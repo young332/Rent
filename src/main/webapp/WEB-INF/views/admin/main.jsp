@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
 
                     <!-- [ content ] Start -->
@@ -6,8 +9,8 @@
                         <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="#">Library</a></li>
-                                <li class="breadcrumb-item active">Data</li>
+                                <li class="breadcrumb-item"><a href="#">메뉴</a></li>
+                                <li class="breadcrumb-item active">메뉴관리</li>
                             </ol>
                         </div>
                         	

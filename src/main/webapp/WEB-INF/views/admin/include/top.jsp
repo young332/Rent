@@ -77,7 +77,7 @@
                     <span class="app-brand-logo demo">
                         <img src="/resources/assets/img/logo.png" alt="Brand Logo" class="img-fluid">
                     </span>
-                    <a href="index.html" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Bhumlu</a>
+                    <a href="index.html" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
                     <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
                         <i class="ion ion-md-menu align-middle"></i>
                     </a>
@@ -98,18 +98,18 @@
                         </a>
                     </li>
 
-                    <!-- Layouts -->
+                    <!-- 메뉴 -->
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">UI Components</li>
+                    <li class="sidenav-header small font-weight-semibold">메뉴</li>
                     <li class="sidenav-item">
                         <a href="typography.html" class="sidenav-link">
                             <i class="sidenav-icon feather icon-type"></i>
-                            <div>Typography</div>
+                            <div>메뉴관리</div>
                         </a>
                     </li>
 
                     <!-- UI elements -->
-                    <li class="sidenav-item">
+                    <!-- <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
                             <i class="sidenav-icon feather icon-box"></i>
                             <div>UI components</div>
@@ -152,17 +152,17 @@
                             </li>
 
                         </ul>
-                    </li>
+                    </li> -->
 
-                    <!-- Forms & Tables -->
+                    <!-- 회원관리 -->
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">Forms & Tables</li>
+                    <li class="sidenav-header small font-weight-semibold">회원</li>
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
                             <i class="sidenav-icon feather icon-clipboard"></i>
-                            <div>Forms</div>
+                            <div>회원관리</div>
                         </a>
-                        <ul class="sidenav-menu">
+                       <!--  <ul class="sidenav-menu">
                             <li class="sidenav-item">
                                 <a href="forms_layouts.html" class="sidenav-link">
                                     <div>Layouts and elements</div>
@@ -173,17 +173,17 @@
                                     <div>Input groups</div>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </li>
-                    <li class="sidenav-item">
+                    <!-- <li class="sidenav-item">
                         <a href="/resources/tables_bootstrap.html" class="sidenav-link">
                             <i class="sidenav-icon feather icon-grid"></i>
                             <div>Tables</div>
                         </a>
-                    </li>
+                    </li> -->
 
                     <!--  Icons -->
-                    <li class="sidenav-divider mb-1"></li>
+                   <!--  <li class="sidenav-divider mb-1"></li>
                     <li class="sidenav-header small font-weight-semibold">Icons</li>
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
@@ -204,7 +204,7 @@
                         </ul>
                     </li>
 
-                    <!-- Pages -->
+                    Pages
                     <li class="sidenav-divider mb-1"></li>
                     <li class="sidenav-header small font-weight-semibold">Pages</li>
                     <li class="sidenav-item">
@@ -224,7 +224,7 @@
                             <i class="sidenav-icon feather icon-anchor"></i>
                             <div>FAQ</div>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- [ Layout sidenav ] End -->

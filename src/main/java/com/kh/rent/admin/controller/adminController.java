@@ -15,4 +15,9 @@ public class adminController {
 	public void adminMainGet() {
 		
 	}
+	
+	@GetMapping("/menu")
+	public void adminMenuGet() {
+		
+	}
 }
