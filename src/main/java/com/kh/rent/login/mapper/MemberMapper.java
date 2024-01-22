@@ -9,7 +9,7 @@ import com.kh.rent.login.domain.MemberVO;
 
 public interface MemberMapper {
 
-	//로그인
+		//로그인
 		public MemberVO login(LoginDTO loginDTO);
 		
 		//회원가입

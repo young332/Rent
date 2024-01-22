@@ -52,13 +52,13 @@
 	</bean>
 
 	<mybatis-spring:scan
-		base-package="com.kh.Rent.mapper" />
+		base-package="com.kh.rent.login.mapper" />
 
 
 	<context:component-scan
-		base-package="com.kh.Rent.service" />
+		base-package="com.kh.rent.login.service" />
 	<context:component-scan
-		base-package="com.kh.Rent.aop" />
+		base-package="com.kh.rent.aop" />
 
 	<!-- @Transactional 사용 가능하게 -->
 	<tx:annotation-driven />
