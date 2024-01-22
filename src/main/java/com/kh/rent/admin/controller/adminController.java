@@ -20,4 +20,9 @@ public class adminController {
 	public void adminMenuGet() {
 		
 	}
+	
+	@GetMapping("/menuWrite")
+	public void adminMenuAddGet() {
+		
+	}
 }

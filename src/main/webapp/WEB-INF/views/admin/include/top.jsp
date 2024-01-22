@@ -37,7 +37,8 @@
     
     <!-- Core scripts -->
     <script src="/resources/assets/js/pace.js"></script>
-    <script src="/resources/assets/js/jquery-3.3.1.min.js"></script>
+    <!-- <script src="/resources/assets/js/jquery-3.3.1.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>						
     <script src="/resources/assets/libs/popper/popper.js"></script>
     <script src="/resources/assets/js/bootstrap.js"></script>
     <script src="/resources/assets/js/sidenav.js"></script>
@@ -89,7 +90,7 @@
 
                     <!-- Dashboards -->
                     <li class="sidenav-item active">
-                        <a href="/resources/index.html" class="sidenav-link">
+                        <a href="/admin/main" class="sidenav-link">
                             <i class="sidenav-icon feather icon-home"></i>
                             <div>Dashboards</div>
                             <div class="pl-1 ml-auto">
@@ -102,7 +103,7 @@
                     <li class="sidenav-divider mb-1"></li>
                     <li class="sidenav-header small font-weight-semibold">메뉴</li>
                     <li class="sidenav-item">
-                        <a href="typography.html" class="sidenav-link">
+                        <a href="/admin/menu" class="sidenav-link">
                             <i class="sidenav-icon feather icon-type"></i>
                             <div>메뉴관리</div>
                         </a>
