@@ -16,7 +16,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/admin/*")
-public class adminController {
+public class AdminController {
 	
 	@Autowired
 	private MenuService menuService;
@@ -28,12 +28,11 @@ public class adminController {
 	
 	@GetMapping("/menu")
 	public void adminMenuGet(Model model) {
-		List<MenuVO> menu = menuService.getMenu();
-		model.addAttribute("menu", menu);
+		List<MenuVO> topMenuList = menuService.getTopMenu();
+		List<MenuVO> subMenuList = menuService.getSubMenu();
+		model.addAttribute("topMenuList", topMenuList);
+		model.addAttribute("subMenuList", subMenuList);
+
 	}
-	
-	@GetMapping("/menuWrite")
-	public void adminMenuAddGet() {
-		
-	}
+
 }

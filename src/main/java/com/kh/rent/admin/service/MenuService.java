@@ -6,6 +6,7 @@ import com.kh.rent.admin.domain.MenuVO;
 
 public interface MenuService {
 	
-	public List<MenuVO> getMenu();
+	public List<MenuVO> getTopMenu();
+	public List<MenuVO> getSubMenu();
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html class="material-style layout-fixed">
 
@@ -100,58 +101,30 @@
                     </li>
 
                     <!-- 메뉴 -->
-                    <li class="sidenav-divider mb-1"></li>
+                    <!-- <li class="sidenav-divider mb-1"></li>
                     <li class="sidenav-header small font-weight-semibold">메뉴</li>
                     <li class="sidenav-item">
                         <a href="/admin/menu" class="sidenav-link">
                             <i class="sidenav-icon feather icon-type"></i>
                             <div>메뉴관리</div>
                         </a>
-                    </li>
+                    </li> -->
 
-                    <!-- UI elements -->
+                    <!-- 관리자 -->
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
                             <i class="sidenav-icon feather icon-box"></i>
-                            <div>UI components</div>
+                            <div>관리자</div>
                         </a>
+                        
                         <ul class="sidenav-menu">
+                        <c:forEach var="subMenu" items="${subMenuList}">
                             <li class="sidenav-item">
-                                <a href="bui_alert.html" class="sidenav-link">
-                                    <div>Alerts</div>
+                                <a href="${subMenu.menu_url}" class="sidenav-link">
+                                    <div>${subMenu.menu_name}</div>
                                 </a>
                             </li>
-                            <li class="sidenav-item">
-                                <a href="bui_badges.html" class="sidenav-link">
-                                    <div>Badges</div>
-                                </a>
-                            </li>
-                            <li class="sidenav-item">
-                                <a href="bui_button.html" class="sidenav-link">
-                                    <div>Buttons</div>
-                                </a>
-                            </li>
-                            <li class="sidenav-item">
-                                <a href="charts_morrisjs.html" class="sidenav-link">
-                                    <div>Charts</div>
-                                </a>
-                            </li>
-                            <li class="sidenav-item">
-                                <a href="bui_dropdowns.html" class="sidenav-link">
-                                    <div>Dropdowns</div>
-                                </a>
-                            </li>
-                            <li class="sidenav-item">
-                                <a href="bui_pagination.html" class="sidenav-link">
-                                    <div>Pagination and breadcrumbs</div>
-                                </a>
-                            </li>
-                            <li class="sidenav-item">
-                                <a href="bui_progress.html" class="sidenav-link">
-                                    <div>Progress bars</div>
-                                </a>
-                            </li>
-
+                         </c:forEach> 
                         </ul>
                     </li>
 
