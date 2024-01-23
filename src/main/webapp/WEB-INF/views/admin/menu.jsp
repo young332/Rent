@@ -37,25 +37,60 @@
 		<div class="col-xl-12">
 			<div class="card">
 				<div class="card-body">
-					<c:set var="menuType" value="1" scope="application" />
-					<link rel="stylesheet"
-						href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
-					<script
-						src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 					<div class="row">
-						<div class="col-lg-4">
-							<div class="user-menu-title">
-								<ul>
-									<li><i class="fal fa-folders"></i>사용자메뉴</li>
-								</ul>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">상위메뉴</div>
+								<button type="button" class="btn btn-success">추가</button>
+								<table class="table card-table">
+									<thead class="thead-light">
+										<tr>
+											<th>메뉴 아이디</th>
+											<th>메뉴명</th>
+											<th>순서</th>
+											<th>편집</th>
+										</tr>
+									</thead>
+									<tbody>
+									<c:forEach var="menuVO" items="${menu}">
+										<tr>
+											<th>${menuVO.menu_id}</th>
+											<td>${menuVO.menu_name}</td>
+											<td>${menuVO.orderby}</td>
+											<td><button type="button" class="btn btn-success" data-menuId="${menuVO.menu_id}">수정</button></td>
+										</tr>
+									</c:forEach>
+									</tbody>
+								</table>
 							</div>
-
-
-							<div id="jstree"></div>
 						</div>
-						<div id="menuWrite" class="col-lg-8 needs-validation" novalidate></div>
-
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">하위메뉴</div>
+								<table class="table card-table">
+									<thead class="thead-light">
+										<tr>
+											<th>메뉴 아이디</th>
+											<th>메뉴명</th>
+											<th>순서</th>
+											<th>편집</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">1</th>
+											<td>Mark</td>
+											<td>Otto</td>
+											<td>@mdo</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
+
+
+
 					<div class="btn-group bottom-btn float-right">
 						<a class="btn btn-success" id="btnMenuWrite" >추가</a>
 						<button type="button" class="btn btn-warning" onclick="">수정</button>
