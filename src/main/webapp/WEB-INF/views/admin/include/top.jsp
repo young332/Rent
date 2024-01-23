@@ -110,7 +110,7 @@
                     </li>
 
                     <!-- UI elements -->
-                    <!-- <li class="sidenav-item">
+                    <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
                             <i class="sidenav-icon feather icon-box"></i>
                             <div>UI components</div>
@@ -153,7 +153,7 @@
                             </li>
 
                         </ul>
-                    </li> -->
+                    </li>
 
                     <!-- 회원관리 -->
                     <li class="sidenav-divider mb-1"></li>

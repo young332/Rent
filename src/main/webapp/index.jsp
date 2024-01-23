@@ -81,7 +81,7 @@
 	  						<form action="#" class="request-form ftco-animate bg-primary">
 		          				<h2>자동차 렌트 예약</h2>
 								<div class="form-group">
-									<label for="" class="label">대여 장소</label> 
+									<label for="" class="label">대여&amp;반납 장소</label> 
 									<input type="text"
 										class="form-control" placeholder="울산역" disabled>
 								</div>
