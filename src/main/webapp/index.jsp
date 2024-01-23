@@ -103,38 +103,38 @@
 											placeholder="반납 날짜">
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="" class="label">차종<br>
-									<input type="checkbox"  name="cartype" value="소형">소형
-									<input type="checkbox"  name="cartype" value="중형">중형 
-									<input type="checkbox"  name="cartype" value="대형">대형 
-									<input type="checkbox"  name="cartype" value="전기차">전기차
-									</label>
-								</div>
-								<div class="form-group">
-									<label for="" class="label">연료<br> 
-										<input type="checkbox"  name="fuel" value="가솔린">가솔린
-										<input type="checkbox"  name="fuel" value="디젤">디젤
-										<input type="checkbox"  name="fuel" value="하이브리드">하이브리드
-										</label>
-								</div>
-								<div class="form-group">
-									<label for="" class="label">제조사<br>
-										<input type="checkbox"  name="carcompany" value="현대">현대
-										<input type="checkbox"  name="carcompany" value="기아">기아
-									</label>  
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="" class="label">차종<br> -->
+<!-- 									<input type="checkbox"  name="cartype" value="소형">소형 -->
+<!-- 									<input type="checkbox"  name="cartype" value="중형">중형  -->
+<!-- 									<input type="checkbox"  name="cartype" value="대형">대형  -->
+<!-- 									<input type="checkbox"  name="cartype" value="전기차">전기차 -->
+<!-- 									</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="" class="label">연료<br>  -->
+<!-- 										<input type="checkbox"  name="fuel" value="가솔린">가솔린 -->
+<!-- 										<input type="checkbox"  name="fuel" value="디젤">디젤 -->
+<!-- 										<input type="checkbox"  name="fuel" value="하이브리드">하이브리드 -->
+<!-- 										</label> -->
+<!-- 								</div> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="" class="label">제조사<br> -->
+<!-- 										<input type="checkbox"  name="carcompany" value="현대">현대 -->
+<!-- 										<input type="checkbox"  name="carcompany" value="기아">기아 -->
+<!-- 									</label>   -->
 									
-								</div>
+<!-- 								</div> -->
 								
-								<div class="form-group">
-									<label for="" class="label">기타옵션<br> 
-										<input type="checkbox"  name="otheroptions" value="후방카메라">후방카메라
-										<input type="checkbox"  name="otheroptions" value="블루투스">블루투스
-										<input type="checkbox"  name="otheroptions" value="내비게이션">내비게이션
-										<input type="checkbox"  name="otheroptions" value="유아카시트">유아카시트
-									</label> 
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="" class="label">기타옵션<br>  -->
+<!-- 										<input type="checkbox"  name="otheroptions" value="후방카메라">후방카메라 -->
+<!-- 										<input type="checkbox"  name="otheroptions" value="블루투스">블루투스 -->
+<!-- 										<input type="checkbox"  name="otheroptions" value="내비게이션">내비게이션 -->
+<!-- 										<input type="checkbox"  name="otheroptions" value="유아카시트">유아카시트 -->
+<!-- 									</label>  -->
 									
-								</div>
+<!-- 								</div> -->
 								<div class="form-group">
 									<button type="submit" id="btn-reservation"
 										class="btn btn-secondary py-3 px-4"><a href="/resources/carbook-master/car.html">차량조회하고예약하기</a></button>
