@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 
@@ -69,13 +70,13 @@ public class MemberMapperTests {
 	@Test //아이디찾기
 	public void testfindMemberId() {
 		String name = "강감찬";
-		String email = "www@www.com";
-		MemberVO memberVO = MemberVO.builder()
+		String phone = "01032143214";
+		FindIdDTO findIdDTO = FindIdDTO.builder()
 				.mem_name(name)
-				.mem_email(email)
+				.mem_phone(phone)
 				.build();
-		MemberVO vo = memberMapper.findMemberId(memberVO);
-		log.info("vo:" + vo);
+		String find_id = memberMapper.findMemberId(findIdDTO);
+		log.info("find_id:" + find_id);
 		
 	}
 	

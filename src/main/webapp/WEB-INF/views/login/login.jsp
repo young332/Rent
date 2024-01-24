@@ -3,10 +3,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
-  	<!-- 주소 -->
-  	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
-	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <style>
+       
+    </style>
   
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>singup</title>
+    <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -27,7 +26,7 @@
     <link rel="stylesheet" href="/resources/carbook-master/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="/resources/carbook-master/css/magnific-popup.css">
 
-    <link rel="stylesheet" href="/resources/carbook-master/carbook-master/css/aos.css">
+    <link rel="stylesheet" href="/resources/carbook-master/css/aos.css">
 
     <link rel="stylesheet" href="/resources/carbook-master/css/ionicons.min.css">
 
@@ -56,7 +55,7 @@
 	          <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
 	          <li class="nav-item"><a href="car.html" class="nav-link">Cars</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item active"><a href="/login/loginin" class="nav-link">로그인</a></li>
+	          <li class="nav-item active"><a href="/login/login" class="nav-link">로그인</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -74,69 +73,81 @@
         </div>
       </div>
     </section>
-
+<!-- 로그인 -->
     <section class="ftco-section contact-section">
       <div class="container">
-        <div class="row d-flex mb-5 contact-info justify-content-center">
+        <div class="row d-flex mb-5 contact-info">
         	
           <div class="col-md-6 block-9 mb-md-5">
-          <div class="form-group">
-          		<p style="font-size:30px;">회원가입</p>
-            </div>
-            <form action="#" class="bg-light p-5 contact-form">
+            <form action="loginPost" method="post" class="bg-light p-5 contact-form">
               <div class="form-group">
-              <small>아이디</small>
-                <input type="text" class="form-control">
-              </div>  
-                <div class="form-group">
-                <button type="button" value="" class="btn btn-primary py-2 px-2">중복확인</button>
+              	<label>아이디</label>
+                <input type="text" id="mem_id" name="mem_id" class="form-control" placeholder="아이디를 입력해주세요." >
+              <input type="hidden" id="idmessage" class="idmessage" value="아이디 입력해주세요" readonly>
               </div>
               <div class="form-group">
-              	<small>비밀번호</small>
-                <input type="password" class="form-control" placeholder="영문 8~16이내">
-                <p class="textErr" style="color: red;">입력하신 비밀번호는 올바른 형식이 아닙니다.</p>
+              	<label>비밀번호</label>
+                <input type="password" name="mem_pw" id="mem_pw" class="form-control" placeholder="비밀번호를 입력해주세요." value="MEMBER01">
+              	 <input type="hidden" id="pwmessage" class="pwmessage" value="최소 8자 이상 입력해주세요." readonly>
               </div>
               <div class="form-group">
-              	<small>비밀번호 확인</small>
-                <input type="password" class="form-control" placeholder="확인을 위해 한번 더 입력해주세요.">
-                <p class="textErr" style="color: red;">비밀번호가 서로 맞지 않습니다.</p>
-              </div>
+                  <div class="custom-control custom-checkbox small">
+                       <input type="checkbox" class="custom-control-input" 
+                                 id="useCookie" name="useCookie">
+                        <label class="custom-control-label" for="useCookie">아이디 저장</label>
+                  </div>
+               </div>
               <div class="form-group">
-              <small>이름</small>
-                <input type="text" class="form-control">
+                <button type="submit" class="btn btn-primary py-3 px-5">로그인</button>
               </div>
-              <div class="form-group">
-              <small>생년월일</small>
-             	 <input type="number" class="form-control" name="birthday">
-             	 <p class="textErr" style="color: red;">'-'없이 숫자만 입력해주세요.</p>
-              </div>
-              <div class="form-group">
-              <small>휴대폰</small>
-                <input type="number" class="form-control">
-              </div> 
-              <div class="form-group">
-              <small>이메일</small>
-                <input type="email" class="form-control">
-              </div>
-              <div class="form-group">
-              <small>주소</small>
-              <br>
-              	<input type="text"  id="zip_code" name="zip_code" readonly="readonly" placeholder="우편번호" style="width:320px;">
-				<input type="button" onclick="openZipSearch();" value="우편번호 찾기">
-				<input type="text"  id="addr" name="addr" onclick="openZipSearch();" readonly="readonly" placeholder="기본주소"  style="width:450px;">
-				<input type="text"  id="addr_dtl" name="addr_dtl" placeholder="상세주소"  style="width:450px;">
-              </div>
-              
-              <div class="form-group">
-                <button type="button" value="" class="btn btn-primary py-3 px-5">완료</button>
-              </div>
+				<div class="loginBtns">
+					<a href="/login/findId"  style="margin-right: 30px;">아이디찾기</a> 
+					<a href="/login/findPw"  style="margin-right: 30px;">비밀번호찾기</a>
+					<a href="/login/signUp">회원가입</a>
+				</div>
 			</form>
           </div>
-          </div>
-		</div>
- 
+          
+          <!-- 왼쪽 -->
+          <div class="col-md-6 block-9 mb-md-5">
+            <form action="#" class="bg-light p-5 contact-form">
+              <div class="form-group">
+              	<p style="font-size:30px; margin-bottom:20px;">비회원으로 예약하셨나요?</p>
+              </div>
+              <div class="form-group">
+              	<p style="margin-bottom:150px;">발급된 예약번호로 예약내역을 확인해 보세요.</p>
+              	 <div class="form-group">
+                <button type="button" id="btnclick" onclick="showSwal();" class="btn btn-primary py-3 px-5">비회원 예약확인</button>
+              </div>
+        		<!-- 예약번호,이름,휴대폰번호 비회원예약확인 -->
+              </div>
+			</form>
+			 </div>
+			   <div class="col-md-12 block-9 mb-md-5">
+			   <p>---------------------간편로그인---------------------</p><br>
+	    <div class="form-group">
+	        <button type="button">
+	            <img alt="카카오로그인" src="/resources/carbook-master/images/btn_kakao.png" style="max-width: 100px; max-height: 50px;">
+	        </button>
+	        <button type="button">
+	            <img alt="네이버로그인" src="/resources/carbook-master/images/btn_naver.png" style="max-width: 100px; max-height: 50px;">
+	        </button>
+	    </div>
+			   </div>
+			
+         
+        </div>
+        <!-- 로그인 -->
+		
+        <div class="row justify-content-center">
+        	<div class="col-md-12">
+        		<div id="map" class="bg-white"></div>
+        	</div>
+        </div>
+      </div>
     </section>
 	
+
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">
         <div class="row mb-5">
@@ -180,7 +191,6 @@
             	<h2 class="ftco-heading-2">Have a Questions?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
 	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
 	              </ul>
@@ -219,29 +229,35 @@
   <script src="/resources/carbook-master/js/bootstrap-datepicker.js"></script>
   <script src="/resources/carbook-master/js/jquery.timepicker.min.js"></script>
   <script src="/resources/carbook-master/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="/resources/carbook-master/js/google-map.js"></script>
   <script src="/resources/carbook-master/js/main.js"></script>
-  
+    
 <script>
-function openZipSearch() {
-    new daum.Postcode({
-    	oncomplete: function(data) {     
-		var addr = ''; 
-		if (data.userSelectedType === 'R') { 
-			addr = data.roadAddress;
-		} else {
-			addr = data.jibunAddress;
+$(function(){
+	var loginResult = "${loginResult}";
+	var registerResult = "${registerResult}";
+	console.log("loginResult: " + loginResult);
+	if(loginResult == "fail"){
+		alert("아이디와 비밀번호를 다시 확인해주세요");
+		$("#mid").focus();
+	}
+	
+	//쿠키 아이디
+	var cookie = document.cookie;
+	console.log("cookie: " , cookie);
+	var cookies = cookie.split(";");
+	for (var v =0; v < cookies.length; v++){
+		var aCookie = cookies[v].split("=");
+		if(aCookie[0].trim() == "savedId"){
+			var savedId = aCookie[1];
+			console.log("savedId:" , savedId);
+			$("#mid").val(savedId);
+			$("#mpw").focus();
+			break;
 		}
+	}
+});
 
-		$("#zip_code").val(data.zonecode);
-		$("#addr").val(addr);
-		$("#addr_dtl").val("");
-		$("#addr_dtl").focus();
-        }
-    }).open();
-}
-
-</script>  
+</script>    
+    
   </body>
 </html>

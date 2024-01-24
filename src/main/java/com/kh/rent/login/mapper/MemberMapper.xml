@@ -20,10 +20,10 @@
 	</insert>
 
 	<!-- 아이디 찾기 -->
-	<select id="findMemberId" resultType="com.kh.rent.login.domain.MemberVO">
-		select * from rent001.TBL_MEMBER
+	<select id="findMemberId" resultType="string">
+		select mem_id from rent001.TBL_MEMBER
 		where mem_name =#{mem_name} 
-		and mem_email = #{mem_email}
+		and mem_phone = #{mem_phone}
 	</select>
 	
 	
