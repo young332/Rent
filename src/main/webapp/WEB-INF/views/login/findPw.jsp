@@ -82,22 +82,22 @@
             <div class="form-group">
             	<p>렌트카의 가입된 정보를 입력해주세요.</p>
             </div>
-            <form action="#" class="bg-light p-5 contact-form">
+            <form class="user"  action="/resetPassword" method="post" class="bg-light p-5 contact-form">
             <div class="form-group">
               <div class="form-group">
               <small>아이디</small>
-                <input type="text" class="form-control" placeholder="아이디를 입력해주세요.">
+                <input type="text" class="form-control" placeholder="아이디를 입력해주세요." value="MEMBER01">
               </div> 
               <div class="form-group">
               	<small>이메일</small>
-                <input type="email" class="form-control" placeholder="이메일을 입력해주세요.">
+                <input type="email" class="form-control" placeholder="이메일을 입력해주세요." value="khproject2309@gmail.com">
               </div>
               <div class="form-group">
-                <button type="button" value="" class="btn btn-primary py-3 px-5">비밀번호 찾기</button>
+                <button type="submit" class="btn btn-primary py-3 px-5">비밀번호 찾기</button>
               </div>
 				<div class="loginBtns">
-					<a href="/login/singup" style="margin-right: 310px;">회원가입</a>
-					<a href="/login/loginin" >로그인</a>
+					<a href="/login/signUp" style="margin-right: 310px;">회원가입</a>
+					<a href="/login/login" >로그인</a>
 				</div>
 				</div>
 			</form>
@@ -150,7 +150,6 @@
             	<h2 class="ftco-heading-2">Have a Questions?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
 	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
 	              </ul>
@@ -189,8 +188,6 @@
   <script src="/resources/carbook-master/js/bootstrap-datepicker.js"></script>
   <script src="/resources/carbook-master/js/jquery.timepicker.min.js"></script>
   <script src="/resources/carbook-master/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="/resources/carbook-master/js/google-map.js"></script>
   <script src="/resources/carbook-master/js/main.js"></script>
     
   </body>
