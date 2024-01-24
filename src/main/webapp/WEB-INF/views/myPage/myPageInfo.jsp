@@ -26,20 +26,28 @@
 					<div class="container">
 					  <form action="/action_page.php">
 					    <div class="form-group">
-					      <label for="usr">이름</label>
-					      <input type="text" class="form-control" id="username" name="username" value="홍길동" readonly>
+					      <label for="id">아이디</label>
+					      <input type="text" class="form-control" id="id" name="id" value="Hong" readonly>
 					    </div>
 					    <div class="form-group">
 					      <label for="pwd">비밀번호</label>
 					      <input type="password" class="form-control" id="password" name="password" value="1234" readonly>
 					    </div>
 					    <div class="form-group">
-					      <label for="usr">휴대폰 번호</label>
-					      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="010-1234-5678" readonly>
+					      <label for="name">이름</label>
+					      <input type="text" class="form-control" id="name" name="name" value="홍길동" readonly>
 					    </div>
 					    <div class="form-group">
 					      <label for="usr">생년월일</label>
 					      <input type="date" class="form-control" id="birthDay" name="birthDay" value="2000-01-01">
+					    </div>
+					    <div class="form-group">
+					      <label for="usr">휴대폰 번호</label>
+					      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="010-1234-5678" readonly>
+					    </div>
+					    <div class="form-group">
+					      <label for="email">이메일</label>
+					      <input type="email" class="form-control" id="email" name="email" value="rent001@naver.com" readonly>
 					    </div>
 					  </form>
 					</div>

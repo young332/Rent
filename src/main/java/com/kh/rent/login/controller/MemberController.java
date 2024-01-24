@@ -77,6 +77,7 @@ public class MemberController {
 	
 	@PostMapping("resetPassword")
 	public String resetPassword(String mem_id, String mem_email) {
+		log.info("mem_email:" + mem_email);
 		String uuid = UUID.randomUUID().toString();
 		String mem_pw = uuid.substring(0,uuid.indexOf("-"));
 		log.info("newPassword : " + mem_pw);
@@ -84,12 +85,15 @@ public class MemberController {
 			
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
+				log.info("mimeMessage:" + mimeMessage);
 				MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,
 						false,
 						"utf-8"
 						);
-				helper.setFrom("khproject2309@gmail.com");
+				helper.setFrom("tgk3732@gmail.com");
+				
 				helper.setTo(mem_email);
+				log.info("helper:" + helper);
 				helper.setSubject("비밀번호 재설정");
 				helper.setText("변경된 비밀번호 : " + mem_pw);
 			}
