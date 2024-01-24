@@ -11,16 +11,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping("/checkout/*")
 public class CheckoutController {
-	
-	@GetMapping("/payment")
+
+	@GetMapping("/pay")
 	public void pay() {
 		log.info("pay");
-		
-	}
-	
-	@GetMapping("/checkout")
-	public void checkout() {
-		log.info("checkout");
 		
 	}
 	
