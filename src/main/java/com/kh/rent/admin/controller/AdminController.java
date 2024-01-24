@@ -23,7 +23,7 @@ public class AdminController {
 	
 	@GetMapping("/main")
 	public void adminMainGet() {
-		
+		// adminMainGet
 	}
 	
 	@GetMapping("/menu")
