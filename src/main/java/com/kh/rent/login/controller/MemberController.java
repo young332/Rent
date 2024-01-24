@@ -43,19 +43,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("/loginPost")
-	public String loginPost(LoginDTO loginDTO,Model model,HttpSession session, RedirectAttributes rttr) {
+	public void loginPost(LoginDTO loginDTO,Model model,HttpSession session, RedirectAttributes rttr) {
 		log.info("loginDTO: " + loginDTO);
 		MemberVO memberVO = memberService.login(loginDTO);
 		log.info("memberVO: " + memberVO);
-		if(memberVO != null) {
-		session.setAttribute("memberVO", memberVO);
-		return "redirect:/";
-		
-		} else {
-			rttr.addFlashAttribute("loginResult" ,"fail");
-			return "redirect:/login/login";
-			
+		if(memberVO == null) {
+			return;
 		}
+		model.addAttribute("loginInfo", memberVO);
+		model.addAttribute("useCookie", loginDTO.getUseCookie());
+		
 	}
 	
 	@GetMapping("/logout")
@@ -67,6 +64,14 @@ public class MemberController {
 	@GetMapping("/signUp")
 	public void signup() {
 		log.info("signUp");
+	}
+	
+	@PostMapping("/signUpPost")
+	public String singUpPost(MemberVO memberVO, RedirectAttributes rttr) {
+		boolean result = memberService.registerPost(memberVO);
+		log.info("result:" + result);
+		rttr.addFlashAttribute("registerResult", String.valueOf(result));
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/findPw")

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!-- top -->
     
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -21,7 +22,7 @@
 		<div class="row d-flex mb-5 contact-info">
 
 			<div class="col-md-6 block-9 mb-md-5">
-				<form action="loginPost" method="post"
+				<form action="/login/loginPost" method="post"
 					class="bg-light p-5 contact-form">
 					<div class="form-group">
 						<label>아이디</label> <input type="text" id="mem_id" name="mem_id"

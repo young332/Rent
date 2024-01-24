@@ -36,14 +36,13 @@ public class MemberServiceTests {
 
 	@Test
 	public void testInsert() {
-		String id = "MEMBER02";
-		String pw = "MEMBER02";
-		String name ="이순신";
-		String email ="eee@eee.com";
-		String birth ="19890704";
-		String phone = "01098746543";
-		String adress ="울산시 남구 신정동";
-		int admink = 0;
+		String id = "MEMBER04";
+		String pw = "MEMBER04";
+		String name ="안소희";
+		String email ="ttt@ttt.com";
+		String birth ="19920202";
+		String phone = "01074128521";
+		String adress ="울산시 남구 대현동";
 		MemberVO memberVO = MemberVO.builder()
 				.mem_id(id)
 				.mem_pw(pw)
@@ -52,7 +51,6 @@ public class MemberServiceTests {
 				.mem_birth(birth)
 				.mem_phone(phone)
 				.mem_adress(adress)
-				.mem_adminck(admink)
 				.build();
 		memberService.registerPost(memberVO);
 	}

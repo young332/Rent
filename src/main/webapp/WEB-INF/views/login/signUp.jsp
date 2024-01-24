@@ -1,20 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <!-- top -->
 <!-- 주소 -->
   	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">    
-    
-    
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+      
+	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
@@ -42,7 +35,19 @@ function openZipSearch() {
 		$("#addr_dtl").focus();
         }
     }).open();
+    
 }
+$(function(){
+	$("#id_check").click(function(){
+		console.log("클릭");
+		let checkId = 0;
+		if($("#mem_id").val().trim() == ""){
+			$("#message_id").css("color","#fba082").text("아이디를 입력해주세요");
+			$("mem_id").val("").focus();
+			return;
+		}		
+	});
+});
 
 </script>     
 
@@ -54,58 +59,61 @@ function openZipSearch() {
           <div class="form-group">
           		<p style="font-size:30px;">회원가입</p>
             </div>
-            <form action="#" class="bg-light p-5 contact-form">
+            <form action="/login/signUpPost" method="post" class="bg-light p-5 contact-form">
               <div class="form-group">
               <small>아이디</small>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" id="mem_id" name="mem_id">
+              	<div id="message_id"></div>
               </div>  
                 <div class="form-group">
-                <button type="button" value="" class="btn btn-primary py-2 px-2">중복확인</button>
+                <button type="button" id="id_check" value="" class="btn btn-primary py-2 px-2">중복확인</button>
               </div>
               <div class="form-group">
               	<small>비밀번호</small>
-                <input type="password" class="form-control" placeholder="영문 8~16이내">
+                <input type="password" id="mem_pw" name="mem_pw" class="form-control" placeholder="영문 8~16이내">
                 <p class="textErr" style="color: red;">입력하신 비밀번호는 올바른 형식이 아닙니다.</p>
               </div>
               <div class="form-group">
               	<small>비밀번호 확인</small>
-                <input type="password" class="form-control" placeholder="확인을 위해 한번 더 입력해주세요.">
+                <input type="password"  id="mem_pw_check" name="mem_pw_check" class="form-control" placeholder="확인을 위해 한번 더 입력해주세요.">
                 <p class="textErr" style="color: red;">비밀번호가 서로 맞지 않습니다.</p>
               </div>
               <div class="form-group">
               <small>이름</small>
-                <input type="text" class="form-control">
+                <input type="text" id="mem_name" name="mem_name" class="form-control">
               </div>
               <div class="form-group">
               <small>생년월일</small>
-             	 <input type="number" class="form-control" name="birthday">
+             	 <input type="number" id="mem_birth" name="mem_birth" class="form-control" >
              	 <p class="textErr" style="color: red;">'-'없이 숫자만 입력해주세요.</p>
               </div>
               <div class="form-group">
               <small>휴대폰</small>
-                <input type="number" class="form-control">
+                <input type="number" id="mem_phone" name="mem_phone" class="form-control">
               </div> 
               <div class="form-group">
               <small>이메일</small>
-                <input type="email" class="form-control">
+                <input type="email" id="mem_email" name="mem_email" class="form-control">
               </div>
               <div class="form-group">
               <small>주소</small>
-              <br>
-              	<input type="text"  id="zip_code" name="zip_code" readonly="readonly" placeholder="우편번호" style="width:320px;">
-				<input type="button" onclick="openZipSearch();" value="우편번호 찾기">
-				<input type="text"  id="addr" name="addr" onclick="openZipSearch();" readonly="readonly" placeholder="기본주소"  style="width:450px;">
-				<input type="text"  id="addr_dtl" name="addr_dtl" placeholder="상세주소"  style="width:450px;">
+              <div class="input-group">
+              	<input type="text"  class="form-control"  id="zip_code" name="zip_code" readonly="readonly" placeholder="우편번호" >
+				<span class="input-group-btn">
+				<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary">
+				</span>
+				</div>
+				<input type="text" class="form-control" id="addr" name="addr" onclick="openZipSearch();" readonly="readonly" placeholder="기본주소">
+				<input type="text"  class="form-control" id="addr_dtl" name="addr_dtl" placeholder="상세주소" >
               </div>
               
               <div class="form-group">
-                <button type="button" value="" class="btn btn-primary py-3 px-5">완료</button>
+                <button type="submit" class="btn btn-primary py-3 px-5">완료</button>
               </div>
 			</form>
           </div>
           </div>
 		</div>
- 
     </section>
 	
 <!-- bottom -->

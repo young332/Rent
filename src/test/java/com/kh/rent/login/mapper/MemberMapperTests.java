@@ -26,14 +26,13 @@ public class MemberMapperTests {
 	
 	@Test //회원가입
 	public void  testInsert() {
-		String id = "MEMBER01";
-		String pw = "MEMBER01";
-		String name ="강감찬";
-		String email ="www@www.com";
-		String birth ="20201212";
-		String phone = "01032143214";
-		String adress ="울산시 남구 삼산동";
-		int admink = 0;
+		String id = "MEMBER03";
+		String pw = "MEMBER03";
+		String name ="김유정";
+		String email ="qqq@qqq.com";
+		String birth ="19960101";
+		String phone = "01074856325";
+		String adress ="울산시 중구 우정동";
 		MemberVO memberVO = MemberVO.builder()
 				.mem_id(id)
 				.mem_pw(pw)
@@ -42,7 +41,6 @@ public class MemberMapperTests {
 				.mem_birth(birth)
 				.mem_phone(phone)
 				.mem_adress(adress)
-				.mem_adminck(admink)
 				.build();
 		int result = memberMapper.registerPost(memberVO);
 		log.info("result:" + result);
