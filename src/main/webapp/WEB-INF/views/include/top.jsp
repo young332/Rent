@@ -43,7 +43,7 @@
 	          <li class="nav-item"><a href="/myPage/reservationList" class="nav-link">예약확인</a></li>
 	          <li class="nav-item"><a href="/useGuide.jsp" class="nav-link">이용안내</a></li>
 	          <li class="nav-item"><a href="/customer.jsp" class="nav-link">고객센터</a></li>
-	          <li class="nav-item"><a href="/login/loginin" class="nav-link">로그인</a></li>
+	          <li class="nav-item"><a href="/login/login" class="nav-link">로그인</a></li>
 	          <li class="nav-item"><a href="/myPage/myPage.html" class="nav-link">마이페이지(임시)</a></li>
 	        </ul>
 	      </div>
