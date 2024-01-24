@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.service.MenuService;
@@ -23,16 +25,21 @@ public class AdminController {
 	
 	@GetMapping("/main")
 	public void adminMainGet() {
-		// adminMainGet
+		
 	}
 	
 	@GetMapping("/menu")
 	public void adminMenuGet(Model model) {
 		List<MenuVO> topMenuList = menuService.getTopMenu();
-		List<MenuVO> subMenuList = menuService.getSubMenu();
+		/* List<MenuVO> subMenuList = menuService.getSubMenu(parentMenu); */
 		model.addAttribute("topMenuList", topMenuList);
-		model.addAttribute("subMenuList", subMenuList);
+		/* model.addAttribute("subMenuList", subMenuList); */
 
+	}
+	
+	@GetMapping("/menuModify")
+	public void menuModify(){
+		
 	}
 
 }
