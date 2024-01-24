@@ -4,13 +4,21 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.admin.mapper.MenuMapper">
 	
-	<select id="getMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		select menu_id, parent_menu_id , menu_name, orderby from TBL_MENU
+	<select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
+		select menu_id, parent_menu_id , menu_name, menu_url, orderby from TBL_MENU
 		where parent_menu_id = '@'
 	</select>
 	
-	<insert id="">
+	<select id="getSubMenu" resultType="com.kh.rent.admin.domain.MenuVO">
+		select menu_id, parent_menu_id , menu_name, menu_url, orderby from TBL_MENU
+		where not parent_menu_id = '@'
+	</select>
 	
+	<insert id="insertTopMenu">
+		insert into TBL_MENU(menu_id, parent_menu_id, menu_type, menu_name, menu_depth, menu_url, useyn)
+		values (#{menu_id}, #{parent_menu_id}, #{menu_type}, #{menu_name}, #{menu_depth}, #{menu_url} #{useyn})
 	</insert>
+	
+	
 
 </mapper>
