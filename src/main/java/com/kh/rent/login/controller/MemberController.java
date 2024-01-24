@@ -124,4 +124,21 @@ public class MemberController {
 		return member_id;
 	}
 	
+	//아이디 중복 체크
+	@PostMapping(value = "/checkId", consumes = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public String checkId(@RequestBody String mem_id) {
+		String checkRst;
+		int idCnt = memberService.chekId(mem_id);
+		log.info("idCnt:"+ idCnt);
+		if(idCnt > 0) {
+			checkRst = "F";
+			log.info("checkRstF:"+ checkRst);
+		}else {
+			checkRst = "S";
+			log.info("checkRstS:"+ checkRst);
+		}
+		return checkRst;
+	}
+	
 }

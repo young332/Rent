@@ -40,13 +40,83 @@ function openZipSearch() {
 $(function(){
 	$("#id_check").click(function(){
 		console.log("클릭");
-		let checkId = 0;
-		if($("#mem_id").val().trim() == ""){
-			$("#message_id").css("color","#fba082").text("아이디를 입력해주세요");
-			$("mem_id").val("").focus();
-			return;
-		}		
+		var userId = $("#mem_id").val();
+		console.log("userId:" , userId);
+		
+		if (userId.trim() == "") {
+            alert("아이디를 입력해주세요.");
+            return;
+        }
+		
+		$.ajax({
+            async: true,
+            type : 'post',
+            data : JSON.stringify({ "userId": userId }),
+            url : "/login/checkId",
+            dataType : "text",
+            headers : {       
+				"Content-Type" : "application/json",      
+				"X-HTTP-Method-Override" : "POST"    
+			}, 
+            success: function (data) {
+            	console.log(data);
+				if(data == "S") {
+					alert("사용가능한 아이디입니다.");
+					$("#mem_id").focus();
+					isCheckId = 1;
+					
+				} else if(data == "F"){
+					console.log(data);
+					alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+					$("#mem_id").focus();
+				}
+            },
+            error : function(error) {
+                
+                alert("error:",error);
+            }
+        });
+				
 	});
+	$("#DosignUp").click(function(e) {
+		e.preventDefault();
+		var inputId = $("#mem_id").val();
+		var inputPwd = $("#mem_pw").val();
+		var inputPwdCfm = $("#mem_pw_check").val();
+		var inputCpnName = $("#mem_name").val();
+		var inputCpnBirth = $("#mem_birth").val();
+		var inputCpnTelNo = $("#mem_phone").val();
+		var inputCpnEmail = $("#mem_email").val();
+		<!--주소-->
+		var inputCpnAddr1 = $("#zip_code").val();
+		var inputCpnAddr2 = $("#addr").val();
+		var inputCpnAddr3 = $("#addr_dtl").val();
+		
+		if(inputId.length == 0) { alert("아이디를 입력해 주세요."); $("#mem_id").focus(); return; }
+		if(isCheckId == 0) { alert("아이디 중복 체크를 해주세요."); $("#mem_id").focus(); return; }
+		
+		if(inputPwd.length == 0) { alert("비밀번호를 입력해 주세요."); $("#mem_pw").focus(); return; }
+		if(inputPwd != inputPwdCfm) { alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); $("#mem_pw").focus(); return; }
+		
+		
+		if(inputCpnTelNo.length == 0) { alert("전화번호를 입력해 주세요."); $("#mem_phone").focus(); return; }
+		
+		if(inputCpnEmail.length == 0) { alert("이메일을 입력해 주세요."); $("#mem_email").focus(); return; }
+		
+		
+		if(inputCpnAddr1.length == 0 || inputCpnAddr2.length == 0 || inputCpnAddr3.length == 0) { 
+			alert("주소를 입력해 주세요."); $("#addr").focus();  return;
+		}
+
+		if(confirm("회원가입을 하시겠습니까?")) {
+			alert("가입완료!");
+			
+			location.href= ""; //메인 ? 
+			
+			
+		}
+	});	
+	
 });
 
 </script>     
@@ -60,23 +130,26 @@ $(function(){
           		<p style="font-size:30px;">회원가입</p>
             </div>
             <form action="/login/signUpPost" method="post" class="bg-light p-5 contact-form">
-              <div class="form-group">
+              <div class="form-group" id="divInputId">
               <small>아이디</small>
+                <div class="input-group">
                 <input type="text" class="form-control" id="mem_id" name="mem_id">
-              	<div id="message_id"></div>
-              </div>  
+                <div class="input-group-append">
+                <button type="button" id="id_check" value="" class="btn btn-primary py-2 px-2" style="margin-left: 5px;">중복확인</button>
+                </div>
+               </div>
+               </div>
                 <div class="form-group">
-                <button type="button" id="id_check" value="" class="btn btn-primary py-2 px-2">중복확인</button>
               </div>
               <div class="form-group">
               	<small>비밀번호</small>
                 <input type="password" id="mem_pw" name="mem_pw" class="form-control" placeholder="영문 8~16이내">
-                <p class="textErr" style="color: red;">입력하신 비밀번호는 올바른 형식이 아닙니다.</p>
+                <input class="textErr" style="color: red;" value="입력하신 비밀번호는 올바른 형식이 아닙니다." type="hidden">
               </div>
               <div class="form-group">
               	<small>비밀번호 확인</small>
                 <input type="password"  id="mem_pw_check" name="mem_pw_check" class="form-control" placeholder="확인을 위해 한번 더 입력해주세요.">
-                <p class="textErr" style="color: red;">비밀번호가 서로 맞지 않습니다.</p>
+                <input class="textErr" style="color: red;" value="비밀번호가 서로 맞지 않습니다." type="hidden">
               </div>
               <div class="form-group">
               <small>이름</small>
@@ -85,7 +158,7 @@ $(function(){
               <div class="form-group">
               <small>생년월일</small>
              	 <input type="number" id="mem_birth" name="mem_birth" class="form-control" >
-             	 <p class="textErr" style="color: red;">'-'없이 숫자만 입력해주세요.</p>
+             	 <input class="textErr" style="color: red;" value="'-'없이 숫자8자만 입력해주세요." type="hidden">
               </div>
               <div class="form-group">
               <small>휴대폰</small>
@@ -108,7 +181,7 @@ $(function(){
               </div>
               
               <div class="form-group">
-                <button type="submit" class="btn btn-primary py-3 px-5">완료</button>
+                <button type="button" id="DosignUp" class="btn btn-primary py-3 px-5">회원가입</button>
               </div>
 			</form>
           </div>
