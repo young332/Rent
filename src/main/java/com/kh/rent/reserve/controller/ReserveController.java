@@ -15,4 +15,9 @@ public class ReserveController {
 	public void reserve() {
 		log.info("reserve...");
 	}
+	
+	@GetMapping("/licenseinfo")
+	public void licenseinfo() {
+		log.info("licenseinfo...");
+	}
 }
