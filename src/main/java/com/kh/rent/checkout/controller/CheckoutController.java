@@ -14,7 +14,6 @@ public class CheckoutController {
 	
 	@GetMapping("/payment")
 	public void pay() {
-		// pay
 		log.info("pay");
 		
 	}
