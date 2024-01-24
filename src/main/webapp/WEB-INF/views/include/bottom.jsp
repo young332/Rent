@@ -79,7 +79,7 @@
   <script src="/resources/carbook-master/js/jquery.magnific-popup.min.js"></script>
   <script src="/resources/carbook-master/js/aos.js"></script>
   <script src="/resources/carbook-master/js/jquery.animateNumber.min.js"></script>
-  <script src="/resources/carbook-master/js/bootstrap-datepicker.js"></script>
+<!--   <script src="/resources/carbook-master/js/bootstrap-datepicker.js"></script> -->
   <script src="/resources/carbook-master/js/jquery.timepicker.min.js"></script>
   <script src="/resources/carbook-master/js/scrollax.min.js"></script>
   <script src="/resources/carbook-master/js/main.js"></script>
