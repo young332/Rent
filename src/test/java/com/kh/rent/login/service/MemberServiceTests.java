@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 
@@ -58,14 +59,14 @@ public class MemberServiceTests {
 	
 	@Test
 	public void testfindMemberId() {
-		String name = "이순신";
-		String email = "eee@eee.com";
-		MemberVO memberVO = MemberVO.builder()
+		String name = "강감찬";
+		String phone = "01032143214";
+		FindIdDTO dto1 = FindIdDTO.builder()
 				.mem_name(name)
-				.mem_email(email)
+				.mem_phone(phone)
 				.build();
-	MemberVO memberVO2 = memberService.findMemberId(memberVO);
-	log.info("memberVO2:" + memberVO2);
+	String findId = memberService.findMemberId(dto1);
+	log.info("findId:" + findId);
 	}
 	
 	@Test

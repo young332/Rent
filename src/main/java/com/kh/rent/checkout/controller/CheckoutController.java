@@ -10,7 +10,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/checkout/*")
-public class checkoutController {
+public class CheckoutController {
 	
 	@GetMapping("/payment")
 	public void pay() {

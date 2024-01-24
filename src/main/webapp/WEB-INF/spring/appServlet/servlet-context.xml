@@ -23,6 +23,10 @@
 	
 	<context:component-scan base-package="com.kh.rent" />
 	<context:component-scan base-package="com.kh.rent.admin.controller" />
+
+	<context:component-scan base-package="com.kh.rent.login.controller" />
+	
+
 	
 	
 </beans:beans>
