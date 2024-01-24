@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.rent.myPage.mapper.MyPageMapper">
+
+	<!-- 회원정보 조회하기 -->
+	<select id="getList" resultType="com.kh.rent.login.domain.MemberVO">
+		select * from rent001.TBL_MEMBER
+		where mem_id = #{mem_id}
+	</select>
+	
+	<!-- 비밀번호 변경하기 -->
+	<update id="changePassword">
+		update TBL_MEMBER set
+			mem_pw = #{mem_pw}
+		where mem_id = #{mem_id}
+	</update>
+	
+	<!-- 회원정보 수정하기 -->
+	<update id="updateMember">
+		update TBL_MEMBER set
+			mem_name = #{mem_name},
+			mem_email = #{mem_email},
+			mem_birth = #{mem_birth},
+			mem_phone = #{mem_phone},
+			mem_adress = #{mem_adress},
+			mem_udate = now()
+		where mem_id = #{mem_id}
+	</update>
+	
+	<!-- 탈퇴회원 기록하기 -->
+	<insert id="registerDelMember">
+		insert into TBL_MEMBER
+			(mem_id,mem_name,mem_email,mem_birth,mem_phone,mem_adress,mem_cdate,mem_point,mem_adminck)
+		values
+			(#{mem_id},#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_adress},mem_cdate,#{mem_point},#{mem_adminck})
+	</insert>
+	
+	<!-- 회원정보 삭제하기 -->
+	<delete id="deleteMember">
+		delete from TBL_MEMBER
+		where mem_id = #{mem_id}
+	</delete>
+	
+</mapper>
