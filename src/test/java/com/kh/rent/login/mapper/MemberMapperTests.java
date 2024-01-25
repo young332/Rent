@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 
@@ -25,14 +26,14 @@ public class MemberMapperTests {
 	
 	@Test //회원가입
 	public void  testInsert() {
-		String id = "MEMBER01";
-		String pw = "MEMBER01";
-		String name ="강감찬";
-		String email ="www@www.com";
-		String birth ="20201212";
-		String phone = "01032143214";
-		String adress ="울산시 남구 삼산동";
-		int admink = 0;
+		String id = "MEMBER03";
+		String pw = "MEMBER03";
+		String name ="김유정";
+		String email ="qqq@qqq.com";
+		String birth ="19960101";
+		String phone = "01074856325";
+		String code ="1234";
+		String addr ="울산시 중구 우정동";
 		MemberVO memberVO = MemberVO.builder()
 				.mem_id(id)
 				.mem_pw(pw)
@@ -40,8 +41,8 @@ public class MemberMapperTests {
 				.mem_email(email)
 				.mem_birth(birth)
 				.mem_phone(phone)
-				.mem_adress(adress)
-				.mem_adminck(admink)
+				.mem_zip_code(code)
+				.mem_addr(addr)
 				.build();
 		int result = memberMapper.registerPost(memberVO);
 		log.info("result:" + result);
@@ -69,13 +70,13 @@ public class MemberMapperTests {
 	@Test //아이디찾기
 	public void testfindMemberId() {
 		String name = "강감찬";
-		String email = "www@www.com";
-		MemberVO memberVO = MemberVO.builder()
+		String phone = "01032143214";
+		FindIdDTO findIdDTO = FindIdDTO.builder()
 				.mem_name(name)
-				.mem_email(email)
+				.mem_phone(phone)
 				.build();
-		MemberVO vo = memberMapper.findMemberId(memberVO);
-		log.info("vo:" + vo);
+		String find_id = memberMapper.findMemberId(findIdDTO);
+		log.info("find_id:" + find_id);
 		
 	}
 	
@@ -87,5 +88,12 @@ public class MemberMapperTests {
 		.build();
 		int result = memberMapper.changePassword(loginDTO);
 		log.info("result:" + result);
+	}
+	
+	@Test
+	public void tesetCheckId() {
+		String mem_id = "MEMBER01";
+		int count = memberMapper.checkId(mem_id);
+		log.info("count:" + count);
 	}
 }

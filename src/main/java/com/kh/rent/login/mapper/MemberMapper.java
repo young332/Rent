@@ -2,6 +2,7 @@ package com.kh.rent.login.mapper;
 
 import java.util.List;
 
+import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 
@@ -16,7 +17,7 @@ public interface MemberMapper {
 		public int registerPost(MemberVO memberVO);
 		
 		//아이디찾기
-		public MemberVO findMemberId(MemberVO memberVO); 
+		public String findMemberId(FindIdDTO findIdDTO); 
 		
 		//비밀번호변경
 		public int changePassword(LoginDTO loginDTO);

@@ -3,6 +3,7 @@ package com.kh.rent.login.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.mapper.MemberMapper;
@@ -29,15 +30,21 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberVO findMemberId(MemberVO memberVO) {
-		MemberVO vo = memberMapper.findMemberId(memberVO);
-		return vo;
+	public String findMemberId(FindIdDTO findIdDTO) {
+		String mem_id = memberMapper.findMemberId(findIdDTO);
+		return mem_id;
 	}
 
 	@Override
 	public void changePassword(LoginDTO loginDTO) {
 		memberMapper.changePassword(loginDTO);
 		
+	}
+
+	@Override
+	public int checkId(String mem_id) {
+		int count = memberMapper.checkId(mem_id);
+		return count;
 	}
 
 }

@@ -16,7 +16,7 @@
 	<context:annotation-config></context:annotation-config>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg name="configuration"
 			ref="hikariConfig" />
 	</bean>
@@ -55,6 +55,15 @@
 		base-package="com.kh.rent.login.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.admin.mapper" />
+	<mybatis-spring:scan
+
+		base-package="com.kh.rent.point.mapper" />
+
+	<mybatis-spring:scan
+		base-package="com.kh.rent.reserve.mapper" />
+	<mybatis-spring:scan
+		base-package="com.kh.rent.myPage.mapper" />
+
 
 
 	<context:component-scan
@@ -63,6 +72,12 @@
 		base-package="com.kh.rent.admin.service" />
 	<context:component-scan
 		base-package="com.kh.rent.aop" />
+	<context:component-scan
+
+		base-package="com.kh.rent.point.service" />
+	<context:component-scan
+		base-package="com.kh.rent.reserve.service" />	
+
 
 	<!-- @Transactional 사용 가능하게 -->
 	<tx:annotation-driven />
@@ -71,5 +86,20 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-		
+	
+	<!-- 메일보내기 -->
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="username" value="tgk3732@gmail.com" />
+      <property name="password" value="dkzp srpt vtdr meah" /> <!-- 앱비밀번호 -->
+      <property name="javaMailProperties">
+         <props>
+               <prop key="mail.transport.protocol">smtp</prop>
+               <prop key="mail.smtp.auth">true</prop>
+               <prop key="mail.smtp.starttls.enable">true</prop>
+               <prop key="mail.debug">true</prop>
+         </props>
+      </property>
+	</bean>
 </beans>

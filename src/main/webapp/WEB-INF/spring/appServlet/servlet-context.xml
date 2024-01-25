@@ -23,6 +23,34 @@
 	
 	<context:component-scan base-package="com.kh.rent" />
 	<context:component-scan base-package="com.kh.rent.admin.controller" />
+
+	<context:component-scan base-package="com.kh.rent.login.controller" />
+	<context:component-scan base-package="com.kh.rent.myPage.controller" />
 	
+
+	<context:component-scan base-package="com.kh.rent.point.controller" />
+
+	<context:component-scan base-package="com.kh.rent.reserve.controller" />
 	
+
+	
+	<!-- 인터셉터 -->
+	<beans:bean id="loginInterceptor"
+	 class="com.kh.rent.login.interceptor.LoginInterceptor" ></beans:bean>
+	 <beans:bean id="authInterceptor"
+	 class="com.kh.rent.login.interceptor.AuthInterceptor" ></beans:bean>
+	 
+	 <interceptors>
+	 	<interceptor>
+	 		<mapping path="/login/loginPost"/>
+	 		<beans:ref bean="loginInterceptor"/>
+	 	</interceptor>
+	 <interceptor>
+<!-- 	 	<mapping path="/myPage/**/*"/> -->
+<!-- 	 	<mapping path="/checkout/**/*"/> -->
+		<mapping path="/login/loginPost"/>
+	 	<beans:ref bean="authInterceptor"/>
+	 </interceptor>	
+	 </interceptors>
+
 </beans:beans>

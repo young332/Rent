@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+$(function() {
+	$("#btnTest").click(function() {
+		var v = $("#d1").val();
+		console.log(v);
+	});
+});
+</script>
+</head>
+<body>
+<input type="datetime-local" id="d1">
+<button type="button" id="btnTest">테스트</button>
+</body>
+</html>

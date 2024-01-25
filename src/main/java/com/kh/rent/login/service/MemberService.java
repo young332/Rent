@@ -1,5 +1,6 @@
 package com.kh.rent.login.service;
 
+import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 
@@ -12,10 +13,11 @@ public interface MemberService {
 		public boolean registerPost(MemberVO memberVO);
 		
 		//아이디 찾기
-		public MemberVO findMemberId(MemberVO memberVO);
+		public String findMemberId(FindIdDTO findIdDTO);
 		
 		//비밀번호변경
 		public void changePassword(LoginDTO loginDTO);
 		
 		//아이디 중복체크
+		public int checkId(String mem_id);
 }

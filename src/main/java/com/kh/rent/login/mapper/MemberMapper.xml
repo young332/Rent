@@ -14,16 +14,16 @@
 	<!-- 회원가입 -->
 	<insert id="registerPost">
 		insert into rent001.TBL_MEMBER
-			(mem_id,mem_pw,mem_name,mem_email,mem_birth,mem_phone,mem_adress,mem_adminck)
+			(mem_id,mem_pw,mem_name,mem_email,mem_birth,mem_phone,mem_zip_code,mem_addr)
 		values
-			(#{mem_id},#{mem_pw},#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_adress},#{mem_adminck})	
+			(#{mem_id},#{mem_pw},#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_zip_code},#{mem_addr})	
 	</insert>
 
 	<!-- 아이디 찾기 -->
-	<select id="findMemberId" resultType="com.kh.rent.login.domain.MemberVO">
-		select * from rent001.TBL_MEMBER
+	<select id="findMemberId" resultType="string">
+		select mem_id from rent001.TBL_MEMBER
 		where mem_name =#{mem_name} 
-		and mem_email = #{mem_email}
+		and mem_phone = #{mem_phone}
 	</select>
 	
 	
