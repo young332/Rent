@@ -258,7 +258,14 @@
 			    <version>${org.springframework-version}</version>
 			</dependency>	
 	       
-	    <!-- mail 끝 -->  
+	    <!-- mail 끝 --> 
+	    
+	    <!-- 문자 인증관련 라이브러리 -->
+	    <dependency>
+    		<groupId>net.nurigo</groupId>
+    		<artifactId>sdk</artifactId>
+    		<version>4.3.0</version>
+		</dependency> 
 							  
 	</dependencies>
     <build>
