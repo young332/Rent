@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
-
+	
     <div class="hero-wrap ftco-degree-bg" style="background-image: url('/resources/carbook-master/images/volvo.png');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -34,7 +34,7 @@
 									<input type="text"
 										class="form-control" placeholder="울산역" disabled>
 								</div>
-							
+								
 								<div class="d-flex">
 									<div class="form-group mr-1">
 										<label for="" class="label">대여일을 선택해주세요.</label> 
@@ -54,7 +54,7 @@
 									</div>
 								</div>
 								 <div class="form-group">
-					              <buttom type="submit" class="btn btn-secondary py-3 px-4" ><a href="/reserve/reserve">차량 조회하고 예약하기</a></buttom>
+					              <buttom type="submit" class="btn btn-secondary py-3 px-4" id="bntSearch"><a href="/reserve/reserve">차량 조회하고 예약하기</a></buttom>
 					            </div>
 
 							</form>
@@ -99,9 +99,16 @@
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
    
     
-  
-
- 
+<script>
+$(function() {
+	$("#bntSearch").click(function() {
+		var p = $("#book_pick_date").val();
+		var o = $("#book_off_date").val();
+		console.log("p:", p);
+		console.log("o:", o);
+	});
+});
+</script> 
     
   </body>
 </html>

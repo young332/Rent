@@ -19,11 +19,7 @@
        
       }
 
-     .left-box h5 {
-	    font-size: 18px;
-	    color: #5c54a0;
- 	    vertical-align: middle; 
-	}
+   
 	  #cars-box { 
          width:70%; 
          height: 1000px; 
@@ -49,7 +45,7 @@
 		   			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
 		   			<section>
 						<div class="left-box">
-							<h5>상세검색</h5>
+							<h6>상세검색&nbsp;&nbsp;&nbsp;<button type="reset" class="reset_btn btn-info">검색초기화</button></h6>
 							<hr>
 							<div class="form-group">
 								<label for="" class="label" >차종<br>
@@ -100,7 +96,7 @@
 	    				<div class="right-box">
 								<div class="row">
 				    			<div class="col-md-12">
-				    				<div class="carousel-car owl-carousel">
+<!-- 				    				<div class="carousel-car owl-carousel"> -->
 				    					<div class="item">
 				    						<div class="car-wrap rounded ftco-animate">
 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/hyun1.jpg);">
@@ -115,7 +111,8 @@
 						    					</div>
 						    				</div>
 				    					</div>
-				    					<div class="item">
+				    					<hr>
+				    					<div class="item"> 
 				    						<div class="car-wrap rounded ftco-animate">
 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/hyun2.jpg);">
 						    					</div>
@@ -129,34 +126,37 @@
 						    					</div>
 						    				</div>
 				    					</div>
-				    					<div class="item">
-				    						<div class="car-wrap rounded ftco-animate">
-						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/kia1.jpg);">
-						    					</div>
-						    					<div class="text">
-						    						<h2 class="mb-0"><a href="#">스포티지</a></h2>
-						    						<div class="d-flex mb-3">
-							    						<span class="cat">KIA</span>
-							    						<p class="price ml-auto">500 <span>/day</span></p>
-						    						</div>
-						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p>
-						    					</div>
-						    				</div>
-				    					</div>
-				    					<div class="item">
-				    						<div class="car-wrap rounded ftco-animate">
-						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/kia2.jpg);">
-						    					</div>
-						    					<div class="text">
-						    						<h2 class="mb-0"><a href="#">쏘렌토</a></h2>
-						    						<div class="d-flex mb-3">
-							    						<span class="cat">KIA</span>
-							    						<p class="price ml-auto">500 <span>/day</span></p>
-						    						</div>
-						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p>
-						    					</div>
-						    				</div>
-				    					</div>
+				    					<hr>
+<!-- 				    					<div class="item"> -->
+<!-- 				    						<div class="car-wrap rounded ftco-animate"> -->
+<!-- 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/kia1.jpg);"> -->
+<!-- 						    					</div> -->
+<!-- 						    					<div class="text"> -->
+<!-- 						    						<h2 class="mb-0"><a href="#">스포티지</a></h2> -->
+<!-- 						    						<div class="d-flex mb-3"> -->
+<!-- 							    						<span class="cat">KIA</span> -->
+<!-- 							    						<p class="price ml-auto">500 <span>/day</span></p> -->
+<!-- 						    						</div> -->
+<!-- 						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+<!-- 						    					</div> -->
+<!-- 						    				</div> -->
+<!-- 				    					</div> -->
+<!-- 				    					<hr> -->
+<!-- 				    					<div class="item"> -->
+<!-- 				    						<div class="car-wrap rounded ftco-animate"> -->
+<!-- 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/kia2.jpg);"> -->
+<!-- 						    					</div> -->
+<!-- 						    					<div class="text"> -->
+<!-- 						    						<h2 class="mb-0"><a href="#">쏘렌토</a></h2> -->
+<!-- 						    						<div class="d-flex mb-3"> -->
+<!-- 							    						<span class="cat">KIA</span> -->
+<!-- 							    						<p class="price ml-auto">500 <span>/day</span></p> -->
+<!-- 						    						</div> -->
+<!-- 						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+<!-- 						    					</div> -->
+<!-- 						    				</div> -->
+<!-- 				    					</div> -->
+				    					<hr>
 				    				</div>
 				    			</div>
 				    		</div>
