@@ -8,84 +8,96 @@
 	$(function(){
 		
 		var AddMenuName = '<c:out value="${AddMenuName}"/>';
+		var ModifyMenuName = '<c:out value="${ModifyMenuName}"/>';
 		console.log("AddMenuName: " , AddMenuName);
+		console.log("ModifyMenuName: " , ModifyMenuName);
 		var parentMenu;
 		
 		// 알림창 설정
 		var v = "";
 		if(AddMenuName){
 			v = "등록";
-		}/* else if(removeResult){
-			v = "삭제";
-		} */
+		} else if(ModifyMenuName){
+			v = "수정";
+		} 
 		
-		if(AddMenuName) {
+		if(AddMenuName || ModifyMenuName) {
 			$("#alertModal").find(".modal-body")
-										.text(AddMenuName + " 메뉴가 "+ v +" 등록되었습니다.");
+										.text(" 메뉴가 "+ v +" 되었습니다.");
 			$("#alertModal").find(".modal-title")
 										.text("메뉴 "+ v);
 			$("#alertModal").modal("show");
 		}
-
-		
-		//상위메뉴 등록 모달창
-		/* $("#btnTopMenuAdd").click(function(e){
-			e.preventDefault();
-			$("#TopMenuModal #menu_id").val("");
-	        $("#TopMenuModal #menu_name").val("");
-	        $("#TopMenuModal #orderby").val("");
-	        $("#TopMenuModal #menu_url").val("");
-	        
-			$("#TopMenuModal").modal("show");
-		}); */
-
-	        /* $("#btnTopMenuAdd").click(function() {
-		    	$("#TopMenuModal").modal("show");
-		    	
-		    	
-		    }); */
 		    
 		    $(".btn-modal").click(function() {   	
 		    	//수정 버튼인지 등록버튼인지 확인
-		    	
-		    	var curMode = "Add";
-		    	
-		    	if ($(this).hasClass("btnTopModify")) {
-		    		curMode = "Edit";
-		    	}
-		    	
-		    	/* var Add = $(this).hasClass("btnTopMenuAdd"); */
-		        /* var isEditMode = $(this).hasClass("btnTopModify"); */
-		        /* console.log("isEditMode:", isEditMode); */
-		        /* console.log("isAddMode:", isAddMode); */
-		        
-		        
-		     // 수정 버튼 클릭 시 모달 열기 및 데이터 설정
-		        if(curMode = "Edit"){
+		    	var curMode = $(this).hasClass("btnTopModify") ? "Edit" : "Add";
+
+		     	// 수정 버튼 클릭 시 모달 열기 및 데이터 설정
+		        if(curMode == "Edit"){
 			        var menu_id = $(this).data("menu_id");
 			        var menu_type = $(this).data("menu_type");
 			        var menu_name = $(this).data("menu_name");
 			        var orderby = $(this).data("orderby");
 			        var menu_url = $(this).data("menu_url");
-			        console.log(menu_id,menu_type,menu_name,orderby,menu_url)
+			        
 		        	
 			        $("#TopMenuModal form").attr("action", "/admin/menu/topMenuModify");
 		            $("#TopMenuModal .modal-title").text("상위메뉴 수정");
 			        $("#TopMenuModal #menu_id").val(menu_id);
 			        $("#TopMenuModal #menu_type").val(menu_type);
+			        console.log(menu_id,menu_type,menu_name,orderby,menu_url)
+			        console.log("menu_type", menu_type);
+			        if (menu_type == 1) {
+			        	$("#menu_type").val("1").prop("selected", true);
+			        } 
+			        if (menu_type == 2) {
+			        	$("#menu_type").val("2").prop("selected", true);
+			        }
+			        
 			        $("#TopMenuModal #menu_name").val(menu_name);
 			        $("#TopMenuModal #orderby").val(orderby);
 			        $("#TopMenuModal #menu_url").val(menu_url);
+			        
+			     // 모달 body에 추가 (Edit 모드일 때만)
+		            if (curMode == "Edit") {
+		                var existingFieldset = $("#TopMenuModal .form-group:has('label:contains(\"사용유무\")')");
+		                if (existingFieldset.length === 0) {
+		                    $("#TopMenuModal .form-group:last").after(useYnFieldset);
+		                }
+		            }  
+			        
+			     // 사용유무 fieldset 추가
+			        var useYnFieldset = `
+			            <fieldset class="form-group only-edit">
+			                <div class="row">
+			                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
+			                    <div class="col-sm-10">
+			                        <div class="custom-controls-stacked">
+			                            <label class="custom-control custom-radio">
+			                                <input name="use_yn" value="Y" type="radio" class="custom-control-input" checked="">
+			                                <span class="custom-control-label">사용</span>
+			                            </label>
+			                            <label class="custom-control custom-radio">
+			                                <input name="use_yn" value="N" type="radio" class="custom-control-input">
+			                                <span class="custom-control-label">미사용</span>
+			                            </label>
+			                        </div>
+			                    </div>
+			                </div>
+			            </fieldset>`;
+
 			        updateModalFooter(curMode);
 			        
-			        
-		        }  else {
+		        }  else{
+		        	console.log("else");
 		        	$("#TopMenuModal form").attr("action", "/admin/menu/topMenuAdd");
 		            $("#TopMenuModal .modal-title").text("상위메뉴 등록");
 		        	$("#TopMenuModal #menu_id").val("");
 			        $("#TopMenuModal #menu_name").val("");
 			        $("#TopMenuModal #orderby").val("");
 			        $("#TopMenuModal #menu_url").val("");
+			        
 			        updateModalFooter(curMode);
 		        }  
 		    	
@@ -100,14 +112,11 @@
 	        	console.log("curModefooter:",curMode)
 	            footer.find("#btnTopAdd").text("수정");
 	        }  else {
+	        	console.log("curModefooter:",curMode)
 	            footer.find("#btnTopAdd").text("등록");
 	        }  
 	    }   
 
-		
-		
-		
-		
 		//하위메뉴 등록 모달창
 		$("#btnSubMenuAdd").click(function(e){
 			e.preventDefault();
@@ -182,6 +191,7 @@
 											<td class="align-middle">${topMenu.orderby}</td>
 											<td class="align-middle"><button type="button" class="btn btn-success btnTopModify btn-modal"
 												 data-menu_id="${topMenu.menu_id}"
+												 data-menu_type="${topMenu.menu_type}"
 												 data-menu_name="${topMenu.menu_name}" data-orderby="${topMenu.orderby}" 
 												 data-menu_url="${topMenu.menu_url}">수정</button></td>
 										</tr>
@@ -346,6 +356,7 @@
 								<input type="text" class="form-control" placeholder="메뉴 URL" name="menu_url">
 								<div class="clearfix"></div>
 							</div>
+						
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary" id="btnSubAdd">등록</button>
 								<button type="button" class="btn btn-secondary"
@@ -374,6 +385,9 @@
 						</button>
 					</div>
 					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>

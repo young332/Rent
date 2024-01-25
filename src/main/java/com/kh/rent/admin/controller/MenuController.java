@@ -40,9 +40,9 @@ public class MenuController {
 	
 	@PostMapping("/subMenuAdd")
 	public String SubMenuAdd(MenuVO menuVO, RedirectAttributes rttr) {
-		log.info("menuVO:" + menuVO);
+		//log.info("menuVO:" + menuVO);
 		int count = menuService.addMenu(menuVO);
-		if(count == 0) {
+		if(count == 1) {
 			rttr.addFlashAttribute("AddMenuName",menuVO.getMenu_name());
 		}
 		return "redirect:/admin/menu";
@@ -56,9 +56,14 @@ public class MenuController {
     }
 	
 	
-	@PostMapping("/modify")
-	public String menuModify(MenuVO menuVO) {
-		
+	@PostMapping("/topMenuModify")
+	public String menuModify(MenuVO menuVO, RedirectAttributes rttr) {
+		log.info("menuVO:" + menuVO);
+		int count = menuService.modifyMenu(menuVO);
+		log.info("count:"+count);
+		if(count == 1) {
+			rttr.addFlashAttribute("ModifyMenuName",menuVO.getMenu_name());
+		}
 		return "redirect:/admin/menu";
 	}
 	

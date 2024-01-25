@@ -37,9 +37,9 @@ public class AdminController {
 
 	}
 	
-	@GetMapping("/menuModify")
-	public void menuModify(){
-		
-	}
+//	@GetMapping("/menuModify")
+//	public void menuModify(){
+//		
+//	}
 
 }
