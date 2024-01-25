@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import oracle.sql.TIMESTAMP;
 
 @Data
 @Builder
@@ -13,14 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DeletedMemberVO {
 
-	private String mem_id;
-	private String mem_name;
-	private String mem_email;
-	private String mem_birth;
-	private String mem_phone;
-	private String mem_adress;
-	private Date mem_cdate;
-	private Date mem_ddate;
-	private Integer mem_point;
-	private Integer mem_adminck;
+	private String del_id;
+	private String del_name;
+	private String del_email;
+	private String del_birth;
+	private String del_phone;
+	private String del_zip_code;
+	private String del_addr;
+	private String del_cdate;
+	private TIMESTAMP del_ddate;
+	private Integer del_point;
+	private Integer del_adminck;
 }

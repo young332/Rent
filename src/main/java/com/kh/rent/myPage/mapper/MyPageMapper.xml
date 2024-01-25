@@ -6,7 +6,7 @@
 
 	<!-- 회원정보 조회하기 -->
 	<select id="getList" resultType="com.kh.rent.login.domain.MemberVO">
-		select * from rent001.TBL_MEMBER
+		select * from TBL_MEMBER
 		where mem_id = #{mem_id}
 	</select>
 	
@@ -24,22 +24,27 @@
 			mem_email = #{mem_email},
 			mem_birth = #{mem_birth},
 			mem_phone = #{mem_phone},
-			mem_adress = #{mem_adress},
+			mem_zip_code = #{mem_zip_code},
+			mem_addr = #{mem_addr},
 			mem_udate = now()
 		where mem_id = #{mem_id}
 	</update>
 	
 	<!-- 탈퇴회원 기록하기 -->
 	<insert id="registerDelMember">
-		insert into TBL_MEMBER
-			(mem_id,mem_name,mem_email,mem_birth,mem_phone,mem_adress,mem_cdate,mem_point,mem_adminck)
+		insert into TBL_DEL_MEMBER
+			(del_id, del_name, del_email, del_birth, del_phone, 
+				del_zip_code, del_addr, del_cdate, del_ddate,
+				 del_point, del_adminck)
 		values
-			(#{mem_id},#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_adress},mem_cdate,#{mem_point},#{mem_adminck})
+			(#{del_id},#{del_name},#{del_email},#{del_birth},#{del_phone},
+				#{del_zip_code},#{del_addr}, #{del_cdate}, now(), 
+				#{del_point}, #{del_adminck})
 	</insert>
 	
 	<!-- 회원정보 삭제하기 -->
 	<delete id="deleteMember">
-		delete from TBL_MEMBER
+		delete from rent001.TBL_MEMBER
 		where mem_id = #{mem_id}
 	</delete>
 	

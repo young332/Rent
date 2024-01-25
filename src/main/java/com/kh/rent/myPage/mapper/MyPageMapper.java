@@ -9,7 +9,7 @@ import com.kh.rent.myPage.domain.DeletedMemberVO;
 public interface MyPageMapper {
 
 	// 회원정보 조회하기
-	public List<MemberVO> getList(LoginDTO loginDTO);
+	public List<MemberVO> getList(String mem_id);
 	
 	// 비밀번호 변경하기
 	public int changePassword(LoginDTO loginDTO);
