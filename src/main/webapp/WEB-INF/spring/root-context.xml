@@ -56,7 +56,11 @@
 	<mybatis-spring:scan
 		base-package="com.kh.rent.admin.mapper" />
 	<mybatis-spring:scan
+
+		base-package="com.kh.rent.reserve.mapper" />
+
 		base-package="com.kh.rent.myPage.mapper" />
+
 
 
 	<context:component-scan
@@ -65,6 +69,8 @@
 		base-package="com.kh.rent.admin.service" />
 	<context:component-scan
 		base-package="com.kh.rent.aop" />
+	<context:component-scan
+		base-package="com.kh.rent.reserve.service" />	
 
 	<!-- @Transactional 사용 가능하게 -->
 	<tx:annotation-driven />
