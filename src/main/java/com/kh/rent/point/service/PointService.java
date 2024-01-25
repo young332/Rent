@@ -1,11 +1,9 @@
 package com.kh.rent.point.service;
 
-public class PointService {
-	
-	// 포인트 잔액 확인
-		
-	// 포인트 적립 사유
-	
-	// 포인트 사용일
+import com.kh.rent.point.domain.PointVO;
 
+public interface PointService {
+
+	public int insertPoint(PointVO pointVO);
+	public int updatePoint(int point_id);
 }
