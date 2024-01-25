@@ -39,7 +39,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		log.info("로그인 후 meberVO : " + memberVO);
 		
 		if(memberVO == null) { //로그인실패
-			modelAndView.setViewName("redirect:/loginin");			
+			modelAndView.setViewName("redirect:/login/login");			
 		} else { //로그인 성공
 			HttpSession session = request.getSession();
 			String targetLocation = (String)session.getAttribute("targetLocation");
@@ -60,4 +60,5 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			}
 		}
 	}
+	
 }

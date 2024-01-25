@@ -16,7 +16,7 @@
 	<context:annotation-config></context:annotation-config>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg name="configuration"
 			ref="hikariConfig" />
 	</bean>
@@ -56,7 +56,11 @@
 	<mybatis-spring:scan
 		base-package="com.kh.rent.admin.mapper" />
 	<mybatis-spring:scan
+
 		base-package="com.kh.rent.reserve.mapper" />
+
+		base-package="com.kh.rent.myPage.mapper" />
+
 
 
 	<context:component-scan
