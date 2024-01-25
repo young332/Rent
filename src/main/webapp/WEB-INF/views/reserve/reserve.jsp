@@ -45,7 +45,7 @@
 		   			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
 		   			<section>
 						<div class="left-box">
-							<h6>상세검색&nbsp;&nbsp;&nbsp;<button type="reset" class="reset_btn btn-info">검색초기화</button></h6>
+							<h6>상세검색&nbsp;&nbsp;&nbsp;<button type="reset" class="reset_btn btn-light">검색초기화</button></h6>
 							<hr>
 							<div class="form-group">
 								<label for="" class="label" >차종<br>
@@ -107,7 +107,7 @@
 							    						<span class="cat">현대자동차</span>
 							    						<p class="price ml-auto">500000 <span>/day</span></p>
 						    						</div>
-						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p>
+						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
 						    					</div>
 						    				</div>
 				    					</div>
@@ -122,7 +122,7 @@
 							    						<span class="cat">현대자동차</span>
 							    						<p class="price ml-auto">500 <span>/day</span></p>
 						    						</div>
-						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p>
+						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
 						    					</div>
 						    				</div>
 				    					</div>
