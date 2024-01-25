@@ -18,4 +18,10 @@ public class CheckoutController {
 		
 	}
 	
+	@GetMapping("/point")
+	public void point() {
+		log.info("point");
+		
+	}
+	
 }
