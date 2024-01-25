@@ -15,5 +15,7 @@ public interface MenuMapper {
 	public MenuVO getOneMenu(String menu_id);
 
 	public int insertMenu(MenuVO menuVO);
+	
+	public int updateMenu(MenuVO menuVO);
 
 }

@@ -44,5 +44,11 @@ public class MenuServiceImpl implements MenuService {
 		return menuVO;
 	}
 
+	@Override
+	public int modifyMenu(MenuVO menuVO) {
+		int count = menuMapper.updateMenu(menuVO);
+		return count;
+	}
+
 
 }

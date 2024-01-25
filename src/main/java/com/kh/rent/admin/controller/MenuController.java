@@ -30,7 +30,7 @@ public class MenuController {
 	public String topMenuAdd(MenuVO menuVO, RedirectAttributes rttr) {
 		log.info("menuVO:" + menuVO);
 		int count = menuService.addMenu(menuVO);
-		if(count == 0) {
+		if(count == 1) {
 			rttr.addFlashAttribute("AddMenuName",menuVO.getMenu_name());
 		}
 		
@@ -55,13 +55,21 @@ public class MenuController {
 		return subMenuList;
     }
 	
-	@GetMapping(value = "/list/{bno}" , produces = MediaType.APPLICATION_JSON_VALUE)
-	public MenuVO getList(@PathVariable("menu_id") String menu_id){
+	
+	@PostMapping("/modify")
+	public String menuModify(MenuVO menuVO) {
 		
-		MenuVO menuVO = menuService.getOneMenu(menu_id);
-		return menuVO;
-		
+		return "redirect:/admin/menu";
 	}
+	
+	
+//	@GetMapping(value = "/list/{bno}" , produces = MediaType.APPLICATION_JSON_VALUE)
+//	public MenuVO getList(@PathVariable("menu_id") String menu_id){
+//		
+//		MenuVO menuVO = menuService.getOneMenu(menu_id);
+//		return menuVO;
+//		
+//	}
 	
 	
 	

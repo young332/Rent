@@ -16,4 +16,5 @@ public interface MenuService {
 
 	public MenuVO getOneMenu(String menu_id);
 	
+	public int modifyMenu(MenuVO menuVO);
 }

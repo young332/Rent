@@ -56,5 +56,21 @@ public class MenuMapperTests {
 		log.info("menuVO:"+menuVO);
 	}
 	
-
+	@Test
+	public void testUpdateMenu() {
+		MenuVO menuVO = MenuVO.builder()
+				.parent_menu_id("@")
+				.menu_type(1)
+				.menu_name("통계 수정")
+				.menu_depth(1)
+				.menu_url("/admin/menu/statistics test")
+				.orderby(2)
+				.use_yn("N")
+				.menu_id("Menu002")
+				.build();
+		int count = menuMapper.updateMenu(menuVO);
+		if(count == 1) {
+			log.info("seccess");
+		}
+	}
 }
