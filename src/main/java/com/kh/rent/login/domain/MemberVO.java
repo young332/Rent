@@ -19,7 +19,8 @@ public class MemberVO {
 	private String mem_email;
 	private String mem_birth;
 	private String mem_phone;
-	private String mem_adress;
+	private String mem_zip_code;
+	private String mem_addr;
 	private Date mem_cdate;
 	private Date mem_udate;
 	private Integer mem_point;

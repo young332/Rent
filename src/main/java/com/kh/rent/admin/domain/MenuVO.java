@@ -17,5 +17,5 @@ public class MenuVO {
 	private Integer menu_depth;
 	private String menu_url;
 	private Integer orderby;
-	private String useyn;
+	private String use_yn;
 }
