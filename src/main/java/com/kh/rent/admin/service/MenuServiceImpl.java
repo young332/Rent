@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService {
 	
+	private List<MenuVO> menuList;
+	
 	@Autowired
 	private MenuMapper menuMapper;
 
@@ -22,11 +24,31 @@ public class MenuServiceImpl implements MenuService {
 		List<MenuVO> topMenuList = menuMapper.getTopMenu();
 		return topMenuList;
 	}
+	
+	@Override
+	public List<MenuVO> getSubMenu(String parent_menu_id) {
+	    List<MenuVO> subMenuList = menuMapper.getSubMenu(parent_menu_id);
+	    return subMenuList;
+	}
+	
 
 	@Override
-	public List<MenuVO> getSubMenu() {
-		List<MenuVO> subMenuList = menuMapper.getSubMenu();
-		return subMenuList;
+	public int addMenu(MenuVO menuVO) {
+		int count = menuMapper.insertMenu(menuVO);
+		return count;
 	}
+
+	@Override
+	public MenuVO getOneMenu(String menu_id) {
+		MenuVO menuVO = menuMapper.getOneMenu(menu_id);
+		return menuVO;
+	}
+
+	@Override
+	public int modifyMenu(MenuVO menuVO) {
+		int count = menuMapper.updateMenu(menuVO);
+		return count;
+	}
+
 
 }
