@@ -45,8 +45,6 @@
 		    	
 		    }); */
 		    
-		    
-		    
 		    $(".btn-modal").click(function() {   	
 		    	//수정 버튼인지 등록버튼인지 확인
 		    	
@@ -60,6 +58,7 @@
 		        /* var isEditMode = $(this).hasClass("btnTopModify"); */
 		        /* console.log("isEditMode:", isEditMode); */
 		        /* console.log("isAddMode:", isAddMode); */
+		        
 		        
 		     // 수정 버튼 클릭 시 모달 열기 및 데이터 설정
 		        if(curMode = "Edit"){
