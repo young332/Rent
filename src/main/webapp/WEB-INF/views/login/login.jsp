@@ -3,6 +3,17 @@
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+$(function() {
+	var registerResult = '${registerResult}';
+	if (registerResult == 'true') {
+		alert("회원 가입 성공");
+	} else if(registerResult == "false"){
+		alert("회원 가입 실패");
+	}
+		
+});
+</script>
 <!-- top -->
     
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">

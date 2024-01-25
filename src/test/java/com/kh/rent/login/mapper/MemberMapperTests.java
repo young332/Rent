@@ -32,7 +32,8 @@ public class MemberMapperTests {
 		String email ="qqq@qqq.com";
 		String birth ="19960101";
 		String phone = "01074856325";
-		String adress ="울산시 중구 우정동";
+		String code ="1234";
+		String addr ="울산시 중구 우정동";
 		MemberVO memberVO = MemberVO.builder()
 				.mem_id(id)
 				.mem_pw(pw)
@@ -40,7 +41,8 @@ public class MemberMapperTests {
 				.mem_email(email)
 				.mem_birth(birth)
 				.mem_phone(phone)
-				.mem_adress(adress)
+				.mem_zip_code(code)
+				.mem_addr(addr)
 				.build();
 		int result = memberMapper.registerPost(memberVO);
 		log.info("result:" + result);
@@ -86,5 +88,12 @@ public class MemberMapperTests {
 		.build();
 		int result = memberMapper.changePassword(loginDTO);
 		log.info("result:" + result);
+	}
+	
+	@Test
+	public void tesetCheckId() {
+		String mem_id = "MEMBER01";
+		int count = memberMapper.checkId(mem_id);
+		log.info("count:" + count);
 	}
 }

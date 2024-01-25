@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -58,7 +59,7 @@ public class MemberController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/login";
+		return "redirect:/login/login";
 	}
 	
 	@GetMapping("/signUp")
@@ -68,10 +69,11 @@ public class MemberController {
 	
 	@PostMapping("/signUpPost")
 	public String singUpPost(MemberVO memberVO, RedirectAttributes rttr) {
+		log.info("signUpPost...:");
 		boolean result = memberService.registerPost(memberVO);
 		log.info("result:" + result);
-		rttr.addFlashAttribute("registerResult", String.valueOf(result));
-		return "redirect:/login";
+		rttr.addFlashAttribute("registerResult", String.valueOf(true));
+		return "redirect:/login/login";
 	}
 	
 	@GetMapping("/findPw")
@@ -125,11 +127,12 @@ public class MemberController {
 	}
 	
 	//아이디 중복 체크
-	@PostMapping(value = "/checkId", consumes = {MediaType.APPLICATION_JSON_VALUE})
+	@PostMapping(value = "/checkId")
 	@ResponseBody
 	public String checkId(@RequestBody String mem_id) {
+		log.info("mem_id:" + mem_id);
 		String checkRst;
-		int idCnt = memberService.chekId(mem_id);
+		int idCnt = memberService.checkId(mem_id);
 		log.info("idCnt:"+ idCnt);
 		if(idCnt > 0) {
 			checkRst = "F";

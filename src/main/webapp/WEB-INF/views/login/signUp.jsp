@@ -19,6 +19,7 @@
       </div>
     </section>
 <script>
+
 function openZipSearch() {
     new daum.Postcode({
     	oncomplete: function(data) {     
@@ -29,17 +30,18 @@ function openZipSearch() {
 			addr = data.jibunAddress;
 		}
 
-		$("#zip_code").val(data.zonecode);
-		$("#addr").val(addr);
-		$("#addr_dtl").val("");
-		$("#addr_dtl").focus();
+		$("#mem_zip_code").val(data.zonecode);
+		$("#mem_addr").val(addr);
+		$("#mem_addr").focus();
         }
     }).open();
     
 }
+
 $(function(){
 	$("#id_check").click(function(){
 		console.log("클릭");
+		
 		var userId = $("#mem_id").val();
 		console.log("userId:" , userId);
 		
@@ -51,7 +53,7 @@ $(function(){
 		$.ajax({
             async: true,
             type : 'post',
-            data : JSON.stringify({ "userId": userId }),
+            data : userId,
             url : "/login/checkId",
             dataType : "text",
             headers : {       
@@ -59,14 +61,14 @@ $(function(){
 				"X-HTTP-Method-Override" : "POST"    
 			}, 
             success: function (data) {
-            	console.log(data);
+            	console.log("dataS:" , data);
 				if(data == "S") {
 					alert("사용가능한 아이디입니다.");
 					$("#mem_id").focus();
 					isCheckId = 1;
 					
-				} else if(data == "F"){
-					console.log(data);
+				} else {
+					console.log("dataF:" , data);
 					alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 					$("#mem_id").focus();
 				}
@@ -78,8 +80,8 @@ $(function(){
         });
 				
 	});
-	$("#DosignUp").click(function(e) {
-		e.preventDefault();
+	$("#frmSignUp").submit(function() {
+		
 		var inputId = $("#mem_id").val();
 		var inputPwd = $("#mem_pw").val();
 		var inputPwdCfm = $("#mem_pw_check").val();
@@ -90,31 +92,25 @@ $(function(){
 		<!--주소-->
 		var inputCpnAddr1 = $("#zip_code").val();
 		var inputCpnAddr2 = $("#addr").val();
-		var inputCpnAddr3 = $("#addr_dtl").val();
-		
-		if(inputId.length == 0) { alert("아이디를 입력해 주세요."); $("#mem_id").focus(); return; }
-		if(isCheckId == 0) { alert("아이디 중복 체크를 해주세요."); $("#mem_id").focus(); return; }
-		
-		if(inputPwd.length == 0) { alert("비밀번호를 입력해 주세요."); $("#mem_pw").focus(); return; }
-		if(inputPwd != inputPwdCfm) { alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); $("#mem_pw").focus(); return; }
 		
 		
-		if(inputCpnTelNo.length == 0) { alert("전화번호를 입력해 주세요."); $("#mem_phone").focus(); return; }
+		if(inputId.length == 0) { alert("아이디를 입력해 주세요."); $("#mem_id").focus(); return false; }
+// 		if(isCheckId == 0) { alert("아이디 중복 체크를 해주세요."); $("#mem_id").focus(); return; }
 		
-		if(inputCpnEmail.length == 0) { alert("이메일을 입력해 주세요."); $("#mem_email").focus(); return; }
+		if(inputPwd.length == 0) { alert("비밀번호를 입력해 주세요."); $("#mem_pw").focus(); return  false; }
+		if(inputPwd != inputPwdCfm) { alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); $("#mem_pw").focus(); return false; }
 		
 		
-		if(inputCpnAddr1.length == 0 || inputCpnAddr2.length == 0 || inputCpnAddr3.length == 0) { 
-			alert("주소를 입력해 주세요."); $("#addr").focus();  return;
+		if(inputCpnTelNo.length == 0) { alert("전화번호를 입력해 주세요."); $("#mem_phone").focus(); return  false; }
+		
+		if(inputCpnEmail.length == 0) { alert("이메일을 입력해 주세요."); $("#mem_email").focus(); return false; }
+		
+		
+		if(inputCpnAddr1.length == 0 || inputCpnAddr2.length == 0) { 
+			alert("주소를 입력해 주세요."); $("#addr").focus();  return  false;
 		}
+		
 
-		if(confirm("회원가입을 하시겠습니까?")) {
-			alert("가입완료!");
-			
-			location.href= ""; //메인 ? 
-			
-			
-		}
 	});	
 	
 });
@@ -129,13 +125,13 @@ $(function(){
           <div class="form-group">
           		<p style="font-size:30px;">회원가입</p>
             </div>
-            <form action="/login/signUpPost" method="post" class="bg-light p-5 contact-form">
+            <form id="frmSignUp" action="/login/signUpPost" method="post" class="bg-light p-5 contact-form" accept-charset="UTF-8">
               <div class="form-group" id="divInputId">
               <small>아이디</small>
                 <div class="input-group">
                 <input type="text" class="form-control" id="mem_id" name="mem_id">
                 <div class="input-group-append">
-                <button type="button" id="id_check" value="" class="btn btn-primary py-2 px-2" style="margin-left: 5px;">중복확인</button>
+                <button type="button" id="id_check"  class="btn btn-primary py-2 px-2" style="margin-left: 5px;">중복확인</button>
                 </div>
                </div>
                </div>
@@ -171,17 +167,16 @@ $(function(){
               <div class="form-group">
               <small>주소</small>
               <div class="input-group">
-              	<input type="text"  class="form-control"  id="zip_code" name="zip_code" readonly="readonly" placeholder="우편번호" >
+              	<input type="text"  class="form-control"  id="mem_zip_code" name="mem_zip_code" readonly="readonly" placeholder="우편번호" >
 				<span class="input-group-btn">
 				<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary">
 				</span>
 				</div>
-				<input type="text" class="form-control" id="addr" name="addr" onclick="openZipSearch();" readonly="readonly" placeholder="기본주소">
-				<input type="text"  class="form-control" id="addr_dtl" name="addr_dtl" placeholder="상세주소" >
+				<input type="text" class="form-control" id="mem_addr" name="mem_addr" onclick="openZipSearch();" readonly="readonly" placeholder="기본주소">
               </div>
               
               <div class="form-group">
-                <button type="button" id="DosignUp" class="btn btn-primary py-3 px-5">회원가입</button>
+                <button type="submit" id="DosignUp" class="btn btn-primary py-3 px-5">회원가입</button>
               </div>
 			</form>
           </div>
