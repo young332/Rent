@@ -19,4 +19,5 @@ public interface MemberService {
 		public void changePassword(LoginDTO loginDTO);
 		
 		//아이디 중복체크
+		public int checkId(String mem_id);
 }

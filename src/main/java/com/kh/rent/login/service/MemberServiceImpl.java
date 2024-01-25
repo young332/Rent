@@ -41,4 +41,10 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	@Override
+	public int checkId(String mem_id) {
+		int count = memberMapper.checkId(mem_id);
+		return count;
+	}
+
 }

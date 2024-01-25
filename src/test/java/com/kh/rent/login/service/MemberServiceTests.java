@@ -36,14 +36,14 @@ public class MemberServiceTests {
 
 	@Test
 	public void testInsert() {
-		String id = "MEMBER02";
-		String pw = "MEMBER02";
-		String name ="이순신";
-		String email ="eee@eee.com";
-		String birth ="19890704";
-		String phone = "01098746543";
-		String adress ="울산시 남구 신정동";
-		int admink = 0;
+		String id = "MEMBER04";
+		String pw = "MEMBER04";
+		String name ="안소희";
+		String email ="ttt@ttt.com";
+		String birth ="19920202";
+		String phone = "01074128521";
+		String code = "8521";
+		String addr ="울산시 남구 대현동";
 		MemberVO memberVO = MemberVO.builder()
 				.mem_id(id)
 				.mem_pw(pw)
@@ -51,8 +51,8 @@ public class MemberServiceTests {
 				.mem_email(email)
 				.mem_birth(birth)
 				.mem_phone(phone)
-				.mem_adress(adress)
-				.mem_adminck(admink)
+				.mem_zip_code(code)
+				.mem_addr(addr)
 				.build();
 		memberService.registerPost(memberVO);
 	}
@@ -77,5 +77,12 @@ public class MemberServiceTests {
 		.build();
 		memberService.changePassword(loginDTO);
 	}	
+	
+	@Test
+	public void testCheckId() {
+		String mem_id = "MEMBER01";
+		int count = memberService.checkId(mem_id);
+		log.info("count:" + count);
+	}
 	
 }
