@@ -26,6 +26,11 @@
 
 	<context:component-scan base-package="com.kh.rent.login.controller" />
 	
+	<context:component-scan base-package="com.kh.rent.point.controller" />
+	<context:component-scan base-package="com.kh.rent.point.mapper" />
+	<context:component-scan base-package="com.kh.rent.point.service" />
+	<context:component-scan base-package="com.kh.rent.point.domain" />
+	
 
 	
 	
