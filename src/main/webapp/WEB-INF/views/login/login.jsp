@@ -50,8 +50,8 @@ $(function() {
 					<div class="form-group">
 						<div class="custom-control custom-checkbox small">
 							<input type="checkbox" class="custom-control-input"
-								id="useCookie" name="useCookie"> <label
-								class="custom-control-label" for="useCookie">아이디 저장</label>
+								id="useCookie" name="useCookie"> 
+							<label class="custom-control-label" for="useCookie">아이디 저장</label>
 						</div>
 					</div>
 					<div class="form-group">

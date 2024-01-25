@@ -48,6 +48,7 @@ public class MemberController {
 		log.info("loginDTO: " + loginDTO);
 		MemberVO memberVO = memberService.login(loginDTO);
 		log.info("memberVO: " + memberVO);
+		session.setAttribute("memberVO", memberVO);
 		if(memberVO == null) {
 			return;
 		}
@@ -142,6 +143,15 @@ public class MemberController {
 			log.info("checkRstS:"+ checkRst);
 		}
 		return checkRst;
+	}
+	
+	//본인인증 문자
+	@RequestMapping("/phoneCheck")
+	@ResponseBody
+	public String sendMS(@RequestBody String mem_phone) {
+		
+		int randomNumber = (int)((Math.random()*(9999-1000 + 1)) +1000); //난수생성
+		return "spring";
 	}
 	
 }

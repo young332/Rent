@@ -123,9 +123,19 @@ $(function(){
 // 	    }
 		
 // 	});
+
+$("#check_send").click(function(){
+	console.log("클릭");
+	alert("인증번호 발송이 완료되었습니다.");
+	var mem_phone = $("mem_phone").val();
+	console.log("mem_phone:", mem_phone);
+	$.ajax({
+		
+	})
 });
 
 
+});
 </script>     
 
     <section class="ftco-section contact-section">
@@ -173,8 +183,15 @@ $(function(){
 						<div class="input-group">
 							<input type="text" class="form-control" id="mem_phone" name="mem_phone">
 							<div class="input-group-append">
-								<button type="button" id="phone_check"
-									class="btn btn-primary py-1 px-2" style="margin-left: 5px;">인증확인</button>
+								<button type="button" id="check_send" class="btn btn-primary py-1 px-2" style="margin-left: 5px;">문자보내기</button>
+							</div>
+						</div>
+						<div style="margin-bottom: 10px;"></div>
+						<div class="input-group">
+							<input type="text" class="form-control" id="mem_phone_check" name="mem_phone_check">
+							<div class="input-group-append">
+								<button type="button" id="phone_check" class="btn btn-primary py-1 px-2" style="margin-left: 5px;">본인인증</button>
+								<input type="hidden" id="phoneDoubleCheck">							
 							</div>
 						</div>
 					</div>
