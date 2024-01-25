@@ -2,6 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+
+<%@ include file="/WEB-INF/views/include/top.jsp" %>
+
+
+    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+          <div class="col-md-9 ftco-animate pb-5">
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">예약 <i class="ion-ios-arrow-forward"></i></a></span> <span>결제 <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">결제</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +38,6 @@
     <title>결제 페이지</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/checkout/">
-
-    
-
-    
-
-<!-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <style>
       .bd-placeholder-img {
@@ -81,64 +92,90 @@
       }
       
       /* 포인트 영역 */
-.point_div{
-	margin-top: 30px;
-    margin-bottom: 50px;
-}
-.point_div_subject{
-	font-size: 25px;
-    line-height: 35px;
-    font-weight: bold;
-}
-.point_table{
-	border-color: #ddd;
-    border-spacing: 0;
-    border-top: 1px solid #363636;
-    border-bottom: 1px solid #b6b6b6;
-}
-.point_table th{
-	border-color: #ddd;
-    vertical-align: top;
-    text-align: center;
-    color: #333333;
-    background: #fbfbfb;
-    text-indent: 0;
-    padding: 12px 5px 12px 20px;
-    font-size: 15px;
-    line-height: 20px;
-}
-.point_table_td{
-	border-color: #ddd;
-    text-align: left;
-    color: #333333;
-    padding: 8px 15px;
-}
-.order_point_input_btn{
-	vertical-align: middle;
-    display: inline-block;
-    border: 1px solid #aaa;
-    width: 60px;
-    text-align: center;
-    height: 20px;
-    line-height: 20px;
-    color: #555;
-    cursor: pointer;
-    font-size: 12px;
-}
+	.point_div{
+		margin-top: 30px;
+	    margin-bottom: 50px;
+	}
+	.point_div_subject{
+		font-size: 25px;
+	    line-height: 35px;
+	    font-weight: bold;
+	}
+	.point_table{
+		border-color: #ddd;
+	    border-spacing: 0;
+	    border-top: 1px solid #363636;
+	    border-bottom: 1px solid #b6b6b6;
+	}
+	.point_table th{
+		border-color: #ddd;
+	    vertical-align: top;
+	    text-align: center;
+	    color: #333333;
+	    background: #fbfbfb;
+	    text-indent: 0;
+	    padding: 12px 5px 12px 20px;
+	    font-size: 15px;
+	    line-height: 20px;
+	}
+	.point_table_td{
+		border-color: #ddd;
+	    text-align: left;
+	    color: #333333;
+	    padding: 8px 15px;
+	}
+	.order_point_input_btn{
+		vertical-align: middle;
+	    display: inline-block;
+	    border: 1px solid #aaa;
+	    width: 60px;
+	    text-align: center;
+	    height: 20px;
+	    line-height: 20px;
+	    color: #555;
+	    cursor: pointer;
+	    font-size: 12px;
+	}
       
     </style>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/resources/carbook-master/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/carbook-master/css/animate.css">
+    
+    <link rel="stylesheet" href="/resources/carbook-master/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/resources/carbook-master/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/resources/carbook-master/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/resources/carbook-master/css/aos.css">
+
+    <link rel="stylesheet" href="/resources/carbook-master/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/resources/carbook-master/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/resources/carbook-master/css/jquery.timepicker.css">
 
     
-    <!-- Custom styles for this template -->
-<!--     <link href="form-validation.css" rel="stylesheet"> -->
-
-</head>
+    <link rel="stylesheet" href="/resources/carbook-master/css/flaticon.css">
+    <link rel="stylesheet" href="/resources/carbook-master/css/icomoon.css">
+    <link rel="stylesheet" href="/resources/carbook-master/css/style.css">
+  </head>
+  
 <body>
 <div class="container">
   <main>
     <div class="py-5 text-center">
 <!-- 		로고 이미지 넣기  -->
-<!-- 	<img class="d-block mx-auto mb-4" src="/resources/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
 	 	<img class="d-block mx-auto mb-4" src="" alt="" width="0" height="0">
       <h2>결제 페이지</h2>
       <p class="lead">예약 내용을 꼼꼼히 확인해주시고 결제를 진행해주세요</p>
@@ -237,7 +274,7 @@
             </div>
             <div class="form-check">
               <input id="kakaopay" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="debit">현금</label>
+              <label class="form-check-label" for="debit">현금 결제 (비회원 전용)</label>
             </div>
             </div><br>
 <!--             <div class="form-check"> -->
@@ -418,3 +455,6 @@
       </script>
 </body>
 </html>
+	
+
+<%@ include file="/WEB-INF/views/include/bottom.jsp" %>
