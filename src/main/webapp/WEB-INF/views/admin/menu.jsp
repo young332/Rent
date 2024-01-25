@@ -124,6 +124,14 @@
 			$("#SubMenuModal").modal("show");
 		});
 		
+		// 메뉴 삭제
+		$(".btnTopdelete").click(function() {
+			
+		
+		});
+		
+		
+		
 		//선택한 상위메뉴의 하위메뉴 목록
 		$(".parentMenu").click(function() {
 	        parentMenu = $(this).text();
@@ -145,6 +153,7 @@
 	                        "<td class='align-middle'>" + subMenu.use_yn + "</td>" +
 	                        "<td class='align-middle'>" + subMenu.orderby + "</td>" +
 	                        "<td class='align-middle'><button type='button' class='btn btn-success btn-modal' id='btnSubModify' data-menu_id='" + subMenu.menu_id + "'>수정</button></td>" +
+	                        "<td class='align-middle'><button type='button' class='btn btn-danger btn-modal' data-menu_id='" + subMenu.menu_id + "'>삭제</button></td>" +
 	                        "</tr>";
 	                    tbody.append(row);
 	                });
@@ -181,6 +190,7 @@
 											<th>메뉴명</th>
 											<th>순서</th>
 											<th>수정</th>
+											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -194,6 +204,7 @@
 												 data-menu_type="${topMenu.menu_type}"
 												 data-menu_name="${topMenu.menu_name}" data-orderby="${topMenu.orderby}" 
 												 data-menu_url="${topMenu.menu_url}">수정</button></td>
+											<td class="align-middle"><button type="button" class="btn btn-danger btnTopdelete" data-menuId="${subMenu.menu_id}">삭제</button></td>
 										</tr>
 									</c:forEach>
 									</tbody>
@@ -212,6 +223,7 @@
 											<th>사용</th>
 											<th>순서</th>
 											<th>수정</th>
+											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody>

@@ -33,6 +33,11 @@
 			use_yn = #{use_yn}
 		where menu_id = #{menu_id}
 	</update>
+	
+	<delete id="delete">
+		delete from TBL_MENU
+		where menu_id = #{menu_id} 
+	</delete>
 
 	
 	

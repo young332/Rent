@@ -67,14 +67,12 @@ public class MenuController {
 		return "redirect:/admin/menu";
 	}
 	
-	
-//	@GetMapping(value = "/list/{bno}" , produces = MediaType.APPLICATION_JSON_VALUE)
-//	public MenuVO getList(@PathVariable("menu_id") String menu_id){
-//		
-//		MenuVO menuVO = menuService.getOneMenu(menu_id);
-//		return menuVO;
-//		
-//	}
+	@PostMapping("/delete")
+	public String menuDelete(String menu_id) {
+		
+		
+		return "redirect:/admin/menu";
+	}
 	
 	
 	
