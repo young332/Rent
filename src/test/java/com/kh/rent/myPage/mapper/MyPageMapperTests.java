@@ -43,15 +43,17 @@ public class MyPageMapperTests {
 				log.info("result:" + result);
 	}
 	
-	// 회원정보 수정하기 - 보류
+	// 회원정보 수정하기
 	@Test
 	public void testUpdateMember() {
 		MemberVO updateVO = MemberVO.builder()
-				.mem_name("강감찬-수정")
-				.mem_email("khproject2309@gmail.com")
+				.mem_id("test02")
+				.mem_name("김영희")
+				.mem_email("hong@naver.com")
 				.mem_birth("20201231")
 				.mem_phone("01032143214")
-				.mem_adress("울산시 북구 강동동")
+				.mem_zip_code("66666")
+				.mem_addr("울산시 남구 달동")
 				.build();
 		int result = myPageMapper.updateMember(updateVO);
 		log.info("result:" + result);
