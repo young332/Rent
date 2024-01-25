@@ -55,6 +55,8 @@
 		base-package="com.kh.rent.login.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.admin.mapper" />
+	<mybatis-spring:scan
+		base-package="com.kh.rent.myPage.mapper" />
 
 
 	<context:component-scan
