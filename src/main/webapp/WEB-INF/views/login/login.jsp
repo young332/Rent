@@ -22,6 +22,7 @@ $(function(){
 	var cookie = document.cookie;
 		console.log("cookie:",cookie);
 		var cookies = cookie.split(";");
+		console.log("cookies:" , cookies);
 		for (var v = 0; v < cookies.length; v++) {
 			var aCookie = cookies[v].split("=");
 			if (aCookie[0].trim() == "savedId") {
@@ -53,7 +54,7 @@ $(function(){
 		<div class="row d-flex mb-5 contact-info">
 
 			<div class="col-md-6 block-9 mb-md-5">
-				<form action="/login/loginPost" method="post"
+				<form class=user action="/login/loginPost" method="post"
 					class="bg-light p-5 contact-form">
 					<div class="form-group">
 						<label>아이디</label> 

@@ -148,12 +148,14 @@ public class MemberController {
 	}
 	
 	//본인인증 문자
-	@RequestMapping("/phoneCheck")
+	@GetMapping("/phoneCheck")
 	@ResponseBody
-	public String sendMS(@RequestBody String mem_phone) {
+	public String sendMS(String mem_phone) { //휴대폰 문자보내기
 		
 		int randomNumber = (int)((Math.random()*(9999-1000 + 1)) +1000); //난수생성
-		return "spring";
+		memberService.checkPhone(mem_phone, randomNumber);
+		
+		return Integer.toString(randomNumber);
 	}
 	
 }

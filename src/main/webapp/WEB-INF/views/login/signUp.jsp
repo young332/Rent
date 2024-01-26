@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- 알람창 -->
 <!-- top -->
 <!-- 주소 -->
   	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
@@ -127,11 +129,35 @@ $(function(){
 $("#check_send").click(function(){
 	console.log("클릭");
 	alert("인증번호 발송이 완료되었습니다.");
-	var mem_phone = $("mem_phone").val();
+	var mem_phone = $("#mem_phone").val();
 	console.log("mem_phone:", mem_phone);
 	$.ajax({
+		 async: true,
+		 type :"GET",
+		 url : "/login/phoneCheck",
+		 dataType : "text",
+		 headers : {       
+				"Content-Type" : "application/json",      
+			}, 
+			success: function (data) {
+				console.log("data:" , data);
+				$("#phone_check").click(function(){
+					console.log("문자인증클릭");
+					if($.trim(data) == $("#mem_phone_check").val()){
+						alert("인증성공!\n휴대폰 인증이 정상적으로 완료되었습니다.");
+					} else {
+						alert("인증실패!\n인증번호가 올바르지 않습니다!");
+					}
+				});
+				
+			},
+			error : function(request, status, error) { // 결과 에러 콜백함수
+				console.log(error)
+			}
+			
+			
 		
-	})
+	});
 });
 
 
