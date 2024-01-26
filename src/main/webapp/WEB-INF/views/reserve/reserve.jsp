@@ -26,6 +26,57 @@ div.left-box {
 
 
 
+ .top-search-box { 
+     width: 100%;
+	height: 500px;
+     display: flex; 
+     flex-direction: row; 
+     border : 2px solid ; 
+ } 
+
+.form-control {
+    flex: 1 0 auto;
+    border : 2px solid ;
+}
+.top-search-box{
+	
+}
+.top-search-box input[type="datetime-local"] {
+    width: 0%; /* 조절 가능한 너비로 설정 */
+}
+.top-search-box {
+    position: relative;
+    height:100px;
+    margin-right:40px;
+     border-radius: 5px;
+}
+
+.top-search-box h6 {
+    margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
+    font-size:18px;
+   
+}
+
+#top_book_pick_date {
+    margin-top: 40px; /* 입력란 간격 조절 */
+    margin-right:30px;
+    margin-left:5px;
+}
+
+#top_book_off_date {
+    margin-top: 40px; /* 입력란 간격 조절 */
+    margin-right:50px;
+}
+
+.btntop {
+    padding: 10px 20px; /* 버튼 내부 여백 조절 */
+    font-size: 16px; /* 버튼 텍스트 크기 조절 */
+    border-radius: 5px; /* 버튼 테두리 둥글게 만듭니다. */
+}
+</style>
+
+
+
 </style>
 
 
@@ -48,8 +99,18 @@ div.left-box {
 <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
+						<div class="top-search-box">
+							<h6>렌트카001 빠른 검색</h6>
+				
+							<input type="datetime-local" class="form-control"
+								id="top_book_pick_date" placeholder="대여 날짜"> 
+							<input type="datetime-local" class="form-control"
+							id="top_book_off_date" placeholder="반납 날짜">
+							<button type="button" calss="btntop" >검색하기</button>
+						</div>
 		   			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
 		   			<section>
+		   				
 						<div class="left-box">
 							<h6>상세검색&nbsp;&nbsp;&nbsp;<button type="button" class="reset_btn btn-secondary" id="btnreset">검색초기화</button></h6>
 							
