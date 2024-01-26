@@ -4,19 +4,55 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.point.mapper.PointMapper">
 	
-	<!-- 포인트 충전 -->
-	<insert id="insertPoint">
-		insert into tbl_point
-			(point_id, point_user_id, point_code) 
-		values 
-			(#{point_id}, #{point_user_id}, #{point_code})
-	</insert>
-	<!-- wdf -->
+	<select id="getPointCode" resultType="String">
+        SELECT * FROM TBL_COMMON_CODE
+        WHERE code_id = #{code_id}
+    </select>
+	
+	
+	<!-- Member Mapper에 넣어야 포인트 값 연동 가능. 포인트 변경 -->
+<!-- 	<update id="updateMemberPoint"> -->
+<!-- 	    update TBL_MEMBER set -->
+<!-- 	        mem_point = mem_point + #{mem_point} -->
+<!-- 	    where mem_id = #{mem_id} -->
+<!-- 	</update> -->
+    
+	<!-- 회원 가입, 글쓸 때 등 포인트 얻을 시 -->
+    <insert id="insertPoint" parameterType="map">
+        INSERT INTO TBL_POINT_MEMBER (point_id, point_user_id, point_code, point_use_date, point_cost)
+        VALUES (
+            #{point_id},
+			#{point_user_id},
+			#{point_code},
+			#{point_use_date},
+			#{point_cost}
+            CASE
+              WHEN #{point_code} = '글쓰기' THEN 10
+              WHEN #{point_code} = "POINT_J" THEN 100000
+              ELSE 0
+            END
+        )
+    </insert>
+		
+<!-- 	<insert id="insertPoint"> -->
+<!-- 		insert into TBL_POINT_MEMBER -->
+<!-- 			(point_id, point_user_id, point_code, point_cost, point_use_date)  -->
+<!-- 		values  -->
+<!-- 			(#{point_id}, #{point_user_id}, #{point_code}, #{point_cost}, #{point_use_date}) -->
+<!-- 	</insert> -->
+		
 	<!-- 포인트 변경 -->
 	<update id="updatePoint">
-		update tbl_point set
-			point_id = point_id + #{point_id}
-			where point_user_id = #{point_user_id}
-	</update>	
+	    update TBL_POINT_MEMBER set
+	        point_user_id = point_user_id + (select sum(point_cost) from TBL_POINT_MEMBER where point_user_id = #{point_user_id})
+	    where point_user_id = #{point_user_id}
+	</update>
+	
 
+	<!-- 포인트 조회 -->
+	<select id="pointList" resultType="int" parameterType="String">
+		 SELECT SUM(point_cost) from TBL_POINT_MEMBER
+		 WHERE point_user_id = #{point_user_id}
+	</select>
+	
 </mapper>

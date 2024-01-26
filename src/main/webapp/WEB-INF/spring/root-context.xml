@@ -56,7 +56,6 @@
 	<mybatis-spring:scan
 		base-package="com.kh.rent.admin.mapper" />
 	<mybatis-spring:scan
-
 		base-package="com.kh.rent.point.mapper" />
 
 	<mybatis-spring:scan
@@ -102,4 +101,7 @@
          </props>
       </property>
 	</bean>
+	
+	
+	
 </beans>
