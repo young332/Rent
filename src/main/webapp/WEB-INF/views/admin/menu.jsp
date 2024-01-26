@@ -12,7 +12,9 @@
 		var deleteMenuName = '<c:out value="${deleteMenuName}"/>';
 		console.log("AddMenuName: " , AddMenuName);
 		console.log("ModifyMenuName: " , ModifyMenuName);
+		
 		var parentMenu;
+		console.log("상단parentMenu",parentMenu);
 		
 		// 알림창 설정
 		var v = "";
@@ -31,7 +33,46 @@
 										.text("메뉴 "+ v);
 			$("#alertModal").modal("show");
 		}
+		
+		
+		
+		// 선택한 상위메뉴의 하위메뉴 목록 조회 이벤트 처리
+		$(".parentMenu").click(function() {
+		    parentMenu = $(this).text();
+		    console.log("선택후parentMenu:",parentMenu);
 		    
+		    // 함수 호출
+		    $.ajax({
+		        url: "/admin/menu/submenus/" + parentMenu,
+		        success: function(data) {
+		            console.log("data: ", data);
+		            
+		            var tbody = $("#subTable tbody");
+		            tbody.empty();
+
+		            $.each(data, function(index, subMenu) {
+		                var row = "<tr>" +
+		                    "<th class='align-middle'>" + subMenu.menu_id + "</th>" +
+		                    "<td class='align-middle'>" + subMenu.menu_name + "</td>" +
+		                    "<td class='align-middle'>" + subMenu.use_yn + "</td>" +
+		                    "<td class='align-middle'>" + subMenu.orderby + "</td>" +
+		                    "<td class='align-middle'><button type='button' class='btn btn-success btn-modal' id='btnSubModify' data-menu_id='" + subMenu.menu_id + "'>수정</button></td>" +
+		                    "<td class='align-middle'><button type='button' class='btn btn-danger btn-modal' data-menu_id='" + subMenu.menu_id + "'>삭제</button></td>" +
+		                    "</tr>";
+		                tbody.append(row);
+		            });
+		        }
+		    });
+		});
+		
+		//하위메뉴 등록 모달창
+		$("#btnSubMenuAdd").click(function(e){
+			e.preventDefault();
+			$("#sub_parent_menu_id [name='parent_menu_id']").val(parentMenu);
+			console.log("하위메뉴등록parentMenu:",parentMenu);
+			$("#SubMenuModal").modal("show");
+		});
+		
 		    $(".btn-modal").click(function() {   	
 		    	//수정 버튼인지 등록버튼인지 확인
 		    	var curMode = $(this).hasClass("btnTopModify") ? "Edit" : "Add";
@@ -64,40 +105,11 @@
 			        $("#TopMenuModal #menu_url").val(menu_url);
 
 			        if(use_yn == "Y"){
-			        	$('#TopMenuModal input[name="use_yn"][value="Y"]').attr('checked', 'checked');
+			        	$('#TopMenuModal input[name="use_yn"]').attr('checked', 'checked');
 			        }
 			        if(use_yn == "N"){
-			        	$('#TopMenuModal input[name="use_yn"][value="N"]').attr('checked', 'checked');
+			        	$('#TopMenuModal input[name="use_yn"]').attr('checked', 'checked');
 			        }
-			        
-			     // 모달 body에 추가 (Edit 모드일 때만)
-		            /* if (curMode == "Edit") {
-		                var existingFieldset = $("#TopMenuModal .form-group:has('label:contains(\"사용유무\")')");
-		                if (existingFieldset.length === 0) {
-		                    $("#TopMenuModal .form-group:last").after(useYnFieldset);
-		                }
-		            }   */
-			        
-			     // 사용유무 fieldset 추가
-			       /*  var useYnFieldset = `
-			            <fieldset class="form-group only-edit">
-			                <div class="row">
-			                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
-			                    <div class="col-sm-10">
-			                        <div class="custom-controls-stacked">
-			                            <label class="custom-control custom-radio">
-			                                <input name="use_yn" value="Y" type="radio" class="custom-control-input" checked="">
-			                                <span class="custom-control-label">사용</span>
-			                            </label>
-			                            <label class="custom-control custom-radio">
-			                                <input name="use_yn" value="N" type="radio" class="custom-control-input">
-			                                <span class="custom-control-label">미사용</span>
-			                            </label>
-			                        </div>
-			                    </div>
-			                </div>
-			            </fieldset>`; */
-
 			        updateModalFooter(curMode);
 			        
 		        }  else{
@@ -115,6 +127,8 @@
 		    	
 		    	$("#TopMenuModal").modal("show");
 		    });
+		    
+		  
 
 	    function updateModalFooter(curMode) {
 	        var footer = $("#TopMenuModal .modal-footer");
@@ -129,13 +143,6 @@
 	        }  
 	    }   
 
-		//하위메뉴 등록 모달창
-		$("#btnSubMenuAdd").click(function(e){
-			e.preventDefault();
-			$("#sub_parent_menu_id[name='parent_menu_id']").val(parentMenu);
-			$("#SubMenuModal").modal("show");
-		});
-		
 		//상위 메뉴 삭제
 		$(".btnTopdelete").click(function() {
 		    var menu_id = $(this).data("menu_id");
@@ -159,9 +166,7 @@
 		                	if (deleteResult) {
 		                        that.closest("tr").fadeOut();
 		                    }
-		                	
 		                });
-		             	
 		            } else {
 		                alert("하위 메뉴가 존재하여 삭제할 수 없습니다.");
 		            }
@@ -169,41 +174,11 @@
 		    });
 		});
 
-		
-		
-		
 		function loadSubMenuList(parentMenu) {
-		    $.ajax({
-		        url: "/admin/menu/submenus/" + parentMenu,
-		        success: function(data) {
-		            console.log("data: ", data);
-		            
-		            var tbody = $("#subTable tbody");
-		            tbody.empty();
-
-		            $.each(data, function(index, subMenu) {
-		                var row = "<tr>" +
-		                    "<th class='align-middle'>" + subMenu.menu_id + "</th>" +
-		                    "<td class='align-middle'>" + subMenu.menu_name + "</td>" +
-		                    "<td class='align-middle'>" + subMenu.use_yn + "</td>" +
-		                    "<td class='align-middle'>" + subMenu.orderby + "</td>" +
-		                    "<td class='align-middle'><button type='button' class='btn btn-success btn-modal' id='btnSubModify' data-menu_id='" + subMenu.menu_id + "'>수정</button></td>" +
-		                    "<td class='align-middle'><button type='button' class='btn btn-danger btn-modal' data-menu_id='" + subMenu.menu_id + "'>삭제</button></td>" +
-		                    "</tr>";
-		                tbody.append(row);
-		            });
-		        }
-		    });
+		   
 		}
 
-		// 선택한 상위메뉴의 하위메뉴 목록 조회 이벤트 처리
-		$(".parentMenu").click(function() {
-		    var parentMenu = $(this).text();
-		    console.log(parentMenu);
-		    
-		    // 함수 호출
-		    loadSubMenuList(parentMenu);
-		});
+		
 
 	});
 </script>
