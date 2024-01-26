@@ -186,6 +186,21 @@
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">결제내역</span>
         </h4>
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">운전자님의 여정</h6>
+              <small class="text-muted">울산지점</small><br>
+              <small class="text-muted">02.16(금) 11:00 ~ 02.18(일) 15:00</small>
+              <small class="text-muted">소형</small>
+            </div>
+          </li>
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">운전자</h6>
+              <small class="text-muted">이름</small><br>
+              <small class="text-muted">몇종 / 생년월일</small>
+            </div>
+          </li>
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
@@ -203,7 +218,7 @@
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">결재내역</h6>
+              <h6 class="my-0">결제내역</h6>
               <small class="text-muted">설명</small>
             </div>
             <span class="text-muted">0</span>
@@ -219,6 +234,7 @@
             <span>총 결제내역</span>
             <strong>0</strong>
           </li>
+           <button id="btn_pay" class="w-100 btn btn-primary btn-lg" type="submit">결제 하기</button>
         </ul>
 
 <!--         <form class="card p-2"> -->
@@ -229,38 +245,32 @@
 <!--         </form> -->
       </div>
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">주소 입력</h4>
+        <h4 class="mb-3">운전자 정보</h4>
         <form class="needs-validation" novalidate>
           <div class="row g-3">
             <div class="col-sm-12">
               <label for="name" class="form-label">이름</label>
-              <input type="text" class="form-control" id="name" placeholder="" value="" required>
+              <input type="text" class="form-control" id="name" value=${MemberVO.mem_name}>
               <div class="invalid-feedback">
-                이름을 입력해주세요.
-              </div>
+             
+              </div><br>
             </div>
 
 
             <div class="col-12">
-              <label for="email" class="form-label">이메일<span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <label for="text" class="form-label">연락처<span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="phone">
               <div class="invalid-feedback">
-                이메일을 입력해주세요.
-              </div>
+                연락처 불려오기
+              </div><br>
             </div>
 
             <div class="col-12">
-              <label for="address" class="form-label">주소</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+              <label for="birth" class="form-label">생년월일</label>
+              <input type="text" class="form-control" id="birth">
               <div class="invalid-feedback">
-                주소를 입력해주세요
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="address2" class="form-label">주소 2 <span class="text-muted">(Optional)</span>
-              </label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite"><br>
+                생년월일 불려오기
+              </div><br>
             </div>
 
 		<div class="col-md-7 col-lg-8">
@@ -269,11 +279,11 @@
 
           <div class="col-md-7 col-lg-8">
             <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+              <input id="pointPayment" name="paymentMethod" type="radio" class="form-check-input" checked required>
               <label class="form-check-label" for="credit">포인트 결제</label>
             </div>
             <div class="form-check">
-              <input id="kakaopay" name="paymentMethod" type="radio" class="form-check-input" required>
+              <input id="creditPayment" name="paymentMethod" type="radio" class="form-check-input" required>
               <label class="form-check-label" for="debit">현금 결제 (비회원 전용)</label>
             </div>
             </div><br>
@@ -302,8 +312,8 @@
 				<tr>
 					<th>포인트 사용</th>
 					<td>
-						${memberInfo.point} | <input class="order_point_input" value="0">원 
-						<a class="order_point_input_btn order_point_input_btn_N" data-state="N">모두사용</a>
+						${MemberVO.mem_point} | <input class="order_point_input" value="0">원 
+ 						<a class="order_point_input_btn order_point_input_btn_N" data-state="N">모두사용</a>
 						<a class="order_point_input_btn order_point_input_btn_Y" data-state="Y" style="display: none;">사용취소</a>
 						
 					</td>
@@ -394,65 +404,89 @@
           				</ul>
           			</div>
           			</div>
-          			<div class="ex_txt"><p>위 내용을 확인했으며 결제에 동의합니다</p></div>
+          			<div class="ex_txt"><p>위 내용을 확인했으며 결제에 동의합니다</p></div><br>
+          			<p></p><br>
+          			<p></p><br>
+          			<p></p><br>
+          			<p></p>
+          		
           		</div>
           	</div>
           	</div>
-          
-          
-
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">결제 하기</button>
         </form>
       </div>
     </div>
   </main>
-
-  <footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; 20240113 렌트카001</p>
-    <ul class="list-inline">
-      <li class="list-inline-item"><a href="#">회사소개</a></li>
-      <li class="list-inline-item"><a href="#">이용약관</a></li>
-      <li class="list-inline-item"><a href="#">고객센터</a></li>
-    </ul>
-  </footer>
 </div>
 
+	<form class="checkout_form" action="/checkout" method="post">
+		<!-- 사용 포인트 -->
+		<input name="point_cost" type="hidden">
+	</form>
 
-<!--     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
-
-<!--       <script src="form-validation.js"></script> -->
       
-      <script>
-      /* 포인트 입력 */
-    //0 이상 & 최대 포인트 수 이하
-    $(".order_point_input_btn").on("click", function(){
+   <script>
 
-	const maxPoint = parseInt('${memberInfo.point}');	
-	
-	let state = $(this).data("state");	
-	
-	if(state == 'N'){
-		console.log("n동작");
-		/* 모두사용 */
-		//값 변경
-		$(".order_point_input").val(maxPoint);
-		//글 변경
-		$(".order_point_input_btn_Y").css("display", "inline-block");
-		$(".order_point_input_btn_N").css("display", "none");
-	} else if(state == 'Y'){
-		console.log("y동작");
-		/* 취소 */
-		//값 변경
-		$(".order_point_input").val(0);
-		//글 변경
-		$(".order_point_input_btn_Y").css("display", "none");
-		$(".order_point_input_btn_N").css("display", "inline-block");		
-	}		
-	
+	// radio box 클릭 이벤트 처리
+	$("#pointPayment").on("click", function() {
+	    if ($(this).is(":checked")) {
+	        // radio box가 체크된 경우의 동작을 여기에 추가
+	        console.log("pointPayment radio box가 체크되었습니다.");
+	        // 추가로 해야 할 작업을 여기에 구현
+	       	$(".order_point_input_btn").on("click", function() {
+	       		const maxPoint = "${MemberVO.mem_point}";
+	       		let state = $(this).data("state");
+	       		
+	       		if(state == "N") {
+	       			console.log("n동작");
+	       		$(".order_point_input").val(maxPoint);
+	       		
+	       		$(".order_point_input_btn_Y").css("display", "inline-block");
+	       		$(".order_point_input_btn_N").css("display", "none");
+	       		} else if (state == "Y") {
+	       			console.log("y동작");
+	       			//취소
+	       			//값 변경
+	       			$(".order_point_input").val(0);
+	       			//글 변경
+	       			$(".order_point_input_btn_Y").css("display", "none");
+	       			$(".order_point_input_btn_N").css("display", "inline-block");
+	       			
+	       		}
+	       	});
+	    } else if ($(this).not(":checked")) {
+	    	console.log("point 체크해주세요.");
+	    }
 	});
-      </script>
+
+   	/* 포인트 입력 */
+  //0 이상 & 최대 포인트 수 이하
+   	$(".order_point_input").on("propertychange change keyup paste input", function(){
+
+   		const maxPoint = parseInt('${MemberVO.mem_point}');	
+   		
+   		let inputValue = parseInt($(this).val());	
+   		
+   		if(inputValue < 0){
+   			$(this).val(0);
+   		} else if(inputValue > maxPoint){
+   			$(this).val(maxPoint);
+   		}	
+   		
+   	});
+   	
+   	$("#btn_pay").on("click", function() {
+	    console.log("click");
+	    
+	    var pointValue = $(".order_point_input").val();
+	    $("input[name='point_cost']").val(pointValue);
+	    
+	    console.log(pointValue);
+	});
+
+
+   
+   </script>
 </body>
 </html>
 	
