@@ -101,7 +101,6 @@ div.left-box {
 				<div class="row">
 						<div class="top-search-box">
 							<h6>렌트카001 빠른 검색</h6>
-				
 							<input type="datetime-local" class="form-control"
 								id="top_book_pick_date" placeholder="대여 날짜"> 
 							<input type="datetime-local" class="form-control"
