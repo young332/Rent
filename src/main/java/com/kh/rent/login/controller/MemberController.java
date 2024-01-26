@@ -44,7 +44,7 @@ public class MemberController {
 	}
 	//로그인
 	@PostMapping("/loginPost")
-	public void loginPost(LoginDTO loginDTO,Model model) {
+	public void loginPost(LoginDTO loginDTO,Model model, HttpSession session) {
 		log.info("loginDTO: " + loginDTO);
 		MemberVO memberVO = memberService.login(loginDTO);
 		log.info("memberVO: " + memberVO);
