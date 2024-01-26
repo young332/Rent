@@ -14,14 +14,14 @@
         </div>
       </div>
     </section>
-${memberVO}
+<%-- ${loginInfo} --%>
     <section class="ftco-section">
 		<div class="container">
 			<div class="row">
    				<div class="col-md-12">
    					<div>
 	    				<h3>
-							ooo님 안녕하세요!
+							${loginInfo.mem_name}님 안녕하세요!
 						</h3>
 						<a href="/myPage/myPageInfo">내정보 보러가기</a>
    					</div>
@@ -35,53 +35,13 @@ ${memberVO}
 						내 포인트
 					</p>
 					<h2>
-						300,000 P
+						${loginInfo.mem_point} P
 					</h2>
+					<a href="/checkout/point">포인트 상세보기</a>
 				</div>
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-outline-dark">전체</button>
-					<button type="button" class="btn btn-outline-dark">적립</button>
-					<button type="button" class="btn btn-outline-dark">사용</button>
-					<button type="button" class="btn btn-outline-dark">소멸</button>
-				</div>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>
-								
-							</th>
-							<th>
-								날짜
-							</th>
-							<th>
-								포인트
-							</th>
-							<th>
-								상태
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								1
-							</td>
-							<td>
-								2024-01-01
-							</td>
-							<td>
-								300,000 P
-							</td>
-							<td>
-								회원가입적립
-							</td>
-						</tr>
-					</tbody>
-				</table>
 				</div>
    			</div>
    		</div>
-		</div>
 	</section>
 
 
