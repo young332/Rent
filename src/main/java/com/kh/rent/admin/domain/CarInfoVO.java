@@ -2,6 +2,15 @@ package com.kh.rent.admin.domain;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class CarInfoVO {
 	private String car_index;
 	private String car_name;
