@@ -19,7 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	@Override
 		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 				throws Exception {
-			log.info("preHandle..");
+			log.info("preHandle..login");
 			HttpSession session = request.getSession();
 			MemberVO memberVO = (MemberVO)session.getAttribute("loginInfo");
 			if(memberVO != null) {
@@ -31,7 +31,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		log.info("postHandle..");
+		log.info("postHandle..login");
 		ModelMap map = (ModelMap)modelAndView.getModel();
 		MemberVO memberVO = (MemberVO)map.get("loginInfo");
 		Boolean useCookie =(Boolean)map.get("useCookie");
@@ -45,10 +45,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			String targetLocation = (String)session.getAttribute("targetLocation");
 			log.info("targetLocation:" + targetLocation);
 			session.removeAttribute(targetLocation);
+			
 			if(targetLocation == null) {
+				 
 				modelAndView.setViewName("redirect:/");
 			} else {
-				modelAndView.setViewName("redicret:" + targetLocation);
+				modelAndView.setViewName("redirect:" + targetLocation);
+				
 			}
 			request.getSession().setAttribute("loginInfo", memberVO);
 			
