@@ -88,12 +88,84 @@
 					            </div>      
 					          </div>
 					        </div>
-					        <p><a href="/reserve/reserve" class="btn btn-primary py-3 px-4">완벅한 자동차를 예약하세요.</a></p>
+<!-- 					        <p><a href="/reserve/reserve" class="btn btn-primary py-3 px-4">완벅한 자동차를 예약하세요.</a></p> -->
 	  						</div>
 	  					</div>
 	  				</div>
 				</div>
   		</div>
+    </section>
+    <section class="ftco-section ftco-no-pt bg-light">
+    	<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          	<span class="subheading">우리가 제공하는</span>
+            <h2 class="mb-2">주요 차량들</h2>
+          </div>
+        </div>
+    		<div class="row">
+    			<div class="col-md-12">
+    				<div class="carousel-car owl-carousel">
+    					<div class="item">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/hyun1.jpg);">
+		    					</div>
+		    					<div class="text">
+		    						<h2 class="mb-0"><a href="#">엑스터</a></h2>
+		    						<div class="d-flex mb-3">
+			    						<span class="cat">현대자동차</span>
+			    						<p class="price ml-auto">500000 <span>/day</span></p>
+		    						</div>
+<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="item">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/hyun2.jpg);">
+		    					</div>
+		    					<div class="text">
+		    						<h2 class="mb-0"><a href="#">그랜져</a></h2>
+		    						<div class="d-flex mb-3">
+			    						<span class="cat">현대자동차</span>
+			    						<p class="price ml-auto">500 <span>/day</span></p>
+		    						</div>
+<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="item">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/kia1.jpg);">
+		    					</div>
+		    					<div class="text">
+		    						<h2 class="mb-0"><a href="#">스포티지</a></h2>
+		    						<div class="d-flex mb-3">
+			    						<span class="cat">KIA</span>
+			    						<p class="price ml-auto">500 <span>/day</span></p>
+		    						</div>
+<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="item">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/kia2.jpg);">
+		    					</div>
+		    					<div class="text">
+		    						<h2 class="mb-0"><a href="#">쏘렌토</a></h2>
+		    						<div class="d-flex mb-3">
+			    						<span class="cat">KIA</span>
+			    						<p class="price ml-auto">500 <span>/day</span></p>
+		    						</div>
+<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+		    					</div>
+		    				</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
     </section>
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
