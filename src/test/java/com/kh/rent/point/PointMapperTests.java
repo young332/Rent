@@ -23,11 +23,11 @@ public class PointMapperTests {
 	@Autowired
 	private PointMapper pointMapper;
 	
+	// 포인트 지급 관련 한 테스트 (추후)
 	@Test
 	public void testInsert() {
 		Date day = new Date();
 		PointVO pointVO = PointVO.builder()
-				.point_id(200)
 				.point_user_id("MEMBER01")
 				.point_code("POINT_J")
 				.point_use_date(day)
@@ -38,11 +38,19 @@ public class PointMapperTests {
 		
 	}
 	
-//	@Test
-//	public void testPointList() {
-//		List<PointVO> list = PointMapper
-//		log.info("list" + list);
-//	}
-
+	//포인트 차감
+	@Test
+	public void testUpdate() {
+		Date day = new Date();
+		PointVO pointVO = PointVO.builder()
+				.point_user_id("MEMBER01")
+				.point_code("POINT_J")
+				.point_use_date(day)
+				.point_cost(-10)
+				.build();
+		pointMapper.updatePoint(pointVO);
+		log.info("pointVO"+pointVO);
+		
+	}
 
 }

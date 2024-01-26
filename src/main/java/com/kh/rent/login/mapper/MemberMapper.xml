@@ -45,6 +45,5 @@
 		select count(*) from rent001.TBL_MEMBER
 		where mem_id = #{mem_id}
 	</select>
-
-
+	
 </mapper>
