@@ -4,15 +4,35 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-$(function() {
-	var registerResult = '${registerResult}';
-	if (registerResult == 'true') {
-		alert("회원 가입 성공");
-	} else if(registerResult == "false"){
-		alert("회원 가입 실패");
-	}
-		
-});
+$(function(){
+	var loginResult = "${loginFailure}";
+	var registerResult = "${registerResult}";
+	if(loginResult == "true"){
+		alert("아이디와 비밀번호를 다시 확인해주세요");
+		$("#mem_id").focus();
+		}
+	
+		if(registerResult == "true"){
+			alert("회원 가입 성공");
+		} else if(registerResult == "false"){
+			alert("회원 가입 실패");
+		}
+
+	//쿠키 아이디
+	var cookie = document.cookie;
+		console.log("cookie:",cookie);
+		var cookies = cookie.split(";");
+		for (var v = 0; v < cookies.length; v++) {
+			var aCookie = cookies[v].split("=");
+			if (aCookie[0].trim() == "savedId") {
+				var savedId = aCookie[1];
+				console.log("savedId:", savedId);
+				$("#mem_id").val(savedId);
+				$("#mem_pw").focus();
+				break;
+			}
+		}
+	});
 </script>
 <!-- top -->
     
@@ -36,21 +56,19 @@ $(function() {
 				<form action="/login/loginPost" method="post"
 					class="bg-light p-5 contact-form">
 					<div class="form-group">
-						<label>아이디</label> <input type="text" id="mem_id" name="mem_id"
-							class="form-control" placeholder="아이디를 입력해주세요."> <input
+						<label>아이디</label> 
+						<input type="text" id="mem_id" name="mem_id" class="form-control" placeholder="아이디를 입력해주세요."> <input
 							type="hidden" id="idmessage" class="idmessage" value="아이디 입력해주세요"
 							readonly>
 					</div>
 					<div class="form-group">
-						<label>비밀번호</label> <input type="password" name="mem_pw"
-							id="mem_pw" class="form-control" placeholder="비밀번호를 입력해주세요."
-							value="MEMBER01"> <input type="hidden" id="pwmessage"
-							class="pwmessage" value="최소 8자 이상 입력해주세요." readonly>
+						<label>비밀번호</label> <input type="password" name="mem_pw" id="mem_pw" class="form-control" placeholder="비밀번호를 입력해주세요."
+							value="MEMBER01"> 
+							<input type="hidden" id="pwmessage" class="pwmessage" value="최소 8자 이상 입력해주세요." readonly>
 					</div>
 					<div class="form-group">
 						<div class="custom-control custom-checkbox small">
-							<input type="checkbox" class="custom-control-input"
-								id="useCookie" name="useCookie"> 
+							<input type="checkbox" class="custom-control-input" id="useCookie" name="useCookie"> 
 							<label class="custom-control-label" for="useCookie">아이디 저장</label>
 						</div>
 					</div>
@@ -104,32 +122,7 @@ $(function() {
 	
 
     
-<script>
-$(function(){
-	var loginResult = "${loginResult}";
-	var registerResult = "${registerResult}";
-	console.log("loginResult: " + loginResult);
-	if(loginResult == "fail"){
-		alert("아이디와 비밀번호를 다시 확인해주세요");
-		$("#mid").focus();
-	}
-	
-	//쿠키 아이디
-	var cookie = document.cookie;
-		console.log("cookie: ", cookie);
-		var cookies = cookie.split(";");
-		for (var v = 0; v < cookies.length; v++) {
-			var aCookie = cookies[v].split("=");
-			if (aCookie[0].trim() == "savedId") {
-				var savedId = aCookie[1];
-				console.log("savedId:", savedId);
-				$("#mid").val(savedId);
-				$("#mpw").focus();
-				break;
-			}
-		}
-	});
-</script>    
+    
     
 <!-- bottom -->
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>

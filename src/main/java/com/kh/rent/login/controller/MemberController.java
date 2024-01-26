@@ -42,13 +42,12 @@ public class MemberController {
 	public void login() {
 		log.info("login..");
 	}
-	
+	//로그인
 	@PostMapping("/loginPost")
-	public void loginPost(LoginDTO loginDTO,Model model,HttpSession session, RedirectAttributes rttr) {
+	public void loginPost(LoginDTO loginDTO,Model model) {
 		log.info("loginDTO: " + loginDTO);
 		MemberVO memberVO = memberService.login(loginDTO);
 		log.info("memberVO: " + memberVO);
-		session.setAttribute("memberVO", memberVO);
 		if(memberVO == null) {
 			return;
 		}
@@ -67,7 +66,7 @@ public class MemberController {
 	public void signup() {
 		log.info("signUp");
 	}
-	
+	//회원가입
 	@PostMapping("/signUpPost")
 	public String singUpPost(MemberVO memberVO, RedirectAttributes rttr) {
 		log.info("signUpPost...:");
@@ -77,12 +76,14 @@ public class MemberController {
 		return "redirect:/login/login";
 	}
 	
+	
+	
 	@GetMapping("/findPw")
 	public String findPw() {
 		log.info("findpw");
 		return "/login/findPw";
 	}
-	
+	//비밀번호 재설정
 	@PostMapping("resetPassword")
 	public String resetPassword(String mem_id, String mem_email) {
 		log.info("mem_email:" + mem_email);
@@ -118,7 +119,7 @@ public class MemberController {
 	@GetMapping("/findId")
 	public void findId() {
 	}
-	
+	//아이디 찾기
 	@PostMapping(value = "/findIdRun", consumes = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public String findIdRun(@RequestBody FindIdDTO findIdDTO) {
