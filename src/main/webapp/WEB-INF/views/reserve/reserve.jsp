@@ -49,11 +49,15 @@ div.left-box {
     height:100px;
     margin-right:40px;
      border-radius: 5px;
+     margin-bottom: 5px;
 }
 
 .top-search-box h6 {
     margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
     font-size:18px;
+    color:purple;
+    margin-right:10px;
+    margin-left:10px;
    
 }
 
@@ -65,24 +69,17 @@ div.left-box {
 
 #top_book_off_date {
     margin-top: 40px; /* 입력란 간격 조절 */
-    margin-right:50px;
+    margin-right:30px;
 }
 
 .btntop {
     padding: 10px 20px; /* 버튼 내부 여백 조절 */
     font-size: 16px; /* 버튼 텍스트 크기 조절 */
     border-radius: 5px; /* 버튼 테두리 둥글게 만듭니다. */
+   
 }
 </style>
 
-
-
-</style>
-
-
-
-
-    
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -99,13 +96,11 @@ div.left-box {
 <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
-						<div class="top-search-box">
-							<h6>렌트카001 빠른 검색</h6>
-							<input type="datetime-local" class="form-control"
-								id="top_book_pick_date" placeholder="대여 날짜"> 
-							<input type="datetime-local" class="form-control"
-							id="top_book_off_date" placeholder="반납 날짜">
-							<button type="button" calss="btntop" >검색하기</button>
+					<div class="top-search-box" style="height: 63.2px;">
+							<h6 style="border-top-width: 20px;padding-top: 20px;">렌트카001 빠른 검색</h6>
+							<input type="datetime-local" class="form-control" id="top_book_pick_date" placeholder="대여 날짜" style="margin-top: 5px;"> 
+							<input type="datetime-local" class="form-control" id="top_book_off_date" placeholder="반납 날짜" style="margin-top: 5px;">
+							<button type="button" class="btntop btn-secondary" style="height: 50.2px; margin-top: 5px;">검색하기</button>
 						</div>
 		   			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
 		   			<section>
