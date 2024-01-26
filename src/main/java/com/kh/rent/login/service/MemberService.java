@@ -20,4 +20,7 @@ public interface MemberService {
 		
 		//아이디 중복체크
 		public int checkId(String mem_id);
+		
+		//문자인증
+		public void checkPhone(String mem_phone, int randomNumber);
 }

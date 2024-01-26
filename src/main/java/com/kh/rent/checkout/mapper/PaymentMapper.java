@@ -4,7 +4,7 @@ import com.kh.rent.login.domain.MemberVO;
 
 public interface PaymentMapper {
 	
-	/* 예약 금액 차감 */
-	public int minusMoney(MemberVO member);
+	/* 금액 차감 */
+	public int deductMoney(MemberVO member);
 
 }

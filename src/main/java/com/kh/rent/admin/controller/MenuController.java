@@ -40,9 +40,9 @@ public class MenuController {
 	
 	@PostMapping("/subMenuAdd")
 	public String SubMenuAdd(MenuVO menuVO, RedirectAttributes rttr) {
-		log.info("menuVO:" + menuVO);
+		//log.info("menuVO:" + menuVO);
 		int count = menuService.addMenu(menuVO);
-		if(count == 0) {
+		if(count == 1) {
 			rttr.addFlashAttribute("AddMenuName",menuVO.getMenu_name());
 		}
 		return "redirect:/admin/menu";
@@ -56,20 +56,26 @@ public class MenuController {
     }
 	
 	
-	@PostMapping("/modify")
-	public String menuModify(MenuVO menuVO) {
-		
+	@PostMapping("/topMenuModify")
+	public String menuModify(MenuVO menuVO, RedirectAttributes rttr) {
+		log.info("menuVO:" + menuVO);
+		int count = menuService.modifyMenu(menuVO);
+		log.info("count:"+count);
+		if(count == 1) {
+			rttr.addFlashAttribute("ModifyMenuName",menuVO.getMenu_name());
+		}
 		return "redirect:/admin/menu";
 	}
 	
-	
-//	@GetMapping(value = "/list/{bno}" , produces = MediaType.APPLICATION_JSON_VALUE)
-//	public MenuVO getList(@PathVariable("menu_id") String menu_id){
-//		
-//		MenuVO menuVO = menuService.getOneMenu(menu_id);
-//		return menuVO;
-//		
-//	}
+	@PostMapping("/delete/{parentMenu}")
+	public String menuDelete(@PathVariable("parentMenu") String parentMenu, RedirectAttributes rttr) {
+		int count = menuService.delete(parentMenu);
+	    log.info("count:" + count);
+		if(count == 1) {
+			rttr.addFlashAttribute("deleteMenuName",parentMenu);
+		}
+		return "redirect:/admin/menu";
+	}
 	
 	
 	

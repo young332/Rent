@@ -5,12 +5,12 @@
 <mapper namespace="com.kh.rent.admin.mapper.MenuMapper">
 	
 	<select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		select menu_id, parent_menu_id , menu_name, menu_url, orderby from TBL_MENU
+		select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
 		where parent_menu_id = '@'
 	</select>
 	
 	<select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		SELECT menu_id, parent_menu_id , menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE menu_id = #{menu_id}
+		SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE menu_id = #{menu_id}
 	</select>
 	
 	<select id="getSubMenu" parameterType="String" resultType="com.kh.rent.admin.domain.MenuVO">
@@ -33,6 +33,11 @@
 			use_yn = #{use_yn}
 		where menu_id = #{menu_id}
 	</update>
+	
+	<delete id="delete">
+		delete from TBL_MENU
+		where menu_id = #{menu_id} 
+	</delete>
 
 	
 	

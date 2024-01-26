@@ -2,21 +2,39 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 주소찾기 -->
+  	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+ 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!-- /주소찾기 -->
 
 <script>
+//주소 검색
+function openZipSearch() {
+    new daum.Postcode({
+    	oncomplete: function(data) {     
+		var addr = ''; 
+		if (data.userSelectedType === 'R') { 
+			addr = data.roadAddress;
+		} else {
+			addr = data.jibunAddress;
+		}
+
+		$("#mem_zip_code").val(data.zonecode);
+		$("#mem_addr").val(addr);
+		$("#mem_addr").focus();
+        }
+    }).open();
+}
+
 $(function() {
-	// 회원정보 수정버튼
-// 	$("#btn-updateInfo").click(function() {
-// 		action = "/myPage/myPageInfo_modify";
-// 		method = "post";
-// 	});
 	
-	
-	// 회원탈퇴 모달
-	$("#btn-deleteInfo").click(function() {
-		$("#modal-delForm").modal("show");
-	});
 	
 }); 
 </script>
@@ -41,12 +59,9 @@ $(function() {
 		<div class="container">
 			<div class="row">
    				<div class="col-md-8">
-					<div style="display: flex; justify-content: space-between; align-items: center;">
     				<h3>
-						내 정보
+						내 정보 - 수정
 					</h3>
-					<a href="/myPage/myPageInfo_modify" class="btn btn-primary">회원정보 수정하기</a>
-					</div>
 					<br>
 					<div class="container">
 					  <form action="/action_page.php">
@@ -56,35 +71,43 @@ $(function() {
 					    </div>
 					    <div class="form-group">
 					      <label for="pwd">비밀번호</label>
-					      <input type="password" class="form-control" id="password" name="password" value="${loginInfo.mem_pw}" readonly>
+					   	  <div style="display: flex; align-items: center;">
+					      	<input type="password" class="form-control" id="password" name="password" 
+					      		   value="${loginInfo.mem_pw}" style="margin-right: 10px;" readonly>
+					     	<button type="button" id="pwdChange" class="btn btn-primary" style="flex-shrink: 0;">비밀번호 변경</button>
+					      </div>
 					    </div>
 					    <div class="form-group">
 					      <label for="name">이름</label>
-					      <input type="text" class="form-control" id="name" name="name" value="${loginInfo.mem_name}" readonly>
+					      <input type="text" class="form-control" id="name" name="name" value="${loginInfo.mem_name}">
 					    </div>
 					    <div class="form-group">
 					      <label for="birthDay">생년월일</label>
-					      <input type="date" class="form-control" id="birthDay" name="birthDay" value="${loginInfo.mem_birth}" readonly>
+					      <input type="date" class="form-control" id="birthDay" name="birthDay" value="${loginInfo.mem_birth}">
 					    </div>
 					    <div class="form-group">
 					      <label for="phoneNumber">휴대폰 번호</label>
-					      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="${loginInfo.mem_phone}" readonly>
+					      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="${loginInfo.mem_phone}">
 					    </div>
 					    <div class="form-group">
 					      <label for="email">이메일</label>
-					      <input type="email" class="form-control" id="email" name="email" value="${loginInfo.mem_email}" readonly>
+					      <input type="email" class="form-control" id="email" name="email" value="${loginInfo.mem_email}">
 					    </div>
 					    <div class="form-group">
 			              <small>주소</small>
-			              	<div class="input-group">
-			              	<input type="text"  class="form-control"  id="mem_zip_code" name="mem_zip_code" readonly="readonly" value="${loginInfo.mem_zip_code}" >
+			              <div class="input-group">
+			              	<input type="text"  class="form-control"  id="mem_zip_code" name="mem_zip_code" 
+			              		   value="${loginInfo.mem_zip_code}" style="margin-right: 10px;" readonly>
+							<span class="input-group-btn">
+							<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary">
+							</span>
 							</div>
 							<input type="text" class="form-control" id="mem_addr" name="mem_addr" readonly="readonly" value="${loginInfo.mem_addr}">
-		             	</div>
+			              </div>
 					  </form>
 					</div>
 					<hr>
-					<button id="btn-deleteInfo" class="btn btn-danger">회원탈퇴</button>
+					<button id="btn-updateInfo" class="btn btn-primary">수정완료</button>
 			  	
 				</div>
    			</div>

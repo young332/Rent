@@ -80,8 +80,9 @@ $(function(){
         });
 				
 	});
+	
 	$("#frmSignUp").submit(function() {
-		
+	
 		var inputId = $("#mem_id").val();
 		var inputPwd = $("#mem_pw").val();
 		var inputPwdCfm = $("#mem_pw_check").val();
@@ -95,7 +96,7 @@ $(function(){
 		
 		
 		if(inputId.length == 0) { alert("아이디를 입력해 주세요."); $("#mem_id").focus(); return false; }
-// 		if(isCheckId == 0) { alert("아이디 중복 체크를 해주세요."); $("#mem_id").focus(); return; }
+		if(isCheckId == 0) { alert("아이디 중복 체크를 해주세요."); $("#mem_id").focus(); return false; }
 		
 		if(inputPwd.length == 0) { alert("비밀번호를 입력해 주세요."); $("#mem_pw").focus(); return  false; }
 		if(inputPwd != inputPwdCfm) { alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요."); $("#mem_pw").focus(); return false; }
@@ -110,11 +111,31 @@ $(function(){
 			alert("주소를 입력해 주세요."); $("#addr").focus();  return  false;
 		}
 		
-
-	});	
+	});
 	
+// 	$("#mem_pw").on("input",function(){
+// 		var mem_pw = $("#mem_pw").val();
+// 		console.log("mem_pw:",mem_pw);
+// 		if(mem_pw == "" || mem_pw.length < 6){
+// 			$("#pwDoubleChk").show();
+// 	    } else {
+// 	        $("#pwDoubleChk").hide();
+// 	    }
+		
+// 	});
+
+$("#check_send").click(function(){
+	console.log("클릭");
+	alert("인증번호 발송이 완료되었습니다.");
+	var mem_phone = $("mem_phone").val();
+	console.log("mem_phone:", mem_phone);
+	$.ajax({
+		
+	})
 });
 
+
+});
 </script>     
 
     <section class="ftco-section contact-section">
@@ -126,21 +147,22 @@ $(function(){
           		<p style="font-size:30px;">회원가입</p>
             </div>
             <form id="frmSignUp" action="/login/signUpPost" method="post" class="bg-light p-5 contact-form" accept-charset="UTF-8">
-              <div class="form-group" id="divInputId">
-              <small>아이디</small>
-                <div class="input-group">
-                <input type="text" class="form-control" id="mem_id" name="mem_id">
-                <div class="input-group-append">
-                <button type="button" id="id_check"  class="btn btn-primary py-2 px-2" style="margin-left: 5px;">중복확인</button>
-                </div>
-               </div>
-               </div>
-                <div class="form-group">
+					<div class="form-group" id="divInputId">
+						<small>아이디</small>
+						<div class="input-group">
+							<input type="text" class="form-control" id="mem_id" name="mem_id">
+							<div class="input-group-append">
+								<button type="button" id="id_check"
+									class="btn btn-primary py-1 px-2" style="margin-left: 5px;">중복확인</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
               </div>
               <div class="form-group">
               	<small>비밀번호</small>
                 <input type="password" id="mem_pw" name="mem_pw" class="form-control" placeholder="영문 8~16이내">
-                <input class="textErr" style="color: red;" value="입력하신 비밀번호는 올바른 형식이 아닙니다." type="hidden">
+              	<input type="hidden" id="pwDoubleChk" value="비밀번호는 6자 이상 설정해주시기 바랍니다.">
               </div>
               <div class="form-group">
               	<small>비밀번호 확인</small>
@@ -153,14 +175,27 @@ $(function(){
               </div>
               <div class="form-group">
               <small>생년월일</small>
-             	 <input type="number" id="mem_birth" name="mem_birth" class="form-control" >
+             	 <input type="date" id="mem_birth" name="mem_birth" class="form-control" >
              	 <input class="textErr" style="color: red;" value="'-'없이 숫자8자만 입력해주세요." type="hidden">
               </div>
-              <div class="form-group">
-              <small>휴대폰</small>
-                <input type="number" id="mem_phone" name="mem_phone" class="form-control">
-              </div> 
-              <div class="form-group">
+					<div class="form-group" id="divInputId">
+						<small>휴대전화</small>
+						<div class="input-group">
+							<input type="text" class="form-control" id="mem_phone" name="mem_phone">
+							<div class="input-group-append">
+								<button type="button" id="check_send" class="btn btn-primary py-1 px-2" style="margin-left: 5px;">문자보내기</button>
+							</div>
+						</div>
+						<div style="margin-bottom: 10px;"></div>
+						<div class="input-group">
+							<input type="text" class="form-control" id="mem_phone_check" name="mem_phone_check">
+							<div class="input-group-append">
+								<button type="button" id="phone_check" class="btn btn-primary py-1 px-2" style="margin-left: 5px;">본인인증</button>
+								<input type="hidden" id="phoneDoubleCheck">							
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
               <small>이메일</small>
                 <input type="email" id="mem_email" name="mem_email" class="form-control">
               </div>

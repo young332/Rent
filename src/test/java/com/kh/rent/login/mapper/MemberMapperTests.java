@@ -26,8 +26,8 @@ public class MemberMapperTests {
 	
 	@Test //회원가입
 	public void  testInsert() {
-		String id = "MEMBER03";
-		String pw = "MEMBER03";
+		String id = "MEMBER04";
+		String pw = "MEMBER04";
 		String name ="김유정";
 		String email ="qqq@qqq.com";
 		String birth ="19960101";

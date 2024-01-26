@@ -50,5 +50,11 @@ public class MenuServiceImpl implements MenuService {
 		return count;
 	}
 
+	@Override
+	public int delete(String menu_id) {
+		int count = menuMapper.delete(menu_id);
+		return count;
+	}
+
 
 }

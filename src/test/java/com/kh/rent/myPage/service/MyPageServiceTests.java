@@ -1,4 +1,4 @@
-package com.kh.rent.myPage.mapper;
+package com.kh.rent.myPage.service;
 
 import java.util.List;
 
@@ -19,16 +19,15 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
 @Log4j
 @WebAppConfiguration
-public class MyPageMapperTests {
+public class MyPageServiceTests {
 	
 	@Autowired
-	private MyPageMapper myPageMapper;
+	private MyPageService myPageService;
 	
 	// 회원정보 조회하기
 	@Test
-	public void testGetList() {
-		String mem_id = "MEMBER01";
-		List<MemberVO> list = myPageMapper.getList(mem_id);
+	public void testSelectList() {
+		List<MemberVO> list = myPageService.selectList("test02");
 		log.info("list:" + list);
 	}
 	
@@ -36,53 +35,54 @@ public class MyPageMapperTests {
 	@Test
 	public void testChangePassword() {
 		LoginDTO loginDTO = LoginDTO.builder()
-				.mem_id("MEMBER01")
-				.mem_pw("MEMBER01")
+				.mem_id("test02")
+				.mem_pw("test02")
 				.build();
-				int result = myPageMapper.changePassword(loginDTO);
+				int result = myPageService.changePassword(loginDTO);
 				log.info("result:" + result);
 	}
 	
 	// 회원정보 수정하기
-	@Test
-	public void testUpdateMember() {
-		MemberVO updateVO = MemberVO.builder()
-				.mem_id("test02")
-				.mem_name("김영희-수정")
-				.mem_email("kim@naver.com")
-				.mem_birth("2020-12-31")
-				.mem_phone("01032143214")
-				.mem_zip_code("66666")
-				.mem_addr("울산시 남구 달동")
-				.build();
-		int result = myPageMapper.updateMember(updateVO);
-		log.info("result:" + result);
-	}
-	
+		@Test
+		public void testUpdateMember() {
+			MemberVO updateVO = MemberVO.builder()
+					.mem_id("test02")
+					.mem_name("김영희-수정")
+					.mem_email("kim@naver.com")
+					.mem_birth("20201231")
+					.mem_phone("01032143214")
+					.mem_zip_code("66666")
+					.mem_addr("울산시 남구 달동")
+					.build();
+			int result = myPageService.updateMember(updateVO);
+			log.info("result:" + result);
+		}
+		
 	// 탈퇴회원 기록하기
 	@Test
 	public void testRegisterDelMember() {
 		DeletedMemberVO deletedVO = DeletedMemberVO.builder()
-				.del_id("test02")
-				.del_name("bb")
-				.del_email("bb@naver.com")
+				.del_id("test03")
+				.del_name("cc")
+				.del_email("cc@naver.com")
 				.del_birth("20000101")
 				.del_phone("01011111111")
 				.del_zip_code("55555")
-				.del_addr("울산시 남구 달동")
-				.del_cdate("2024-01-22 15:13:14")
+				.del_addr("울산시 남구 삼호동")
+				.del_cdate("2024-01-24 15:13:14")
 				.del_point(5000)
 				.del_adminck(0)
 				.build();
-		int result = myPageMapper.registerDelMember(deletedVO);
+		int result = myPageService.registerDelMember(deletedVO);
 		log.info("result:" + result);
 	}
-
+	
 	// 회원정보 삭제하기
-	@Test
-	public void testDeleteMember() {
-		String mem_id = "test01";
-		int result = myPageMapper.deleteMember(mem_id);
-		log.info("result:" + result);
-	}
+		@Test
+		public void testDeleteMember() {
+			String mem_id = "test02";
+			int result = myPageService.deleteMember(mem_id);
+			log.info("result:" + result);
+		}
+
 }
