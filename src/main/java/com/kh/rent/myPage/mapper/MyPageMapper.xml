@@ -44,7 +44,7 @@
 	
 	<!-- 회원정보 삭제하기 -->
 	<delete id="deleteMember">
-		delete from rent001.TBL_MEMBER
+		delete from TBL_MEMBER
 		where mem_id = #{mem_id}
 	</delete>
 	

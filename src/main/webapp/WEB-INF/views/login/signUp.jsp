@@ -153,7 +153,7 @@ $(function(){
               </div>
               <div class="form-group">
               <small>생년월일</small>
-             	 <input type="number" id="mem_birth" name="mem_birth" class="form-control" >
+             	 <input type="date" id="mem_birth" name="mem_birth" class="form-control" >
              	 <input class="textErr" style="color: red;" value="'-'없이 숫자8자만 입력해주세요." type="hidden">
               </div>
               <div class="form-group">

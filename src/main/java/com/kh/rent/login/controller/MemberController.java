@@ -48,6 +48,7 @@ public class MemberController {
 		log.info("loginDTO: " + loginDTO);
 		MemberVO memberVO = memberService.login(loginDTO);
 		log.info("memberVO: " + memberVO);
+		session.setAttribute("memberVO", memberVO);
 		if(memberVO == null) {
 			return;
 		}
