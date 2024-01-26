@@ -9,6 +9,7 @@
 		
 		var AddMenuName = '<c:out value="${AddMenuName}"/>';
 		var ModifyMenuName = '<c:out value="${ModifyMenuName}"/>';
+		var deleteMenuName = '<c:out value="${deleteMenuName}"/>';
 		console.log("AddMenuName: " , AddMenuName);
 		console.log("ModifyMenuName: " , ModifyMenuName);
 		var parentMenu;
@@ -19,9 +20,11 @@
 			v = "등록";
 		} else if(ModifyMenuName){
 			v = "수정";
+		}  else if(deleteMenuName){
+			v = "삭제";
 		} 
 		
-		if(AddMenuName || ModifyMenuName) {
+		if(AddMenuName || ModifyMenuName || deleteMenuName) {
 			$("#alertModal").find(".modal-body")
 										.text(" 메뉴가 "+ v +" 되었습니다.");
 			$("#alertModal").find(".modal-title")
@@ -40,6 +43,7 @@
 			        var menu_name = $(this).data("menu_name");
 			        var orderby = $(this).data("orderby");
 			        var menu_url = $(this).data("menu_url");
+			        var use_yn = $(this).data("use_yn");
 			        
 		        	
 			        $("#TopMenuModal form").attr("action", "/admin/menu/topMenuModify");
@@ -58,17 +62,24 @@
 			        $("#TopMenuModal #menu_name").val(menu_name);
 			        $("#TopMenuModal #orderby").val(orderby);
 			        $("#TopMenuModal #menu_url").val(menu_url);
+
+			        if(use_yn == "Y"){
+			        	$('#TopMenuModal input[name="use_yn"][value="Y"]').attr('checked', 'checked');
+			        }
+			        if(use_yn == "N"){
+			        	$('#TopMenuModal input[name="use_yn"][value="N"]').attr('checked', 'checked');
+			        }
 			        
 			     // 모달 body에 추가 (Edit 모드일 때만)
-		            if (curMode == "Edit") {
+		            /* if (curMode == "Edit") {
 		                var existingFieldset = $("#TopMenuModal .form-group:has('label:contains(\"사용유무\")')");
 		                if (existingFieldset.length === 0) {
 		                    $("#TopMenuModal .form-group:last").after(useYnFieldset);
 		                }
-		            }  
+		            }   */
 			        
 			     // 사용유무 fieldset 추가
-			        var useYnFieldset = `
+			       /*  var useYnFieldset = `
 			            <fieldset class="form-group only-edit">
 			                <div class="row">
 			                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
@@ -85,7 +96,7 @@
 			                        </div>
 			                    </div>
 			                </div>
-			            </fieldset>`;
+			            </fieldset>`; */
 
 			        updateModalFooter(curMode);
 			        
@@ -97,6 +108,7 @@
 			        $("#TopMenuModal #menu_name").val("");
 			        $("#TopMenuModal #orderby").val("");
 			        $("#TopMenuModal #menu_url").val("");
+			        $('#TopMenuModal input[name="use_yn"][value="N"]').attr('disabled', 'disabled');
 			        
 			        updateModalFooter(curMode);
 		        }  
@@ -124,42 +136,75 @@
 			$("#SubMenuModal").modal("show");
 		});
 		
-		// 메뉴 삭제
+		//상위 메뉴 삭제
 		$(".btnTopdelete").click(function() {
-			
+		    var menu_id = $(this).data("menu_id");
+		    console.log("menu_id:", menu_id);
+		    var parentMenu = menu_id;
+		    var that = $(this);
 		
+		    // 하위메뉴 확인
+		    $.ajax({
+		        url: "/admin/menu/submenus/" + parentMenu,
+		        success: function(data) {
+		            console.log("parentMenu: ", parentMenu);
+		            console.log("data: ", data);
+		
+		            if (data.length === 0) {
+		                console.log("하위 메뉴 없음");
+		
+		             	// 메뉴 삭제 비동기 요청
+		                $.post("/admin/menu/delete/" + parentMenu, function(deleteResult) {
+		                	console.log(deleteResult ? "삭제 성공" : "삭제 실패");
+		                	if (deleteResult) {
+		                        that.closest("tr").fadeOut();
+		                    }
+		                	
+		                });
+		             	
+		            } else {
+		                alert("하위 메뉴가 존재하여 삭제할 수 없습니다.");
+		            }
+		        }
+		    });
 		});
-		
-		
-		
-		//선택한 상위메뉴의 하위메뉴 목록
-		$(".parentMenu").click(function() {
-	        parentMenu = $(this).text();
-	        console.log(parentMenu);
-	        
-	        $.ajax({
-	            url: "/admin/menu/submenus/" + parentMenu,
-	            success: function(data) {
-	                console.log("data: ", data);
-	                
-	                var tbody = $("#subTable tbody");
-	                tbody.empty();
 
-	                
-	                $.each(data, function(index, subMenu) {
-	                    var row = "<tr>" +
-	                        "<th class='align-middle'>" + subMenu.menu_id + "</th>" +
-	                        "<td class='align-middle'>" + subMenu.menu_name + "</td>" +
-	                        "<td class='align-middle'>" + subMenu.use_yn + "</td>" +
-	                        "<td class='align-middle'>" + subMenu.orderby + "</td>" +
-	                        "<td class='align-middle'><button type='button' class='btn btn-success btn-modal' id='btnSubModify' data-menu_id='" + subMenu.menu_id + "'>수정</button></td>" +
-	                        "<td class='align-middle'><button type='button' class='btn btn-danger btn-modal' data-menu_id='" + subMenu.menu_id + "'>삭제</button></td>" +
-	                        "</tr>";
-	                    tbody.append(row);
-	                });
-	            }
-	        });
-	    });
+		
+		
+		
+		function loadSubMenuList(parentMenu) {
+		    $.ajax({
+		        url: "/admin/menu/submenus/" + parentMenu,
+		        success: function(data) {
+		            console.log("data: ", data);
+		            
+		            var tbody = $("#subTable tbody");
+		            tbody.empty();
+
+		            $.each(data, function(index, subMenu) {
+		                var row = "<tr>" +
+		                    "<th class='align-middle'>" + subMenu.menu_id + "</th>" +
+		                    "<td class='align-middle'>" + subMenu.menu_name + "</td>" +
+		                    "<td class='align-middle'>" + subMenu.use_yn + "</td>" +
+		                    "<td class='align-middle'>" + subMenu.orderby + "</td>" +
+		                    "<td class='align-middle'><button type='button' class='btn btn-success btn-modal' id='btnSubModify' data-menu_id='" + subMenu.menu_id + "'>수정</button></td>" +
+		                    "<td class='align-middle'><button type='button' class='btn btn-danger btn-modal' data-menu_id='" + subMenu.menu_id + "'>삭제</button></td>" +
+		                    "</tr>";
+		                tbody.append(row);
+		            });
+		        }
+		    });
+		}
+
+		// 선택한 상위메뉴의 하위메뉴 목록 조회 이벤트 처리
+		$(".parentMenu").click(function() {
+		    var parentMenu = $(this).text();
+		    console.log(parentMenu);
+		    
+		    // 함수 호출
+		    loadSubMenuList(parentMenu);
+		});
+
 	});
 </script>
 
@@ -202,9 +247,12 @@
 											<td class="align-middle"><button type="button" class="btn btn-success btnTopModify btn-modal"
 												 data-menu_id="${topMenu.menu_id}"
 												 data-menu_type="${topMenu.menu_type}"
-												 data-menu_name="${topMenu.menu_name}" data-orderby="${topMenu.orderby}" 
-												 data-menu_url="${topMenu.menu_url}">수정</button></td>
-											<td class="align-middle"><button type="button" class="btn btn-danger btnTopdelete" data-menuId="${subMenu.menu_id}">삭제</button></td>
+												 data-menu_name="${topMenu.menu_name}"
+												 data-orderby="${topMenu.orderby}" 
+												 data-menu_url="${topMenu.menu_url}"
+												 data-use_yn="${topMenu.use_yn}">수정</button></td>
+											<td class="align-middle"><button type="button" class="btn btn-danger btnTopdelete" 
+											data-menu_id="${topMenu.menu_id}">삭제</button></td>
 										</tr>
 									</c:forEach>
 									</tbody>
@@ -270,7 +318,7 @@
 						<form action="/admin/menu/topMenuAdd" method="post" >
 							<input type="hidden" name="parent_menu_id" id="parent_menu_id" value="@">
 							<input type="hidden" name="menu_depth" id="menu_depth" value="1">
-							<input type="hidden" name="use_yn" id="use_yn" value="Y">
+							<!-- <input type="hidden" name="use_yn" id="use_yn" value="Y"> -->
 							
 							<div class="form-row">
 								<div class="form-group col-md-6">
@@ -303,6 +351,23 @@
 								<input type="text" class="form-control" placeholder="메뉴 URL" name="menu_url" id="menu_url">
 								<div class="clearfix"></div>
 							</div>
+							<fieldset class="form-group only-edit">
+			                <div class="row">
+		                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
+			                    <div class="col-sm-10">
+			                        <div class="custom-controls-stacked">
+			                            <label class="custom-control custom-radio">
+			                                <input name="use_yn" value="Y" type="radio" class="custom-control-input" checked="">
+			                                <span class="custom-control-label">사용</span>
+			                            </label>
+			                            <label class="custom-control custom-radio">
+			                                <input name="use_yn" value="N" type="radio" class="custom-control-input" >
+			                                <span class="custom-control-label">미사용</span>
+			                            </label>
+			                        </div>
+			                    </div>
+		                	</div>
+			            </fieldset>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary" id="btnTopAdd">등록</button>
 								<button type="button" class="btn btn-secondary"

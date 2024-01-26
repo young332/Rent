@@ -67,10 +67,13 @@ public class MenuController {
 		return "redirect:/admin/menu";
 	}
 	
-	@PostMapping("/delete")
-	public String menuDelete(String menu_id) {
-		
-		
+	@PostMapping("/delete/{parentMenu}")
+	public String menuDelete(@PathVariable("parentMenu") String parentMenu, RedirectAttributes rttr) {
+		int count = menuService.delete(parentMenu);
+	    log.info("count:" + count);
+		if(count == 1) {
+			rttr.addFlashAttribute("deleteMenuName",parentMenu);
+		}
 		return "redirect:/admin/menu";
 	}
 	

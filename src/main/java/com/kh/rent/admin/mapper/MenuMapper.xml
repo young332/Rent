@@ -5,7 +5,7 @@
 <mapper namespace="com.kh.rent.admin.mapper.MenuMapper">
 	
 	<select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		select menu_id, parent_menu_id, menu_type, menu_name, menu_url, orderby from TBL_MENU
+		select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
 		where parent_menu_id = '@'
 	</select>
 	
