@@ -5,7 +5,7 @@
 <html class="material-style layout-fixed">
 
 <head>
-    <title>HAKA 관리자페이지</title>
+    <title>관리자페이지</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -112,11 +112,11 @@
 
                     <!-- 관리자 -->
                     <li class="sidenav-item">
-                        <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-box"></i>
-                            <div>관리자</div>
-                        </a>
-                        
+                        <c:forEach var="topMenu" items="${TopMenuList}">
+						    <a href="/${topMenu.menu_url}?parent_menu_id=${topMenu.parent_menu_id}" class="sidenav-link sidenav-toggle">
+						        <div>${topMenu.menu_name}</div>
+						    </a>
+						</c:forEach> 
                         <ul class="sidenav-menu">
                         <c:forEach var="subMenu" items="${subMenuList}">
                             <li class="sidenav-item">

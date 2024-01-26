@@ -26,6 +26,12 @@ public class MenuServiceImpl implements MenuService {
 	}
 	
 	@Override
+	public List<MenuVO> getSubMenuAll() {
+		List<MenuVO> subMenuList = menuMapper.getSubMenuAll();
+		return subMenuList;
+	}
+	
+	@Override
 	public List<MenuVO> getSubMenu(String parent_menu_id) {
 	    List<MenuVO> subMenuList = menuMapper.getSubMenu(parent_menu_id);
 	    return subMenuList;
@@ -55,6 +61,8 @@ public class MenuServiceImpl implements MenuService {
 		int count = menuMapper.delete(menu_id);
 		return count;
 	}
+
+	
 
 
 }

@@ -40,7 +40,10 @@
 		$(".parentMenu").click(function() {
 		    parentMenu = $(this).text();
 		    console.log("선택후parentMenu:",parentMenu);
-		    
+		   /*  $("#sub_title").text("");
+		    $("#sub_title").html("선택된 상위메뉴: " + parentMenu + 
+		    		'<button type="button" class="btn btn-success ml-3" id="btnSubMenuAdd">추가</button>'); */
+
 		    // 함수 호출
 		    $.ajax({
 		        url: "/admin/menu/submenus/" + parentMenu,
@@ -68,11 +71,18 @@
 		//하위메뉴 등록 모달창
 		$("#btnSubMenuAdd").click(function(e){
 			e.preventDefault();
-			$("#sub_parent_menu_id [name='parent_menu_id']").val(parentMenu);
-			console.log("하위메뉴등록parentMenu:",parentMenu);
+			
+			var sub_parent_menu_id = $("#SubMenuModal #sub_parent_menu_id").val(parentMenu);
+			var sub_parent_menu_id = sub_parent_menu_id.val();
+				console.log("하위메뉴등록parentMenu:",parentMenu);
+				if (!sub_parent_menu_id) {
+			        alert("상위 메뉴를 선택하세요.");
+			        return;
+			    }
+
 			$("#SubMenuModal").modal("show");
 		});
-		
+
 		    $(".btn-modal").click(function() {   	
 		    	//수정 버튼인지 등록버튼인지 확인
 		    	var curMode = $(this).hasClass("btnTopModify") ? "Edit" : "Add";
@@ -150,7 +160,7 @@
 		    var parentMenu = menu_id;
 		    var that = $(this);
 		
-		    // 하위메뉴 확인
+		    // 하위메뉴 확인 작업
 		    $.ajax({
 		        url: "/admin/menu/submenus/" + parentMenu,
 		        success: function(data) {
@@ -173,10 +183,6 @@
 		        }
 		    });
 		});
-
-		function loadSubMenuList(parentMenu) {
-		   
-		}
 
 		
 
@@ -236,8 +242,8 @@
 						</div>
 						<div class="col-md-6">
 							<div class="card">
-								<div class="card-header font-weight-bold">하위메뉴 (상위메뉴 아이디를 선택해 주세요.)
-								<button type="button" class="btn btn-success ml-3" id="btnSubMenuAdd">추가</button></div>
+								<div class="card-header font-weight-bold" id="sub_title">하위메뉴 (상위메뉴 아이디를 선택해 주세요.)
+								<button type="button" class="btn btn-success ml-3" id="btnSubMenuAdd" >추가</button></div>
 								<table class="table card-table" id="subTable">
 									<thead class="thead-light">
 										<tr>
