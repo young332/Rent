@@ -1,7 +1,6 @@
 package com.kh.rent.login.service;
 
 
-
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
@@ -15,9 +14,6 @@ import com.kh.rent.login.mapper.MemberMapper;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import netscape.javascript.JSObject;
-
-
 
 
 @Service
@@ -53,21 +49,21 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
-	@Override
+	@Override //아이디 중복체크
 	public int checkId(String mem_id) {
 		int count = memberMapper.checkId(mem_id);
 		return count;
 	}
 
-	@Override
-	public void checkPhone(String mem_phone, int randomNumber) {
+	@Override //문자인증
+	public void checkSend(String mem_phone, int randomNumber) {
 		String api_key = "NCSDWNNWYLA0BTWD";
 	    String api_secret = "1LXFECAPZ4LFPUUIU9CRYSDHAQCUGPAN";
 	   Message coolsms = new Message(api_key, api_secret);
 	
 	   HashMap<String, String> params = new HashMap<>();
 	   //수신전화전호
-	   params.put("To", "01089179442");
+	   params.put("To", mem_phone);  // 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
 	   //발신전화번호
 	   params.put("from", "01089179442");
 	   params.put("type", "SMS");
@@ -82,5 +78,13 @@ public class MemberServiceImpl implements MemberService{
 	   }
 		
 	}
+
+	@Override
+	public int checkPhone(String mem_phone) {
+		int count = memberMapper.checkPhone(mem_phone);
+		return count;
+	}
+	
+	
 
 }

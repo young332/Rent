@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -85,7 +86,7 @@ public class MemberController {
 		return "/login/findPw";
 	}
 	//비밀번호 재설정
-	@PostMapping("resetPassword")
+	@PostMapping("/resetPassword")
 	public String resetPassword(String mem_id, String mem_email) {
 		log.info("mem_email:" + mem_email);
 		String uuid = UUID.randomUUID().toString();
@@ -120,6 +121,7 @@ public class MemberController {
 	@GetMapping("/findId")
 	public void findId() {
 	}
+	
 	//아이디 찾기
 	@PostMapping(value = "/findIdRun", consumes = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -147,14 +149,27 @@ public class MemberController {
 		return checkRst;
 	}
 	
+	
+	
+	//휴대폰번호 중복 체크
+	@ResponseBody
+	@PostMapping(value = "/phoneCheck")
+	public String checkPhone(@RequestBody String mem_phone) {
+		log.info("mem_phone:" + mem_phone);
+		int count = memberService.checkPhone(mem_phone);
+		log.info("count:" + count);
+		return Integer.toString(count);
+	}
+	
 	//본인인증 문자
-	@GetMapping("/phoneCheck")
+	@GetMapping("/phoneSend")
 	@ResponseBody
 	public String sendMS(String mem_phone) { //휴대폰 문자보내기
 		
-		int randomNumber = (int)((Math.random()*(9999-1000 + 1)) +1000); //난수생성
-		memberService.checkPhone(mem_phone, randomNumber);
-		
+		int randomNumber = (int)((Math.random()*(9999-1000 + 1)) + 1000); //난수생성
+		memberService.checkSend(mem_phone, randomNumber);
+		log.info("mem_phone_send:" + mem_phone);
+		log.info("randomNumber_send:" + randomNumber);
 		return Integer.toString(randomNumber);
 	}
 	

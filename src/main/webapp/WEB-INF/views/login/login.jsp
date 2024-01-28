@@ -83,7 +83,6 @@ $(function(){
 					</div>
 				</form>
 			</div>
-
 			<!-- 왼쪽 -->
 			<div class="col-md-6 block-9 mb-md-5">
 				<form action="#" class="bg-light p-5 contact-form">
@@ -93,8 +92,7 @@ $(function(){
 					<div class="form-group">
 						<p style="margin-bottom: 150px;">발급된 예약번호로 예약내역을 확인해 보세요.</p>
 						<div class="form-group">
-							<button type="button" id="btnclick" onclick="showSwal();"
-								class="btn btn-primary py-3 px-5">비회원 예약확인</button>
+							<button type="button" id="btnclick"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
 						</div>
 						<!-- 예약번호,이름,휴대폰번호 비회원예약확인 -->
 					</div>
@@ -118,8 +116,50 @@ $(function(){
 			</div>
 		</div>
 	</div>
-		<!-- 로그인 -->
-    </section>
+<!--// 로그인 -->
+<!-- 비회원 모달 -->
+<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-748842" href="#modal-container-748842" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+			
+			<div class="modal fade" id="modal-container-748842" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								비회원 예약조회
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+						<label>이름 : </label>
+						<input type="text" id="non-members-name"/>
+						</div>
+						<div class="modal-body">
+						<label>전화번호 : </label>
+						<input type="text" id="non-members-phone"/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary">
+								예약조회
+							</button> 
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+<!-- //모달 -->
+
+</section>
 	
 
     
