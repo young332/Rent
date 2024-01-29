@@ -24,22 +24,22 @@ public class AdminController {
 	@Autowired
 	private MenuService menuService;
 	
-	@GetMapping("/main")
-	public void adminMainGet() {
-		log.info("*-***--");
-	}
 	
-	 @GetMapping("/*")
-	    public void adminMainGet(@RequestParam(name = "parent_menu_id", required = false) String parent_menu_id, Model model ) {
-//		 log.info("****");
-//	        List<MenuVO> topMenuList = menuService.getTopMenu();
-//	        List<MenuVO> subMenuList = menuService.getSubMenu(parent_menu_id);
-//
-//	        model.addAttribute("TopMenuList", topMenuList);
-//	        model.addAttribute("SubMenuList", subMenuList);
+	@GetMapping("/")
+	public String adminMainGet(@RequestParam(name = "parent_menu_id", required = false) String parent_menu_id,
+			Model model) {
+		
+		log.info("****");
+		
+		List<MenuVO> topMenuList = menuService.getTopMenu();
+		List<MenuVO> subMenuList = menuService.getSubMenu(parent_menu_id);
 
-	        //return "/admin/main";
-	    }
+		model.addAttribute("TopMenuList", topMenuList);
+		model.addAttribute("SubMenuList", subMenuList);
+
+		return "/admin/main";
+	}
+	 
 	
 	
 	@GetMapping("/menu")
@@ -49,6 +49,11 @@ public class AdminController {
 		model.addAttribute("topMenuList", topMenuList);
 		/* model.addAttribute("subMenuList", subMenuList); */
 
+	}
+	
+	@GetMapping("/commonCode")
+	public void adminCommonCode(Model model) {
+		
 	}
 	
 

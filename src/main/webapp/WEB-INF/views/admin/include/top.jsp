@@ -113,7 +113,7 @@
                     <!-- 관리자 -->
                     <li class="sidenav-item">
                         <c:forEach var="topMenu" items="${TopMenuList}">
-						    <a href="/${topMenu.menu_url}?parent_menu_id=${topMenu.parent_menu_id}" class="sidenav-link sidenav-toggle">
+						    <a href="/admin/${topMenu.menu_url}?parent_menu_id=${topMenu.parent_menu_id}" class="sidenav-link sidenav-toggle">
 						        <div>${topMenu.menu_name}</div>
 						    </a>
 						</c:forEach> 

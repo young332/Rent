@@ -25,9 +25,11 @@ public class MenuInterceptor implements HandlerInterceptor{
         
 		String parent_menu_id = request.getParameter("parent_menu_id");
 		log.info("parent_menu_id:"+ parent_menu_id);
-		// /admin/ 경로로 들어왔을 때의 전처리 로직을 작성
+		
 		List<MenuVO> topMenuList = menuService.getTopMenu();
         List<MenuVO> subMenuList = menuService.getSubMenu(parent_menu_id);
+        log.info("topMenuList:"+topMenuList);
+        log.info("subMenuList:"+subMenuList);
 
         
         request.setAttribute("topMenuList", topMenuList);

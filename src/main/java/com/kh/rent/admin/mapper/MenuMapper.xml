@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="getSubMenu" parameterType="String" resultType="com.kh.rent.admin.domain.MenuVO">
-    	SELECT menu_id, parent_menu_id , menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE parent_menu_id = #{parent_menu_id}
+    	SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE parent_menu_id = #{parent_menu_id}
 	</select>
 	
 	<insert id="insertMenu">
