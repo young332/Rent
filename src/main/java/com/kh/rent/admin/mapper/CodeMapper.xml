@@ -2,19 +2,19 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kh.rent.admin.mapper.MenuMapper">
+<mapper namespace="com.kh.rent.admin.mapper.CodeMapper">
 	
-	<select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-		where parent_menu_id = '@'
+	<select id="getTopCode" resultType="com.kh.rent.admin.domain.CommonCodeVO">
+		select code_id, parent_code_id, code_depth, code_name, use_yn, orderby, ref_1, ref_2 from TBL_COMMON_CODE
+		where parent_code_id = '@'
 	</select>
 	
-	<select id="getSubMenuAll" resultType="com.kh.rent.admin.domain.MenuVO">
-		select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-		where not parent_menu_id = '@'
+	<select id="getSubCodeAll" resultType="com.kh.rent.admin.domain.CommonCodeVO">
+		select code_id, parent_code_id, code_depth, code_name, use_yn, orderby, ref_1, ref_2 from TBL_COMMON_CODE
+		where not parent_code_id = '@'
 	</select>
 	
-	<select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">
+	<!-- <select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">
 		SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE menu_id = #{menu_id}
 	</select>
 	
@@ -43,7 +43,7 @@
 		delete from TBL_MENU
 		where menu_id = #{menu_id} 
 	</delete>
-
+ -->
 	
 	
 	
