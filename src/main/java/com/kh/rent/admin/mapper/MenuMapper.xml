@@ -10,8 +10,21 @@
 	</select>
 	
 	<select id="getSubMenuAll" resultType="com.kh.rent.admin.domain.MenuVO">
-		select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-		where not parent_menu_id = '@'
+		<!-- select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
+		where not parent_menu_id = '@' -->
+		
+	select menu_id
+	 ,parent_menu_id
+     ,menu_type
+     ,menu_name
+     ,menu_url
+     ,use_yn
+     ,orderby 
+	from TBL_MENU
+	where parent_menu_id = #{menu_id}
+		use_yn = 'Y' and menu_type = '1'
+	order by orderby
+
 	</select>
 	
 	<select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">

@@ -59,10 +59,64 @@
     <script src="/resources/assets/js/demo.js"></script>
     <script src="/resources/assets/js/analytics.js"></script>
     <!-- <script src="/resources/assets/js/pages/dashboards_index.js"></script> -->
+    
+    <script>
+    function TopMenuClick(menu_id) {
+    	
+
+    	
+        // 클릭한 메뉴의 menu_id 값을 출력 (여기에서는 alert으로 표시)
+        //alert("Clicked Menu ID: " + menu_id);
+        
+        $.ajax({
+	        url: "/admin/" + menu_id,
+	        success: function(data) {
+	            console.log("menu_id: ", menu_id);
+	            console.log("data: ", data);
+	            
+	            $.each(data, function(index, subMenu) {
+	            	var row = "<tr>" +
+	                "<th class='align-middle'>" + subMenu.menu_id + "</th>" +
+	                "<td class='align-middle'>" + subMenu.menu_name + "</td>" +
+	                "<td class='align-middle'>" + subMenu.use_yn + "</td>" +
+	                "<td class='align-middle'>" + subMenu.orderby + "</td>" +
+	                "<td class='align-middle'>" +
+	                "<button type='button' class='btn btn-success btn-subModal btnSubModify' " +
+	                "data-menu_id='" + subMenu.menu_id + "' " +
+	                "data-menu_type='" + subMenu.menu_type + "' " +
+	                "data-menu_name='" + subMenu.menu_name + "' " +
+	                "data-orderby='" + subMenu.orderby + "' " +
+	                "data-menu_url='" + subMenu.menu_url + "' " +
+	                "data-use_yn='" + subMenu.use_yn + "'>수정</button>" +
+	                "</td>" +
+	                "<td class='align-middle'>" +
+	                "<button type='button' class='btn btn-danger btnSubdelete' data-menu_id='" + subMenu.menu_id + "'>삭제</button>" +
+	                "</td>" +
+	                "</tr>";
+	            	tbody.append(row);
+	            	
+	            	<li class="sidenav-item">
+                    <a href="${subMenu.menu_url}" class="sidenav-link">
+                        <div>${subMenu.menu_name}</div>
+                    </a>
+                	</li>
+	            });
+	            
+	           
+	        }
+	    });
+
+        
+    }
+</script>
 
 </head>
 
 <body>
+
+    	<c:set var="topMenuList" value="${responseMap['TopMenuList']}" />
+    	<c:set var="subMenuList" value="${responseMap['SubMenuList']}" />
+
     <!-- [ Preloader ] Start -->
     <div class="page-loader">
         <div class="bg-primary"></div>
@@ -115,10 +169,12 @@
                         <c:forEach var="topMenu" items="${TopMenuList}">
 						    <a href="localhost${topMenu.menu_url}
 						    <%-- parent_menu_id=${topMenu.parent_menu_id} --%>
-						    " class="sidenav-link sidenav-toggle">
+						    " class="sidenav-link sidenav-toggle" onclick="TopMenuClick('${topMenu.menu_id}')">
 						        <div>${topMenu.menu_name}</div>
+						        
 						    </a>
 						</c:forEach> 
+						
                         <ul class="sidenav-menu">
                         <c:forEach var="subMenu" items="${subMenuList}">
                             <li class="sidenav-item">

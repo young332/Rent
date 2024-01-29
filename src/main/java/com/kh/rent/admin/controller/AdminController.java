@@ -1,8 +1,13 @@
 package com.kh.rent.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,18 +37,38 @@ public class AdminController {
 	
 	
 	@GetMapping("/")
-	public String adminMainGet(@RequestParam(name = "parent_menu_id", required = false) String parent_menu_id,
-			Model model) {
+	public String adminMainGet(
+			Model model, HttpSession session) {
 		
 		log.info("****");
-		
-		List<MenuVO> topMenuList = menuService.getTopMenu();
-		List<MenuVO> subMenuList = menuService.getSubMenu(parent_menu_id);
 
+		List<MenuVO> topMenuList = menuService.getTopMenu();
+		//List<MenuVO> subMenuList = menuService.getSubMenu(menu_id);
+		
 		model.addAttribute("TopMenuList", topMenuList);
-		model.addAttribute("SubMenuList", subMenuList);
+		//model.addAttribute("SubMenuList", subMenuList);
 
 		return "/admin/main";
+	}
+	
+	@GetMapping(value = "/{menu_id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public Map<String, Object> adminMainPost(@PathVariable("menu_id") String menu_id,
+			Model model, HttpSession session) {
+		
+		List<MenuVO> topMenuList = menuService.getTopMenu();
+		List<MenuVO> subMenuList = menuService.getSubMenu(menu_id);
+		
+		Map<String, Object> responseMap = new HashMap<>();
+	    responseMap.put("TopMenuList", topMenuList);
+	    responseMap.put("SubMenuList", subMenuList);
+		
+//		model.addAttribute("TopMenuList", topMenuList);
+//		model.addAttribute("SubMenuList", subMenuList);
+		log.info("subMenuList:::"+subMenuList);
+		
+		
+		return responseMap;
 	}
 	 
 	
