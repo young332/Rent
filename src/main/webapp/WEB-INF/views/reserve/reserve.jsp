@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
@@ -92,7 +93,7 @@ div.left-box {
       </div>
     </section>
 	
-		
+	
 <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
@@ -122,8 +123,8 @@ div.left-box {
 							<div class="form-group">
 								<label for="" class="label-fuel" >연료<br> 
 									<input type="checkbox" name="fuelAll" value="전체">전체
-									<input type="checkbox"  name="fuel" value="가솔린">가솔린
-									<input type="checkbox"  name="fuel" value="디젤">디젤<br>
+									<input type="checkbox"  name="fuel" value="휘발유">휘발유
+									<input type="checkbox"  name="fuel" value="경유">경유<br>
 									<input type="checkbox"  name="fuel" value="하이브리드">하이브리드
 									</label>
 							</div>
@@ -158,42 +159,48 @@ div.left-box {
 	    				<div class="right-box">
 								<div class="row">
 				    			<div class="col-md-12">
+				    			<c:forEach items="${carlist}" var="reserveDTO">
+				    			
 				    					<div class="item">
-				    						<div class="car-wrap rounded ftco-animate">
+				    						<div class="car-wrap rounded ftco-animate"
+				    						 data-cartype="${reserveDTO.car_size}"  data-carcompany="${reserveDTO.car_company}"  data-otheroptions="${reserveDTO.op_carseat},${reserveDTO.op_navi},${reserveDTO.op_bt},${reserveDTO.op_cam}">
 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/hyun1.jpg);">
 						    					</div>
 						    					<div class="text">
-						    						<h2 class="mb-0"><a href="#">엑스터</a></h2>
+						    						<h2 class="mb-0">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
-							    						<span class="cat">현대</span>
-							    						<p class="price ml-auto">500000 <span>/day</span></p>
+							    						<span class="cat">${reserveDTO.car_company}</span>
+							    						<span class="cat">|${reserveDTO.car_size}</span>
+<%-- 							    						<span class="cat">|${reserveDTO.car_fuel}</span> --%>
+							    						<c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
+													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">
+													        <span class="cat">| 카시트</span>
+													    </c:if>
+													    <c:if test="${reserveDTO.op_navi eq 'Y'}">
+													        <span class="cat">| 내비게이션</span>
+													    </c:if>
+													    <c:if test="${reserveDTO.op_bt eq 'Y'}">
+													        <span class="cat">| 블루투스</span>
+													    </c:if>
+													    <c:if test="${reserveDTO.op_cam eq 'Y'}">
+													        <span class="cat">| 후방 카메라</span>
+													    </c:if>
+													</c:if>
+
+							    						<p class="price ml-auto">가격 <span>원</span></p>
 						    						</div>
 						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
 						    					</div>
 						    				</div>
 				    					</div>
-				    					<hr>
-				    					<div class="item"> 
-				    						<div class="car-wrap rounded ftco-animate">
-						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/hyun2.jpg);">
-						    					</div>
-						    					<div class="text">
-						    						<h2 class="mb-0"><a href="#">그랜져</a></h2>
-						    						<div class="d-flex mb-3">
-							    						<span class="cat">현대</span>
-							    						<p class="price ml-auto">500 <span>/day</span></p>
-						    						</div>
-						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
-						    					</div>
-						    				</div>
-				    					</div>
-				    				
+				    					</c:forEach>
 				    				</div>
 				    			</div>
 				    		</div>
 						</div>
+						</div>
 					</div>
-    		</div>
+    		
 			
 		</section>
      
@@ -251,8 +258,29 @@ $(function() {
 		      console.log("Selected " + groupName + ":", selectedValues);
 		  }
 		});
-
+	 $(document).ready(function() {
+		    
+		    function getParameterByName(name, url) {
+		        if (!url) url = window.location.href;
+		        name = name.replace(/[\[\]]/g, "\\$&");
+		        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		            results = regex.exec(url);
+		        if (!results) return null;
+		        if (!results[2]) return '';
+		        return decodeURIComponent(results[2].replace(/\+/g, " "));
+		    }
+		    var bookPickDate = getParameterByName('book_pick_date');
+		    var bookOffDate = getParameterByName('book_off_date');
+		    $("#top_book_pick_date").val(bookPickDate);
+		    $("#top_book_off_date").val(bookOffDate);
+		});
+	 
 	
+	
+
+
+
+	 
 });
 
 
