@@ -1,4 +1,4 @@
-package com.kh.rent.login.mapper;
+package com.kh.rent.login.domain;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class NaverLoginBO {
 	
 	private final static String CLIENT_ID = "PX8yklCfbTPCekEdyMrO";	    
 	private final static String CLIENT_SECRET = "evsBIYpwka";	    
-	private final static String REDIRECT_URI = "http://localhost/";	    
+	private final static String REDIRECT_URI = "http://localhost";	    
 	private final static String SESSION_STATE = "oauth_state";
 	
 	/* 프로필 조회 API URL */	    
@@ -30,6 +30,7 @@ public class NaverLoginBO {
 		String state = generateRandomString();
 		//생선한 난수 값을 session에 저장
 		setSession(session,state);
+		
 		OAuth20Service oauthService = new ServiceBuilder()
 				.apiKey(CLIENT_ID)
 				.apiSecret(CLIENT_SECRET)
