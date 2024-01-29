@@ -10,4 +10,5 @@ public interface ReserveService {
 	public void reserveinsert(ReserveVO reserveVO);
 	public List<ReserveVO> getList();
 	public List<CarInfoVO> getCarInfo();
+	public List<CarInfoVO> selectCheck(CarInfoVO carinfoVO);
 }

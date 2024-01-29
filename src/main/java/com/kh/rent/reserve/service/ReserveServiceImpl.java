@@ -38,6 +38,12 @@ public class ReserveServiceImpl implements ReserveService{
 		
 		return list;
 	}
+
+	@Override
+	public List<CarInfoVO> selectCheck(CarInfoVO carinfoVO) {
+		List<CarInfoVO> list = reserveMapper.getCarInfo();
+		return list;
+	}
 	
 	
 }

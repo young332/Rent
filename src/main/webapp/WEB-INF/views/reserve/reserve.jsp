@@ -112,28 +112,28 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-cartype" >차종<br>
-									<input type="checkbox" id="cartypeAll" name="cartypeAll" value="전체" >전체
-									<input type="checkbox" id="cartype" name="cartype" value="소형">소형
-									<input type="checkbox" id="cartype" name="cartype" value="중형">중형<br>
-									<input type="checkbox" id="cartype" name="cartype" value="대형">대형 
-									<input type="checkbox" id="cartype" name="cartype" value="전기차">전기차
+									<input type="checkbox" id="car_sizeAll" name="car_sizeAll" value="전체">전체
+									<input type="checkbox" id="car_size_small" name="car_size" value="소형">소형
+									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형<br>
+									<input type="checkbox" id="car_size_large" name="car_size" value="대형">대형 
+									<input type="checkbox" id="car_size_electric" name="car_size" value="전기차">전기차
 								</label>
 							</div>
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-fuel" >연료<br> 
-									<input type="checkbox" name="fuelAll" value="전체">전체
-									<input type="checkbox"  name="fuel" value="휘발유">휘발유
-									<input type="checkbox"  name="fuel" value="경유">경유<br>
-									<input type="checkbox"  name="fuel" value="하이브리드">하이브리드
+									<input type="checkbox" name="car_fuelAll" value="전체">전체
+									<input type="checkbox"  name="car_fuel" id="car_fuel" value="휘발유">휘발유
+									<input type="checkbox"  name="car_fuel" id="car_fuel" value="경유">경유<br>
+									<input type="checkbox"  name="car_fuel" id="car_fuel" value="하이브리드">하이브리드
 									</label>
 							</div>
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-carcompany">제조사<br>
-									<input type="checkbox" name="carcompanyAll" value="전체" >전체
-									<input type="checkbox"  name="carcompany" value="현대">현대
-									<input type="checkbox"  name="carcompany" value="기아">기아
+									<input type="checkbox" name="car_companyAll" value="전체" >전체
+									<input type="checkbox"  name="car_company" id="car_company" value="현대">현대
+									<input type="checkbox"  name="car_company" id="car_company"  value="기아">기아
 								</label>  
 								
 							</div>
@@ -141,10 +141,10 @@ div.left-box {
 							<div class="form-group">
 								<label for="" class="label-otheroptions">기타옵션<br> 
 									<input type="checkbox" name="otheroptionsAll" value="전체" >전체
-									<input type="checkbox"  name="otheroptions" value="후방카메라">후방카메라<br>
-									<input type="checkbox"  name="otheroptions" value="블루투스">블루투스
-									<input type="checkbox"  name="otheroptions" value="내비게이션">내비게이션
-									<input type="checkbox"  name="otheroptions" value="유아카시트">유아카시트
+									<input type="checkbox"  name="otheroptions" id="op_cam" value="후방카메라">후방카메라<br>
+									<input type="checkbox"  name="otheroptions" id="op_bt" value="블루투스">블루투스
+									<input type="checkbox"  name="otheroptions" id="op_navi" value="내비게이션">내비게이션
+									<input type="checkbox"  name="otheroptions" id="op_carseat" value="카시트">카시트
 								</label> 
 								
 							</div>
@@ -162,16 +162,15 @@ div.left-box {
 				    			<c:forEach items="${carlist}" var="reserveDTO">
 				    			
 				    					<div class="item">
-				    						<div class="car-wrap rounded ftco-animate"
-				    						 data-cartype="${reserveDTO.car_size}"  data-carcompany="${reserveDTO.car_company}"  data-otheroptions="${reserveDTO.op_carseat},${reserveDTO.op_navi},${reserveDTO.op_bt},${reserveDTO.op_cam}">
+				    						<div class="car-wrap rounded ftco-animate">
 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/hyun1.jpg);">
 						    					</div>
 						    					<div class="text">
 						    						<h2 class="mb-0">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
 							    						<span class="cat">${reserveDTO.car_company}</span>
-							    						<span class="cat">|${reserveDTO.car_size}</span>
-<%-- 							    						<span class="cat">|${reserveDTO.car_fuel}</span> --%>
+							    						<span class="cat">${reserveDTO.car_size}</span>
+							    						<span class="cat">${reserveDTO.car_fuel}</span>
 							    						<c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
 													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">
 													        <span class="cat">카시트</span>
@@ -189,7 +188,7 @@ div.left-box {
 
 							    						<p class="price ml-auto">가격 <span>원</span></p>
 						    						</div>
-						    						<p class="d-flex mb-0 d-block"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
+						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
 						    					</div>
 						    				</div>
 				    					</div>
@@ -215,49 +214,7 @@ $(function() {
 	        console.log("CheckReset");
 	    });
 	
-	 $(document).ready(function () {
-		  $("input[name=cartypeAll], input[name=fuelAll], input[name=carcompanyAll], input[name=otheroptionsAll]").click(function () {
-		      checkAll($(this));
-		  });
-
-		  $("input[name=cartype], input[name=fuel], input[name=carcompany]").click(function () {
-		      uncheckOthers($(this));
-		  });
-
-		  function checkAll(checkbox) {
-		      var groupName = checkbox.attr("name").replace("All", "");
-		      var groupCheckboxes = $("input[name=" + groupName + "]");
-		      
-		      if (checkbox.prop("checked")) {
-		          groupCheckboxes.prop("checked", true);
-		      } else {
-		          groupCheckboxes.prop("checked", false);
-		      }
-
-		      logSelectedValues(groupName);
-		  }
-
-		  $("input[name=otheroptions]").click(function () {
-		      logSelectedValues("otheroptions");
-		  });
-
-		  function uncheckOthers(checkbox) {
-		      var groupName = checkbox.attr("name");
-		      var groupCheckboxes = $("input[name=" + groupName + "]");
-		      
-		      groupCheckboxes.not(checkbox).prop("checked", false);
-		      logSelectedValues(groupName);
-		  }
-
-		  function logSelectedValues(groupName) {
-		      var selectedCheckboxes = $("input[name=" + groupName + "]:checked");
-		      var selectedValues = selectedCheckboxes.map(function () {
-		          return $(this).val();
-		      }).get();
-
-		      console.log("Selected " + groupName + ":", selectedValues);
-		  }
-		});
+	
 	 $(document).ready(function() {
 		    
 		    function getParameterByName(name, url) {
@@ -275,8 +232,66 @@ $(function() {
 		    $("#top_book_off_date").val(bookOffDate);
 		});
 	 
-	
-	
+	 $("input[type='checkbox']").change(function() {
+		    var checkedValues = "";
+		    var carSizeValues = "";
+		    var carFuelValues = "";
+		    var carCompanyValues = "";
+
+		    // Iterate over car_size checkboxes
+		    $("input[name='car_size']:checked").each(function() {
+		        carSizeValues += $(this).val() + ",";
+		    });
+
+		    // Remove trailing comma
+		    carSizeValues = carSizeValues.slice(0, -1);
+
+		    $("input[name='car_fuel']:checked").each(function() {
+		        carFuelValues += $(this).val() + ",";
+		    });
+
+		    // Remove trailing comma
+		    carFuelValues = carFuelValues.slice(0, -1);
+
+		    $("input[name='car_company']:checked").each(function() {
+		        carCompanyValues += $(this).val() + ",";
+		    });
+
+		    // Remove trailing comma
+		    carCompanyValues = carCompanyValues.slice(0, -1);
+
+		    $("input[name='otheroptions']:checked").each(function() {
+		        checkedValues += $(this).val() + ",";
+		    });
+
+		    // Remove trailing comma
+		    checkedValues = checkedValues.slice(0, -1);
+
+		    var sendData = {
+		        "car_size": carSizeValues,
+		        "car_fuel": carFuelValues,
+		        "car_company": carCompanyValues,
+		        "otherOptions": checkedValues
+		    };
+
+		    console.log('sendData =', sendData);
+
+		    $.ajax({
+		        url: '/reserve/reserveCheck',
+		        type: 'GET',
+		        contentType: "application/json:charset=utf-8",
+		        data: sendData,
+		        success: function(rData) {
+		            console.log('success', rData); // JSON: {"":"", "":""} -> parsing
+		            $("#cars-box").html(rData);
+		            $.each(rData, function() {
+		                var that = $(this);
+		                var car_name = that.car_name;
+		                $("#cars-box").append("<div>" + car_name + "</div>");
+		            });
+		        }
+		    });
+		});
 
 
 

@@ -54,4 +54,19 @@ public class ReserveMapperTests {
 		log.info("carlist"+carlist);
 	}
 	
+	@Test
+	public void testSelectCheck() {
+		CarInfoVO car = new CarInfoVO();
+		car.setCar_company("현대");
+		car.setCar_size("소형");
+		car.setCar_fuel("휘발유");
+		car.setOp_carseat("Y");
+		car.setOp_bt("Y");
+		car.setOp_cam("Y");
+		car.setOp_navi("N");
+		
+		List<CarInfoVO> list = reserveMapper.selectCheck(car);
+		log.info("list"+list);
+	}
+	
 }
