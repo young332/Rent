@@ -173,4 +173,6 @@ public class MemberController {
 		return Integer.toString(randomNumber);
 	}
 	
+	
+	
 }

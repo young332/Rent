@@ -3,6 +3,8 @@
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- 네이버로 로그인 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script>
 $(function(){
 	var loginResult = "${loginFailure}";
@@ -33,6 +35,7 @@ $(function(){
 				break;
 			}
 		}
+	
 	});
 </script>
 <!-- top -->
@@ -101,18 +104,13 @@ $(function(){
 			<div class="col-md-12 block-9 mb-md-5">
 				<p>---------------------간편로그인---------------------</p>
 				<br>
+				<form action="/sns/loginPost" method="post">
 				<div class="form-group">
-					<button type="button">
-						<img alt="카카오로그인"
-							src="/resources/carbook-master/images/btn_kakao.png"
-							style="max-width: 100px; max-height: 50px;">
-					</button>
-					<button type="button">
-						<img alt="네이버로그인"
-							src="/resources/carbook-master/images/btn_naver.png"
-							style="max-width: 100px; max-height: 50px;">
-					</button>
+					<div id="naverIdLogin">
+					<button type="button" class="btn" onclick="location.href='${urlNaver}'"><img src="/resources/carbook-master/images/btn_naver.png"></button>
+				  </div>
 				</div>
+			</form>
 			</div>
 		</div>
 	</div>
