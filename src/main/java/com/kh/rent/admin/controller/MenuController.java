@@ -67,6 +67,15 @@ public class MenuController {
 		return "redirect:/admin/menu";
 	}
 	
+	@PostMapping("/subMenuModify")
+	public String subMenuModify(MenuVO menuVO, RedirectAttributes rttr) {
+		int count = menuService.modifyMenu(menuVO);
+		if(count == 1) {
+			rttr.addFlashAttribute("ModifyMenuName",menuVO.getMenu_name());
+		}
+		return "redirect:/admin/menu";
+	}
+	
 	@PostMapping("/delete/{parentMenu}")
 	public String menuDelete(@PathVariable("parentMenu") String parentMenu, RedirectAttributes rttr) {
 		int count = menuService.delete(parentMenu);

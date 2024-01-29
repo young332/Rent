@@ -270,12 +270,12 @@
 
    <!-- [ content ] Start -->
    <div class="container-fluid flex-grow-1 container-p-y">
-       <h4 class="font-weight-bold py-3 mb-0">메뉴관리</h4>
+       <h4 class="font-weight-bold py-3 mb-0">공통코드관리</h4>
        <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
            <ol class="breadcrumb">
                <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
-               <li class="breadcrumb-item"><a href="#">메뉴</a></li>
-               <li class="breadcrumb-item active">메뉴관리</li>
+               <li class="breadcrumb-item"><a href="#">관리자</a></li>
+               <li class="breadcrumb-item active">공통코드관리</li>
            </ol>
        </div>
 
@@ -288,14 +288,14 @@
 						<div class="col-md-6">
 							<div class="card">
 								<div class="card-header font-weight-bold d-flex align-items-center" >
-								    <span class="mr-auto">상위메뉴</span>
+								    <span class="mr-auto">상위코드</span>
 								    <button type="button" class="btn btn-success ml-3 btnTopMenuAdd btn-modal">추가</button>
 								</div>
 								
 								<table class="table card-table table-hover ">
 									<thead class="thead-light">
 										<tr >
-											<th>메뉴 아이디</th>
+											<th>코드 아이디</th>
 											<th>메뉴명</th>
 											<th>순서</th>
 											<th>수정</th>
