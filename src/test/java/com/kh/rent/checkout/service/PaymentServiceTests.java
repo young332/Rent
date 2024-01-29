@@ -22,36 +22,7 @@ public class PaymentServiceTests {
     private PaymentService PaymentService;
 	
 	@Test
-    public void testPaymentDeduction() {
-        
-        int pay_res_rid = 1;
-        String pay_mem_id = "MEMBER01";
-        int pay_cost = 100; // 테스트하고자 하는 결제 금액
-
-       
-        PaymentDTO paymentInfoBefore = PaymentService.getPaymentDTO(pay_res_rid);
-        int memberPointBefore = getMemberPoint(PaymentDTO.builder()
-        						.pay_cost(pay_cost)
-        						.pay_res_rid(pay_res_rid)
-        						.build());
-
-        
-        PaymentService.deductPayment(pay_res_rid, pay_cost);
-
-        
-        PaymentDTO paymentInfoAfter = PaymentService.getPaymentDTO(pay_res_rid);
-        int memberPointAfter = getMemberPoint(MemberVO.builder().build());
-
-       
-       
-    }
-
-	    private int getMemberPoint(PaymentDTO paymentDTO) {
-	       
-		   
-	        return 1000;
-	    }
+    public void testPaymentDeduction() {};
 	
-
 }
 

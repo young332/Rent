@@ -3,6 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.mapper.PaymentMapper">
+	
+	<!-- 예약자 정보 -->
 	<select id="getPaymentInfo" resultType="com.kh.rent.mapper.PaymentDTO">
 		SELECT
     		pay_res_rid,
@@ -18,7 +20,29 @@
    		 TBL_PAYMENT
 		WHERE
     		pay_res_rid = #{pay_res_rid}
-	</select>	
+	</select>
 	
+	<!-- 포인트 조회 -->
+	<select id="getMemberPoint" parameterType="map" resultType="int">
+		select mem_point
+		from TBL_MEMBER
+		where mem_id = #{mem_id};
+	
+	</select>
+	
+	<!-- 포인트 차감 -->
+	<update id="updateMemberPoint" parameterType="map">
+		update TBL_MEMBER set mem_point = mem_point - #{pointToDeduct}
+		where mem_id = #{mem_id}
+	</update>
+	
+	<!-- 예약 번호 불려오기 -->	
+	<select id="getPayResRid" parameterType="int" resultType="int">
+        SELECT pay_res_rid
+        FROM TBL_PAYMENT
+        WHERE pay_res_rid = #{pay_res_rid}
+    </select>
+    
+    <!-- 결제 최종 정보 -->
 
 </mapper>

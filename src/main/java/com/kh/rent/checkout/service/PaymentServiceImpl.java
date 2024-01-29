@@ -5,12 +5,16 @@ import org.springframework.stereotype.Service;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
+import com.kh.rent.login.domain.MemberVO;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	private PaymentMapper paymentMapper; 
+	
+	@Autowired
+	private MemberVO memberVO;
 
 	@Override
 	public PaymentDTO getPaymentDTO(int pay_res_rid) {
@@ -20,7 +24,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public void deductPayment(int pay_res_rid, int pay_cost) {
-		// TODO Auto-generated method stub
+		// TODO Auto-ge
 		
 	}
 	
