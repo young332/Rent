@@ -18,6 +18,43 @@ $(function() {
 		$("#modal-delForm").modal("show");
 	});
 	
+	// 회원탈퇴 처리
+	$("#btn-delete-save").click(function() {
+		console.log("탈퇴하기 버튼");
+		var password = $("#password").val();
+// 		console.log("password:", password);
+		var del_enter_pwd = $("#del_enter_pwd").val();
+// 		console.log("del_enter_pwd:", del_enter_pwd);
+
+		if (del_enter_pwd.trim() == "") {
+			alert("비밀번호를 입력하세요");
+		} else if (password != del_enter_pwd) {
+			alert("비밀번호가 맞지 않습니다.");
+		} else if (password == del_enter_pwd) {
+			console.log("비밀번호 일치확인")
+			var mem_id = $("#id").val(); 
+			$.ajax({
+	            method: "DELETE",
+	            url: "/myPage/delete/" + mem_id,
+	            success: function(rData) {
+	                console.log("rData:", rData);
+	                if (rData == "success") {
+		                alert("회원탈퇴성공! 로그인 페이지로 이동합니다.");
+		                $("#modal-delForm").modal("hide");
+		                location.href = "/login/login";
+	                } else if (rData == "fail") {
+	                	alert("회원탈퇴실패!");
+	                }
+	                
+	            },
+	            error: function(xhr, status, error) {
+                	alert("회원탈퇴실패!");
+	                console.error("회원 삭제 실패:", error);
+	            }
+	        });
+		}
+	});
+	
 }); 
 </script>
 
@@ -110,12 +147,12 @@ $(function() {
                             정말로 탈퇴 하시겠습니까? <br>
                         </div>
                         <br>
-                            <label for="userPwd" class="mr-sm-2">Password : </label>
-                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name=""> <br>
+                            <label for="userPwd" class="mr-sm-2">비밀번호 : </label>
+                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호 입력" id="del_enter_pwd" name="del_enter_pwd"> <br>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                        <button type="button" class="btn btn-danger" id="btn-delete-save">탈퇴하기</button>
                     </div>
                 </form>
             </div>
