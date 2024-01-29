@@ -1,10 +1,11 @@
 package com.kh.rent.checkout.mapper;
 
+import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.login.domain.MemberVO;
 
 public interface PaymentMapper {
 	
-	/* 금액 차감 */
-	public int deductMoney(MemberVO member);
+	public PaymentDTO getPaymentInfo(int pay_res_rid);
+	public MemberVO getMemberVO(String pay_mem_id);
 
 }

@@ -207,7 +207,7 @@
             <span>총 결제내역</span>
             <strong><c:out value="${OrderDTO.pay_cost}"/></strong>
           </li>
-           <button id="btn_pay" class="w-100 btn btn-primary btn-lg" type="submit">결제 하기</button>
+           <button id="btn_pay" onclick="location.href='index.jsp'" class="w-100 btn btn-primary btn-lg" type="submit">결제 하기</button>
         </ul>
 
 <!--         <form class="card p-2"> -->
@@ -289,7 +289,7 @@ int pnt = 7210;
 		    <tr>
 		      <td></td>
 		      <td>
-		        <span> <input type="number" name="use_pnt" id="use_pnt" min="<%=min%>" max="<%=amt%>" onchange="point_cost"></span> p 
+		        <span> <input type="number" name="use_pnt" id="use_pnt" min="<%=min%>" max="<%=amt%>" onchange="changePoint(65000,7210,5000,100)"></span> p 
 		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt"><%=pnt%></span>p )
 		      </td>
 		    </tr>
@@ -399,7 +399,7 @@ int pnt = 7210;
   </main>
 </div>
 
-	<form class="checkout_form" action="/payment" method="post">
+	<form class="checkout_form" action="/reserve/reserve" method="Get">
 		<!-- 사용 포인트 -->
 		<input name="point_cost" type="hidden">
 	</form>
@@ -456,7 +456,7 @@ int pnt = 7210;
 	    }
 	});
 
-	function chkPoint(amt,point,min,unit) {
+	function chkPoint(amt,pnt,min,unit) {
 		//amt : 최초 결제 금액 / pnt : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
 		var v_point = 0; //사용할 포인트 (input 입력값)
 	
@@ -477,7 +477,7 @@ int pnt = 7210;
 		}
 		document.getElementById("use_pnt").value = v_point; //input 값 설정
 
-		changePoint(amt,point_cost,min,unit);
+		changePoint(amt,pnt,min,unit);
 	}
 	
 	function changePoint(amt,pnt,min,unit){
@@ -520,6 +520,8 @@ int pnt = 7210;
         $(".checkout_form").submit();
 
         console.log("결제완료: ", $("#result_pnt").val());
+        
+      
     });
 	
 	 // 총 결제내역 출력

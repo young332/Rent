@@ -1,9 +1,9 @@
 package com.kh.rent.checkout.controller;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,10 +22,9 @@ public class CheckoutController {
 	}
 	
 	@RequestMapping(value = "/payment", method = {RequestMethod.GET, RequestMethod.POST})
-    public String payment(HttpServletResponse response, @RequestParam(name = "point_cost") String pointCost) {
-        log.info("payment");
+    public void payment() {
 
-        return "redirect:/reserve/reserve";
-    }
+		log.info("payment");
+	}
 		
 }

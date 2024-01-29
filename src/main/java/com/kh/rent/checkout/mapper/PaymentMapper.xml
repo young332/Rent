@@ -3,7 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.mapper.PaymentMapper">
+	<select id="getPaymentInfo" resultType="com.kh.rent.mapper.PaymentDTO">
+		SELECT
+    		pay_res_rid,
+    		pay_mem_id,
+    		pay_date,
+    		pay_cost,
+    		point_id,
+    		point_user_id,
+    		point_code,
+    		point_use_date,
+    		point_cost
+		FROM
+   		 TBL_PAYMENT
+		WHERE
+    		pay_res_rid = #{pay_res_rid}
+	</select>	
 	
-
 
 </mapper>
