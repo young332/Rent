@@ -13,14 +13,14 @@ public interface CodeService {
 	
 	public List<CommonCodeVO> getSubCodeAll();
 
-//	public List<MenuVO> getSubMenu(@Param("parent_menu_id") String parent_menu_id);
-//	
-//	public int addMenu(MenuVO menuVO);
+	public List<CommonCodeVO> getSubCode(@Param("parent_code_id") String parent_code_id);
+	
+	public int addCode(CommonCodeVO commonCodeVO);
 //
 //	public MenuVO getOneMenu(String menu_id);
 //	
-//	public int modifyMenu(MenuVO menuVO);
+	public int modifyCode(CommonCodeVO CommonCodeVO);
 //	
-//	public int delete(String menu_id);
+	public int delete(String code_id);
 	
 }

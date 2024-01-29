@@ -13,14 +13,14 @@ public interface CodeMapper {
 	
 	public List<CommonCodeVO> getSubCodeAll();
 
-//	public List<MenuVO> getSubMenu(@Param("parent_menu_id") String parent_menu_id);
-//	
+	public List<CommonCodeVO> getSubCode(@Param("parent_code_id") String parent_code_id);
+	
 //	public MenuVO getOneMenu(String menu_id);
-//
-//	public int insertMenu(MenuVO menuVO);
-//	
-//	public int updateMenu(MenuVO menuVO);
-//	
-//	public int delete(String menu_id);
+
+	public int insertCode(CommonCodeVO commonCodeVO);
+	
+	public int updateCode(CommonCodeVO CommonCodeVO);
+	
+	public int delete(String code_id);
 
 }
