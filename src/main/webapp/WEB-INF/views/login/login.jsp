@@ -3,6 +3,8 @@
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- 네이버로 로그인 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script>
 $(function(){
 	var loginResult = "${loginFailure}";
@@ -22,6 +24,7 @@ $(function(){
 	var cookie = document.cookie;
 		console.log("cookie:",cookie);
 		var cookies = cookie.split(";");
+		console.log("cookies:" , cookies);
 		for (var v = 0; v < cookies.length; v++) {
 			var aCookie = cookies[v].split("=");
 			if (aCookie[0].trim() == "savedId") {
@@ -32,6 +35,7 @@ $(function(){
 				break;
 			}
 		}
+	
 	});
 </script>
 <!-- top -->
@@ -53,7 +57,7 @@ $(function(){
 		<div class="row d-flex mb-5 contact-info">
 
 			<div class="col-md-6 block-9 mb-md-5">
-				<form action="/login/loginPost" method="post"
+				<form class=user action="/login/loginPost" method="post"
 					class="bg-light p-5 contact-form">
 					<div class="form-group">
 						<label>아이디</label> 
@@ -82,7 +86,6 @@ $(function(){
 					</div>
 				</form>
 			</div>
-
 			<!-- 왼쪽 -->
 			<div class="col-md-6 block-9 mb-md-5">
 				<form action="#" class="bg-light p-5 contact-form">
@@ -92,8 +95,7 @@ $(function(){
 					<div class="form-group">
 						<p style="margin-bottom: 150px;">발급된 예약번호로 예약내역을 확인해 보세요.</p>
 						<div class="form-group">
-							<button type="button" id="btnclick" onclick="showSwal();"
-								class="btn btn-primary py-3 px-5">비회원 예약확인</button>
+							<button type="button" id="btnclick"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
 						</div>
 						<!-- 예약번호,이름,휴대폰번호 비회원예약확인 -->
 					</div>
@@ -102,23 +104,60 @@ $(function(){
 			<div class="col-md-12 block-9 mb-md-5">
 				<p>---------------------간편로그인---------------------</p>
 				<br>
+				<form action="/sns/loginPost" method="post">
 				<div class="form-group">
-					<button type="button">
-						<img alt="카카오로그인"
-							src="/resources/carbook-master/images/btn_kakao.png"
-							style="max-width: 100px; max-height: 50px;">
-					</button>
-					<button type="button">
-						<img alt="네이버로그인"
-							src="/resources/carbook-master/images/btn_naver.png"
-							style="max-width: 100px; max-height: 50px;">
-					</button>
+					<div id="naverIdLogin">
+					<button type="button" class="btn" onclick="location.href='${urlNaver}'"><img src="/resources/carbook-master/images/btn_naver.png"></button>
+				  </div>
 				</div>
+			</form>
 			</div>
 		</div>
 	</div>
-		<!-- 로그인 -->
-    </section>
+<!--// 로그인 -->
+<!-- 비회원 모달 -->
+<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-748842" href="#modal-container-748842" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+			
+			<div class="modal fade" id="modal-container-748842" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								비회원 예약조회
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+						<label>이름 : </label>
+						<input type="text" id="non-members-name"/>
+						</div>
+						<div class="modal-body">
+						<label>전화번호 : </label>
+						<input type="text" id="non-members-phone"/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary">
+								예약조회
+							</button> 
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+<!-- //모달 -->
+
+</section>
 	
 
     

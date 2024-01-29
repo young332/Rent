@@ -27,7 +27,7 @@
     			<div class="col-md-12	featured-top">
     				<div class="row no-gutters">
 	  					<div class="col-md-4 d-flex align-items-center">
-	  						<form action="#" class="request-form ftco-animate bg-primary">
+	  						<form action="/reserve/reserve" method="get" class="request-form ftco-animate bg-primary">
 		          				<h2>자동차 렌트 예약</h2>
 								<div class="form-group">
 									<label for="" class="label">대여&amp;반납 장소</label> 
@@ -54,7 +54,8 @@
 									</div>
 								</div>
 								 <div class="form-group">
-					              <buttom type="submit" class="btn btn-secondary py-3 px-4" id="bntSearch"><a href="/reserve/reserve">차량 조회하고 예약하기</a></buttom>
+					              <buttom type="submit" class="btn btn-secondary py-3 px-4" id="bntSearch">
+					              <a id="reservationLink" href="#">차량 조회하고 예약하기</a></buttom>
 					            </div>
 
 							</form>
@@ -108,7 +109,7 @@
     				<div class="carousel-car owl-carousel">
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/hyun1.jpg);">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">엑스터</a></h2>
@@ -122,7 +123,7 @@
     					</div>
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/hyun2.jpg);">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">그랜져</a></h2>
@@ -136,7 +137,7 @@
     					</div>
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/kia1.jpg);">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">스포티지</a></h2>
@@ -150,7 +151,7 @@
     					</div>
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/images/kia2.jpg);">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">쏘렌토</a></h2>
@@ -179,6 +180,16 @@ $(function() {
 		console.log("p:", p);
 		console.log("o:", o);
 	});
+
+     $("#bntSearch").click(function() {
+         
+         var pickDate = $("#book_pick_date").val();
+         var offDate = $("#book_off_date").val();
+         var reservationURL = "/reserve/reserve?book_pick_date=" + pickDate + "&book_off_date=" + offDate;
+        
+         $("#reservationLink").attr("href", reservationURL);
+     });
+	   
 });
 </script> 
     

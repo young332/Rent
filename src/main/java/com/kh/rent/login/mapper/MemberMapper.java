@@ -27,4 +27,7 @@ public interface MemberMapper {
 		
 		//아이디 중복체크
 		public int checkId(String mem_id);
+		
+		//휴대폰번호 중복체크
+		public int checkPhone(String mem_phone);
 }

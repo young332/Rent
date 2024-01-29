@@ -26,13 +26,13 @@ public class MemberMapperTests {
 	
 	@Test //회원가입
 	public void  testInsert() {
-		String id = "MEMBER04";
-		String pw = "MEMBER04";
-		String name ="김유정";
-		String email ="qqq@qqq.com";
-		String birth ="19960101";
-		String phone = "01074856325";
-		String code ="1234";
+		String id = "MEMBER03";
+		String pw = "MEMBER03";
+		String name ="신세경";
+		String email ="ttt@ttt.com";
+		String birth ="19890101";
+		String phone = "01055556666";
+		String code ="5235";
 		String addr ="울산시 중구 우정동";
 		MemberVO memberVO = MemberVO.builder()
 				.mem_id(id)
@@ -95,5 +95,12 @@ public class MemberMapperTests {
 		String mem_id = "MEMBER01";
 		int count = memberMapper.checkId(mem_id);
 		log.info("count:" + count);
+	}
+	
+	@Test
+	public void testCheckPhone() {
+		String mem_phone ="01015450428";
+		int count = memberMapper.checkPhone(mem_phone);
+		log.info("count : " + count);
 	}
 }

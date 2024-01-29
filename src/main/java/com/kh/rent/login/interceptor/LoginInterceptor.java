@@ -6,8 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.kh.rent.login.domain.MemberVO;
 
@@ -35,17 +38,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		ModelMap map = (ModelMap)modelAndView.getModel();
 		MemberVO memberVO = (MemberVO)map.get("loginInfo");
 		Boolean useCookie =(Boolean)map.get("useCookie");
+		log.info("useCookie:" + useCookie);
 		modelAndView.setView(null);
 		log.info("로그인 후 meberVO : " + memberVO);
 		
 		if(memberVO == null) { //로그인실패
+			FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+            flashMap.put("loginFailure", true);
 			modelAndView.setViewName("redirect:/login/login");			
 		} else { //로그인 성공
 			HttpSession session = request.getSession();
 			String targetLocation = (String)session.getAttribute("targetLocation");
 			log.info("targetLocation:" + targetLocation);
 			session.removeAttribute(targetLocation);
-			
 			if(targetLocation == null) {
 				 
 				modelAndView.setViewName("redirect:/");
@@ -55,9 +60,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			}
 			request.getSession().setAttribute("loginInfo", memberVO);
 			
-			//아이디저장
+			//쿠키저장
 			if(useCookie != null && useCookie == true) {
-				Cookie cookie = new Cookie("saveId", memberVO.getMem_id());
+				Cookie cookie = new Cookie("savedId", memberVO.getMem_id());
+				log.info("cookie:"+ cookie);
 				cookie.setMaxAge(60 * 60 * 24 * 7);
 				response.addCookie(cookie);
 			}
