@@ -29,10 +29,6 @@ public class OrderItemDTO {
 	// 총 가격
 	private int totalPrice;
 	
-	// 상품권, 차량 자체 할인 들어가는 기능 구현 된다면 추후 생각
-//	public void initSaleTotal() {
-//		this.salePrice = (int) (this.carPrice * 1);
-//		this.totalPrice = this.salePrice;
-//	}
+
 	
 }

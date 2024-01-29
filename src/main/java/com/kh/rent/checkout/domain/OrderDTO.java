@@ -16,10 +16,10 @@ public class OrderDTO {
 	/* 회원 */
 	
 	// 예약번호
-	private int PAY_RES_RID;
+	private int pay_res_rid;
 	
 	// 예약자
-	private String RES_MEM_ID;
+	private String res_mem_id;
 	
 	// 회원ID (mem_id)
 	private String mem_id;
