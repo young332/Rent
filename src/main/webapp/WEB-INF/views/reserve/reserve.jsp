@@ -174,16 +174,16 @@ div.left-box {
 <%-- 							    						<span class="cat">|${reserveDTO.car_fuel}</span> --%>
 							    						<c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
 													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">
-													        <span class="cat">| 카시트</span>
+													        <span class="cat">카시트</span>
 													    </c:if>
 													    <c:if test="${reserveDTO.op_navi eq 'Y'}">
-													        <span class="cat">| 내비게이션</span>
+													        <span class="cat">내비게이션</span>
 													    </c:if>
 													    <c:if test="${reserveDTO.op_bt eq 'Y'}">
-													        <span class="cat">| 블루투스</span>
+													        <span class="cat">블루투스</span>
 													    </c:if>
 													    <c:if test="${reserveDTO.op_cam eq 'Y'}">
-													        <span class="cat">| 후방 카메라</span>
+													        <span class="cat">후방 카메라</span>
 													    </c:if>
 													</c:if>
 
