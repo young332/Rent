@@ -13,7 +13,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 <!-- /주소찾기 -->
-
 <script>
 //주소 검색
 function openZipSearch() {
@@ -79,7 +78,7 @@ $(function() {
 					    </div>
 					    <div class="form-group">
 					      <label for="name">이름</label>
-					      <input type="text" class="form-control" id="name" name="name" value="${loginInfo.mem_name}">
+					      <input type="text" class="form-control" id="name" name="name" value="${loginInfo.mem_name}" readonly>
 					    </div>
 					    <div class="form-group">
 					      <label for="birthDay">생년월일</label>
@@ -95,11 +94,11 @@ $(function() {
 					    </div>
 					    <div class="form-group">
 			              <small>주소</small>
-			              <div class="input-group">
+			              <div class="input-group" style="align-items: center;">
 			              	<input type="text"  class="form-control"  id="mem_zip_code" name="mem_zip_code" 
 			              		   value="${loginInfo.mem_zip_code}" style="margin-right: 10px;" readonly>
 							<span class="input-group-btn">
-							<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary">
+							<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary" >
 							</span>
 							</div>
 							<input type="text" class="form-control" id="mem_addr" name="mem_addr" readonly="readonly" value="${loginInfo.mem_addr}">
@@ -133,17 +132,58 @@ $(function() {
                             정말로 탈퇴 하시겠습니까? <br>
                         </div>
                         <br>
-                            <label for="userPwd" class="mr-sm-2">Password : </label>
-                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name=""> <br>
+                            <label for="userPwd" class="mr-sm-2">비밀번호 : </label>
+                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호 입력" id="userPwd" name="userPwd"> <br>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                        <button type="button" class="btn btn-danger" id="btn-delete-save">탈퇴하기</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
+	<!-- 비밀번호 변경 모달창 -->
+	<div class="row">
+	<div class="col-md-12">
+		<div class="modal fade" id="modal-reply" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">
+							비밀번호 변경
+						</h5> 
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<label for="pwd">현재 비밀번호</label>
+						<input type="password" class="form-control" id="password1">
+						<label for="pwd">변경 비밀번호</label>
+						<input type="password" class="form-control" id="pwd_change">
+						<label for="pwd">변경 비밀번호 확인</label>
+						<input type="password" class="form-control" id="pwd_check">
+					</div>
+					<div class="modal-footer">
+						 
+						<button type="button" class="btn btn-primary" id="btn-reply-save">
+							저장
+						</button> 
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							닫기
+						</button>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+</div>
+<!-- // 비밀번호 변경 모달창 -->
 
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
