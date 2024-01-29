@@ -32,7 +32,8 @@
 
 	<context:component-scan base-package="com.kh.rent.reserve.controller" />
 
-
+  <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->	
+  <beans:bean id="naverLoginBO" class="com.kh.rent.login.mapper.NaverLoginBO" />
 
 	<!-- 인터셉터 -->
 	<beans:bean id="loginInterceptor"
@@ -43,18 +44,24 @@
 		class="com.kh.rent.admin.interceptor.MenuInterceptor"></beans:bean>
 
 	<interceptors>
+    
 		<interceptor>
 			<mapping path="/login/loginPost" />
 			<beans:ref bean="loginInterceptor" />
 		</interceptor>
+    
 		<interceptor>
 			<mapping path="/myPage/**/*" />
+      <mapping path="/checkout/**/*"/>
+		  <mapping path="/reserve/**/*"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
+    
 		<interceptor>
 			<mapping path="/admin/**" />
 			<beans:ref bean="menuInterceptor" />
 		</interceptor>
+    
 	</interceptors>
 
 </beans:beans>
