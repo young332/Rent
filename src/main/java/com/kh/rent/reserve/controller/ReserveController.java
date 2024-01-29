@@ -24,7 +24,7 @@ public class ReserveController {
 	private ReserveService reserveService;
 	
 	@GetMapping("/reserve")
-	public void reserve( HttpSession session, Model model) {
+	public void reserve( CarInfoVO carinfoVO, HttpSession session, Model model) {
 		List<CarInfoVO> carlist = reserveService.getCarInfo();
 		model.addAttribute("carlist", carlist); 
 		log.info("carlist"+carlist);
