@@ -58,9 +58,10 @@ public class ReserveMapperTests {
 	@Test
 	public void testSelectCheck() {
 		ReserveDTO car = new ReserveDTO();
-		car.setCar_fuel("휘발유");
-		car.setCar_company("현대");
+//		car.setCar_fuel("휘발유");
+//		car.setCar_company("현대");
 		car.setOp_carseat("Y");
+		car.setOp_navi("N");
 		
 		List<ReserveDTO> list = reserveMapper.selectCheck(car);
 		log.info("list"+list);

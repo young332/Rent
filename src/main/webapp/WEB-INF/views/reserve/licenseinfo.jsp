@@ -72,7 +72,7 @@
 					<br>
 
 					<p>
-						<a class="btn btn-success btn-large" href="/checkout/pay">운전자 정보 입력완료</a>
+						<a class="btn btn-success btn-large" href="/checkout/payment">운전자 정보 입력완료</a>
 					</p>
 				</div>
 

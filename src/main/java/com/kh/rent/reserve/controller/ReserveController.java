@@ -1,18 +1,16 @@
 package com.kh.rent.reserve.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.reserve.domain.ReserveDTO;
@@ -37,14 +35,37 @@ public class ReserveController {
 	
 	// 선택
 	@GetMapping("/reservecars")
-	public String reservecars(CarInfoVO carInfoVO, HttpSession session, Model model) {
-		log.info("carInfoVo:" + carInfoVO);
-		ReserveDTO reserveDTO = new ReserveDTO();
-		List<ReserveDTO> checkcarlist = reserveService.selectCheck(reserveDTO);
-		model.addAttribute("checkcarlist", checkcarlist); 
-		log.info("checkcarlist"+checkcarlist);
+	public String reservecars(@RequestParam(name = "car_company", required = false) String carCompany,
+				            @RequestParam(name = "car_size", required = false) String carSize,
+				            @RequestParam(name = "car_fuel", required = false) String carFuel,
+				            @RequestParam(name = "op_carseat", required = false) String opCarseat,
+	                           @RequestParam(name = "op_navi", required = false) String opNavi,
+	                           @RequestParam(name = "op_bt", required = false) String opBt,
+	                           @RequestParam(name = "op_cam", required = false) String opCam,
+				            Model model) {
+			log.info("Selected carCompany: " + carCompany);
+			log.info("Selected carSize: " + carSize);
+			log.info("Selected carFuel: " + carFuel);
+			log.info("Selected opCarseat: " + opCarseat);
+			log.info("Selected opNavi: " + opNavi);
+			log.info("Selected opBt: " + opBt);
+			log.info("Selected opCam: " + opCam);
+			
 		
-		return "reserve/reservecars"; 
+			ReserveDTO reserveDTO = new ReserveDTO();
+			reserveDTO.setCar_company(carCompany);
+			reserveDTO.setCar_size(carSize);
+			reserveDTO.setCar_fuel(carFuel);
+			reserveDTO.setOp_carseat(opCarseat);
+			reserveDTO.setOp_navi(opNavi);
+			reserveDTO.setOp_bt(opBt);
+			reserveDTO.setOp_cam(opCam);
+			
+			List<ReserveDTO> checkcarlist = reserveService.selectCheck(reserveDTO);
+			model.addAttribute("checkcarlist", checkcarlist);
+			log.info("checkcarlist: " + checkcarlist);
+			
+			return "reserve/reservecars";
 		
 	}
 	

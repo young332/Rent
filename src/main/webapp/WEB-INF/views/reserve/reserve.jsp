@@ -7,7 +7,7 @@
 <style>
 #details-box {
 	width: 25%;
-	height: 1000px;
+	height: 700px;
 	margin-right: 5px;
 
 	/*         border: 1px solid #003458;  */
@@ -80,6 +80,7 @@ div.left-box {
     border-radius: 5px; /* 버튼 테두리 둥글게 만듭니다. */
    
 }
+
 </style>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -98,11 +99,13 @@ div.left-box {
 <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
-					<div class="top-search-box" style="height: 63.2px;">
+					<div class="top-search-box" style="height: 154px;">
 							<h6 style="border-top-width: 20px;padding-top: 20px;">렌트카001 빠른 검색</h6>
 							<input type="datetime-local" class="form-control" id="top_book_pick_date" placeholder="대여 날짜" style="margin-top: 5px;"> 
 							<input type="datetime-local" class="form-control" id="top_book_off_date" placeholder="반납 날짜" style="margin-top: 5px;">
+							
 							<button type="button" class="btntop btn-secondary" style="height: 50.2px; margin-top: 5px;">검색하기</button>
+							
 						</div>
 		   			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
 		   			<section>
@@ -270,7 +273,10 @@ $(function() {
 		        "car_size": carSizeValues,
 		        "car_fuel": carFuelValues,
 		        "car_company": carCompanyValues,
-		        "otherOptions": checkedValues
+		        "op_cam": $("input[name='otheroptions'][value='후방카메라']").is(":checked") ? "Y" : "",
+                "op_bt": $("input[name='otheroptions'][value='블루투스']").is(":checked") ? "Y" : "",
+                "op_navi": $("input[name='otheroptions'][value='내비게이션']").is(":checked") ? "Y" : "",
+                "op_carseat": $("input[name='otheroptions'][value='카시트']").is(":checked") ? "Y" : ""
 		    };
 
 		    console.log('var sendData =', sendData);
@@ -282,9 +288,9 @@ $(function() {
 		        contentType: "application/json",
 		        data: sendData,
 		        success: function(rData) {
-		            console.log('전송 성공:', rData);
+		            //console.log('전송 성공:', rData);
 		            $("#cars-box").html(rData);
-		           
+		            setFooterTop();
 		            
 		        },
 		        
@@ -292,7 +298,19 @@ $(function() {
 		});
 
 
-
+	function setFooterTop() {
+		$("footer").css("position", "absolute");
+		$("footer").css("width", "100%");
+		var item = $(".right-box .item");
+		var y = parseInt(item.css("height"));
+        var top = ((y + 25) * (item.length)) + 1000;
+		if (top < 1600) {
+			top = 1600;
+		}
+        $("footer").css("top", top + "px");
+	}
+	
+	setFooterTop();
 	 
 });
 
