@@ -52,13 +52,18 @@
     
 		<interceptor>
 			<mapping path="/myPage/**/*" />
-      <mapping path="/checkout/**/*"/>
-		  <mapping path="/reserve/**/*"/>
+      		<mapping path="/checkout/**/*"/>
+		  	<mapping path="/reserve/**/*"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
     
 		<interceptor>
-			<mapping path="/admin/**" />
+			<mapping path="/admin/" />
+			<mapping path="/admin/menu/*" />
+			<mapping path="/admin/**/*" />
+			<exclude-mapping path="/admin/menu/submenus/**/*"/>
+			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
+			
 			<beans:ref bean="menuInterceptor" />
 		</interceptor>
     

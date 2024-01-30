@@ -10,6 +10,7 @@
 		var AddMenuName = '<c:out value="${AddMenuName}"/>';
 		var ModifyMenuName = '<c:out value="${ModifyMenuName}"/>';
 		var deleteMenuName = '<c:out value="${deleteMenuName}"/>';
+		
 		console.log("AddMenuName: " , AddMenuName);
 		console.log("ModifyMenuName: " , ModifyMenuName);
 		
