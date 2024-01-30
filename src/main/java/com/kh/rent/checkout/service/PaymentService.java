@@ -17,5 +17,8 @@ public interface PaymentService {
 	
 	public int getPayNonResRid(int pay_res_rid);
 	
+	public void getPaymentInfo(PaymentDTO paymentDto);
+
 	public void pay(PaymentDTO paymentDto);
+
 }

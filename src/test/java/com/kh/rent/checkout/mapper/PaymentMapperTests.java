@@ -25,14 +25,17 @@ public class PaymentMapperTests {
 	//포인트 차감
 	@Test
 	public void testDeductPayment() {
+		Date day = new Date();
 		PaymentDTO paymentDTO = PaymentDTO.builder()
-				.pay_mem_id("test01")
+				.pay_mem_id("MEMBER01")
 				.pay_type("PAY_P")
-				.point_cost(-2000)
+				.pay_date(day)
+				.point_cost(1000)
 				.build();
 		paymentMapper.deductPayment(paymentDTO);
 		log.info("paymentDTO"+paymentDTO);
 		
 	}
+	
 	
 }

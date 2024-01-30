@@ -20,23 +20,18 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentMapper.getPaymentInfo(pay_res_rid);
 	}
 
-	/*
-	@Override
-	public int deductPayment(PaymentDTO paymentDTO) {
-		
-		return paymentMapper.deductPayment(PaymentDTO paymentDTO);
-		
-	}
-	*/
+	
+//	@Override
+//	public int deductPayment(PaymentDTO paymentDTO) {
+//		
+//		return paymentMapper.deductPayment(PaymentDTO paymentDTO);
+//		
+//	}
+//	
 
 	@Override
 	public int getMemberPoint(int mem_point) {
 		return paymentMapper.getMemberPoint(mem_point);
-	}
-
-	@Override
-	public MemberVO getMemberVO(String pay_mem_id) {
-		return paymentMapper.getMemberVO(pay_mem_id);
 	}
 
 	@Override
@@ -54,10 +49,23 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void pay(PaymentDTO paymentDto) {
 		// 결제 내역 기록 (insert)
-//		paymentMapper.결제기록차감하기();
+		paymentMapper.getPaymentRecord(paymentDto);
 		// 회원 포인트 차감 (update)
 		paymentMapper.deductPayment(paymentDto);
 	}
-	
-	
+
+
+	@Override
+	public MemberVO getMemberVO(String pay_mem_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void getPaymentInfo(PaymentDTO paymentDto) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
