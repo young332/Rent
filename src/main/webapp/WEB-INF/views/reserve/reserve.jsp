@@ -116,7 +116,7 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-cartype" >차종<br>
-									<input type="checkbox" id="car_sizeAll" name="car_sizeAll" value="전체">전체
+									<input type="checkbox" id="car_sizeAll" name="car_size" value="전체">전체
 									<input type="checkbox" id="car_size_small" name="car_size" value="소형">소형
 									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형<br>
 									<input type="checkbox" id="car_size_large" name="car_size" value="대형">대형 
@@ -126,7 +126,7 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-fuel" >연료<br> 
-									<input type="checkbox" name="car_fuelAll" value="전체">전체
+									<input type="checkbox" name="car_fuel" value="전체">전체
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="휘발유">휘발유
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="경유">경유<br>
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="하이브리드">하이브리드
@@ -136,7 +136,7 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-carcompany">제조사<br>
-									<input type="checkbox" name="car_companyAll" value="전체" >전체
+									<input type="checkbox" name="car_company" value="전체" >전체
 									<input type="checkbox"  name="car_company" id="car_company" value="현대">현대
 									<input type="checkbox"  name="car_company" id="car_company"  value="기아">기아
 								</label>  
@@ -145,7 +145,7 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-otheroptions">기타옵션<br> 
-									<input type="checkbox" name="otheroptionsAll" value="전체" >전체
+									<input type="checkbox" name="otheroptions" value="전체" >전체
 									<input type="checkbox"  name="otheroptions" id="op_cam" value="후방카메라">후방카메라<br>
 									<input type="checkbox"  name="otheroptions" id="op_bt" value="블루투스">블루투스
 									<input type="checkbox"  name="otheroptions" id="op_navi" value="내비게이션">내비게이션
@@ -221,6 +221,17 @@ $(function() {
 	
 	
 	 $(document).ready(function() {
+		 $("input[type='checkbox']").change(function() {
+	            var groupName = $(this).attr("name");
+	    
+	            // Uncheck other checkboxes in the same group
+	            $("input[name='" + groupName + "']").not(this).prop("checked", false);
+	    
+	            // Clear the selection if the checkbox is unchecked
+	            if (!$(this).prop("checked")) {
+	                $("input[name='" + groupName + "']").prop("checked", false);
+	            }
+	        });
 		    
 		    function getParameterByName(name, url) {
 		        if (!url) url = window.location.href;
@@ -245,17 +256,17 @@ $(function() {
 
 		    
 		    $("input[name='car_size']:checked").each(function() {
-		        carSizeValues += $(this).val() + ",";
+		        carSizeValues = $(this).val() ;
 		    });
 
 		    
 		    $("input[name='car_fuel']:checked").each(function() {
-		        carFuelValues += $(this).val() + ",";
+		        carFuelValues = $(this).val() ;
 		    });
 
 		    
 		    $("input[name='car_company']:checked").each(function() {
-		        carCompanyValues += $(this).val() + ",";
+		        carCompanyValues = $(this).val() ;
 		    });
 
 		    
@@ -311,6 +322,8 @@ $(function() {
 	}
 	
 	setFooterTop();
+	
+	
 	 
 });
 
