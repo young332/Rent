@@ -100,5 +100,11 @@ public class AdminController {
 
 	}
 	
+	@GetMapping("/member")
+	public void adminMemberGet() {
+		
+	}
+	
+	
 
 }

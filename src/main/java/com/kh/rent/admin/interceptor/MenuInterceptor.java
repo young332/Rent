@@ -45,6 +45,7 @@ public class MenuInterceptor implements HandlerInterceptor{
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
+		
 		log.info("postHandle...");
 		String path = request.getRequestURI();
 		log.info("path:"+ path);

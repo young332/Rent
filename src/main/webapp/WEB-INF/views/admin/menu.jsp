@@ -10,9 +10,10 @@
 		var AddMenuName = '<c:out value="${AddMenuName}"/>';
 		var ModifyMenuName = '<c:out value="${ModifyMenuName}"/>';
 		var deleteMenuName = '<c:out value="${deleteMenuName}"/>';
-		
+		var errorMessage = '<c:out value="${errorMessage}"/>';
 		console.log("AddMenuName: " , AddMenuName);
 		console.log("ModifyMenuName: " , ModifyMenuName);
+		console.log("errorMessage: " , errorMessage);
 		
 		var parentMenu;
 		console.log("상단parentMenu:",parentMenu);
@@ -33,9 +34,9 @@
 			$("#alertModal").find(".modal-title")
 										.text("메뉴 "+ v);
 			$("#alertModal").modal("show");
+		} else if(errorMessage){
+			$("#alertModal").find(".modal-body").text("해당요청을 수행하지 못했습니다.");
 		}
-		
-		
 		
 		// 선택한 상위메뉴의 하위메뉴 목록 조회 이벤트 처리
 		$(".parentMenu").click(function() {
@@ -102,13 +103,14 @@
 		        var orderby = $(this).data("orderby");
 		        var menu_url = $(this).data("menu_url");
 		        var use_yn = $(this).data("use_yn");
-		        
+		        console.log("수정 yn값:" , use_yn);
+		        //console.log(menu_id, menu_type, menu_name, orderby, menu_url ,use_yn)
 	        	
 		        $("#SubMenuModal form").attr("action", "/admin/menu/subMenuModify");
 	            $("#SubMenuModal .modal-title").text("하위메뉴 수정");
-		        $("#SubMenuModal #sub_menu_id").val(menu_id);
+		        $("#SubMenuModal #sub_menu_id").val(menu_id).prop('readonly', true);
 		        $("#SubMenuModal #sub_menu_type").val(menu_type);
-		        console.log(menu_id,menu_type,menu_name,orderby,menu_url)
+		        
 		        console.log("menu_type", menu_type);
 		        if (menu_type == 1) {
 		        	$("#sub_menu_type").val("1").prop("selected", true);
@@ -166,10 +168,12 @@
 		        	
 			        $("#TopMenuModal form").attr("action", "/admin/menu/topMenuModify");
 		            $("#TopMenuModal .modal-title").text("상위메뉴 수정");
-			        $("#TopMenuModal #menu_id").val(menu_id);
+			        $("#TopMenuModal #menu_id").val(menu_id).prop('readonly', true);
 			        $("#TopMenuModal #menu_type").val(menu_type);
-			        console.log(menu_id,menu_type,menu_name,orderby,menu_url)
+			        
+			        console.log(menu_id, menu_type ,menu_name, orderby, use_yn, menu_url)
 			        console.log("menu_type", menu_type);
+			        
 			        if (menu_type == 1) {
 			        	$("#menu_type").val("1").prop("selected", true);
 			        } 
@@ -182,10 +186,12 @@
 			        $("#TopMenuModal #menu_url").val(menu_url);
 
 			        if(use_yn == "Y"){
-			        	$('#TopMenuModal input[name="use_yn"]').attr('checked', 'checked');
+			        	$('#TopMenuModal .rdoY').prop('checked', true);
+			        	$('#TopMenuModal .rdoN').prop('checked', false);
 			        }
 			        if(use_yn == "N"){
-			        	$('#TopMenuModal input[name="use_yn"]').attr('checked', 'checked');
+			        	$('#TopMenuModal .rdoY').prop('checked', false);
+			        	$('#TopMenuModal .rdoN').prop('checked', true);
 			        }
 			        updateModalFooter(curMode);
 			        
@@ -254,6 +260,7 @@
 			console.log("클릭됨");
 		    var menu_id = $(this).data("menu_id");
 		    console.log("menu_id:", menu_id);
+		    var that = $(this);
 		
 		 	// 메뉴 삭제 비동기 요청
             $.post("/admin/menu/delete/" + menu_id, function(deleteResult) {
@@ -416,11 +423,11 @@
 			                    <div class="col-sm-10">
 			                        <div class="custom-controls-stacked">
 			                            <label class="custom-control custom-radio">
-			                                <input name="use_yn" value="Y" type="radio" class="custom-control-input" checked="">
+			                                <input name="use_yn" value="Y" type="radio" class="custom-control-input rdoY" checked>
 			                                <span class="custom-control-label">사용</span>
 			                            </label>
 			                            <label class="custom-control custom-radio">
-			                                <input name="use_yn" value="N" type="radio" class="custom-control-input" >
+			                                <input name="use_yn" value="N" type="radio" class="custom-control-input rdoN" >
 			                                <span class="custom-control-label">미사용</span>
 			                            </label>
 			                        </div>
