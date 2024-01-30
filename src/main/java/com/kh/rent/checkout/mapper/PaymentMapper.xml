@@ -4,45 +4,38 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.mapper.PaymentMapper">
 	
-	<!-- 예약자 정보 -->
+	<!-- 결제 정보 -->
 	<select id="getPaymentInfo" resultType="com.kh.rent.mapper.PaymentDTO">
-		SELECT
-    		pay_res_rid,
-    		pay_mem_id,
-    		pay_date,
-    		pay_cost,
-    		point_id,
-    		point_user_id,
-    		point_code,
-    		point_use_date,
-    		point_cost
-		FROM
-   		 TBL_PAYMENT
-		WHERE
-    		pay_res_rid = #{pay_res_rid}
+		SELECT pay_type, pay_res_id, pay_mem_id, pay_date, pay_cost
+		FROM TBL_PAYMENT
+		WHERE pay_mem_id = #{pay_mem_id}
 	</select>
 	
 	<!-- 포인트 조회 -->
 	<select id="getMemberPoint" parameterType="map" resultType="int">
 		select mem_point
 		from TBL_MEMBER
-		where mem_id = #{mem_id};
-	
+		where mem_id = #{mem_id};	
 	</select>
 	
 	<!-- 포인트 차감 -->
-	<update id="updateMemberPoint" parameterType="map">
-		update TBL_MEMBER set mem_point = mem_point - #{pointToDeduct}
+	<update id="deductPayment" parameterType="map">
+		update TBL_MEMBER set mem_point = mem_point - #{point_cost}
 		where mem_id = #{mem_id}
 	</update>
 	
-	<!-- 예약 번호 불려오기 -->	
+	<!-- 회원 예약 번호 불려오기 -->	
 	<select id="getPayResRid" parameterType="int" resultType="int">
-        SELECT pay_res_rid
-        FROM TBL_PAYMENT
-        WHERE pay_res_rid = #{pay_res_rid}
+        SELECT res_rid
+        FROM TBL_RESERVE
+        WHERE res_rid = #{pay_res_rid}
     </select>
     
-    <!-- 결제 최종 정보 -->
+    <!-- 비회원 예약 번호 불려오기 -->	
+	<select id="getPayNonResRid" parameterType="int" resultType="int">
+        SELECT non_rid
+        FROM TBL_NONMEMBER
+        WHERE non_rid = #{pay_res_rid}
+    </select>
 
 </mapper>

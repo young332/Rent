@@ -23,9 +23,31 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public void deductPayment(int pay_res_rid, int pay_cost) {
-		// TODO Auto-ge
+	public int deductPayment(int pay_res_rid, int pay_cost) {
 		
+		return paymentMapper.deductPayment(pay_res_rid, pay_cost);
+		
+	}
+
+	@Override
+	public int getMemberPoint(int mem_point) {
+		return paymentMapper.getMemberPoint(mem_point);
+	}
+
+	@Override
+	public MemberVO getMemberVO(String pay_mem_id) {
+		return paymentMapper.getMemberVO(pay_mem_id);
+	}
+
+	@Override
+	public int getPayResRid(int pay_res_rid) {
+		
+		return paymentMapper.getPayResRid(pay_res_rid);
+	}
+
+	@Override
+	public int getPayNonResRid(int pay_res_rid) {
+		return paymentMapper.getPayNonResRid(pay_res_rid);
 	}
 	
 	
