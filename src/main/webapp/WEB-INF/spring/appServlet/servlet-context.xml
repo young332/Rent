@@ -54,7 +54,7 @@
 			<mapping path="/myPage/**/*" />
       <mapping path="/checkout/**/*"/>
 		  <mapping path="/reserve/**/*"/>
-		  <exclude-mapping path="/reserve/reserveCheck"/>
+		  <exclude-mapping path="/reserve/reservecars"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
     

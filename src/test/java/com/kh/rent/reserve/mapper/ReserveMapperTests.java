@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.admin.domain.CarInfoVO;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 import com.kh.rent.reserve.mapper.ReserveMapperTests;
 
@@ -56,16 +57,16 @@ public class ReserveMapperTests {
 	
 	@Test
 	public void testSelectCheck() {
-		CarInfoVO car = new CarInfoVO();
+		ReserveDTO car = new ReserveDTO();
 		car.setCar_company("현대");
-		car.setCar_size("소형");
-		car.setCar_fuel("휘발유");
-		car.setOp_carseat("Y");
-		car.setOp_bt("Y");
-		car.setOp_cam("Y");
-		car.setOp_navi("N");
+		car.setCar_fuel("경유");
 		
-		List<CarInfoVO> list = reserveMapper.selectCheck(car);
+		
+	
+		
+		
+		
+		List<ReserveDTO> list = reserveMapper.selectCheck(car);
 		log.info("list"+list);
 	}
 	

@@ -23,6 +23,7 @@ div.left-box {
 #cars-box {
 	width: 70%;
 	height: 1000px;
+	margin-left: 10px;
 }
 
 
@@ -116,7 +117,7 @@ div.left-box {
 									<input type="checkbox" id="car_size_small" name="car_size" value="소형">소형
 									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형<br>
 									<input type="checkbox" id="car_size_large" name="car_size" value="대형">대형 
-									<input type="checkbox" id="car_size_electric" name="car_size" value="전기차">전기차
+									
 								</label>
 							</div>
 							<hr>
@@ -126,6 +127,7 @@ div.left-box {
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="휘발유">휘발유
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="경유">경유<br>
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="하이브리드">하이브리드
+									<input type="checkbox"  name="car_fuel" id="car_fuel" value="전기">전기
 									</label>
 							</div>
 							<hr>
@@ -155,7 +157,7 @@ div.left-box {
 					
 		   			</div>
 		   			
-		   			<div id="cars-box" class="jumbotron card card-block" style="background-color:white;">
+		   			<div id="cars-box" >
 	    				<div class="right-box">
 								<div class="row">
 				    			<div class="col-md-12">
@@ -168,20 +170,20 @@ div.left-box {
 						    					<div class="text">
 						    						<h2 class="mb-0">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
-							    						<span class="cat">${reserveDTO.car_company}</span>
-							    						<span class="cat">${reserveDTO.car_size}</span>
-							    						<span class="cat">${reserveDTO.car_fuel}</span>
+							    						<span class="cat">${reserveDTO.car_company}</span>|
+							    						<span class="cat">${reserveDTO.car_size}</span>|
+							    						<span class="cat">${reserveDTO.car_fuel}</span>|
 							    						<c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
 													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">
 													        <span class="cat">카시트</span>
 													    </c:if>
-													    <c:if test="${reserveDTO.op_navi eq 'Y'}">
+													    <c:if test="${reserveDTO.op_navi eq 'Y'}">|
 													        <span class="cat">내비게이션</span>
 													    </c:if>
-													    <c:if test="${reserveDTO.op_bt eq 'Y'}">
+													    <c:if test="${reserveDTO.op_bt eq 'Y'}">|
 													        <span class="cat">블루투스</span>
 													    </c:if>
-													    <c:if test="${reserveDTO.op_cam eq 'Y'}">
+													    <c:if test="${reserveDTO.op_cam eq 'Y'}">|
 													        <span class="cat">후방 카메라</span>
 													    </c:if>
 													</c:if>
@@ -204,8 +206,8 @@ div.left-box {
 		</section>
      
 
-<%@ include file="/WEB-INF/views/include/bottom.jsp" %>
 
+<%@ include file="/WEB-INF/views/include/bottom.jsp" %>
 <script>
 $(function() {
 	 $("#btnreset").click(function(){
@@ -238,34 +240,31 @@ $(function() {
 		    var carFuelValues = "";
 		    var carCompanyValues = "";
 
-		    // Iterate over car_size checkboxes
+		    
 		    $("input[name='car_size']:checked").each(function() {
 		        carSizeValues += $(this).val() + ",";
 		    });
 
-		    // Remove trailing comma
-		    carSizeValues = carSizeValues.slice(0, -1);
-
+		    
 		    $("input[name='car_fuel']:checked").each(function() {
 		        carFuelValues += $(this).val() + ",";
 		    });
 
-		    // Remove trailing comma
-		    carFuelValues = carFuelValues.slice(0, -1);
-
+		    
 		    $("input[name='car_company']:checked").each(function() {
 		        carCompanyValues += $(this).val() + ",";
 		    });
 
-		    // Remove trailing comma
-		    carCompanyValues = carCompanyValues.slice(0, -1);
-
+		    
 		    $("input[name='otheroptions']:checked").each(function() {
 		        checkedValues += $(this).val() + ",";
 		    });
 
-		    // Remove trailing comma
-		    checkedValues = checkedValues.slice(0, -1);
+		    
+		    carSizeValues = carSizeValues.replace(/,$/, "");
+		    carFuelValues = carFuelValues.replace(/,$/, "");
+		    carCompanyValues = carCompanyValues.replace(/,$/, "");
+		    checkedValues = checkedValues.replace(/,$/, "");
 
 		    var sendData = {
 		        "car_size": carSizeValues,
@@ -274,22 +273,21 @@ $(function() {
 		        "otherOptions": checkedValues
 		    };
 
-		    console.log('sendData =', sendData);
+		    console.log('var sendData =', sendData);
 
+		    
 		    $.ajax({
-		        url: '/reserve/reserveCheck',
+		        url: '/reserve/reservecars',
 		        type: 'GET',
-		        contentType: "application/json:charset=utf-8",
+		        contentType: "application/json",
 		        data: sendData,
 		        success: function(rData) {
-		            console.log('success', rData); // JSON: {"":"", "":""} -> parsing
+		            console.log('전송 성공:', rData);
 		            $("#cars-box").html(rData);
-		            $.each(rData, function() {
-		                var that = $(this);
-		                var car_name = that.car_name;
-		                $("#cars-box").append("<div>" + car_name + "</div>");
-		            });
-		        }
+		           
+		            
+		        },
+		        
 		    });
 		});
 

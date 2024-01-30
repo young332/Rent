@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReserveDTO {
 	private String car_index;
-    private String res_rid;
+   
 
     private String car_name;
     private String car_company;
