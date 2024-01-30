@@ -2,6 +2,7 @@ package com.kh.rent.checkout.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
@@ -12,9 +13,6 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	private PaymentMapper paymentMapper; 
-	
-	@Autowired
-	private MemberVO memberVO;
 
 	@Override
 	public PaymentDTO getPaymentDTO(int pay_res_rid) {
@@ -22,12 +20,14 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentMapper.getPaymentInfo(pay_res_rid);
 	}
 
+	/*
 	@Override
-	public int deductPayment(int pay_res_rid, int pay_cost) {
+	public int deductPayment(PaymentDTO paymentDTO) {
 		
-		return paymentMapper.deductPayment(pay_res_rid, pay_cost);
+		return paymentMapper.deductPayment(PaymentDTO paymentDTO);
 		
 	}
+	*/
 
 	@Override
 	public int getMemberPoint(int mem_point) {
@@ -48,6 +48,15 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public int getPayNonResRid(int pay_res_rid) {
 		return paymentMapper.getPayNonResRid(pay_res_rid);
+	}
+
+	@Transactional
+	@Override
+	public void pay(PaymentDTO paymentDto) {
+		// 결제 내역 기록 (insert)
+//		paymentMapper.결제기록차감하기();
+		// 회원 포인트 차감 (update)
+		paymentMapper.deductPayment(paymentDto);
 	}
 	
 	

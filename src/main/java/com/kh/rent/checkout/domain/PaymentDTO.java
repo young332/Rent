@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PaymentDTO {
 	
-	private MemberVO memberVO;
+//	private MemberVO memberVO;
 		
 	// 예약번호ID(FK)
 	private int pay_res_rid;

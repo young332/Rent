@@ -9,11 +9,13 @@ public interface PaymentService {
 	
 	public MemberVO getMemberVO(String pay_mem_id);
 	
-	public int deductPayment(int pay_res_rid, int pay_cost);
+//	public int deductPayment(PaymentDTO paymentDTO);
 	
 	public int getMemberPoint(int mem_point);
 	
 	public int getPayResRid(int pay_res_rid);
 	
 	public int getPayNonResRid(int pay_res_rid);
+	
+	public void pay(PaymentDTO paymentDto);
 }

@@ -19,10 +19,15 @@ import lombok.extern.log4j.Log4j;
 public class PaymentServiceTests {
 	
 	@Autowired
-    private PaymentService PaymentService;
+    private PaymentService paymentService;
 	
 	@Test
     public void testPaymentDeduction() {};
+    
+//    @Test
+//    public void testPay() {
+//    	this.paymentService.pay();
+//    }
 	
 }
 
