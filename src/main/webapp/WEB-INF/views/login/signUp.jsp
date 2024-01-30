@@ -200,8 +200,8 @@ $(function(){
 			var inputCpnTelNo = $("#mem_phone").val();
 			var inputCpnEmail = $("#mem_email").val();
 			<!--주소-->
-			var inputCpnAddr1 = $("#zip_code").val();
-			var inputCpnAddr2 = $("#addr").val();
+			var inputCpnAddr1 = $("#mem_zip_code").val();
+			var inputCpnAddr2 = $("#mem_addr").val();
 			<!--문자인증-->
 			var inputCpnMessage =$("#phone_check").val();
 			

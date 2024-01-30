@@ -26,8 +26,8 @@ public class MemberMapperTests {
 	
 	@Test //회원가입
 	public void  testInsert() {
-		String id = "MEMBER03";
-		String pw = "MEMBER03";
+		String id = "MEMBER05";
+		String pw = "MEMBER05";
 		String name ="신세경";
 		String email ="ttt@ttt.com";
 		String birth ="19890101";
@@ -103,4 +103,13 @@ public class MemberMapperTests {
 		int count = memberMapper.checkPhone(mem_phone);
 		log.info("count : " + count);
 	}
+	//암호화 패스워드 로그인
+	@Test
+	public void testPasswordLogin() {
+		
+		String mem_pw = "5afab9da4eaefbb7f4536796337f4fb0f9cdd5024731c4ea9f1a7523";
+		String count = memberMapper.passwordLogin(mem_pw);
+		log.info("count:" + count);
+	}
+	
 }

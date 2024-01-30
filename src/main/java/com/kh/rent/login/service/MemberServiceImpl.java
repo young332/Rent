@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.kh.rent.login.domain.FindIdDTO;
@@ -24,8 +25,15 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public MemberVO login(LoginDTO loginDTO) {
-		MemberVO memberVO = memberMapper.login(loginDTO);
-		return memberVO;
+		String password = memberMapper.passwordLogin(loginDTO.getMem_pw());
+		BCryptPasswordEncoder bcypt = new BCryptPasswordEncoder();
+		boolean result = bcypt.matches(loginDTO.getMem_pw(), password);
+		if(result) {
+			loginDTO.setMem_pw(password);
+			return memberMapper.login(loginDTO);
+		}
+		
+		return memberMapper.login(loginDTO);
 	}
 
 	@Override
@@ -83,6 +91,12 @@ public class MemberServiceImpl implements MemberService{
 	public int checkPhone(String mem_phone) {
 		int count = memberMapper.checkPhone(mem_phone);
 		return count;
+	}
+
+	@Override
+	public int passwordencrypt(String mem_pw) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

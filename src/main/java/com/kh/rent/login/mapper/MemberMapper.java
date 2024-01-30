@@ -30,4 +30,7 @@ public interface MemberMapper {
 		
 		//휴대폰번호 중복체크
 		public int checkPhone(String mem_phone);
+		
+		//암호화 패스워드 로그인
+		public String passwordLogin(String mem_pw);
 }

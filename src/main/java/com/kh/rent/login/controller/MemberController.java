@@ -73,10 +73,11 @@ public class MemberController {
 		model.addAttribute("useCookie", loginDTO.getUseCookie());
 		
 	}
-	
+	//로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
+		log.info("logout");
 		return "redirect:/login/login";
 	}
 	

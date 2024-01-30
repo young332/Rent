@@ -26,4 +26,7 @@ public interface MemberService {
 		
 		//휴대폰 중복체크
 		public int checkPhone(String mem_phone);
+		
+		//패스워드 암호화 비교
+		public int passwordencrypt(String mem_pw);
 }
