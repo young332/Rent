@@ -68,6 +68,7 @@ public class ReserveController {
 		
 	}
 	
+	
 	@GetMapping("/licenseinfo")
 	public void licenseinfo() {
 		log.info("licenseinfo...");

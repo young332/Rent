@@ -246,9 +246,34 @@ $(function() {
 	        console.log("CheckReset");
 	         
 	    });
-	 $("#btnSearch").click(function(){
-		 
-	 });
+	 $("#btnSearch").click(function() {
+		    // Your existing code for handling the btnSearch click event
+
+		    // Get the selected values from the date inputs
+		    var selectedPickDate = $("#top_book_pick_date").val();
+		    var selectedOffDate = $("#top_book_off_date").val();
+
+		    // Format the selected dates for display
+		    var formattedPickDate = formatDateTime(selectedPickDate);
+		    var formattedOffDate = formatDateTime(selectedOffDate);
+
+		    // Update the readonly input fields with the selected dates
+		    $("input[name='top_book_pick_date']").val(formattedPickDate);
+		    $("input[name='top_book_off_date']").val(formattedOffDate);
+		});
+
+		// The existing code for formatting date/time
+		function formatDateTime(dateTimeString) {
+		    var options = {
+		        year: 'numeric',
+		        month: 'numeric',
+		        day: 'numeric',
+		        hour: 'numeric',
+		        minute: 'numeric',
+		        hour12: true,
+		    };
+		    return new Date(dateTimeString).toLocaleString('ko-KR', options);
+		}
 	
 	//달력 입력값 받음
 	 $(document).ready(function() {
@@ -324,6 +349,7 @@ $(function() {
 		    // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
 		    $("#top_book_pick_date, #top_book_off_date").change(function() {
 		        calculateTotalTime();
+		        
 		    });
 
 		    // 초기 로딩 시에도 계산 함수 호출
@@ -439,6 +465,3 @@ $(function() {
 
 
 </script>
-
-
-
