@@ -92,6 +92,11 @@ div.left-box {
 	margin-top:10px;
 	
 }
+.fa-arrow-circle-right{
+	margin-top:15px;
+	margin-left:20px;
+    color: black;
+}
 
 </style>
 
@@ -124,8 +129,8 @@ div.left-box {
 					<div class="top-searchinput-box" style="width: 1099px;">
 						<h6>대여일&nbsp;&nbsp;:</h6>
 						<input type="text" name="top_book_pick_date" readonly>
-						
-						<h6>반납일&nbsp;&nbsp;:</h6>
+						<i class="fa fa-arrow-circle-right"style="height: 16px;"></i>
+						<h6 style="margin-left: 25px;">반납일&nbsp;&nbsp;:</h6>
 						<input type="text" name="top_book_off_date"  readonly>
 						<h6>총&nbsp;&nbsp;: <span id="totalTimeSpan"></span> </h6>
 
