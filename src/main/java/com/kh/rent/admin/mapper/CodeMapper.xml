@@ -6,44 +6,47 @@
 	
 	<select id="getTopCode" resultType="com.kh.rent.admin.domain.CommonCodeVO">
 		select code_id, parent_code_id, code_depth, code_name, use_yn, orderby, ref_1, ref_2 from TBL_COMMON_CODE
-		where parent_code_id = '@'
+		where parent_code_id = '@' order by orderby asc;
 	</select>
 	
 	<select id="getSubCodeAll" resultType="com.kh.rent.admin.domain.CommonCodeVO">
 		select code_id, parent_code_id, code_depth, code_name, use_yn, orderby, ref_1, ref_2 from TBL_COMMON_CODE
-		where not parent_code_id = '@'
+		where not parent_code_id = '@' order by orderby asc;
 	</select>
 	
-	<!-- <select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE menu_id = #{menu_id}
+	<select id="getOneCode" resultType="com.kh.rent.admin.domain.CommonCodeVO">
+		select code_id, parent_code_id, code_depth, code_name, use_yn, orderby, ref_1, ref_2 from TBL_COMMON_CODE
+		where code_id = #{code_id} order by orderby asc;
 	</select>
 	
-	<select id="getSubMenu" parameterType="String" resultType="com.kh.rent.admin.domain.MenuVO">
-    	SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE parent_menu_id = #{parent_menu_id}
+	<select id="getSubCode" parameterType="String" resultType="com.kh.rent.admin.domain.CommonCodeVO">
+    	select code_id, parent_code_id, code_depth, code_name, use_yn, orderby, ref_1, ref_2 from TBL_COMMON_CODE
+    	WHERE parent_code_id = #{parent_code_id} order by orderby asc;
 	</select>
 	
-	<insert id="insertMenu">
-		insert into TBL_MENU(menu_id, parent_menu_id, menu_type, menu_name, menu_depth, menu_url, orderby, use_yn)
-		values (#{menu_id}, #{parent_menu_id}, #{menu_type}, #{menu_name}, #{menu_depth}, #{menu_url}, #{orderby}, #{use_yn})
+    <insert id="insertCode">
+		insert into TBL_COMMON_CODE(code_id, parent_code_id, code_depth, code_name, use_yn, orderby, ref_1, ref_2, update_user, update_date)
+		values (#{code_id}, #{parent_code_id}, #{code_depth}, #{code_name}, #{use_yn}, #{orderby}, #{ref_1}, #{ref_2}, #{update_user}, #{update_date})
 	</insert>
 	
-	<update id="updateMenu">
-		update TBL_MENU set
-			parent_menu_id = #{parent_menu_id},
-			menu_type = #{menu_type},
-			menu_name = #{menu_name},
-			menu_depth = #{menu_depth},
-			menu_url = #{menu_url},
+	<update id="updateCode">
+		update TBL_COMMON_CODE set
+			parent_code_id = #{parent_code_id},
+			code_depth = #{code_depth},
+			code_name = #{code_name},
+			use_yn = #{use_yn},
 			orderby = #{orderby},
-			use_yn = #{use_yn}
-		where menu_id = #{menu_id}
+			ref_1 = #{ref_1},
+			ref_2 = #{ref_2},
+			update_date = now()
+		where code_id = #{code_id}
 	</update>
 	
 	<delete id="delete">
-		delete from TBL_MENU
-		where menu_id = #{menu_id} 
+		delete from TBL_COMMON_CODE
+		where code_id = #{code_id} 
 	</delete>
- -->
+
 	
 	
 	
