@@ -247,22 +247,22 @@ $(function() {
 	         
 	    });
 	 $("#btnSearch").click(function() {
-		    // Your existing code for handling the btnSearch click event
+		    
 
-		    // Get the selected values from the date inputs
+		    
 		    var selectedPickDate = $("#top_book_pick_date").val();
 		    var selectedOffDate = $("#top_book_off_date").val();
 
-		    // Format the selected dates for display
+		
 		    var formattedPickDate = formatDateTime(selectedPickDate);
 		    var formattedOffDate = formatDateTime(selectedOffDate);
 
-		    // Update the readonly input fields with the selected dates
+		   
 		    $("input[name='top_book_pick_date']").val(formattedPickDate);
 		    $("input[name='top_book_off_date']").val(formattedOffDate);
 		});
 
-		// The existing code for formatting date/time
+		
 		function formatDateTime(dateTimeString) {
 		    var options = {
 		        year: 'numeric',
