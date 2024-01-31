@@ -63,9 +63,7 @@
 			<mapping path="/admin/**/*" />
 			<exclude-mapping path="/admin/menu/submenus/**/*"/>
 			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
-			<!-- <exclude-mapping path="//admin/menu/subMenuModify/"/> -->
-			
-			
+
 			<beans:ref bean="menuInterceptor" />
 		</interceptor>
     

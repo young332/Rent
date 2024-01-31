@@ -104,7 +104,12 @@ public class AdminController {
 	public void adminMemberGet() {
 		
 	}
+
 	
+	@GetMapping("/registerCar")
+	public void adminregisterCarGet() {
+		
+	}
 	
 
 }
