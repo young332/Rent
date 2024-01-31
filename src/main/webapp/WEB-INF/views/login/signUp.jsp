@@ -40,6 +40,7 @@ function openZipSearch() {
 
 var isValidPhone = false;
 var isValidPassword = false;
+isCheckId = false;
 
 //아이디 중복 체크
 $(function(){
@@ -87,8 +88,8 @@ $(function(){
 	$("input[name='mem_phone']").on("propertychange change keyup paste input", function(){
 		var str = $("input[name='mem_phone']").val();
 		console.log("str:" , str);
-		var regExp = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
-		if(!regExp.test(str)){
+		var regExp = /^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/;
+		if(str.length !== 11 || !regExp.test(str)){
 			$("#dup-phone").text("올바른 전화번호 11자리를 입력해주세요").css("color","red");
 			isValidPhone = false;
 			
@@ -102,7 +103,7 @@ $(function(){
 			url : "/login/phoneCheck",
 			dataType : "text",
 			contentType: "application/json",
-			data: str,
+			data: JSON.stringify({ "mem_phone": str }),
 			headers : {       
 				"Content-Type" : "application/json",      
 				"X-HTTP-Method-Override" : "POST"    
@@ -205,10 +206,13 @@ $(function(){
 			<!--문자인증-->
 			var inputCpnMessage =$("#phone_check").val();
 			
-				if (inputId.length == 0) {alert("아이디를 입력해 주세요.");$("#mem_id").focus();return false;}
+				if (inputId.trim() == "") {alert("아이디를 입력해 주세요.");$("#mem_id").focus();return false;}
 				if (isCheckId == 0) {alert("아이디 중복 체크를 해주세요.");$("#mem_id").focus();return false;}
-				if (inputPwd.length == 0) {alert("비밀번호를 입력해 주세요.");$("#mem_pw").focus();return false;}
+				if (inputPwd.trim() == "") {alert("비밀번호를 입력해 주세요.");$("#mem_pw").focus();return false;}
 				if (inputPwd != inputPwdCfm) {alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.");$("#mem_pw").focus();return false;}
+				if (inputCpnName.length == 0) {alert("이름을 입력해 주세요.");$("#mem_name").focus();return false;}
+				if (inputCpnBirth.length == 0) {alert("생일을 입력해 주세요.");$("#mem_birth").focus();return false;}
+				<!--문자인증 -->
 				if (inputCpnTelNo.length == 0) {alert("전화번호를 입력해 주세요.");$("#mem_phone").focus();return false;}
 				<!--문자인증 -->
 // 				if (inputCpnMessage.length == 0) {alert("문자인증 해주세요.");$("#phone_check").focus();return false;}

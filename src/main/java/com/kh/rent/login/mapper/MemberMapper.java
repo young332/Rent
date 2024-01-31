@@ -33,9 +33,9 @@ public interface MemberMapper {
 		//휴대폰번호 중복체크
 		public int checkPhone(String mem_phone);
 		
-		//암호화 비밀번호 이름,이메일 찾기
+		//암호화 비밀번호 로그인
 		public MemberVO findByIdAndPw(LoginDTO loginDTO);
 		
-		public MemberVO findeByName(@Param("mem_name") String mem_name);
+
 		
 }

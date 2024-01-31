@@ -26,14 +26,14 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private Sha256 sha256;
 	
-//	@Override //로그인
+//	@Override //로그인(일반로그인)
 //	public MemberVO login(LoginDTO loginDTO) {
 //		MemberVO memberVO=	memberMapper.login(loginDTO);
 //		
 //		return memberVO;
 //	}
 	
-	@Override //로그인
+	@Override //로그인(암호화로그인)
 	public MemberVO login(LoginDTO loginDTO) {
 		log.info("loginDTO:" + loginDTO);
 		loginDTO.setMem_pw(sha256.encrypt(loginDTO.getMem_pw()));

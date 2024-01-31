@@ -104,20 +104,19 @@ public class MemberMapperTests {
 		log.info("count : " + count);
 	}
 	
-//	@Test
-//	public void testFindBypw() {
-//		String mem_id = "MEMBER03";
-//		String mem_pw ="1942b77e8133d5323f6e99288a6d45cd21529547bb39d1256385082892719f76";
-//		String count  = memberMapper.findByIdAndPw(LoginDTO )
-//		log.info("count: " + count);
-//	}
-	
 	@Test
-	public void testFindByName() {
-		String mem_name = "한소희";
-		MemberVO memberVO = memberMapper.findeByName(mem_name);
-		log.info("memberVO:" + memberVO);
+	public void testFindBypw() {
+		String mem_id = "MEMBER03";
+		String mem_pw ="1942b77e8133d5323f6e99288a6d45cd21529547bb39d1256385082892719f76";
+		
+		LoginDTO loginDTO = LoginDTO.builder()
+				.mem_id(mem_id)
+				.mem_pw(mem_pw)
+				.build();
+		MemberVO memberVO = memberMapper.findByIdAndPw(loginDTO);
+		log.info("memberVO: " + memberVO);
 	}
 	
+
 	
 }
