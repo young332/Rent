@@ -6,21 +6,17 @@
 
 <script>
 $(function() {
-	// 회원정보 수정버튼
-// 	$("#btn-updateInfo").click(function() {
-// 		action = "/myPage/myPageInfo_modify";
-// 		method = "post";
-// 	});
-	
-	
 	// 회원탈퇴 모달
 	$("#btn-deleteInfo").click(function() {
+		$("#del_enter_pwd").val("");
 		$("#modal-delForm").modal("show");
 	});
 	
 	// 회원탈퇴 처리
 	$("#btn-delete-save").click(function() {
 		console.log("탈퇴하기 버튼");
+		
+		var mem_id = $("#id").val(); 
 		var password = $("#password").val();
 // 		console.log("password:", password);
 		var del_enter_pwd = $("#del_enter_pwd").val();
@@ -32,7 +28,6 @@ $(function() {
 			alert("비밀번호가 맞지 않습니다.");
 		} else if (password == del_enter_pwd) {
 			console.log("비밀번호 일치확인")
-			var mem_id = $("#id").val(); 
 			$.ajax({
 	            method: "DELETE",
 	            url: "/myPage/delete/" + mem_id,
@@ -54,6 +49,11 @@ $(function() {
 	        });
 		}
 	});
+	
+	var modifyResult = '${modifyResult}';
+	if (modifyResult) {
+		alert("회원정보 수정완료");
+	}
 	
 }); 
 </script>

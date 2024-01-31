@@ -13,7 +13,7 @@
 	<!-- 비밀번호 변경하기 -->
 	<update id="changePassword">
 		update TBL_MEMBER set
-			mem_pw = #{mem_pw}
+			mem_pw = #{newPassword}
 		where mem_id = #{mem_id}
 	</update>
 	

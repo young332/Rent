@@ -1,8 +1,7 @@
 package com.kh.rent.myPage.mapper;
 
-import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.myPage.domain.DeletedMemberVO;
+import com.kh.rent.myPage.domain.PWchangeDTO;
 
 public interface MyPageMapper {
 
@@ -10,7 +9,7 @@ public interface MyPageMapper {
 	public MemberVO getVO(String mem_id);
 	
 	// 비밀번호 변경하기
-	public int changePassword(LoginDTO loginDTO);
+	public int changePassword(PWchangeDTO pwChangeDTO);
 	
 	// 회원정보 수정하기
 	public int updateMember(MemberVO updateVO);

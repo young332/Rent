@@ -1,7 +1,5 @@
 package com.kh.rent.myPage.mapper;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +7,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.myPage.domain.DeletedMemberVO;
+import com.kh.rent.myPage.domain.PWchangeDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -37,11 +34,12 @@ public class MyPageMapperTests {
 	// 비밀번호 변경하기
 	@Test
 	public void testChangePassword() {
-		LoginDTO loginDTO = LoginDTO.builder()
-				.mem_id("MEMBER02")
-				.mem_pw("MEMBER03")
+
+		PWchangeDTO pwChangeDTO = PWchangeDTO.builder()
+				.mem_id("MEMBER01")
+				.newPassword("MEMBER01")
 				.build();
-				int result = myPageMapper.changePassword(loginDTO);
+				int result = myPageMapper.changePassword(pwChangeDTO);
 				log.info("result:" + result);
 	}
 	

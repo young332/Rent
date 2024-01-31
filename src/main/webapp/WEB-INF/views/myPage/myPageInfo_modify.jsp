@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
@@ -13,6 +14,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 <!-- /주소찾기 -->
+
+<!-- 비밀번호변경 유효성 검사 스크립트 include -->
+<script src="/resources/js/change-pw-checker.js"></script>
+
 <script>
 //주소 검색
 function openZipSearch() {
@@ -33,9 +38,25 @@ function openZipSearch() {
 }
 
 $(function() {
+	// 비밀번호변경 모달열기
+	$("#pwdChange").click(function() {
+		$("#password1").val("");
+		$("#newPassword").val("");
+		$("#confirmPassword").val("");
+		$("#invalid-message1").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.");
+		$("#invalid-message2").hide();
+		$("#modal-pwdChangeForm").modal("show");
+	});
 	
+	// 비밀번호변경 처리
+	$("#btn-pwdChange-save").click(function() {
+// 		var password1 = $("#password1").val();
+// 		console.log("password1:", password1);
+	    validatePasswordChangeForm();
+	});
 	
 }); 
+
 </script>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -46,9 +67,10 @@ $(function() {
           	<p class="breadcrumbs">
           	<span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> 
           	<span class="mr-2"><a href="/myPage/myPage">마이페이지 <i class="ion-ios-arrow-forward"></i></a></span> 
-          	<span class="mr-2">내 정보 관리 <i class="ion-ios-arrow-forward"></i></span> 
+          	<span class="mr-2"><a href="/myPage/myPageInfo">내 정보 관리 <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2">개인정보 수정 <i class="ion-ios-arrow-forward"></i></span> 
           	</p>
-            <h1 class="mb-3 bread">내 정보 관리</h1>
+            <h1 class="mb-3 bread">개인정보 수정</h1>
           </div>
         </div>
       </div>
@@ -59,95 +81,63 @@ $(function() {
 			<div class="row">
    				<div class="col-md-8">
     				<h3>
-						내 정보 - 수정
+						개인정보수정
 					</h3>
 					<br>
 					<div class="container">
-					  <form action="/action_page.php">
+					  <form id="formModify" action="/myPage/memberModify_submit" method="post">
 					    <div class="form-group">
 					      <label for="id">아이디</label>
-					      <input type="text" class="form-control" id="id" name="id" value="${loginInfo.mem_id}" readonly>
+					      <input type="text" class="form-control" id="mem_id" name="mem_id" value="${loginInfo.mem_id}" readonly>
 					    </div>
 					    <div class="form-group">
-					      <label for="pwd">비밀번호</label>
-					   	  <div style="display: flex; align-items: center;">
-					      	<input type="password" class="form-control" id="password" name="password" 
+						    <label for="pwd">비밀번호</label>
+						    <div style="display: flex; align-items: center;">
+					      	<input type="password" class="form-control" id="mem_pw" name="mem_pw" 
 					      		   value="${loginInfo.mem_pw}" style="margin-right: 10px;" readonly>
-					     	<button type="button" id="pwdChange" class="btn btn-primary" style="flex-shrink: 0;">비밀번호 변경</button>
+					     	<button type="button" id="pwdChange" class="btn btn-primary" style="flex-shrink: 0;">변경</button>
 					      </div>
-					    </div>
+						</div>
+					    
 					    <div class="form-group">
 					      <label for="name">이름</label>
-					      <input type="text" class="form-control" id="name" name="name" value="${loginInfo.mem_name}" readonly>
+					      <input type="text" class="form-control" id="mem_name" name="mem_name" value="${loginInfo.mem_name}" readonly>
 					    </div>
 					    <div class="form-group">
 					      <label for="birthDay">생년월일</label>
-					      <input type="date" class="form-control" id="birthDay" name="birthDay" value="${loginInfo.mem_birth}">
+					      <input type="date" class="form-control" id="mem_birth" name="mem_birth" value="${loginInfo.mem_birth}" required>
 					    </div>
 					    <div class="form-group">
 					      <label for="phoneNumber">휴대폰 번호</label>
-					      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="${loginInfo.mem_phone}">
+					      <input type="text" class="form-control" id="mem_phone" name="mem_phone" value="${loginInfo.mem_phone}" required>
 					    </div>
 					    <div class="form-group">
 					      <label for="email">이메일</label>
-					      <input type="email" class="form-control" id="email" name="email" value="${loginInfo.mem_email}">
+					      <input type="email" class="form-control" id="mem_email" name="mem_email" value="${loginInfo.mem_email}" required>
 					    </div>
 					    <div class="form-group">
 			              <small>주소</small>
-			              <div class="input-group" style="align-items: center;">
+			              <div class="input-group" style="display: flex; align-items: center;">
 			              	<input type="text"  class="form-control"  id="mem_zip_code" name="mem_zip_code" 
 			              		   value="${loginInfo.mem_zip_code}" style="margin-right: 10px;" readonly>
 							<span class="input-group-btn">
-							<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary" >
+							<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary">
 							</span>
 							</div>
 							<input type="text" class="form-control" id="mem_addr" name="mem_addr" readonly="readonly" value="${loginInfo.mem_addr}">
 			              </div>
+						<hr>
+						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>
 					</div>
-					<hr>
-					<button id="btn-updateInfo" class="btn btn-primary">수정완료</button>
 			  	
 				</div>
    			</div>
    		</div>
 	</section>
-
-<!-- 회원탈퇴 버튼 클릭시 보여질 Modal -->
-    <div class="modal fade" id="modal-delForm">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">회원탈퇴</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <form action="" method="post">
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div align="center">
-                            탈퇴 후 복구가 불가능합니다. <br>
-                            정말로 탈퇴 하시겠습니까? <br>
-                        </div>
-                        <br>
-                            <label for="userPwd" class="mr-sm-2">비밀번호 : </label>
-                            <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호 입력" id="userPwd" name="userPwd"> <br>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer" align="center">
-                        <button type="button" class="btn btn-danger" id="btn-delete-save">탈퇴하기</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    
+	
 	<!-- 비밀번호 변경 모달창 -->
-	<div class="row">
-	<div class="col-md-12">
-		<div class="modal fade" id="modal-reply" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="modal-pwdChangeForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -157,33 +147,33 @@ $(function() {
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">×</span>
 						</button>
-					</div>
-					<div class="modal-body">
-						<label for="pwd">현재 비밀번호</label>
-						<input type="password" class="form-control" id="password1">
-						<label for="pwd">변경 비밀번호</label>
-						<input type="password" class="form-control" id="pwd_change">
-						<label for="pwd">변경 비밀번호 확인</label>
-						<input type="password" class="form-control" id="pwd_check">
-					</div>
-					<div class="modal-footer">
-						 
-						<button type="button" class="btn btn-primary" id="btn-reply-save">
-							저장
-						</button> 
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">
-							닫기
-						</button>
-					</div>
-				</div>
-				
+						</div>
+						<div class="modal-body">
+							<label for="pwd">현재 비밀번호</label>
+							<input type="password" class="form-control" id="password1">
+						</div>
+						<div class="modal-body">
+							<label for="pwd">새 비밀번호</label>
+							<input type="password" class="form-control" id="newPassword">
+							<div id="invalid-message1"></div>
+						</div>
+						<div class="modal-body">
+							<label for="pwd">새 비밀번호 확인</label>
+							<input type="password" class="form-control" id="confirmPassword">
+							<div id="invalid-message2">비밀번호가 일치하지 않습니다.</div>
+	          		        <div id="invalid-message3">비밀번호를 입력하세요.</div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary" id="btn-pwdChange-save">
+								저장
+							</button> 
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+				  </div>
 			</div>
-			
 		</div>
-		
-	</div>
-</div>
-<!-- // 비밀번호 변경 모달창 -->
-
+	<!-- // 비밀번호 변경 모달창 -->
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
