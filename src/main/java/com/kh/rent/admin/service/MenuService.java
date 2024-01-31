@@ -10,7 +10,7 @@ public interface MenuService {
 	
 	public List<MenuVO> getTopMenu();
 	
-	public List<MenuVO> getSubMenuAll();
+	public List<MenuVO> getSubMenuAll(String menu_id);
 
 	public List<MenuVO> getSubMenu(@Param("parent_menu_id") String parent_menu_id);
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.mapper.CodeMapper;
 import com.kh.rent.admin.service.CodeService;
@@ -27,72 +28,66 @@ public class CodeController {
 	
 	@Autowired
 	private CodeService codeService;
-
-//	@PostMapping("/topMenuAdd")
-//	public String topMenuAdd(MenuVO menuVO, RedirectAttributes rttr) {
-//		log.info("menuVO:" + menuVO);
-//		int count = menuService.addMenu(menuVO);
-//		if(count == 1) {
-//			rttr.addFlashAttribute("AddMenuName",menuVO.getMenu_name());
-//		}
-//		
-//		return "redirect:/admin/menu";
-//	}
-//	
-//	
-//	@PostMapping("/subMenuAdd")
-//	public String SubMenuAdd(MenuVO menuVO, RedirectAttributes rttr) {
-//		//log.info("menuVO:" + menuVO);
-//		int count = menuService.addMenu(menuVO);
-//		if(count == 1) {
-//			rttr.addFlashAttribute("AddMenuName",menuVO.getMenu_name());
-//		}
-//		return "redirect:/admin/menu";
-//	}
-//	
-//	@GetMapping(value = "/submenus/{parentMenu}", produces = {MediaType.APPLICATION_JSON_VALUE})
-//    @ResponseBody
-//    public List<MenuVO> getSubMenus(@PathVariable("parentMenu") String parentMenu, Model model) {
-//		List<MenuVO> subMenuList = menuService.getSubMenu(parentMenu);
-//		return subMenuList;
-//    }
 	
-//	
-//	@PostMapping("/topMenuModify")
-//	public String menuModify(MenuVO menuVO, RedirectAttributes rttr) {
-//		log.info("menuVO:" + menuVO);
-//		int count = menuService.modifyMenu(menuVO);
-//		log.info("count:"+count);
-//		if(count == 1) {
-//			rttr.addFlashAttribute("ModifyMenuName",menuVO.getMenu_name());
-//		}
-//		return "redirect:/admin/menu";
-//	}
-//	
-//	@PostMapping("/subMenuModify")
-//	public String subMenuModify(MenuVO menuVO, RedirectAttributes rttr) {
-//		int count = menuService.modifyMenu(menuVO);
-//		if(count == 1) {
-//			rttr.addFlashAttribute("ModifyMenuName",menuVO.getMenu_name());
-//		}
-//		return "redirect:/admin/menu";
-//	}
-//	
-//	@PostMapping("/delete/{parentMenu}")
-//	public String menuDelete(@PathVariable("parentMenu") String parentMenu, RedirectAttributes rttr) {
-//		int count = menuService.delete(parentMenu);
-//	    log.info("count:" + count);
-//		if(count == 1) {
-//			rttr.addFlashAttribute("deleteMenuName",parentMenu);
-//		}
-//		return "redirect:/admin/menu";
-//	}
-//	
-//	
+	@GetMapping(value = "/subcodes/{parent_code}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public List<CommonCodeVO> getSubMenus(@PathVariable("parent_code") String parent_code, Model model) {
+		List<CommonCodeVO> subMenuList = codeService.getSubCode(parent_code);
+		return subMenuList;
+    }
 	
 	
+	@PostMapping("/topCodeAdd")
+	public String topCodeAdd(CommonCodeVO commonCodeVO, RedirectAttributes rttr) {
+		log.info("commonCodeVO:" + commonCodeVO);
+		int count = codeService.addCode(commonCodeVO);
+		if(count == 1) {
+			rttr.addFlashAttribute("AddCodeName",commonCodeVO.getCode_name());
+		}
+		
+		return "redirect:/admin/commonCode";
+	}
 	
-	 	
+	@PostMapping("/subCodeAdd")
+	public String SubMenuAdd(CommonCodeVO CommonCodeVO, RedirectAttributes rttr) {
+		//log.info("menuVO:" + menuVO);
+		int count = codeService.addCode(CommonCodeVO);
+		if(count == 1) {
+			rttr.addFlashAttribute("AddCodeName",CommonCodeVO.getCode_name());
+		}
+		return "redirect:/admin/commonCode";
+	}
+	
+	@PostMapping("/topCodeModify")
+	public String topCodeModify(CommonCodeVO CommonCodeVO, RedirectAttributes rttr) {
+		log.info("CommonCodeVO:" + CommonCodeVO);
+		int count = codeService.modifyCode(CommonCodeVO);
+		log.info("count:"+count);
+		if(count == 1) {
+			rttr.addFlashAttribute("ModifyCodeName",CommonCodeVO.getCode_name());
+		}
+		return "redirect:/admin/commonCode";
+	}
+	
+	@PostMapping("/subCodeModify")
+	public String subCodeModify(CommonCodeVO CommonCodeVO, RedirectAttributes rttr) {
+		int count = codeService.modifyCode(CommonCodeVO);
+		if(count == 1) {
+			rttr.addFlashAttribute("ModifyCodeName",CommonCodeVO.getCode_name());
+		}
+		return "redirect:/admin/commonCode";
+	}
+	
+	@PostMapping("/delete/{parent_code}")
+	public String codeDelete(@PathVariable("parent_code") String parent_code, RedirectAttributes rttr) {
+		int count = codeService.delete(parent_code);
+	    log.info("count:" + count);
+		if(count == 1) {
+			rttr.addFlashAttribute("deleteMenuName",parent_code);
+		}
+		return "redirect:/admin/commonCode";
+	}
+	
 	
 	
 }

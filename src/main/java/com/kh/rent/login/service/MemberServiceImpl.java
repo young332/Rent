@@ -12,22 +12,40 @@ import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.mapper.MemberMapper;
 
+import lombok.extern.log4j.Log4j;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
-
+@Log4j
 @Service
 public class MemberServiceImpl implements MemberService{
 
 	@Autowired
 	private MemberMapper memberMapper;
 	
-	@Override
+	@Autowired
+	private Sha256 sha256;
+	
+//	@Override //로그인(일반로그인)
+//	public MemberVO login(LoginDTO loginDTO) {
+//		MemberVO memberVO=	memberMapper.login(loginDTO);
+//		
+//		return memberVO;
+//	}
+	
+	@Override //로그인(암호화로그인)
 	public MemberVO login(LoginDTO loginDTO) {
-		MemberVO memberVO = memberMapper.login(loginDTO);
-		return memberVO;
-	}
+		log.info("loginDTO:" + loginDTO);
+		loginDTO.setMem_pw(sha256.encrypt(loginDTO.getMem_pw()));
+		MemberVO memberVO = memberMapper.findByIdAndPw(loginDTO);
+		if (memberVO != null) {
+			return memberVO;
 
+		}
+		return null;
+	}
+	
+	
 	@Override
 	public boolean registerPost(MemberVO memberVO) {
 		int count = memberMapper.registerPost(memberVO);
@@ -79,12 +97,12 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	//휴대폰 중복체크
 	@Override
 	public int checkPhone(String mem_phone) {
 		int count = memberMapper.checkPhone(mem_phone);
 		return count;
 	}
-	
-	
+
 
 }
