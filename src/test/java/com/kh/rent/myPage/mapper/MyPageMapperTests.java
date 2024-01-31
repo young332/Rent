@@ -27,17 +27,19 @@ public class MyPageMapperTests {
 	// 회원정보 조회하기
 	@Test
 	public void testGetList() {
-		String mem_id = "MEMBER01";
-		MemberVO selectVO = myPageMapper.getVO(mem_id);
-		log.info("selectVO:" + selectVO);
+
+		String mem_id = "MEMBER02";
+		List<MemberVO> list = myPageMapper.getList(mem_id);
+		log.info("list:" + list);
+
 	}
 	
 	// 비밀번호 변경하기
 	@Test
 	public void testChangePassword() {
 		LoginDTO loginDTO = LoginDTO.builder()
-				.mem_id("MEMBER01")
-				.mem_pw("MEMBER01")
+				.mem_id("MEMBER02")
+				.mem_pw("MEMBER03")
 				.build();
 				int result = myPageMapper.changePassword(loginDTO);
 				log.info("result:" + result);

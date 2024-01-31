@@ -16,7 +16,7 @@
 		insert into rent001.TBL_MEMBER
 			(mem_id,mem_pw,mem_name,mem_email,mem_birth,mem_phone,mem_zip_code,mem_addr)
 		values
-			(#{mem_id},PASSWORD(#{mem_pw}),#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_zip_code},#{mem_addr})	
+			(#{mem_id},#{mem_pw},#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_zip_code},#{mem_addr})	
 	</insert>
 
 	<!-- 아이디 찾기 -->
@@ -51,5 +51,14 @@
 		select count(*) from rent001.TBL_MEMBER
 		where mem_phone = #{mem_phone}
 	</select>
+	
+		<!-- 암호화비밀번호 로그인 -->
+	<select id="findByIdAndPw" resultType="com.kh.rent.login.domain.MemberVO" parameterType="com.kh.rent.login.domain.LoginDTO">
+		select *
+		from rent001.TBL_MEMBER
+		where mem_pw = #{mem_pw}
+		and mem_id = #{mem_id}
+	</select>
+	
 	
 </mapper>
