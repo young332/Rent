@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.rent.admin.domain.CarInfoVO;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 import com.kh.rent.reserve.mapper.ReserveMapper;
 
@@ -36,6 +37,12 @@ public class ReserveServiceImpl implements ReserveService{
 	public List<CarInfoVO> getCarInfo() {
 		List<CarInfoVO> list = reserveMapper.getCarInfo();
 		
+		return list;
+	}
+
+	@Override
+	public List<ReserveDTO> selectCheck(ReserveDTO reserveDTO) {
+		List<ReserveDTO> list = reserveMapper.selectCheck(reserveDTO);
 		return list;
 	}
 	
