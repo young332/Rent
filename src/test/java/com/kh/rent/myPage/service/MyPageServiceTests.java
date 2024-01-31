@@ -1,7 +1,5 @@
 package com.kh.rent.myPage.service;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +7,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.myPage.domain.DeletedMemberVO;
+import com.kh.rent.myPage.domain.PWchangeDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -34,11 +31,11 @@ public class MyPageServiceTests {
 	// 비밀번호 변경하기
 	@Test
 	public void testChangePassword() {
-		LoginDTO loginDTO = LoginDTO.builder()
+		PWchangeDTO pwChangeDTO = PWchangeDTO.builder()
 				.mem_id("test02")
-				.mem_pw("test02")
+				.newPassword("test02")
 				.build();
-				int result = myPageService.changePassword(loginDTO);
+				int result = myPageService.changePassword(pwChangeDTO);
 				log.info("result:" + result);
 	}
 	

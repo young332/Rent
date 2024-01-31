@@ -5,18 +5,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.myPage.domain.DeletedMemberVO;
+import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
 
 import lombok.extern.log4j.Log4j;
@@ -35,7 +36,7 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage")
-	public void myPage(LoginDTO loginDTO, Model model, HttpSession session) {
+	public void myPage(HttpSession session, LoginDTO loginDTO, Model model) {
 		log.info("myPageGet..");
 		log.info("loginDTO:" + loginDTO);
 	}
@@ -50,14 +51,26 @@ public class MyPageController {
 		log.info("myPageInfo_modify get..");
 	}
 	
-	@PostMapping("/modify")
-	public void modifyInfo() {
-		log.info("modifyInfo Post...");
+	// 비밀번호 변경
+	@Transactional
+	@PutMapping("/pwdChange")
+	public ResponseEntity<String> pwdChange(@RequestBody PWchangeDTO pwChangeDTO) {
+	    // 비밀번호 변경 로직 수행
+	    int result = myPageService.changePassword(pwChangeDTO);
+
+	    // 변경 결과에 따라 응답 반환
+	    if (result == 1) {
+	        return ResponseEntity.ok("success");
+	    } else {
+	        return ResponseEntity.ok("fail");
+	    }
 	}
+	
 	
 	// 회원탈퇴
 	@DeleteMapping("/delete/{mem_id}")
 	@ResponseBody
+	@Transactional
 	public String deleteMember(HttpSession session, @PathVariable("mem_id") String mem_id) {
 		log.info("deleteMember...");
 		MemberVO deleteVO = myPageService.selectList(mem_id);

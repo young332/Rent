@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.myPage.domain.DeletedMemberVO;
+import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.mapper.MyPageMapper;
 
 @Service
@@ -25,8 +25,8 @@ public class MyPageServiceImpl implements MyPageService{
 	// 비밀번호 변경하기
 	@Transactional
 	@Override
-	public int changePassword(LoginDTO loginDTO) {
-		int result = myPageMapper.changePassword(loginDTO);
+	public int changePassword(PWchangeDTO pwChangeDTO) {
+		int result = myPageMapper.changePassword(pwChangeDTO);
 		return result;
 	}
 
