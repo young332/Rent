@@ -26,12 +26,12 @@ public class MemberMapperTests {
 	
 	@Test //회원가입
 	public void  testInsert() {
-		String id = "MEMBER05";
-		String pw = "MEMBER05";
-		String name ="신세경";
-		String email ="ttt@ttt.com";
+		String id = "MEMBER02";
+		String pw = "MEMBER02";
+		String name ="하삼동";
+		String email ="yyyy@ttt.com";
 		String birth ="19890101";
-		String phone = "01055556666";
+		String phone = "01099998888";
 		String code ="5235";
 		String addr ="울산시 중구 우정동";
 		MemberVO memberVO = MemberVO.builder()
@@ -103,13 +103,21 @@ public class MemberMapperTests {
 		int count = memberMapper.checkPhone(mem_phone);
 		log.info("count : " + count);
 	}
-	//암호화 패스워드 로그인
+	
+//	@Test
+//	public void testFindBypw() {
+//		String mem_id = "MEMBER03";
+//		String mem_pw ="1942b77e8133d5323f6e99288a6d45cd21529547bb39d1256385082892719f76";
+//		String count  = memberMapper.findByIdAndPw(LoginDTO )
+//		log.info("count: " + count);
+//	}
+	
 	@Test
-	public void testPasswordLogin() {
-		
-		String mem_pw = "5afab9da4eaefbb7f4536796337f4fb0f9cdd5024731c4ea9f1a7523";
-		String count = memberMapper.passwordLogin(mem_pw);
-		log.info("count:" + count);
+	public void testFindByName() {
+		String mem_name = "한소희";
+		MemberVO memberVO = memberMapper.findeByName(mem_name);
+		log.info("memberVO:" + memberVO);
 	}
+	
 	
 }

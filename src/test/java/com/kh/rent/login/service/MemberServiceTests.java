@@ -98,11 +98,6 @@ public class MemberServiceTests {
 		memberService.checkSend(mem_phone, 5632);
 	}
 	
-	@Test
-	public void testPasswordLogin() {
-		String mem_pw = "957216a6396fa1ea6c97652dc167099c82df32d33dacbaada6";
-		int count = memberService.passwordencrypt(mem_pw);
-		log.info("count:" + count);
-				
-	}
+
+
 }

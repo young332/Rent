@@ -16,7 +16,7 @@
 		insert into rent001.TBL_MEMBER
 			(mem_id,mem_pw,mem_name,mem_email,mem_birth,mem_phone,mem_zip_code,mem_addr)
 		values
-			(#{mem_id},SHA2(#{mem_pw},224),#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_zip_code},#{mem_addr})	
+			(#{mem_id},#{mem_pw},#{mem_name},#{mem_email},#{mem_birth},#{mem_phone},#{mem_zip_code},#{mem_addr})	
 	</insert>
 
 	<!-- 아이디 찾기 -->
@@ -52,11 +52,19 @@
 		where mem_phone = #{mem_phone}
 	</select>
 	
-	<!-- 암호화비밀번호 로그인 -->
-	<select id="passwordLogin" resultType="string">
-		select count(*) 
+	<!-- 암호화 비밀번호 이름,이메일 찾기 -->
+	<select id="findeByName" resultType="com.kh.rent.login.domain.MemberVO">
+		 select * from rent001.TBL_MEMBER
+   		 where mem_name = #{mem_name} 
+	</select>
+	
+		<!-- 암호화비밀번호 로그인 -->
+	<select id="findByIdAndPw" resultType="com.kh.rent.login.domain.MemberVO" parameterType="com.kh.rent.login.domain.LoginDTO">
+		select *
 		from rent001.TBL_MEMBER
 		where mem_pw = #{mem_pw}
+		and mem_id = #{mem_id}
 	</select>
+	
 	
 </mapper>

@@ -2,6 +2,8 @@ package com.kh.rent.login.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
@@ -31,6 +33,9 @@ public interface MemberMapper {
 		//휴대폰번호 중복체크
 		public int checkPhone(String mem_phone);
 		
-		//암호화 패스워드 로그인
-		public String passwordLogin(String mem_pw);
+		//암호화 비밀번호 이름,이메일 찾기
+		public MemberVO findByIdAndPw(LoginDTO loginDTO);
+		
+		public MemberVO findeByName(@Param("mem_name") String mem_name);
+		
 }

@@ -37,8 +37,6 @@
 	<beans:bean id="naverLoginBO" class="com.kh.rent.login.domain.NaverLoginBO" />
 	
 
-
-
 	<!-- 인터셉터 -->
 	<beans:bean id="loginInterceptor"
 		class="com.kh.rent.login.interceptor.LoginInterceptor"></beans:bean>

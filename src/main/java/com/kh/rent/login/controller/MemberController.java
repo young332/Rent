@@ -31,6 +31,7 @@ import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NaverLoginBO;
 import com.kh.rent.login.service.MemberService;
+import com.kh.rent.login.service.Sha256;
 
 import lombok.extern.log4j.Log4j;
 
@@ -44,6 +45,9 @@ public class MemberController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private Sha256 sha256;
 
 	@GetMapping("/login")
 	public void login() {
@@ -73,6 +77,7 @@ public class MemberController {
 		model.addAttribute("useCookie", loginDTO.getUseCookie());
 		
 	}
+	
 	//로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -89,6 +94,9 @@ public class MemberController {
 	@PostMapping("/signUpPost")
 	public String singUpPost(MemberVO memberVO, RedirectAttributes rttr) {
 		log.info("signUpPost...:");
+		String encryptedPassword = sha256.encrypt(memberVO.getMem_pw());
+		memberVO.setMem_pw(encryptedPassword);
+		
 		boolean result = memberService.registerPost(memberVO);
 		log.info("result:" + result);
 		rttr.addFlashAttribute("registerResult", String.valueOf(true));
