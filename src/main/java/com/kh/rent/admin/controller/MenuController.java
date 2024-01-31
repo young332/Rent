@@ -60,18 +60,24 @@ public class MenuController {
 	public String menuModify(MenuVO menuVO, RedirectAttributes rttr) {
 		log.info("menuVO:" + menuVO);
 		int count = menuService.modifyMenu(menuVO);
-		log.info("count:"+count);
+		log.info("count:" + count);
 		if(count == 1) {
 			rttr.addFlashAttribute("ModifyMenuName",menuVO.getMenu_name());
+		} else {
+			rttr.addFlashAttribute("errorMessage", "해당 메뉴를 수정할 수 없습니다.");
 		}
 		return "redirect:/admin/menu";
 	}
 	
 	@PostMapping("/subMenuModify")
 	public String subMenuModify(MenuVO menuVO, RedirectAttributes rttr) {
+		log.info("menuVO넘어온::"+menuVO);
 		int count = menuService.modifyMenu(menuVO);
+		log.info("count"+count);
 		if(count == 1) {
 			rttr.addFlashAttribute("ModifyMenuName",menuVO.getMenu_name());
+		}else {
+			rttr.addFlashAttribute("errorMessage", "해당 메뉴를 수정할 수 없습니다.");
 		}
 		return "redirect:/admin/menu";
 	}

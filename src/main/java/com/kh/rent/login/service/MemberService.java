@@ -26,4 +26,6 @@ public interface MemberService {
 		
 		//휴대폰 중복체크
 		public int checkPhone(String mem_phone);
+		
+		
 }
