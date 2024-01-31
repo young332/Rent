@@ -22,7 +22,9 @@
   		select * from TBL_RESERVE
   	
   	</select>
-  	
-  
+  	<!-- car_info 리스트 -->
+  <select id="getCarInfo" resultType="com.kh.rent.admin.domain.CarInfoVO">
+  		select * from TBL_CAR_INFO
+  </select>
   	
   </mapper>

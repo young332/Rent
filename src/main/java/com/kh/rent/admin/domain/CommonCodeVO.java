@@ -19,8 +19,8 @@ public class CommonCodeVO {
 	private String code_name;
 	private String use_yn;
 	private Integer orderby;
-	private String rdf_1;
-	private String rdf_2;
+	private String ref_1;
+	private String ref_2;
 	private String update_user;
 	private Date update_date;
 	

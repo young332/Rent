@@ -1,6 +1,6 @@
 package com.kh.rent.reserve.domain;
 
-import java.sql.Date;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,14 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NonMemberVO {
-	private Integer non_rid;
-	private String non_name;
-	private String non_tel;
-	private String non_car_id;
-	private Date non_rental_date;
-	private Date non_return_date;
+public class LicenseDTO {
+	private String mem_id;
+	private String mem_name;
+	private String mem_birth;
+	private String res_license_type;
+	private String res_license_num;
 	private String non_license_num;
 	private String non_license_type;
 	private Integer non_license_birth;
+	private String non_name;
+	private String non_tel;
+	
 }
