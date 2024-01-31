@@ -4,6 +4,10 @@
 <html lang="en">
   <head>
     <title>렌트카001</title>
+    
+    <!-- 글리피콘 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -45,8 +49,31 @@
 	          <li class="nav-item"><a href="/customer.jsp" class="nav-link">고객센터</a></li>
 	          <li class="nav-item"><a href="/login/login" class="nav-link">로그인</a></li>
 	          <li class="nav-item"><a href="/myPage/myPage" class="nav-link">마이페이지(임시)</a></li>
+	          <li class="nav-item"><a href="#" data-toggle="modal" data-target="#logoutmodal" class="nav-link">
+	         	<i class="fa fa-sign-out-alt"></i>
+	          	</a>
 	        </ul>
 	      </div>
 	    </div>
 	  </nav>
+	  <!-- 로그아웃 모달 -->
+	  	<div class="modal fade" id="logoutmodal" role="dialog"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="logoutModalLabel">로그아웃 하시겠어요?</h5> 
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">로그아웃시 로그인 페이지로 이동합니다.</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> 
+							<a class="btn btn-primary"	href="/login/logout">로그아웃</a>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
     <!-- END nav -->

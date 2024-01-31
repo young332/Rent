@@ -1,7 +1,12 @@
 package com.kh.rent.login.controller;
 
+
+
+import org.springframework.stereotype.Component;
+
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
+@Component
 public class NaverLoginApi  extends DefaultApi20{
 
 	protected NaverLoginApi() {

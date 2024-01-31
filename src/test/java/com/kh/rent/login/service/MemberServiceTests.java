@@ -97,4 +97,7 @@ public class MemberServiceTests {
 		String mem_phone = "01089179442";
 		memberService.checkSend(mem_phone, 5632);
 	}
+	
+
+
 }
