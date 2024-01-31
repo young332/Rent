@@ -40,16 +40,19 @@ public class PaymentServiceTests {
 	//결제 내역
 	@Test
 	public void testPaymentRecord() {
-		Date day = new Date();
-		PaymentDTO paymentDTO = PaymentDTO.builder()
-				.pay_res_rid(2)
-				.pay_mem_id("MEMBER01")
-				.pay_date(day)
-				.pay_type("PAY_P")
-				.pay_cost(3000)
-				.build();
-		paymentService.pay(paymentDTO);
-		log.info("paymentDTO" + paymentDTO);
+		for (int i = 0; i < 5; i++) { // 2, 4, 5
+			if (i == 2 || i == 4 || i == 5) {
+				Date day = new Date();
+				PaymentDTO paymentDTO = PaymentDTO.builder()
+						.pay_mem_id("MEMBER01")
+						.pay_date(day)
+						.pay_type("PAY_P")
+						.pay_res_rid(i)
+						.build();
+				paymentService.pay(paymentDTO);
+				log.info("paymentDTO" + paymentDTO);
+			}
+		}
 	}
 	
 }

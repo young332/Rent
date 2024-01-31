@@ -49,7 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void pay(PaymentDTO paymentDto) {
 		// 결제 내역 기록 (insert)
-		paymentMapper.getPaymentRecord(paymentDto);
+		paymentMapper.addPaymentRecord(paymentDto);
 		// 회원 포인트 차감 (update)
 		paymentMapper.deductPayment(paymentDto);
 	}

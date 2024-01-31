@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDTO {
+	
+	private int pay_pid;
 			
 	// 예약번호ID(FK)
 	private int pay_res_rid;
@@ -53,10 +55,10 @@ public class PaymentDTO {
 	// 총 가격
 	private int totalPrice;
 	
-	public void getOrderPriceInfo() {
-		
-		/* 최종 비용(상품 비용 - 사용 포인트) */
-			pay_cost = orderSalePrice - point_cost;
-	}
+//	public void getOrderPriceInfo() {
+//		
+//		/* 최종 비용(상품 비용 - 사용 포인트) */
+//			pay_cost = orderSalePrice - point_cost;
+//	}
 	
 }

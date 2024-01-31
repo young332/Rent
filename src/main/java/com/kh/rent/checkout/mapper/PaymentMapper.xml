@@ -6,15 +6,15 @@
 	
 	<!-- 결제 내역 조회-->
 	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
-		SELECT pay_type, pay_res_id, pay_mem_id, pay_date, pay_cost
+		SELECT pay_type, pay_res_id, pay_mem_id, pay_date
 		FROM TBL_PAYMENT
 		WHERE pay_mem_id = #{pay_mem_id}
 	</select>
 	
 	<!-- 결제 내역 기록 -->
-	<insert id="getPaymentRecord" parameterType="com.kh.rent.checkout.domain.PaymentDTO">
-		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_date, pay_type, pay_cost)
-		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_date}, #{pay_type}, #{pay_cost})
+	<insert id="addPaymentRecord" parameterType="com.kh.rent.checkout.domain.PaymentDTO">
+		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_date, pay_type)
+		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_date}, #{pay_type})
 	</insert>
 	
 	<!-- 포인트 조회 -->

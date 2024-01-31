@@ -17,6 +17,6 @@ public interface PaymentMapper {
 	
 	public int getPayNonResRid(int pay_res_rid);
 	
-	public void getPaymentRecord(PaymentDTO paymentDTO);
+	public void addPaymentRecord(PaymentDTO paymentDTO);
 
 }
