@@ -5,70 +5,70 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
-	$(function(){
+	 $(function(){
 		
-		var AddMenuName = '<c:out value="${AddMenuName}"/>';
-		var ModifyMenuName = '<c:out value="${ModifyMenuName}"/>';
-		var deleteMenuName = '<c:out value="${deleteMenuName}"/>';
-		console.log("AddMenuName: " , AddMenuName);
-		console.log("ModifyMenuName: " , ModifyMenuName);
+		var AddCodeName = '<c:out value="${AddCodeName}"/>';
+		var ModifyCodeName = '<c:out value="${ModifyCodeName}"/>';
+		var deleteCodeName = '<c:out value="${deleteCodeName}"/>';
+		console.log("AddCodeName: " , AddCodeName);
+		console.log("ModifyCodeName: " , ModifyCodeName);
 		
-		var parentMenu;
-		console.log("상단parentMenu:",parentMenu);
+		var parent_code;
+		console.log("상단parent_code:",parent_code);
 		
 		// 알림창 설정
 		var v = "";
-		if(AddMenuName){
+		if(AddCodeName){
 			v = "등록";
-		} else if(ModifyMenuName){
+		} else if(ModifyCodeName){
 			v = "수정";
-		}  else if(deleteMenuName){
+		}  else if(deleteCodeName){
 			v = "삭제";
 		} 
 		
-		if(AddMenuName || ModifyMenuName || deleteMenuName) {
+		if(AddCodeName || ModifyCodeName || deleteCodeName) {
 			$("#alertModal").find(".modal-body")
-										.text(" 메뉴가 "+ v +" 되었습니다.");
+										.text(" 코드가 "+ v +" 되었습니다.");
 			$("#alertModal").find(".modal-title")
-										.text("메뉴 "+ v);
+										.text("코드 "+ v);
 			$("#alertModal").modal("show");
 		}
 		
 		
 		
-		// 선택한 상위메뉴의 하위메뉴 목록 조회 이벤트 처리
-		$(".parentMenu").click(function() {
-		    parentMenu = $(this).text();
-		    console.log("선택후parentMenu:",parentMenu);
+		// 선택한 상위코드의 하위코드 목록 조회 이벤트 처리
+		$(".parent_code").click(function() {
+			parent_code = $(this).text();
+		    console.log("선택후parent_code:",parent_code);
 		    $("#sub_title").text("");
-		    $("#sub_title").text("선택된 상위메뉴: " + parentMenu);
+		    $("#sub_title").text("선택된 상위코드: " + parent_code);
 
 		    // 함수 호출
 		    $.ajax({
-		        url: "/admin/menu/submenus/" + parentMenu,
+		        url: "/admin/commonCode/subcodes/" + parent_code,
 		        success: function(data) {
 		            console.log("data: ", data);
 		            
 		            var tbody = $("#subTable tbody");
 		            tbody.empty();
 
-		            $.each(data, function(index, subMenu) {
+		            $.each(data, function(index, subCode) {
 		            	var row = "<tr>" +
-		                "<th class='align-middle'>" + subMenu.menu_id + "</th>" +
-		                "<td class='align-middle'>" + subMenu.menu_name + "</td>" +
-		                "<td class='align-middle'>" + subMenu.use_yn + "</td>" +
-		                "<td class='align-middle'>" + subMenu.orderby + "</td>" +
+		                "<th class='align-middle'>" + subCode.code_id + "</th>" +
+		                "<td class='align-middle'>" + subCode.code_name + "</td>" +
+		                "<td class='align-middle'>" + subCode.use_yn + "</td>" +
+		                "<td class='align-middle'>" + subCode.orderby + "</td>" +
 		                "<td class='align-middle'>" +
 		                "<button type='button' class='btn btn-success btn-subModal btnSubModify' " +
-		                "data-menu_id='" + subMenu.menu_id + "' " +
-		                "data-menu_type='" + subMenu.menu_type + "' " +
-		                "data-menu_name='" + subMenu.menu_name + "' " +
-		                "data-orderby='" + subMenu.orderby + "' " +
-		                "data-menu_url='" + subMenu.menu_url + "' " +
-		                "data-use_yn='" + subMenu.use_yn + "'>수정</button>" +
+		                "data-code_id='" + subCode.code_id + "' " +
+		                "data-code_name='" + subCode.code_name + "' " +
+		                "data-orderby='" + subCode.orderby + "' " +
+		                "data-ref_1='" + subCode.ref_1 + "' " +
+		                "data-ref_2='" + subCode.ref_2 + "' " +
+		                "data-use_yn='" + subCode.use_yn + "'>수정</button>" +
 		                "</td>" +
 		                "<td class='align-middle'>" +
-		                "<button type='button' class='btn btn-danger btnSubdelete' data-menu_id='" + subMenu.menu_id + "'>삭제</button>" +
+		                "<button type='button' class='btn btn-danger btnSubdelete' data-code_id='" + subCode.code_id + "'>삭제</button>" +
 		                "</td>" +
 		                "</tr>";
 		            	tbody.append(row);
@@ -77,15 +77,15 @@
 		    });
 		});
 		
-		//하위메뉴 등록/수정
+		//하위코드 등록/수정
 		$(document).on('click', '.btn-subModal', function() { //동적으로 생성된 요소 이벤트 추가
 			console.log("버튼 클릭됨!");
 			
-			var sub_parent_menu_id = $("#SubMenuModal #sub_parent_menu_id").val(parentMenu);
-			var sub_parent_menu_id = sub_parent_menu_id.val();
-				console.log("하위메뉴등록parentMenu:",parentMenu);
-				if (!sub_parent_menu_id) {
-			        alert("상위 메뉴를 선택하세요.");
+			var sub_parent_code_id = $("#SubCodeModal #sub_parent_code_id").val(parent_code);
+			var sub_parent_code_id = sub_parent_code_id.val();
+				console.log("하위코드등록parent_code:",parent_code);
+				if (!sub_parent_code_id) {
+			        alert("상위 코드를 선택하세요.");
 			        return;
 			    } 
 			
@@ -95,113 +95,96 @@
 
 	     	// 수정 버튼 클릭 시 모달 열기 및 데이터 설정
 	        if(curMode == "Edit"){
-		        var menu_id = $(this).data("menu_id");
-		        var menu_type = $(this).data("menu_type");
-		        var menu_name = $(this).data("menu_name");
+		        var code_id = $(this).data("code_id");
+		        var code_name = $(this).data("code_name");
 		        var orderby = $(this).data("orderby");
-		        var menu_url = $(this).data("menu_url");
+		        var ref_1 = $(this).data("ref_1");
+		        var ref_2 = $(this).data("ref_2");
 		        var use_yn = $(this).data("use_yn");
 		        
 	        	
-		        $("#SubMenuModal form").attr("action", "/admin/menu/subMenuModify");
-	            $("#SubMenuModal .modal-title").text("하위메뉴 수정");
-		        $("#SubMenuModal #sub_menu_id").val(menu_id);
-		        $("#SubMenuModal #sub_menu_type").val(menu_type);
-		        console.log(menu_id,menu_type,menu_name,orderby,menu_url)
-		        console.log("menu_type", menu_type);
-		        if (menu_type == 1) {
-		        	$("#sub_menu_type").val("1").prop("selected", true);
-		        } 
-		        if (menu_type == 2) {
-		        	$("#sub_menu_type").val("2").prop("selected", true);
-		        }
+		        $("#SubCodeModal form").attr("action", "/admin/commonCode/subCodeModify");
+	            $("#SubCodeModal .modal-title").text("하위코드 수정");
+		        $("#SubCodeModal #sub_code_id").val(code_id);
+		        $("#SubCodeModal #sub_code_name").val(code_name);
+		        $("#SubCodeModal #sub_orderby").val(orderby);
+		        $("#SubCodeModal #sub_ref_1").val(ref_1);
+		        $("#SubCodeModal #sub_ref_2").val(ref_2);
 		        
-		        $("#SubMenuModal #sub_menu_name").val(menu_name);
-		        $("#SubMenuModal #sub_orderby").val(orderby);
-		        $("#SubMenuModal #sub_menu_url").val(menu_url);
-
 		        if(use_yn == "Y"){
-		        	$('#SubMenuModal input[name="use_yn"]').attr('checked', 'checked');
+		        	$('#SubCodeModal input[name="use_yn"]').attr('checked', 'checked');
 		        }
 		        if(use_yn == "N"){
-		        	$('#SubMenuModal input[name="use_yn"]').attr('checked', 'checked');
+		        	$('#SubCodeModal input[name="use_yn"]').attr('checked', 'checked');
 		        }
 		        updateModalFooter(curMode);
 		        
 	        }  else{
 	        	console.log("else");
-	        	$("#SubMenuModal form").attr("action", "/admin/menu/subMenuAdd");
-	            $("#SubMenuModal .modal-title").text("하위메뉴 등록");
-	        	$("#SubMenuModal #sub_menu_id").val("");
-		        $("#SubMenuModal #sub_menu_name").val("");
-		        $("#SubMenuModal #sub_orderby").val("");
-		        $("#SubMenuModal #sub_menu_url").val("");
-		        $('#SubMenuModal input[name="use_yn"][value="N"]').attr('disabled', 'disabled');
+	        	$("#SubCodeModal form").attr("action", "/admin/commonCode/subCodeAdd");
+	            $("#SubCodeModal .modal-title").text("하위코드 등록");
+	        	$("#SubCodeModal #sub_code_id").val("");
+		        $("#SubCodeModal #sub_code_name").val("");
+		        $("#SubCodeModal #sub_orderby").val("");
+		        $('#SubCodeModal input[name="use_yn"][value="N"]').attr('disabled', 'disabled');
+		        $("#SubCodeModal #sub_ref_1").val("");
+		        $("#SubCodeModal #sub_ref_2").val("");
 		        
 		        updateModalFooter(curMode);
 	        }
 	    	
 	        
-	    	$("#SubMenuModal").modal("show");
+	    	$("#SubCodeModal").modal("show");
 	    	
 	    });
 		
 		
 
-			// 상위메뉴 등록/수정
+			// 상위코드 등록/수정
 		    $(".btn-modal").click(function() {   	
 		    	//수정 버튼인지 등록버튼인지 확인
 		    	var curMode = $(this).hasClass("btnTopModify") ? "Edit" : "Add";
 
 		     	// 수정 버튼 클릭 시 모달 열기 및 데이터 설정
 		        if(curMode == "Edit"){
-			        var menu_id = $(this).data("menu_id");
-			        var menu_type = $(this).data("menu_type");
-			        var menu_name = $(this).data("menu_name");
+			        var code_id = $(this).data("code_id");
+			        var code_depth = $(this).data("code_depth");
+			        var code_name = $(this).data("code_name");
 			        var orderby = $(this).data("orderby");
-			        var menu_url = $(this).data("menu_url");
 			        var use_yn = $(this).data("use_yn");
+			        var ref_1 = $(this).data("ref_1");
+			        var ref_2 = $(this).data("ref_2");
 			        
 		        	
-			        $("#TopMenuModal form").attr("action", "/admin/menu/topMenuModify");
-		            $("#TopMenuModal .modal-title").text("상위메뉴 수정");
-			        $("#TopMenuModal #menu_id").val(menu_id);
-			        $("#TopMenuModal #menu_type").val(menu_type);
-			        console.log(menu_id,menu_type,menu_name,orderby,menu_url)
-			        console.log("menu_type", menu_type);
-			        if (menu_type == 1) {
-			        	$("#menu_type").val("1").prop("selected", true);
-			        } 
-			        if (menu_type == 2) {
-			        	$("#menu_type").val("2").prop("selected", true);
-			        }
-			        
-			        $("#TopMenuModal #menu_name").val(menu_name);
-			        $("#TopMenuModal #orderby").val(orderby);
-			        $("#TopMenuModal #menu_url").val(menu_url);
+			        $("#TopCodeModal form").attr("action", "/admin/commonCode/topCodeModify");
+		            $("#TopCodeModal .modal-title").text("상위코드 수정");
+			        $("#TopCodeModal #code_id").val(code_id);
+			        $("#TopCodeModal #code_name").val(code_name);
+			        $("#TopCodeModal #orderby").val(orderby);
+			        $("#TopCodeModal #ref_1").val(ref_1);
+			        $("#TopCodeModal #ref_2").val(ref_2);
 
 			        if(use_yn == "Y"){
-			        	$('#TopMenuModal input[name="use_yn"]').attr('checked', 'checked');
+			        	$('#TopCodeModal input[name="use_yn"]').attr('checked', 'checked');
 			        }
 			        if(use_yn == "N"){
-			        	$('#TopMenuModal input[name="use_yn"]').attr('checked', 'checked');
+			        	$('#TopCodeModal input[name="use_yn"]').attr('checked', 'checked');
 			        }
 			        updateModalFooter(curMode);
 			        
 		        }  else{
 		        	console.log("else");
-		        	$("#TopMenuModal form").attr("action", "/admin/menu/topMenuAdd");
-		            $("#TopMenuModal .modal-title").text("상위메뉴 등록");
-		        	$("#TopMenuModal #menu_id").val("");
-			        $("#TopMenuModal #menu_name").val("");
-			        $("#TopMenuModal #orderby").val("");
-			        $("#TopMenuModal #menu_url").val("");
-			        $('#TopMenuModal input[name="use_yn"][value="N"]').attr('disabled', 'disabled');
+		        	$("#TopCodeModal form").attr("action", "/admin/commonCode/topCodeAdd");
+		            $("#TopCodeModal .modal-title").text("상위코드 등록");
+		        	$("#TopCodeModal #code_id").val("");
+			        $("#TopCodeModal #code_name").val("");
+			        $("#TopCodeModal #orderby").val("");
+			        $('#TopCodeModal input[name="use_yn"][value="N"]').attr('disabled', 'disabled');
 			        
 			        updateModalFooter(curMode);
 		        }  
 		    	
-		    	$("#TopMenuModal").modal("show");
+		    	$("#TopCodeModal").modal("show");
 		    });
 		    
 	    function updateModalFooter(curMode) {
@@ -217,45 +200,46 @@
 	        }  
 	    }
 
-		//상위 메뉴 삭제
+		//상위 코드 삭제
 		$(".btnTopdelete").click(function() {
-		    var menu_id = $(this).data("menu_id");
-		    console.log("menu_id:", menu_id);
-		    var parentMenu = menu_id;
+		    var code_id = $(this).data("code_id");
+		    console.log("code_id:", code_id);
+		    var parent_code = code_id;
 		    var that = $(this);
 		
-		    // 하위메뉴 확인 작업
+		    // 하위코드 확인 작업
 		    $.ajax({
-		        url: "/admin/menu/submenus/" + parentMenu,
+		        url: "/admin/commonCode/subcodes/" + parent_code,
 		        success: function(data) {
-		            console.log("parentMenu: ", parentMenu);
+		            console.log("parent_code: ", parent_code);
 		            console.log("data: ", data);
 		
 		            if (data.length === 0) {
-		                console.log("하위 메뉴 없음");
+		                console.log("하위 코드 없음");
 		
-		             	// 메뉴 삭제 비동기 요청
-		                $.post("/admin/menu/delete/" + parentMenu, function(deleteResult) {
+		             	// 코드 삭제 비동기 요청
+		                $.post("/admin/commonCode/delete/" + parent_code, function(deleteResult) {
 		                	console.log(deleteResult ? "삭제 성공" : "삭제 실패");
 		                	if (deleteResult) {
 		                        that.closest("tr").fadeOut();
 		                    }
 		                });
 		            } else {
-		                alert("하위 메뉴가 존재하여 삭제할 수 없습니다.");
+		                alert("하위 코드가 존재하여 삭제할 수 없습니다.");
 		            }
 		        }
 		    });
 		});
 		
-		//하위 메뉴 삭제
+		//하위 코드 삭제
 		$(document).on('click', '.btnSubdelete', function() { //동적으로 생성된 요소 이벤트 추가
 			console.log("클릭됨");
-		    var menu_id = $(this).data("menu_id");
-		    console.log("menu_id:", menu_id);
+		    var code_id = $(this).data("code_id");
+		    console.log("code_id:", code_id);
+		    var that = $(this);
 		
-		 	// 메뉴 삭제 비동기 요청
-            $.post("/admin/menu/delete/" + menu_id, function(deleteResult) {
+		 	// 코드 삭제 비동기 요청
+            $.post("/admin/commonCode/delete/" + code_id, function(deleteResult) {
             	console.log(deleteResult ? "삭제 성공" : "삭제 실패");
             	if (deleteResult) {
                     that.closest("tr").fadeOut();
@@ -296,28 +280,26 @@
 									<thead class="thead-light">
 										<tr >
 											<th>코드 아이디</th>
-											<th>메뉴명</th>
+											<th>코드명</th>
 											<th>순서</th>
 											<th>수정</th>
 											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody>
-									<c:forEach var="topMenu" items="${topMenuList}">
+									<c:forEach var="topCode" items="${topCodeList}">
 										<tr>
-											<th class="align-middle parentMenu" style="cursor: pointer;">${topMenu.menu_id}</th>
-											<td class="align-middle">${topMenu.menu_name}</td>
-											<td class="align-middle">${topMenu.orderby}</td>
+											<th class="align-middle parent_code" style="cursor: pointer;">${topCode.code_id}</th>
+											<td class="align-middle">${topCode.code_name}</td>
+											<td class="align-middle">${topCode.orderby}</td>
 											<td class="align-middle"><button type="button" class="btn btn-success btnTopModify btn-modal"
-												 data-menu_id="${topMenu.menu_id}"
-												 data-menu_type="${topMenu.menu_type}"
-												 data-menu_name="${topMenu.menu_name}"
-												 data-orderby="${topMenu.orderby}" 
-												 data-menu_url="${topMenu.menu_url}"
-												 data-use_yn="${topMenu.use_yn}"
+												 data-code_id="${topCode.code_id}"
+												 data-code_name="${topCode.code_name}"
+												 data-orderby="${topCode.orderby}"
+												 data-use_yn="${topCode.use_yn}"
 												 >수정</button></td>
 											<td class="align-middle"><button type="button" class="btn btn-danger btnTopdelete" 
-											data-menu_id="${topMenu.menu_id}">삭제</button></td>
+											data-code_id="${topCode.code_id}">삭제</button></td>
 										</tr>
 									</c:forEach>
 									</tbody>
@@ -327,14 +309,14 @@
 						<div class="col-md-6">
 							<div class="card">
 								<div class="card-header font-weight-bold d-flex align-items-center" >
-								    <span class="mr-auto" id="sub_title">하위메뉴 (상위메뉴 아이디를 선택해 주세요.)</span>
+								    <span class="mr-auto" id="sub_title">하위코드 (상위코드 아이디를 선택해 주세요.)</span>
 								    <button type="button" class="btn btn-success ml-3 btn-subModal" >추가</button>
 								</div>
 								<table class="table card-table" id="subTable">
 									<thead class="thead-light">
 										<tr>
-											<th>메뉴 아이디</th>
-											<th>메뉴명</th>
+											<th>코드 아이디</th>
+											<th>코드명</th>
 											<th>사용</th>
 											<th>순서</th>
 											<th>수정</th>
@@ -355,59 +337,58 @@
 		</div>
 		<!-- end col-->
 	</div>
-
 </div>
 <!-- [ content ] End -->
-<!-- 상위메뉴등록 모달 -->
+<!-- 상위코드등록 모달 -->
 <div class="row">
 	<div class="col-md-12">
-		<div class="modal fade" id="TopMenuModal" role="dialog"
+		<div class="modal fade" id="TopCodeModal" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg " role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="messageModalLabel">상위메뉴 등록</h5>
+						<h5 class="modal-title" id="messageModalLabel">상위코드 등록</h5>
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">×</span>
 						</button>
 					</div>
 
 					<div class="modal-body">
-						<form action="/admin/menu/topMenuAdd" method="post" >
-							<input type="hidden" name="parent_menu_id" id="parent_menu_id" value="@">
-							<input type="hidden" name="menu_depth" id="menu_depth" value="1">
+						<form action="/admin/commonCode/topCodeAdd" method="post" >
+							<input type="hidden" name="parent_code_id" id="parent_code_id" value="@">
+							<input type="hidden" name="code_depth" value="1">
 							<!-- <input type="hidden" name="use_yn" id="use_yn" value="Y"> -->
 							
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label class="form-label">Menu_id</label> 
-									<input type="text" class="form-control" placeholder="ex)Menu001" id="menu_id" name="menu_id">
+									<label class="form-label">code_id</label> 
+									<input type="text" class="form-control" placeholder="ex)Car" id="code_id" name="code_id">
 									<div class="clearfix"></div>
 								</div>
 								<div class="form-group col-md-6">
-									<label class="form-label">Menu-type</label>
-									<select name="menu_type" id="menu_type" class="custom-select">
-										<option value="1" selected>관리자</option>
-										<option value="2">메인페이지</option>
-									</select>
+									<label class="form-label">코드 이름</label>
+									<input type="text" class="form-control" placeholder="코드 이름" name="code_name" id="code_name">
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-12">
+									<label class="form-label">코드 순서</label>
+									<input type="text" class="form-control" placeholder="코드 순서" name="orderby" id="orderby">
+									<div class="clearfix"></div>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label class="form-label">메뉴 이름</label>
-									<input type="text" class="form-control" placeholder="메뉴 이름" name="menu_name" id="menu_name">
+									<label class="form-label">참조코드1</label> 
+									<input type="text" class="form-control" id="ref_1" name="ref_1">
 									<div class="clearfix"></div>
 								</div>
 								<div class="form-group col-md-6">
-									<label class="form-label">메뉴 순서</label>
-									<input type="text" class="form-control" placeholder="메뉴 순서" name="orderby" id="orderby">
+									<label class="form-label">참조코드2</label>
+									<input type="text" class="form-control" name="ref_2" id="ref_2">
 									<div class="clearfix"></div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="form-label">메뉴 URL</label>
-								<input type="text" class="form-control" placeholder="메뉴 URL" name="menu_url" id="menu_url">
-								<div class="clearfix"></div>
 							</div>
 							<fieldset class="form-group only-edit">
 			                <div class="row">
@@ -441,66 +422,64 @@
 </div>
 <!-- 모달끝 -->
 
-<!-- 서브메뉴등록 모달 -->
+<!-- 서브코드등록 모달 -->
 <div class="row">
 	<div class="col-md-12">
-		<div class="modal fade" id="SubMenuModal" role="dialog"
+		<div class="modal fade" id="SubCodeModal" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg " role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="messageModalLabel">하위메뉴 등록</h5>
+						<h5 class="modal-title" id="messageModalLabel">하위코드 등록</h5>
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">×</span>
 						</button>
 					</div>
 
 					<div class="modal-body">
-						<form action="/admin/menu/subMenuAdd" method="post" >
-							<input type="hidden" id="sub_parent_menu_id" name="parent_menu_id" value="">
-							<input type="hidden" name="menu_depth" value="2" id="sub_menu_depth">
+						<form action="/admin/commonCode/subCodeAdd" method="post" >
+							<input type="hidden" id="sub_parent_code_id" name="parent_code_id" value="">
+							<input type="hidden" name="code_depth" value="2" id="sub_code_depth">
 							<input type="hidden" name="use_yn" value="Y" id="sub_use_yn">
 							
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label class="form-label">Menu_id</label> 
-									<input type="text" class="form-control" placeholder="ex)Sub001" name="menu_id" id="sub_menu_id">
+									<label class="form-label">code_id</label> 
+									<input type="text" class="form-control" placeholder="ex)Car_01" name="code_id" id="sub_code_id">
 									<div class="clearfix"></div>
 								</div>
 								<div class="form-group col-md-6">
-									<label class="form-label">Menu-type</label>
-									<select name="menu_type" class="custom-select" id="sub_menu_type">
-										<option value="1" selected>관리자</option>
-										<option value="2">메인페이지</option>
-									</select>
+									<label class="form-label">코드 이름</label>
+									<input type="text" class="form-control" placeholder="코드 이름" name="code_name" id="sub_code_name">
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-12">
+									<label class="form-label">코드 순서</label>
+									<input type="text" class="form-control" placeholder="코드 순서" name="orderby" id="sub_orderby">
+									<div class="clearfix"></div>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-6">
-									<label class="form-label">메뉴 이름</label>
-									<input type="text" class="form-control" placeholder="메뉴 이름" name="menu_name" id="sub_menu_name">
+									<label class="form-label">참조코드1</label> 
+									<input type="text" class="form-control" name="ref_1" id="sub_ref_1">
 									<div class="clearfix"></div>
 								</div>
 								<div class="form-group col-md-6">
-									<label class="form-label">메뉴 순서</label>
-									<input type="text" class="form-control" placeholder="메뉴 순서" name="orderby" id="sub_orderby">
+									<label class="form-label">참조코드2</label>
+									<input type="text" class="form-control" name="ref_2" id="sub_ref_2">
 									<div class="clearfix"></div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="form-label">메뉴 URL</label>
-								<input type="text" class="form-control" placeholder="메뉴 URL" name="menu_url" id="sub_menu_url">
-								<div class="clearfix"></div>
-							</div>
-						
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary btnAdd" >등록</button>
+								<button type="submit" class="btn btn-primary btnAdd">등록</button>
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">닫기</button>
 							</div>
 						</form>
 					</div>
-					
 				</div>
 			</div>
 		</div>
