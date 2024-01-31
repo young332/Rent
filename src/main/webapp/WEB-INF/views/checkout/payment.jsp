@@ -269,7 +269,7 @@ int min = 5000;
 		    <tr>
 		      <th> 포인트 </th>
 		      <td>
-		        사용가능 포인트 : <span name="left_pnt">${memberVO.mem_point}</span>p  <span><input type="checkbox" id="chk_use" onclick="chkPoint(${orderSalePrice}, ${memberVO.mem_point}, ${min}, ${unit})">포인트 사용</span>
+		        사용가능 포인트 : <span name="left_pnt">${memberVO.mem_point}</span>p  <span><input type="checkbox" id="chk_use" onclick="chkPoint(orderSalePrice, ${memberVO.mem_point}, min)">포인트 사용</span>
 <%-- 		        <span style="float:right">포인트는 최소 <%=min%>p부터 <%=unit%>p단위로 사용 가능합니다.</span> --%>
 		      </td>
 		    </tr>
@@ -277,7 +277,7 @@ int min = 5000;
 		      <td></td>
 		      <td>
 		        <span> <input type="number" name="use_pnt" id="use_pnt" min="<%=min%>" max="<%=orderSalePrice%>" onchange="changePoint(orderSalePrice, point, min)"></span> p 
-		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${orderSalePrice - memberVO.mem_point}</span>p )
+		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${orderSalePrice + memberVO.mem_point}</span>p )
 		      </td>
 		    </tr>
 		    <tr>
@@ -414,6 +414,8 @@ int min = 5000;
    console.log("포인트: " + point);
    
    var pay_cost = '${orderDTO.pay_cost}';
+   
+   var orderSalePrice = <%= orderSalePrice %>;
   
 	// radio box 클릭 이벤트 처리
 	$("#pointPayment").on("click", function() {
@@ -449,7 +451,7 @@ int min = 5000;
 
 	function chkPoint(orderSalePrice, point, min,unit) {
 		//orderSalePrice : 최초 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
-		var v_point = parseInt(document.getElementById("use_pnt").value); //사용할 포인트 (input 입력값)
+		var v_point = 0; //사용할 포인트 (input 입력값)
 	
 		if (document.getElementById("chk_use").checked)  
 		{
@@ -500,7 +502,7 @@ int min = 5000;
 			v_left[i].innerHTML = point - v_point; //= 전체 포인트 중에 사용할 포인트빼고 남은 포인트
 
 		}
-		document.getElementById("result_pnt").innerHTML = pay_cost - v_point; //최종 결제금액 = 결제금액 - 사용할 포인트
+		document.getElementById("result_pnt").innerHTML = orderSalePrice - v_point; //최종 결제금액 = 결제금액 - 사용할 포인트
 	}
 	
 	$("#btn_pay").on("click", function() {
