@@ -360,7 +360,7 @@ $(function() {
 	 
 	
 	 
-	 //체크박스 3개 하나씩 선택되게
+	 //체크박스 3개 하나씩 선택되게호ㅓ
 	 $(document).ready(function() {
 		    $("input[name='car_size'], input[name='car_fuel'], input[name='car_company']").change(function() {
 		        var groupName = $(this).attr('name');
