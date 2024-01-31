@@ -17,7 +17,6 @@ div.left-box {
 	/*         width: 80%; */
 	float: left;
 	box-sizing: border-box;
-	
 }
 
 #cars-box {
@@ -26,59 +25,72 @@ div.left-box {
 	margin-left: 10px;
 }
 
-
-
- .top-search-box { 
-     width: 100%;
+.top-search-box {
+	width: 100%;
 	height: 500px;
-     display: flex; 
-     flex-direction: row; 
-     border : 2px solid ; 
- } 
+	display: flex;
+	flex-direction: row;
+	border: 2px solid;
+}
 
 .form-control {
-    flex: 1 0 auto;
-    border : 2px solid ;
+	flex: 1 0 auto;
+	border: 2px solid;
 }
-.top-search-box{
-	
-}
+
 .top-search-box input[type="datetime-local"] {
-    width: 0%; /* 조절 가능한 너비로 설정 */
+	width: 0%; /* 조절 가능한 너비로 설정 */
 }
+
 .top-search-box {
-    position: relative;
-    height:100px;
-    margin-right:40px;
-     border-radius: 5px;
-     margin-bottom: 5px;
+	position: relative;
+	height: 100px;
+	margin-right: 40px;
+	border-radius: 5px;
 }
 
 .top-search-box h6 {
-    margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
-    font-size:18px;
-    color:purple;
-    margin-right:10px;
-    margin-left:10px;
-   
+	margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
+	font-size: 18px;
+	color: purple;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 #top_book_pick_date {
-    margin-top: 40px; /* 입력란 간격 조절 */
-    margin-right:30px;
-    margin-left:5px;
+	margin-top: 40px; /* 입력란 간격 조절 */
+	margin-right: 30px;
+	margin-left: 5px;
 }
 
 #top_book_off_date {
-    margin-top: 40px; /* 입력란 간격 조절 */
-    margin-right:30px;
+	margin-top: 40px; /* 입력란 간격 조절 */
+	margin-right: 30px;
 }
 
 .btntop {
-    padding: 10px 20px; /* 버튼 내부 여백 조절 */
-    font-size: 16px; /* 버튼 텍스트 크기 조절 */
-    border-radius: 5px; /* 버튼 테두리 둥글게 만듭니다. */
-   
+	padding: 10px 20px; /* 버튼 내부 여백 조절 */
+	font-size: 16px; /* 버튼 텍스트 크기 조절 */
+	border-radius: 5px; /* 버튼 테두리 둥글게 만듭니다. */
+}
+
+.top-searchinput-box {
+	width: 100%;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	border: 2px solid;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+.top-searchinput-box h6 {
+	margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
+	font-size: 18px;
+	color: black;
+	margin-right: 10px;
+	margin-left:50px;
+	margin-top:10px;
+	
 }
 
 </style>
@@ -99,15 +111,30 @@ div.left-box {
 <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
-					<div class="top-search-box" style="height: 154px;">
+					<div class="top-search-box" style="height: 65px;">
 							<h6 style="border-top-width: 20px;padding-top: 20px;">렌트카001 빠른 검색</h6>
 							<input type="datetime-local" class="form-control" id="top_book_pick_date" placeholder="대여 날짜" style="margin-top: 5px;"> 
 							<input type="datetime-local" class="form-control" id="top_book_off_date" placeholder="반납 날짜" style="margin-top: 5px;">
 							
-							<button type="button" class="btntop btn-secondary" style="height: 50.2px; margin-top: 5px;">검색하기</button>
+							<button type="button" class="btntop btn-secondary" name="btnSearch" id="btnSearch" style="height: 50.2px; margin-top: 5px;">검색하기</button>
 							
 						</div>
-		   			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="top-searchinput-box" style="width: 1099px;">
+						<h6>대여일&nbsp;&nbsp;:</h6>
+						<input type="text" name="top_book_pick_date" readonly>
+						
+						<h6>반납일&nbsp;&nbsp;:</h6>
+						<input type="text" name="top_book_off_date"  readonly>
+						<h6>총&nbsp;&nbsp;: <span id="totalTimeSpan"></span> </h6>
+
+
+					</div>
+				</div>
+			</div>
+
+			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
 		   			<section>
 		   				
 						<div class="left-box">
@@ -148,7 +175,7 @@ div.left-box {
 									<input type="checkbox" name="otheroptions" value="전체" >전체
 									<input type="checkbox"  name="otheroptions" id="op_cam" value="후방카메라">후방카메라<br>
 									<input type="checkbox"  name="otheroptions" id="op_bt" value="블루투스">블루투스
-									<input type="checkbox"  name="otheroptions" id="op_navi" value="내비게이션">내비게이션
+									<input type="checkbox"  name="otheroptions" id="op_navi" value="내비게이션">내비게이션<br>
 									<input type="checkbox"  name="otheroptions" id="op_carseat" value="카시트">카시트
 								</label> 
 								
@@ -191,7 +218,7 @@ div.left-box {
 													    </c:if>
 													</c:if>
 
-							    						<p class="price ml-auto">가격 <span>원</span></p>
+							    						<p class="price ml-auto">총요금 <span id="totalPay"></span></p>
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
 						    					</div>
@@ -217,21 +244,15 @@ $(function() {
 		 $(":checkbox").prop("checked",false);
 	        var CheckReset = $("#btnreset").val();
 	        console.log("CheckReset");
+	         
 	    });
+	 $("#btnSearch").click(function(){
+		 
+	 });
 	
-	
+	//달력 입력값 받음
 	 $(document).ready(function() {
-		 $("input[type='checkbox']").change(function() {
-	            var groupName = $(this).attr("name");
-	    
-	            // Uncheck other checkboxes in the same group
-	            $("input[name='" + groupName + "']").not(this).prop("checked", false);
-	    
-	            // Clear the selection if the checkbox is unchecked
-	            if (!$(this).prop("checked")) {
-	                $("input[name='" + groupName + "']").prop("checked", false);
-	            }
-	        });
+		 
 		    
 		    function getParameterByName(name, url) {
 		        if (!url) url = window.location.href;
@@ -246,67 +267,156 @@ $(function() {
 		    var bookOffDate = getParameterByName('book_off_date');
 		    $("#top_book_pick_date").val(bookPickDate);
 		    $("#top_book_off_date").val(bookOffDate);
+		    
+		   
+		});
+	 $(document).ready(function() {
+		    function getParameterByName(name, url) {
+		        if (!url) url = window.location.href;
+		        name = name.replace(/[\[\]]/g, "\\$&");
+		        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		            results = regex.exec(url);
+		        if (!results) return null;
+		        if (!results[2]) return '';
+		        return decodeURIComponent(results[2].replace(/\+/g, " "));
+		    }
+
+		    var bookPickDate = getParameterByName('book_pick_date');
+		    var bookOffDate = getParameterByName('book_off_date');
+
+		    
+		    function formatDateTime(dateTimeString) {
+		        var options = {
+		            year: 'numeric',
+		            month: 'numeric',
+		            day: 'numeric',
+		            hour: 'numeric',
+		            minute: 'numeric',
+		            hour12: true,
+		        };
+		        return new Date(dateTimeString).toLocaleString('ko-KR', options);
+		    }
+
+		    
+		    
+		    $("input[name='top_book_pick_date']").val(formatDateTime(bookPickDate));
+		    $("input[name='top_book_off_date']").val(formatDateTime(bookOffDate));
+		    
+		    
 		});
 	 
-	 $("input[type='checkbox']").change(function() {
-		    var checkedValues = "";
-		    var carSizeValues = "";
-		    var carFuelValues = "";
-		    var carCompanyValues = "";
+	 $(document).ready(function() {
+		    function calculateTotalTime() {
+		        var pickDate = new Date($("#top_book_pick_date").val());
+		        var offDate = new Date($("#top_book_off_date").val());
 
-		    
-		    $("input[name='car_size']:checked").each(function() {
-		        carSizeValues = $(this).val() ;
+		        // 대여일 및 반납일의 차이 계산
+		        var timeDiff = offDate - pickDate;
+
+		        // 차이를 시간과 분으로 분리
+		        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+		        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+		        // 결과를 화면에 표시
+		        $("span[id='totalTimeSpan']").text(hours + "시간 " + minutes + "분");
+		    }
+
+		    // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
+		    $("#top_book_pick_date, #top_book_off_date").change(function() {
+		        calculateTotalTime();
 		    });
 
-		    
-		    $("input[name='car_fuel']:checked").each(function() {
-		        carFuelValues = $(this).val() ;
-		    });
+		    // 초기 로딩 시에도 계산 함수 호출
+		    calculateTotalTime();
+		});
 
-		    
-		    $("input[name='car_company']:checked").each(function() {
-		        carCompanyValues = $(this).val() ;
-		    });
+	 
+	 
+	
+	 
+	 //체크박스 3개 하나씩 선택되게
+	 $(document).ready(function() {
+		    $("input[name='car_size'], input[name='car_fuel'], input[name='car_company']").change(function() {
+		        var groupName = $(this).attr('name');
 
-		    
-		    $("input[name='otheroptions']:checked").each(function() {
-		        checkedValues += $(this).val() + ",";
-		    });
-
-		    
-		    carSizeValues = carSizeValues.replace(/,$/, "");
-		    carFuelValues = carFuelValues.replace(/,$/, "");
-		    carCompanyValues = carCompanyValues.replace(/,$/, "");
-		    checkedValues = checkedValues.replace(/,$/, "");
-
-		    var sendData = {
-		        "car_size": carSizeValues,
-		        "car_fuel": carFuelValues,
-		        "car_company": carCompanyValues,
-		        "op_cam": $("input[name='otheroptions'][value='후방카메라']").is(":checked") ? "Y" : "",
-                "op_bt": $("input[name='otheroptions'][value='블루투스']").is(":checked") ? "Y" : "",
-                "op_navi": $("input[name='otheroptions'][value='내비게이션']").is(":checked") ? "Y" : "",
-                "op_carseat": $("input[name='otheroptions'][value='카시트']").is(":checked") ? "Y" : ""
-		    };
-
-		    console.log('var sendData =', sendData);
-
-		    
-		    $.ajax({
-		        url: '/reserve/reservecars',
-		        type: 'GET',
-		        contentType: "application/json",
-		        data: sendData,
-		        success: function(rData) {
-		            //console.log('전송 성공:', rData);
-		            $("#cars-box").html(rData);
-		            setFooterTop();
-		            
-		        },
+		        
+		        $("input[name='" + groupName + "']").not(this).prop('checked', false);
 		        
 		    });
 		});
+	 
+	 //비동기방식으로 체크박스 값보내서 체크된거만 화면에 보이게 하기
+	 $(function() {
+    
+
+    
+    function updateData() {
+        var checkedValues = "";
+        var carSizeValues = "";
+        var carFuelValues = "";
+        var carCompanyValues = "";
+
+        $("input[name='car_size']:checked").each(function() {
+            carSizeValues = $(this).val();
+        });
+
+        $("input[name='car_fuel']:checked").each(function() {
+            carFuelValues = $(this).val();
+        });
+
+        $("input[name='car_company']:checked").each(function() {
+            carCompanyValues = $(this).val();
+        });
+
+        $("input[name='otheroptions']:checked").each(function() {
+            checkedValues += $(this).val() + ",";
+        });
+
+        carSizeValues = carSizeValues.replace(/,$/, "");
+        carFuelValues = carFuelValues.replace(/,$/, "");
+        carCompanyValues = carCompanyValues.replace(/,$/, "");
+        checkedValues = checkedValues.replace(/,$/, "");
+
+        var sendData = {
+            "car_size": carSizeValues,
+            "car_fuel": carFuelValues,
+            "car_company": carCompanyValues,
+            "op_cam": $("input[name='otheroptions'][value='후방카메라']").is(":checked") ? "Y" : "",
+            "op_bt": $("input[name='otheroptions'][value='블루투스']").is(":checked") ? "Y" : "",
+            "op_navi": $("input[name='otheroptions'][value='내비게이션']").is(":checked") ? "Y" : "",
+            "op_carseat": $("input[name='otheroptions'][value='카시트']").is(":checked") ? "Y" : ""
+        };
+
+        console.log('var sendData =', sendData);
+
+        $.ajax({
+            url: '/reserve/reservecars',
+            type: 'GET',
+            contentType: "application/json",
+            data: sendData,
+            success: function(rData) {
+                $("#cars-box").html(rData);
+                setFooterTop();
+            },
+        });
+    }
+
+    
+    $("input[type='checkbox']").change(function() {
+        updateData();
+       
+    });
+
+    
+    $("#btnreset").click(function() {
+        $(":checkbox").prop("checked", false);
+        updateData();
+       
+    });
+
+  
+});
+
 
 
 	function setFooterTop() {

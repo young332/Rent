@@ -31,9 +31,8 @@
 						    </c:if>
 						</c:if>
 						
-							<p class="price ml-auto">
-							<span>원</span>
-						</p>
+						<p class="price ml-auto">총요금 <span id="totalPay"></span></p>
+						
 						</div>
 						<p class="d-flex mb-0 d-block" id="btn_reserve">
 							<a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a>

@@ -39,9 +39,9 @@ public class ReserveController {
 				            @RequestParam(name = "car_size", required = false) String carSize,
 				            @RequestParam(name = "car_fuel", required = false) String carFuel,
 				            @RequestParam(name = "op_carseat", required = false) String opCarseat,
-	                           @RequestParam(name = "op_navi", required = false) String opNavi,
-	                           @RequestParam(name = "op_bt", required = false) String opBt,
-	                           @RequestParam(name = "op_cam", required = false) String opCam,
+                           @RequestParam(name = "op_navi", required = false) String opNavi,
+                           @RequestParam(name = "op_bt", required = false) String opBt,
+                           @RequestParam(name = "op_cam", required = false) String opCam,
 				            Model model) {
 			log.info("Selected carCompany: " + carCompany);
 			log.info("Selected carSize: " + carSize);
@@ -51,7 +51,6 @@ public class ReserveController {
 			log.info("Selected opBt: " + opBt);
 			log.info("Selected opCam: " + opCam);
 			
-		
 			ReserveDTO reserveDTO = new ReserveDTO();
 			reserveDTO.setCar_company(carCompany);
 			reserveDTO.setCar_size(carSize);
