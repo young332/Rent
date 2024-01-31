@@ -49,7 +49,7 @@
 
 	// 비밀번호 변경 폼 제출 전 유효성 검사
 	function validatePasswordChangeForm() {
-	    var password = $("#password").val();
+	    var password = $("#mem_pw").val();
 	    var password1 = $("#password1").val();
 	    var newPassword = $("#newPassword").val();
 	    var confirmPassword = $("#confirmPassword").val();

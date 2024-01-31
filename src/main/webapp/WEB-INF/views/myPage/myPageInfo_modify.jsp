@@ -67,9 +67,10 @@ $(function() {
           	<p class="breadcrumbs">
           	<span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> 
           	<span class="mr-2"><a href="/myPage/myPage">마이페이지 <i class="ion-ios-arrow-forward"></i></a></span> 
-          	<span class="mr-2">내 정보 관리 <i class="ion-ios-arrow-forward"></i></span> 
+          	<span class="mr-2"><a href="/myPage/myPageInfo">내 정보 관리 <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2">개인정보 수정 <i class="ion-ios-arrow-forward"></i></span> 
           	</p>
-            <h1 class="mb-3 bread">내 정보 관리</h1>
+            <h1 class="mb-3 bread">개인정보 수정</h1>
           </div>
         </div>
       </div>
@@ -80,19 +81,19 @@ $(function() {
 			<div class="row">
    				<div class="col-md-8">
     				<h3>
-						내 정보 - 수정
+						개인정보수정
 					</h3>
 					<br>
 					<div class="container">
-					  <form action="/action_page.php">
+					  <form id="formModify" action="/myPage/memberModify_submit" method="post">
 					    <div class="form-group">
 					      <label for="id">아이디</label>
-					      <input type="text" class="form-control" id="id" name="id" value="${loginInfo.mem_id}" readonly>
+					      <input type="text" class="form-control" id="mem_id" name="mem_id" value="${loginInfo.mem_id}" readonly>
 					    </div>
 					    <div class="form-group">
 						    <label for="pwd">비밀번호</label>
 						    <div style="display: flex; align-items: center;">
-					      	<input type="password" class="form-control" id="password" name="password" 
+					      	<input type="password" class="form-control" id="mem_pw" name="mem_pw" 
 					      		   value="${loginInfo.mem_pw}" style="margin-right: 10px;" readonly>
 					     	<button type="button" id="pwdChange" class="btn btn-primary" style="flex-shrink: 0;">변경</button>
 					      </div>
@@ -100,23 +101,23 @@ $(function() {
 					    
 					    <div class="form-group">
 					      <label for="name">이름</label>
-					      <input type="text" class="form-control" id="name" name="name" value="${loginInfo.mem_name}">
+					      <input type="text" class="form-control" id="mem_name" name="mem_name" value="${loginInfo.mem_name}" readonly>
 					    </div>
 					    <div class="form-group">
 					      <label for="birthDay">생년월일</label>
-					      <input type="date" class="form-control" id="birthDay" name="birthDay" value="${loginInfo.mem_birth}">
+					      <input type="date" class="form-control" id="mem_birth" name="mem_birth" value="${loginInfo.mem_birth}" required>
 					    </div>
 					    <div class="form-group">
 					      <label for="phoneNumber">휴대폰 번호</label>
-					      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="${loginInfo.mem_phone}">
+					      <input type="text" class="form-control" id="mem_phone" name="mem_phone" value="${loginInfo.mem_phone}" required>
 					    </div>
 					    <div class="form-group">
 					      <label for="email">이메일</label>
-					      <input type="email" class="form-control" id="email" name="email" value="${loginInfo.mem_email}">
+					      <input type="email" class="form-control" id="mem_email" name="mem_email" value="${loginInfo.mem_email}" required>
 					    </div>
 					    <div class="form-group">
 			              <small>주소</small>
-			              <div class="input-group">
+			              <div class="input-group" style="display: flex; align-items: center;">
 			              	<input type="text"  class="form-control"  id="mem_zip_code" name="mem_zip_code" 
 			              		   value="${loginInfo.mem_zip_code}" style="margin-right: 10px;" readonly>
 							<span class="input-group-btn">
@@ -125,10 +126,10 @@ $(function() {
 							</div>
 							<input type="text" class="form-control" id="mem_addr" name="mem_addr" readonly="readonly" value="${loginInfo.mem_addr}">
 			              </div>
+						<hr>
+						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>
 					</div>
-					<hr>
-					<button id="btn-updateInfo" class="btn btn-primary">수정완료</button>
 			  	
 				</div>
    			</div>

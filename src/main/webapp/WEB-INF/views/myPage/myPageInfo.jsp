@@ -50,6 +50,11 @@ $(function() {
 		}
 	});
 	
+	var modifyResult = '${modifyResult}';
+	if (modifyResult) {
+		alert("회원정보 수정완료");
+	}
+	
 }); 
 </script>
 
