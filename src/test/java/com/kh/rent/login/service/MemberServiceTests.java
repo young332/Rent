@@ -85,4 +85,19 @@ public class MemberServiceTests {
 		log.info("count:" + count);
 	}
 	
+	@Test
+	public void testCheckPhone() {
+		String mem_phone = "01055556666";
+		int count = memberService.checkPhone(mem_phone);
+		log.info("count: " + count);
+	}
+	
+	@Test //문자인증
+	public void testMessageCheck() {
+		String mem_phone = "01089179442";
+		memberService.checkSend(mem_phone, 5632);
+	}
+	
+
+
 }

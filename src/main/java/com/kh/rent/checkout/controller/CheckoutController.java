@@ -35,6 +35,13 @@ public class CheckoutController {
 		log.info("payment");
 	}
     
+    @RequestMapping(value = "/point", method = {RequestMethod.GET, 
+    		RequestMethod.POST})
+    public void point() {
+ 
+		log.info("point");
+	}
+    
     @PostMapping()
     public String payPage(@PathVariable("mem_id") String mem_id,
                           PaymentDTO paymentDTO, Model model,

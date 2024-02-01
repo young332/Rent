@@ -46,4 +46,19 @@
 		where mem_id = #{mem_id}
 	</select>
 	
+	<!-- 전화번호 중복체크 -->
+	<select id="checkPhone" resultType="int">
+		select count(*) from rent001.TBL_MEMBER
+		where mem_phone = #{mem_phone}
+	</select>
+	
+		<!-- 암호화비밀번호 로그인 -->
+	<select id="findByIdAndPw" resultType="com.kh.rent.login.domain.MemberVO" parameterType="com.kh.rent.login.domain.LoginDTO">
+		select *
+		from rent001.TBL_MEMBER
+		where mem_pw = #{mem_pw}
+		and mem_id = #{mem_id}
+	</select>
+	
+	
 </mapper>
