@@ -23,7 +23,14 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<location>/Rent/src/main/webapp/resources/temp</location>
+			<max-file-size>5242880</max-file-size>
+			<max-request-size>26214400</max-request-size>
+			<file-size-threshold>5242880</file-size-threshold>
+		</multipart-config>
 	</servlet>
+
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>

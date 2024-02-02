@@ -77,9 +77,6 @@ public class AdminController {
 		return "/admin/include/sub_menu";
 	}
 
-	
-	
-	
 	@GetMapping("/menu")
 	public void adminMenuGet(Model model) {
 		List<MenuVO> topMenuList = menuService.getTopMenu();
@@ -106,7 +103,7 @@ public class AdminController {
 	}
 
 	
-	@GetMapping("/registerCar")
+	@GetMapping("/car/registerCar")
 	public void adminregisterCarGet() {
 		
 	}

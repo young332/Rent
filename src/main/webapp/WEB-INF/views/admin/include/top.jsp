@@ -93,9 +93,9 @@
    
     $(document).ready(function() {
         // 상위 메뉴 클릭 시 해당 상위 메뉴에 속한 하위 메뉴 펼치기/숨기기 토글
-        $(".sidenav-toggle").on("click", function() {
+/*         $(".sidenav-toggle").on("click", function() {
             $(this).next(".sidenav-menu").slideToggle();
-        });
+        }); */
         
         $("#sub_menu").on("click", ".s-link", function(e) {
         	e.stopPropagation();
@@ -114,10 +114,6 @@
 </head>
 
 <body>
-
-    	<%-- <c:set var="topMenuList" value="${responseMap['TopMenuList']}" />
-    	<c:set var="subMenuList" value="${responseMap['SubMenuList']}" /> --%>
-
     <!-- [ Preloader ] Start -->
     <div class="page-loader">
         <div class="bg-primary"></div>
@@ -135,7 +131,7 @@
                     <span class="app-brand-logo demo">
                         <img src="/resources/assets/img/logo.png" alt="Brand Logo" class="img-fluid">
                     </span>
-                    <a href="index.html" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
+                    <a href="/admin/" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
                     
                     <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
                         <i class="ion ion-md-menu align-middle"></i>
@@ -148,7 +144,7 @@
 
                     <!-- Dashboards -->
                     <li class="sidenav-item active">
-                        <a href="/admin/main" class="sidenav-link">
+                        <a href="/admin/menu" class="sidenav-link">
                             <i class="sidenav-icon feather icon-home"></i>
                             <div>Dashboards</div>
                             <div class="pl-1 ml-auto">
@@ -195,11 +191,11 @@
 
                     <!-- 회원관리 -->
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">회원</li>
+                    <li class="sidenav-header small font-weight-semibold">통계</li>
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
                             <i class="sidenav-icon feather icon-clipboard"></i>
-                            <div>회원관리</div>
+                            <div>통계</div>
                         </a>
                        <!--  <ul class="sidenav-menu">
                             <li class="sidenav-item">
