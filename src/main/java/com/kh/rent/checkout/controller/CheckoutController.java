@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.service.PaymentService;
 import com.kh.rent.login.domain.MemberVO;
@@ -34,16 +35,9 @@ public class CheckoutController {
  
 		log.info("payment");
 	}
-    
-    @RequestMapping(value = "/point", method = {RequestMethod.GET, 
-    		RequestMethod.POST})
-    public void point() {
- 
-		log.info("point");
-	}
-    
-    @PostMapping()
-    public String payPage(@PathVariable("mem_id") String mem_id,
+
+    @PostMapping("/payment")
+    public String payment(@PathVariable("mem_id") String mem_id,
                           PaymentDTO paymentDTO, Model model,
                           HttpSession session) {
     	
@@ -52,7 +46,48 @@ public class CheckoutController {
             model.addAttribute("loginInfo", loginInfo);
         }
     	
-        return "/reserve/reserve";
+        return "/myPage/myPage";
     }
-		
+    
+    @GetMapping("/point")
+    public void point() {
+ 
+		log.info("point");
+	}
+
+
+//    @GetMapping("/payment")
+//    public void payment(MemberVO memberVO, HttpSession session, Model model) {
+//    	MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+//        if (loginInfo != null) {
+//            model.addAttribute("loginInfo", loginInfo);
+//        }
+//
+//    	log.info("payment");
+//    }
+//    
+//    @PostMapping("/payment")
+//    public String payment(@PathVariable("pay_res_rid") int pay_res_rid,
+//         PaymentDTO paymentDTO, Model model, HttpSession session) {
+//    	
+//    	MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+//    	if (loginInfo != null) {
+//    		model.addAttribute("loginInfo", loginInfo);
+//    	}
+//    	
+//    	
+//    	 PaymentDTO paymentDto = new PaymentDTO();
+//
+//    	 paymentService.pay(paymentDto);
+//
+//    	 List<PaymentDTO> paymentList = paymentService.payNumber();
+//
+//    	 model.addAttribute("paymentlist", paymentList);
+//
+//		
+//		return "/myPage/myPage";
+//		
+//	}
+
+    
 }

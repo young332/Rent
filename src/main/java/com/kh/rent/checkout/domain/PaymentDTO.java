@@ -47,18 +47,14 @@ public class PaymentDTO {
 	// 결제 타입
 	private String pay_type;
 	
+	// 총 금액
+	private int res_totalpay;
+	
 	/* DB테이블에 존재하지 않는 데이터 */
 	
 	// 판매가
 	private int orderSalePrice;
-	
-	// 총 가격
-	private int totalPrice;
-	
-//	public void getOrderPriceInfo() {
-//		
-//		/* 최종 비용(상품 비용 - 사용 포인트) */
-//			pay_cost = orderSalePrice - point_cost;
-//	}
+
+
 	
 }

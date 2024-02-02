@@ -1,12 +1,15 @@
 package com.kh.rent.checkout.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
-import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.reserve.domain.LicenseDTO;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -35,9 +38,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int getPayResRid(int pay_res_rid) {
+	public List<LicenseDTO> getResRid() {
 		
-		return paymentMapper.getPayResRid(pay_res_rid);
+	List<LicenseDTO> list = paymentMapper.getResRid(); 	
+				
+	return list;
+
 	}
 
 	@Override
@@ -54,18 +60,16 @@ public class PaymentServiceImpl implements PaymentService {
 		paymentMapper.deductPayment(paymentDto);
 	}
 
-
-	@Override
-	public MemberVO getMemberVO(String pay_mem_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@Override
 	public void getPaymentInfo(PaymentDTO paymentDto) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public List<PaymentDTO> payNumber() {
+		return paymentMapper.payNumber();
 	}
 
 }

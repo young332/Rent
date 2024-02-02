@@ -6,12 +6,12 @@
 	
 	<!-- 결제 내역 조회-->
 	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
-		SELECT pay_type, pay_res_id, pay_mem_id, pay_date
+		SELECT pay_pid, pay_type, pay_res_id, pay_mem_id, pay_date
 		FROM TBL_PAYMENT
 		WHERE pay_mem_id = #{pay_mem_id}
 	</select>
 	
-	<!-- 결제 내역 기록 -->
+	<!-- 결제 내역 -->
 	<insert id="addPaymentRecord" parameterType="com.kh.rent.checkout.domain.PaymentDTO">
 		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_date, pay_type)
 		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_date}, #{pay_type})
@@ -26,13 +26,13 @@
 	
 	<!-- 포인트 차감 -->
 	<update id="deductPayment" parameterType="map">
-		update TBL_MEMBER set mem_point = mem_point - #{point_cost}
+		update TBL_MEMBER set mem_point = #{mem_point} - #{point_cost}
 		where mem_id = #{pay_mem_id}
 	</update>
 	
 	<!-- 회원 예약 번호 불려오기 -->	
-	<select id="getPayResRid" parameterType="int" resultType="int">
-        SELECT res_rid
+	<select id="getResRid" resultType="com.kh.rent.checkout.domain.PaymentDTO">
+        SELECT 
         FROM TBL_RESERVE
         WHERE res_rid = #{pay_res_rid}
     </select>
@@ -43,5 +43,16 @@
         FROM TBL_NONMEMBER
         WHERE non_rid = #{pay_res_rid}
     </select>
+    
+    <!-- 결제 번호 -->
+    <select id="payNumber">
+    	select p.pay_mem_id, p.pay_date, p.pay_type,
+    	p.pay_res_rid, r.res_totalpay
+    	from TBL_PAYMENT as p
+    	JOIN TBL_RESERVE as r
+    	ON p.pay_res_rid = r.res_rid;
+    </select>
+    
+    
 
 </mapper>
