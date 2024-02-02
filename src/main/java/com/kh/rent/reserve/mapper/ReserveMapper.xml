@@ -6,7 +6,7 @@
   
   <!-- 예약 입력 -->
   	<insert id="reserveinsert">
-  		insert into TBL_RESERVE
+  		insert into TBL_NONMEMBER
   			( res_rental_date, res_return_date, res_car_id, res_mem_id,
   			 res_license_type, res_license_num, res_totalpay)
   		values

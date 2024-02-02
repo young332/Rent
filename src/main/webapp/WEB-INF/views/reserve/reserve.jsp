@@ -97,7 +97,11 @@ div.left-box {
 	margin-left:20px;
     color: black;
 }
-
+#totalPay{
+	color:red;
+	font-size: 20px;
+	font-weight: bold;
+}
 </style>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -149,7 +153,7 @@ div.left-box {
 							<div class="form-group">
 								<label for="" class="label-cartype" >차종<br>
 									<input type="checkbox" id="car_size_small" name="car_size" value="소형">소형
-									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형<br>
+									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형
 									<input type="checkbox" id="car_size_large" name="car_size" value="대형">대형 
 									
 								</label>
@@ -220,7 +224,7 @@ div.left-box {
 													    </c:if>
 													</c:if>
 
-							    						<p class="price ml-auto">총요금 <span id="totalPay"></span></p>
+							    						<p class="price ml-auto">총요금 <span id="totalPay" ></span>원</p>
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
 						    					</div>
@@ -351,14 +355,32 @@ $(function() {
 		    // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
 		    $("#top_book_pick_date, #top_book_off_date").change(function() {
 		        calculateTotalTime();
+		        calculateTotalPay();
 		        
 		    });
 
 		    // 초기 로딩 시에도 계산 함수 호출
 		    calculateTotalTime();
+		    calculateTotalPay();
 		});
 
-	 
+	 //총가격
+	function calculateTotalPay() {
+    var carCostPerHour = parseInt("${carlist[0].car_cost}"); // Assuming car_cost is the cost per hour
+
+    var pickDate = new Date($("#top_book_pick_date").val());
+    var offDate = new Date($("#top_book_off_date").val());
+
+    var timeDiff = offDate - pickDate;
+    var totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
+
+    var totalPay = totalHours * carCostPerHour;
+
+    // Format totalPay with commas
+    var formattedTotalPay = totalPay.toLocaleString('en-US');
+
+    $("#totalPay").text(formattedTotalPay );
+}
 	 
 	
 	 

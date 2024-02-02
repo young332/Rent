@@ -47,6 +47,7 @@ public class ReserveController {
                            @RequestParam(name = "op_navi", required = false) String opNavi,
                            @RequestParam(name = "op_bt", required = false) String opBt,
                            @RequestParam(name = "op_cam", required = false) String opCam,
+                           
 				            Model model) {
 			log.info("Selected carCompany: " + carCompany);
 			log.info("Selected carSize: " + carSize);
