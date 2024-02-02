@@ -12,7 +12,7 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">예약 <i class="ion-ios-arrow-forward"></i></a></span> <span>결제 <i class="ion-ios-arrow-forward"></i></span></p>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="/reserve/licenseinfo">예약 <i class="ion-ios-arrow-forward"></i></a></span> <span>결제 <i class="ion-ios-arrow-forward"></i></span></p>
             <h1 class="mb-3 bread">결제</h1>
           </div>
         </div>
@@ -190,7 +190,7 @@
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>총 결제내역</span>
-            <strong><c:out value="${orderDTO.pay_cost}"/></strong>
+            <strong id="result_pnt">${result_pnt}</strong>
           </li>
            <button id="btn_pay" onclick="location.href='index.jsp'" class="w-100 btn btn-primary btn-lg" type="submit">결제 하기</button>
         </ul>
@@ -405,16 +405,15 @@ int min = 5000;
       
    <script>
    
-// 변수 선언 및 값 할당
+	// 변수 선언 및 값 할당
    var mem_id = '${memberVO.mem_id}';
    
    var point_cost = '${orderDTO.point_cost}';
  
-   var point = point;
+   var point = '${memberVO.mem_point}';
+   
    console.log("포인트: " + point);
-   
-   var pay_cost = '${orderDTO.pay_cost}';
-   
+      
    var orderSalePrice = <%= orderSalePrice %>;
   
 	// radio box 클릭 이벤트 처리
@@ -475,7 +474,7 @@ int min = 5000;
 	
 	function changePoint(orderSalePrice,point,min,unit){
 		//input값을 가져옴 > left_pnt 변경 > 최종결제금액 변경
-		//amt : 최초 결제 금액 / pnt : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
+		//orderSalePrice : 최초 결제 금액 / pnt : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
 		var v_point = parseInt(document.getElementById("use_pnt").value); //사용할 포인트 (input 입력값)
 		if (v_point > point) //입력값이 사용가능 포인트보다 클때
 		{
@@ -492,7 +491,7 @@ int min = 5000;
 		{
 			v_point = 0; 
 			document.getElementById("use_pnt").value = v_point; //input 값 재설정
-		}else {
+		} else {
 			// v_point = v_point - v_point%unit; //사용할 포인트 = 사용할 포인트 중 최소단위 이하 포인트를 뺀 포인트
 		}
 
@@ -517,9 +516,7 @@ int min = 5000;
       
     });
 	
-  // JavaScript 코드에서 mem_id와 point_cost 사용 가능
     console.log("회원 ID: " + mem_id);
-    console.log("포인트 비용: " + point_cost);
 
    </script>
 </body>
