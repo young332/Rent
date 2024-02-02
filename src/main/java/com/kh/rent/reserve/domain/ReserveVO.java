@@ -1,4 +1,4 @@
-package com.kh.rent.reserve.domain;
+ package com.kh.rent.reserve.domain;
 
 
 import java.util.Date;

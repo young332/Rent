@@ -102,6 +102,8 @@ div.left-box {
 	font-size: 20px;
 	font-weight: bold;
 }
+
+
 </style>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -225,7 +227,7 @@ div.left-box {
 													    </c:if>
 													</c:if>
 
-							    						<p class="price ml-auto">시간당 가격 <span id="hourPay"  data-hourly-rate="${reserveDTO.car_cost}">${reserveDTO.car_cost}</span>원</p>
+							    						<p class="price ml-auto"><span id="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
 							    						<p class="price ml-auto">총요금 <span id="totalPay" ></span>원</p>
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
@@ -368,28 +370,59 @@ $(function() {
 		});
 
 	 //차들 총 가격
-	 $(document).ready(function() {
-	    function calculateTotalCost() {
-	        var pickDate = new Date($("#top_book_pick_date").val());
-	        var offDate = new Date($("#top_book_off_date").val());
-	
-	        var timeDiff = offDate - pickDate;
-	        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
-	
-	        $(".item").each(function() {
-	            var hourlyRate = parseFloat($(this).find("#hourPay").text());
-	            console.log("hourlyRate:",hourlyRate);
-	            var totalCost = hours * hourlyRate;
-	            $(this).find("#totalPay").text(totalCost);
-	        });
-	    }
-	
-	    $("#top_book_pick_date, #top_book_off_date").change(function() {
-	        calculateTotalCost();
-	    });
-	
-	    calculateTotalCost();
-	});
+
+		$(document).ready(function() {
+		    function calculateTotalCost() {
+		        var pickDate = new Date($("#top_book_pick_date").val());
+		        var offDate = new Date($("#top_book_off_date").val());
+		
+		        var timeDiff = offDate - pickDate;
+		        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+		
+		        $(".item").each(function() {
+		            var hourlyRate = parseFloat($(this).find("#hourPay").text());
+		            var totalCost = hours * hourlyRate;
+		            $(this).find("#totalPay").text(totalCost);
+		        });
+		
+		        // Asynchronous update
+		        updateTotalCostOnServer();
+		    }
+		
+		    $("#top_book_pick_date, #top_book_off_date").change(function() {
+		        calculateTotalCost();
+		    });
+		
+		    calculateTotalCost();
+		
+		    function updateTotalCostOnServer() {
+		        var pickDate = $("#top_book_pick_date").val();
+		        var offDate = $("#top_book_off_date").val();
+		
+		        // Additional data to send to the server if needed
+		        var additionalData = {
+		            // Add any additional data here if needed
+		        };
+		
+		        $.ajax({
+		            url: '/reserve/reservecars', 
+		            type: 'GET', 
+		            data: {
+		                pickDate: pickDate,
+		                offDate: offDate,
+		                additionalData: additionalData
+		            },
+		            success: function(response) {
+		                console.log(response);
+		            },
+		            error: function(error) {
+		                console.error(error);
+		            }
+		        });
+		    }
+		});
+		
+		
 
 
 	 
