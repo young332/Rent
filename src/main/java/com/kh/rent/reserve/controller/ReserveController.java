@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.rent.admin.domain.CarInfoVO;
+import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.service.ReserveService;
 
@@ -70,7 +75,46 @@ public class ReserveController {
 	
 	
 	@GetMapping("/licenseinfo")
-	public void licenseinfo() {
-		log.info("licenseinfo...");
+	public String licenseinfo(HttpSession session, Model model) {
+	    MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
+	    if (loginInfo != null) {
+	        model.addAttribute("loginInfo", loginInfo);
+	    }
+	    
+	    return "reserve/licenseinfo";
+	}
+	
+	@PostMapping("/licenseinfo")
+	public String processLicenseInfo(@RequestParam("name") String name,
+	                                 @RequestParam("tel") String tel,
+	                                 @RequestParam("birthdate") String birthdate,
+	                                 @RequestParam("licenseType") String licenseType,
+	                                 @RequestParam("licensenum") String licensenum,
+	                                 Model model,
+	                                 HttpSession session) {
+
+	    // Store the information in the model for later retrieval
+	    model.addAttribute("name", name);
+	    model.addAttribute("tel", tel);
+	    model.addAttribute("birthdate", birthdate);
+	    model.addAttribute("licenseType", licenseType);
+	    model.addAttribute("licensenum", licensenum);
+
+	    // Additionally, you can save this information to the session if needed
+	    // Example:
+	    session.setAttribute("name", name);
+	    session.setAttribute("tel", tel);
+	    session.setAttribute("birthdate", birthdate);
+	    session.setAttribute("licenseType", licenseType);
+	    session.setAttribute("licensenum", licensenum);
+
+	    // Redirect to the payment page
+	    return "redirect:/checkout/payment";
+	}
+
+	
+	@PostMapping("/reserve")
+	public void reserveinsert() {
+		
 	}
 }

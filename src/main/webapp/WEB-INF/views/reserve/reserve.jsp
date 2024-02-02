@@ -148,7 +148,6 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-cartype" >차종<br>
-									<input type="checkbox" id="car_sizeAll" name="car_size" value="전체">전체
 									<input type="checkbox" id="car_size_small" name="car_size" value="소형">소형
 									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형<br>
 									<input type="checkbox" id="car_size_large" name="car_size" value="대형">대형 
@@ -158,7 +157,6 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-fuel" >연료<br> 
-									<input type="checkbox" name="car_fuel" value="전체">전체
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="휘발유">휘발유
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="경유">경유<br>
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="하이브리드">하이브리드
@@ -168,7 +166,6 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-carcompany">제조사<br>
-									<input type="checkbox" name="car_company" value="전체" >전체
 									<input type="checkbox"  name="car_company" id="car_company" value="현대">현대
 									<input type="checkbox"  name="car_company" id="car_company"  value="기아">기아
 								</label>  
