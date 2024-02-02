@@ -1,12 +1,12 @@
 	// 비밀번호 변경 유효성 검사 모듈
 	$(function() {
-	
+		
 	    // 검사 결과 저장 객체
 	    var valid = {
 	        newPWValid:false,
 	        confirmPWValid:false,
 	        isAllValid:function() {
-				return this.newPWValid && this.checkPWValid;
+				return this.newPWValid && this.confirmPWValid;
 			}
 	    }
 	
@@ -49,26 +49,35 @@
 
 	// 비밀번호 변경 폼 제출 전 유효성 검사
 	function validatePasswordChangeForm() {
-	    var password = $("#mem_pw").val();
+		function sha256(password) {
+	    		return CryptoJS.SHA256(password).toString();
+			}
+	
+		var password = $("#mem_pw").val();
 	    var password1 = $("#password1").val();
 	    var newPassword = $("#newPassword").val();
 	    var confirmPassword = $("#confirmPassword").val();
 	    
+	    var shaPassword1 = sha256(password1);
+	    var shaNewPassword = sha256(newPassword);
+	    var shaConfirmPassword = sha256(confirmPassword);
+	    
+	
 	    var isFormValid = true;
 	
 	    if (password1=="" || newPassword=="" || confirmPassword==""){
 	        isFormValid = false;
 	        alert("비밀번호를 입력하세요");
-	    } else if (newPassword != confirmPassword) {
+	    } else if (shaNewPassword != shaConfirmPassword) {
 	        isFormValid = false;
 	        alert("변경할 비밀번호가 서로 일치하지 않습니다.");
-	    } else if (password == newPassword && password == confirmPassword) {
+	    } else if (password == shaNewPassword && password == shaConfirmPassword) {
 	        isFormValid = false;
 	        alert("이전에 사용했던 비밀번호는 사용할 수 없습니다.");
-	    } else if (password != password1) {
+	    } else if (password != shaPassword1) {
 	        isFormValid = false;
 	        alert("기존 비밀번호와 일치하지 않습니다.");
-	    } else if (password == password1 && password != newPassword && password != confirmPassword) {
+	    } else if (password == shaPassword1 && password != shaNewPassword && password != shaConfirmPassword) {
 	        isFormValid = true;
 	        console.log("비밀번호 변경 진행");
 	    }
@@ -77,19 +86,19 @@
 	        return false; // 폼 제출 중단
 	    } else {
 	    	// 유효성 검사 통과 시 폼 제출
-	    	submitPasswordChangeForm(password, newPassword);
+	    	submitPasswordChangeForm(password, shaNewPassword);
 		}
 	}
 
 	// 폼 제출 함수
-	function submitPasswordChangeForm(password, newPassword) {
+	function submitPasswordChangeForm(password, shaNewPassword) {
 	    console.log("비밀번호 변경 진행");
 	
 	    // PWchangeDTO 객체 생성
 	    var pwChangeDTO = {
-	        "mem_id": $("#id").val(),
+	        "mem_id": $("#mem_id").val(),
 	        "password": password,
-	        "newPassword": newPassword
+	        "newPassword": shaNewPassword
 	    };
 	
 		// 서버에 PUT 요청 보내기

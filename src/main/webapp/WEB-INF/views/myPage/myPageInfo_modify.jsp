@@ -18,6 +18,9 @@
 <!-- 비밀번호변경 유효성 검사 스크립트 include -->
 <script src="/resources/js/change-pw-checker.js"></script>
 
+<!-- 비밀번호 암호화 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
 <script>
 //주소 검색
 function openZipSearch() {
@@ -52,6 +55,7 @@ $(function() {
 	$("#btn-pwdChange-save").click(function() {
 // 		var password1 = $("#password1").val();
 // 		console.log("password1:", password1);
+		
 	    validatePasswordChangeForm();
 	});
 	
@@ -79,9 +83,11 @@ $(function() {
     <section class="ftco-section">
 		<div class="container">
 			<div class="row">
+				<div class="col-md-2">
+				</div>
    				<div class="col-md-8">
     				<h3>
-						개인정보수정
+						내 정보 수정
 					</h3>
 					<br>
 					<div class="container">
@@ -130,7 +136,8 @@ $(function() {
 						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>
 					</div>
-			  	
+				</div>
+				<div class="col-md-2">
 				</div>
    			</div>
    		</div>

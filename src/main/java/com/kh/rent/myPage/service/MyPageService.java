@@ -1,8 +1,10 @@
 package com.kh.rent.myPage.service;
 
-import com.kh.rent.login.domain.LoginDTO;
+import java.util.List;
+
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
+import com.kh.rent.reserve.domain.ReserveVO;
 
 public interface MyPageService {
 	
@@ -20,5 +22,8 @@ public interface MyPageService {
 	
 	// 회원정보 삭제하기
 	public int deleteMember(String mem_id);
+	
+	// 예약정보 조회하기
+	public List<ReserveVO> getReserveList(String mem_id);
 
 }
