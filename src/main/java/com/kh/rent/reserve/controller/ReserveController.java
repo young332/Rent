@@ -19,6 +19,7 @@ import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.ReserveDTO;
+import com.kh.rent.reserve.domain.ReserveVO;
 import com.kh.rent.reserve.service.ReserveService;
 
 import lombok.extern.log4j.Log4j;
@@ -47,7 +48,6 @@ public class ReserveController {
                            @RequestParam(name = "op_navi", required = false) String opNavi,
                            @RequestParam(name = "op_bt", required = false) String opBt,
                            @RequestParam(name = "op_cam", required = false) String opCam,
-                           
 				            Model model) {
 			log.info("Selected carCompany: " + carCompany);
 			log.info("Selected carSize: " + carSize);
@@ -116,8 +116,10 @@ public class ReserveController {
 	}
 
 	
-	@PostMapping("/reserve")
-	public void reserveinsert() {
-		
+	@PostMapping("/reserveinsert")
+	public String reserveinsert(ReserveVO reserveVO) {
+		reserveService.reserveinsert(reserveVO);
+		log.info("reserveVO"+reserveVO);
+		return "redirect:/checkout/payment";
 	}
 }

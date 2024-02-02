@@ -118,7 +118,7 @@ div.left-box {
 	
 	
 <section class="ftco-section ftco-cart">
-	<form method="post" action="/reserve">
+	<form method="post" action="/reserve/reserveinsert">
 			<div class="container">
 				<div class="row">
 					<div class="top-search-box" style="height: 65px;">
@@ -225,6 +225,7 @@ div.left-box {
 													    </c:if>
 													</c:if>
 
+							    						<p class="price ml-auto">시간당 가격 <span id="hourPay"  data-hourly-rate="${reserveDTO.car_cost}">${reserveDTO.car_cost}</span>원</p>
 							    						<p class="price ml-auto">총요금 <span id="totalPay" ></span>원</p>
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
@@ -351,39 +352,46 @@ $(function() {
 
 		        // 결과를 화면에 표시
 		        $("span[id='totalTimeSpan']").text(hours + "시간 " + minutes + "분");
+		        
 		    }
 
 		    // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
 		    $("#top_book_pick_date, #top_book_off_date").change(function() {
 		        calculateTotalTime();
-		        calculateTotalPay();
+		      
 		        
 		    });
 
 		    // 초기 로딩 시에도 계산 함수 호출
 		    calculateTotalTime();
-		    calculateTotalPay();
+		    
 		});
 
-	 //총가격
-	function calculateTotalPay() {
-	    var carCostPerHour = parseInt("${carlist[0].car_cost}"); // Assuming car_cost is the cost per hour
+	 //차들 총 가격
+	 $(document).ready(function() {
+	    function calculateTotalCost() {
+	        var pickDate = new Date($("#top_book_pick_date").val());
+	        var offDate = new Date($("#top_book_off_date").val());
 	
-	    var pickDate = new Date($("#top_book_pick_date").val());
-	    var offDate = new Date($("#top_book_off_date").val());
+	        var timeDiff = offDate - pickDate;
+	        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
 	
-	    var timeDiff = offDate - pickDate;
-	    var totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
+	        $(".item").each(function() {
+	            var hourlyRate = parseFloat($(this).find("#hourPay").text());
+	            console.log("hourlyRate:",hourlyRate);
+	            var totalCost = hours * hourlyRate;
+	            $(this).find("#totalPay").text(totalCost);
+	        });
+	    }
 	
-	    var totalPay = totalHours * carCostPerHour;
+	    $("#top_book_pick_date, #top_book_off_date").change(function() {
+	        calculateTotalCost();
+	    });
 	
-	    // Format totalPay with commas
-	    var formattedTotalPay = totalPay.toLocaleString('en-US');
-	
-	    $("#totalPay").text(formattedTotalPay );
-	}
-		 
-	
+	    calculateTotalCost();
+	});
+
+
 	 
 	 //체크박스 3개 하나씩 선택되게함
 	 $(document).ready(function() {
@@ -447,8 +455,10 @@ $(function() {
             data: sendData,
             success: function(rData) {
                 $("#cars-box").html(rData);
+                
                 setFooterTop();
-                calculateTotalPay();
+                
+                
             },
         });
     }
