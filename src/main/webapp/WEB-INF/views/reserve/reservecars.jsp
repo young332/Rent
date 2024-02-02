@@ -31,7 +31,7 @@
 						    </c:if>
 						</c:if>
 						
-						<p class="price ml-auto">총요금 <span id="totalPay"></span></p>
+						<p class="price ml-auto">총요금 <span id="totalPay">${vo.totalPay}</span></p>
 						
 						</div>
 						<p class="d-flex mb-0 d-block" id="btn_reserve">
@@ -40,6 +40,7 @@
 					</div>
 				</div>
 			</div>
+			
 
 		</c:forEach>
 

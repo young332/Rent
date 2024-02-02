@@ -47,6 +47,7 @@ public class ReserveController {
                            @RequestParam(name = "op_navi", required = false) String opNavi,
                            @RequestParam(name = "op_bt", required = false) String opBt,
                            @RequestParam(name = "op_cam", required = false) String opCam,
+                           @RequestParam(name="formattedTotalPay", required = false) String formattedTotalPay,
                            
 				            Model model) {
 			log.info("Selected carCompany: " + carCompany);
@@ -56,7 +57,7 @@ public class ReserveController {
 			log.info("Selected opNavi: " + opNavi);
 			log.info("Selected opBt: " + opBt);
 			log.info("Selected opCam: " + opCam);
-			
+		
 			ReserveDTO reserveDTO = new ReserveDTO();
 			reserveDTO.setCar_company(carCompany);
 			reserveDTO.setCar_size(carSize);
@@ -66,8 +67,11 @@ public class ReserveController {
 			reserveDTO.setOp_bt(opBt);
 			reserveDTO.setOp_cam(opCam);
 			
+			
+			
 			List<ReserveDTO> checkcarlist = reserveService.selectCheck(reserveDTO);
 			model.addAttribute("checkcarlist", checkcarlist);
+			model.addAttribute("totalPay", formattedTotalPay);
 			log.info("checkcarlist: " + checkcarlist);
 			
 			return "reserve/reservecars";
@@ -100,6 +104,7 @@ public class ReserveController {
 	    model.addAttribute("birthdate", birthdate);
 	    model.addAttribute("licenseType", licenseType);
 	    model.addAttribute("licensenum", licensenum);
+	    
 
 	    // Additionally, you can save this information to the session if needed
 	    // Example:

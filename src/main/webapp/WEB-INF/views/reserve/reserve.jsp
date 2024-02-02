@@ -366,25 +366,25 @@ $(function() {
 
 	 //총가격
 	function calculateTotalPay() {
-    var carCostPerHour = parseInt("${carlist[0].car_cost}"); // Assuming car_cost is the cost per hour
-
-    var pickDate = new Date($("#top_book_pick_date").val());
-    var offDate = new Date($("#top_book_off_date").val());
-
-    var timeDiff = offDate - pickDate;
-    var totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
-
-    var totalPay = totalHours * carCostPerHour;
-
-    // Format totalPay with commas
-    var formattedTotalPay = totalPay.toLocaleString('en-US');
-
-    $("#totalPay").text(formattedTotalPay );
-}
-	 
+	    var carCostPerHour = parseInt("${carlist[0].car_cost}"); // Assuming car_cost is the cost per hour
+	
+	    var pickDate = new Date($("#top_book_pick_date").val());
+	    var offDate = new Date($("#top_book_off_date").val());
+	
+	    var timeDiff = offDate - pickDate;
+	    var totalHours = Math.floor(timeDiff / (1000 * 60 * 60));
+	
+	    var totalPay = totalHours * carCostPerHour;
+	
+	    // Format totalPay with commas
+	    var formattedTotalPay = totalPay.toLocaleString('en-US');
+	
+	    $("#totalPay").text(formattedTotalPay );
+	}
+		 
 	
 	 
-	 //체크박스 3개 하나씩 선택되게호ㅓ
+	 //체크박스 3개 하나씩 선택되게함
 	 $(document).ready(function() {
 		    $("input[name='car_size'], input[name='car_fuel'], input[name='car_company']").change(function() {
 		        var groupName = $(this).attr('name');
@@ -447,6 +447,7 @@ $(function() {
             success: function(rData) {
                 $("#cars-box").html(rData);
                 setFooterTop();
+                calculateTotalPay();
             },
         });
     }

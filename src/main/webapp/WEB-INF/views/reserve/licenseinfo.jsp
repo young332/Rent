@@ -73,8 +73,12 @@
 						<br>
 	
 						<p>
-							<a class="btn btn-success btn-large" href="/checkout/payment">운전자 정보 입력완료</a>
+							<a class="btn btn-success btn-large" href="/checkout/payment">비회원 현금결제</a>
+							<a class="btn btn-info btn-large" href="/checkout/payment">회원전용 결제</a>
 						</p>
+						
+							
+						
 					</div>
 				</form>
 
