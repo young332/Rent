@@ -9,6 +9,8 @@ import com.kh.rent.admin.domain.MenuVO;
 public interface MenuMapper {
 
 	public List<MenuVO> getTopMenu();
+	
+	public List<MenuVO> getSubMenuAll(String menu_id);
 
 	public List<MenuVO> getSubMenu(@Param("parent_menu_id") String parent_menu_id);
 	

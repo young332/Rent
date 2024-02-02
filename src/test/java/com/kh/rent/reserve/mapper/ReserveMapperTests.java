@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.reserve.domain.ReserveVO;
 import com.kh.rent.reserve.mapper.ReserveMapperTests;
 
@@ -45,6 +46,12 @@ public class ReserveMapperTests {
 	public void testGetList() {
 		List<ReserveVO> list = reserveMapper.getList();
 		log.info("list:"+list);
+	}
+	
+	@Test
+	public void testGetCarInfo() {
+		List<CarInfoVO> carlist = reserveMapper.getCarInfo();
+		log.info("carlist"+carlist);
 	}
 	
 }

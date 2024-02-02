@@ -16,6 +16,7 @@ public class CarInfoVO {
 	private String car_name;
 	private String car_company;
 	private String car_size;
+	private String car_fuel;
 	private String op_carseat;
 	private String op_navi;
 	private String op_bt;
@@ -24,5 +25,6 @@ public class CarInfoVO {
 	private Date crate_date;
 	private String update_user;
 	private Date update_date;
+	private Integer car_cost;
 	
 }
