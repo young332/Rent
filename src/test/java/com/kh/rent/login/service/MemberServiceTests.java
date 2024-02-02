@@ -10,6 +10,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -34,6 +36,21 @@ public class MemberServiceTests {
 		 log.info("memberVO: " + memberVO);
 	}
 
+	//비회원로그인
+	@Test
+	public void testNonMemberLogin() {
+		String non_name = "kim";
+		String non_tel = "123456789";
+		NonMemberLoginDTO nonMemberLoginDTO = NonMemberLoginDTO.builder()
+				.non_name(non_name)
+				.non_tel(non_tel)
+				.build();
+		NonMemberVO nonMemberVO  = memberService.NonMemberLogin(nonMemberLoginDTO);
+		log.info("nonMemberVO:" + nonMemberVO);
+		
+	}
+	
+	
 	@Test
 	public void testInsert() {
 		String id = "MEMBER04";
@@ -98,6 +115,11 @@ public class MemberServiceTests {
 		memberService.checkSend(mem_phone, 5632);
 	}
 	
-
+	@Test
+	public void testCheckEmail() {
+		String mem_email = "khproject2309@gmail.com";
+		int count = memberService.checkEmail(mem_email);
+		log.info("count:" + count);
+	}
 
 }

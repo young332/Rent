@@ -30,8 +30,10 @@ import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NaverLoginBO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
 import com.kh.rent.login.service.MemberService;
 import com.kh.rent.login.service.Sha256;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -75,6 +77,20 @@ public class MemberController {
 		}
 		model.addAttribute("loginInfo", memberVO);
 		model.addAttribute("useCookie", loginDTO.getUseCookie());
+		
+	}
+	//비회원로그인
+	@PostMapping("/NonLoginPost")
+	public String NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO, HttpSession session, RedirectAttributes rttr) {
+		log.info("nonMemberLoginDTO:" + nonMemberLoginDTO);
+		NonMemberVO nonMemberVO = memberService.NonMemberLogin(nonMemberLoginDTO);
+		if(nonMemberVO != null) {
+			session.setAttribute("nonMemberVO", nonMemberVO);
+			return "redirect:/myPage/reservationList";
+		}
+		rttr.addFlashAttribute("nonLoginResult", "fail");
+		return "redirect:/login/login";
+		
 		
 	}
 	
@@ -181,7 +197,7 @@ public class MemberController {
 	public String checkPhone(@RequestBody String mem_phone) {
 		log.info("mem_phone:" + mem_phone);
 		int count = memberService.checkPhone(mem_phone);
-		log.info("count:" + count);
+		log.info("mem_phone_count:" + count);
 		return Integer.toString(count);
 	}
 	
@@ -195,6 +211,15 @@ public class MemberController {
 		log.info("mem_phone_send:" + mem_phone);
 		log.info("randomNumber_send:" + randomNumber);
 		return Integer.toString(randomNumber);
+	}
+	//이메일 중복체크
+	@ResponseBody
+	@PostMapping(value = "/emailCheck" )
+	public String checkEmail(@RequestBody String mem_email) {
+		log.info("mem_email:" + mem_email);
+		int count = memberService.checkEmail(mem_email);
+		log.info("email_count:" + count);
+		return Integer.toString(count);
 	}
 	
 //	//네이버 로그인

@@ -3,11 +3,16 @@ package com.kh.rent.login.service;
 import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 public interface MemberService {
 
 		//로그인
 		public MemberVO login(LoginDTO loginDTO);
+		
+		//비회원로그인
+		public NonMemberVO NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO);
 		
 		//회원가입
 		public boolean registerPost(MemberVO memberVO);
@@ -26,6 +31,9 @@ public interface MemberService {
 		
 		//휴대폰 중복체크
 		public int checkPhone(String mem_phone);
+		
+		//이메일 중복체크
+		public int checkEmail(String mem_email);
 		
 		
 }

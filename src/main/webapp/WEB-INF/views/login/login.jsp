@@ -36,6 +36,11 @@ $(function(){
 				break;
 			}
 		}
+		
+		$("#btn-Non-member").click(function(){
+			console.log("클릭");
+			$("#modal-Non-member").modal("show");
+		});
 	
 	});
 </script>
@@ -46,7 +51,7 @@ $(function(){
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
             <h1 class="mb-3 bread">로그인</h1>
           </div>
         </div>
@@ -67,8 +72,7 @@ $(function(){
 							readonly>
 					</div>
 					<div class="form-group">
-						<label>비밀번호</label> <input type="password" name="mem_pw" id="mem_pw" class="form-control" placeholder="비밀번호를 입력해주세요."
-							value="MEMBER01"> 
+						<label>비밀번호</label> <input type="password" name="mem_pw" id="mem_pw" class="form-control" placeholder="비밀번호를 입력해주세요."> 
 							<input type="hidden" id="pwmessage" class="pwmessage" value="최소 8자 이상 입력해주세요." readonly>
 					</div>
 					<div class="form-group">
@@ -97,7 +101,7 @@ $(function(){
 					<div class="form-group">
 						<p style="margin-bottom: 150px;">발급된 예약번호로 예약내역을 확인해 보세요.</p>
 						<div class="form-group">
-							<button type="button" id="btnclick"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
+							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
 						</div>
 						<!-- 예약번호,이름,휴대폰번호 비회원예약확인 -->
 					</div>
@@ -120,46 +124,42 @@ $(function(){
 	</div>
 <!--// 로그인 -->
 <!-- 비회원 모달 -->
-<div class="row">
+	<div class="row">
 		<div class="col-md-12">
-			 <a id="modal-748842" href="#modal-container-748842" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
-			
-			<div class="modal fade" id="modal-container-748842" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="modal-Non-member" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="myModalLabel">
-								비회원 예약조회
-							</h5> 
+							<h5 class="modal-title" id="myModalLabel">비회원 예약조회</h5>
 							<button type="button" class="close" data-dismiss="modal">
 								<span aria-hidden="true">×</span>
 							</button>
+							
 						</div>
-						<div class="modal-body">
-						<label>이름 : </label>
-						<input type="text" id="non-members-name"/>
-						</div>
-						<div class="modal-body">
-						<label>전화번호 : </label>
-						<input type="text" id="non-members-phone"/>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary">
-								예약조회
-							</button> 
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
-								닫기
-							</button>
-						</div>
+						<form action="/login/NonLoginPost" method="post" >
+							<div class="modal-body">
+								<label>이름</label>
+								<input type="text" class="form-control" id="non_name"  name="non_name"/>
+							</div>
+							<div class="modal-body">
+								<label>전화번호</label>
+								<input type="text" class="form-control" id="non_tel" name="non_tel"/>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">예약조회</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">닫기</button>
+							</div>
+						</form>
 					</div>
-					
-				</div>
-				
-			</div>
 			
-		</div>
+				</div>
+
+			</div>
+		
 	</div>
-<!-- //모달 -->
+	</div>
+	<!-- //모달 -->
 
 </section>
 	
