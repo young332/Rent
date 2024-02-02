@@ -118,6 +118,7 @@ div.left-box {
 	
 	
 <section class="ftco-section ftco-cart">
+	<form method="post" action="/reserve">
 			<div class="container">
 				<div class="row">
 					<div class="top-search-box" style="height: 65px;">
@@ -238,7 +239,7 @@ div.left-box {
 						</div>
 					</div>
     		
-			
+			</form>
 		</section>
      
 
