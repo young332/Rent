@@ -19,9 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.rent.admin.domain.CommonCodeVO;
+import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.admin.service.AdMemberService;
 import com.kh.rent.admin.service.CodeService;
 import com.kh.rent.admin.service.MenuService;
+import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -36,19 +40,16 @@ public class AdminController {
 	@Autowired
 	private CodeService codeService;
 	
+	@Autowired
+	private AdMemberService adMemberService;
+	
+	
 	
 	@GetMapping("/")
 	public String adminMainGet(Model model, @RequestParam(value="menu_id", defaultValue = "MENU001") String menu_id,
 			HttpServletRequest request) {
 		request.setAttribute("menu_id", menu_id);
 		log.info("****");
-//		request.getAttribute("topMenuList");
-		//List<MenuVO> topMenuList = menuService.getTopMenu();
-		/* List<MenuVO> subMenuList = menuService.getSubMenu(parent_menu_id); */
-		
-		//model.addAttribute("TopMenuList", topMenuList);
-		/* model.addAttribute("SubMenuList", subMenuList); */
-
 		return "admin/main";
 	}
 	
@@ -59,20 +60,7 @@ public class AdminController {
 //	@ResponseBody
 	public String adminMainPost(@RequestParam(value="menu_id", defaultValue = "MENU001") String menu_id,
 			Model model, HttpSession session, HttpServletRequest request) {
-		
-		
-//		List<MenuVO> topMenuList = (List<Menu>) 
-//		List<MenuVO> subMenuList =
-//		
-//		Map<String, Object> responseMap = new HashMap<>();
-//	    responseMap.put("TopMenuList", topMenuList);
-//	    responseMap.put("SubMenuList", subMenuList);
-//		
-//		model.addAttribute("TopMenuList", topMenuList);
-//		model.addAttribute("SubMenuList", subMenuList);
-//		log.info("subMenuList:::"+subMenuList);
-//
-//		return responseMap;
+
 		
 		return "/admin/include/sub_menu";
 	}
@@ -98,8 +86,17 @@ public class AdminController {
 	}
 	
 	@GetMapping("/member")
-	public void adminMemberGet() {
-		
+	public void adminMemberGet(Model model) {
+		List<MemberVO> MemberList = adMemberService.selectAllMember();
+		log.info("MemberList:"+MemberList);
+		model.addAttribute("MemberList", MemberList);
+	}
+	
+	@GetMapping("/delMember")
+	public void adminDelMemberGet(Model model) {
+		List<DelMemberVO> DelMemberList = adMemberService.selectDelMember();
+		log.info("DelMemberList:"+DelMemberList);
+		model.addAttribute("DelMemberList", DelMemberList);
 	}
 
 	
@@ -107,6 +104,8 @@ public class AdminController {
 	public void adminregisterCarGet() {
 		
 	}
+	
+	
 	
 
 }
