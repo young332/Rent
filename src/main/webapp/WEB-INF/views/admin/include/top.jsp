@@ -92,11 +92,6 @@
     }
    
     $(document).ready(function() {
-        // 상위 메뉴 클릭 시 해당 상위 메뉴에 속한 하위 메뉴 펼치기/숨기기 토글
-/*         $(".sidenav-toggle").on("click", function() {
-            $(this).next(".sidenav-menu").slideToggle();
-        }); */
-        
         $("#sub_menu").on("click", ".s-link", function(e) {
         	e.stopPropagation();
         	e.preventDefault();
@@ -105,7 +100,6 @@
         	TopMenuClick(href, $(this));
         });
         
-//         TopMenuClick("/admin/?menu_id=MENU001");
     });
     
     
