@@ -22,5 +22,10 @@ public interface MemberService {
 		public int checkId(String mem_id);
 		
 		//문자인증
-		public void checkPhone(String mem_phone, int randomNumber);
+		public void checkSend(String mem_phone, int randomNumber);
+		
+		//휴대폰 중복체크
+		public int checkPhone(String mem_phone);
+		
+		
 }

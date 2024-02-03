@@ -26,8 +26,8 @@ public class MenuServiceImpl implements MenuService {
 	}
 	
 	@Override
-	public List<MenuVO> getSubMenuAll() {
-		List<MenuVO> subMenuList = menuMapper.getSubMenuAll();
+	public List<MenuVO> getSubMenuAll(String menu_id) {
+		List<MenuVO> subMenuList = menuMapper.getSubMenuAll(menu_id);
 		return subMenuList;
 	}
 	

@@ -5,7 +5,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.0.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
@@ -57,7 +59,8 @@
 		base-package="com.kh.rent.admin.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.point.mapper" />
-
+	<mybatis-spring:scan
+		base-package="com.kh.rent.checkout.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.reserve.mapper" />
 	<mybatis-spring:scan
@@ -77,7 +80,9 @@
 	<context:component-scan
 		base-package="com.kh.rent.reserve.service" />
 	<context:component-scan
-		base-package="com.kh.rent.myPage.service" />	
+		base-package="com.kh.rent.myPage.service" />
+	<context:component-scan
+	base-package="com.kh.rent.checkout.service" />	
 
 
 	<!-- @Transactional 사용 가능하게 -->
@@ -103,7 +108,5 @@
          </props>
       </property>
 	</bean>
-	
-	
 	
 </beans>

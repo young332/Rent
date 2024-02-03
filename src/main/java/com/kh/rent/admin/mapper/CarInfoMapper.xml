@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.rent.admin.mapper.CarInfoMapper">
+	
+    <insert id="insertCar">
+	    INSERT INTO TBL_CAR_INFO (car_name, car_number, car_company, car_size, car_fuel, car_cost,
+	                              op_carseat, op_navi, op_bt, op_cam, create_user, update_user, update_date, image_path)
+	    VALUES (
+	        #{car_name}, #{car_number}, #{car_company}, #{car_size}, #{car_fuel}, #{car_cost}, 
+	        #{op_carseat}, #{op_navi}, #{op_bt}, #{op_cam}, #{create_user}, #{update_user}, #{update_date}, #{image_path}
+	    )
+	</insert>
+
+
+	
+	<!-- <select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
+	select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
+	where parent_menu_id = '@'
+	</select>
+	
+	<select id="getSubMenuAll" resultType="com.kh.rent.admin.domain.MenuVO">
+		 select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
+		where not parent_menu_id = '@' 
+		
+ 	select menu_id
+	 ,parent_menu_id
+     ,menu_type
+     ,menu_name
+     ,menu_url
+     ,use_yn
+     ,orderby 
+	from TBL_MENU
+	where parent_menu_id = #{menu_id}
+		use_yn = 'Y' and menu_type = '1'
+	order by orderby 
+
+	</select>
+	
+	<select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">
+		SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE menu_id = #{menu_id}
+	</select>
+	
+	<select id="getSubMenu" parameterType="string" resultType="com.kh.rent.admin.domain.MenuVO">
+    	SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE parent_menu_id = #{parent_menu_id}
+	</select>
+	
+	<update id="updateMenu">
+		update TBL_MENU set
+			parent_menu_id = #{parent_menu_id},
+			menu_type = #{menu_type},
+			menu_name = #{menu_name},
+			menu_depth = #{menu_depth},
+			menu_url = #{menu_url},
+			orderby = #{orderby},
+			use_yn = #{use_yn}
+		where menu_id = #{menu_id}
+	</update>
+	
+	<delete id="delete">
+		delete from TBL_MENU
+		where menu_id = #{menu_id} 
+	</delete> -->
+
+	
+	
+	
+	
+
+</mapper>

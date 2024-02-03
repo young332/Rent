@@ -18,4 +18,7 @@ public class NonMemberVO {
 	private String non_car_id;
 	private Date non_rental_date;
 	private Date non_return_date;
+	private String non_license_num;
+	private String non_license_type;
+	private Integer non_license_birth;
 }

@@ -1,6 +1,7 @@
 package com.kh.rent.login.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +22,8 @@ public class MemberVO {
 	private String mem_phone;
 	private String mem_zip_code;
 	private String mem_addr;
-	private Date mem_cdate;
-	private Date mem_udate;
+	private Timestamp mem_cdate;
+	private Timestamp mem_udate;
 	private Integer mem_point;
 	private Integer mem_adminck;
 }
