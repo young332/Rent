@@ -24,6 +24,7 @@ import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.service.AdMemberService;
 import com.kh.rent.admin.service.CodeService;
 import com.kh.rent.admin.service.MenuService;
+import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.service.MemberService;
 
@@ -50,7 +51,7 @@ public class AdminController {
 			HttpServletRequest request) {
 		request.setAttribute("menu_id", menu_id);
 		log.info("****");
-		return "admin/main";
+		return "admin/login";
 	}
 	
 	
@@ -109,6 +110,29 @@ public class AdminController {
 	public void adminListCarGet() {
 		
 	}
+	
+    // ----------- 로그인 --------------- 	
+	
+	@GetMapping("/login")
+	public void adminLoginGet() {
+		
+	}
+	
+	//로그인
+	@PostMapping("/loginPost")
+	public void loginPost(LoginDTO loginDTO, Model model, HttpSession session) {
+		log.info("loginDTO: " + loginDTO);
+		MemberVO memberVO = adMemberService.login(loginDTO);
+		log.info("memberVO: " + memberVO);
+		session.setAttribute("memberVO", memberVO);
+		if(memberVO == null) {
+			return;
+		}
+		model.addAttribute("loginInfo", memberVO);
+		model.addAttribute("useCookie", loginDTO.getUseCookie());
+		
+	}
+	
 	
 
 }

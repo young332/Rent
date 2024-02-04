@@ -48,6 +48,8 @@
 		class="com.kh.rent.login.interceptor.AuthInterceptor"></beans:bean>
 	<beans:bean id="menuInterceptor"
 		class="com.kh.rent.admin.interceptor.MenuInterceptor"></beans:bean>
+	<beans:bean id="adLoginInterceptor"
+	class="com.kh.rent.admin.interceptor.AdLoginInterceptor"></beans:bean>
 
 	<interceptors>
     
@@ -74,6 +76,11 @@
 			<exclude-mapping path="/admin/member/getMemberInfo"/>
 
 			<beans:ref bean="menuInterceptor" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/loginPost" />
+			<beans:ref bean="adLoginInterceptor" />
 		</interceptor>
     
 	</interceptors>
