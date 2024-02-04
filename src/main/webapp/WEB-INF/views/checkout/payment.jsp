@@ -145,16 +145,16 @@
         </h4>
         <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">${session.loginInfo.mem_id}님의 여정</h6>
+              <h6 class="my-0">${loginInfo.mem_id}님의 여정</h6>
               <small class="text-muted">울산지점</small><br>
               <small class="text-muted">02.16(금) 11:00 ~ 02.18(일) 15:00</small>
-              <small class="text-muted">소형</small>
+              <small class="text-muted">${reserveDTO.car_size}</small>
             </div>
           </li>
         <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
 		    <h6 class="my-0">운전자</h6>
-		    <small class="text-muted">${memberVO.mem_name}</small>
+		    <small class="text-muted">${loginInfo.mem_name}</small>
 			</div>
           </li>
         <ul class="list-group mb-3">
@@ -214,7 +214,7 @@
           <div class="row g-3">
             <div class="col-sm-12">
               <label for="name" class="form-label">이름</label>
-              <input type="text" class="form-control" id="name" value=${memberVO.mem_name}>
+              <input type="text" class="form-control" id="name" value=${loginInfo.mem_name}>
               <div class="invalid-feedback">
              
               </div><br>
@@ -223,7 +223,7 @@
 
             <div class="col-12">
               <label for="text" class="form-label">연락처<span class="text-muted"></span></label>
-              <input type="text" class="form-control" id="phone" value=${memberVO.mem_phone}>
+              <input type="text" class="form-control" id="phone" value=${loginInfo.mem_phone}>
               <div class="invalid-feedback">
                 연락처 불려오기
               </div><br>
@@ -231,7 +231,7 @@
 
             <div class="col-12">
               <label for="birth" class="form-label">생년월일</label>
-              <input type="text" class="form-control" id="birth" value=${memberVO.mem_birth}>
+              <input type="text" class="form-control" id="birth" value=${loginInfo.mem_birth}>
               <div class="invalid-feedback">
                 생년월일 불려오기
               </div><br>
@@ -392,23 +392,18 @@ int min = 5000;
   </main>
 </div>
 
-	<form class="checkout_form" action="/myPage/myPage" method="post">
-		<!-- 사용 포인트 -> 예약 번호로 나오게 -->
-		<input name="point_cost" type="hidden">
+	<form id="checkout_form">
+		<!-- 결제 번호 -->
+		<input type="hidden" id="point_cost" name="point_cost">
+		<!-- 주문자 회원번호 -->
+		<input type="hidden" name="mem_id" value="${pay_mem_id}" type="hidden">
+		<!-- 예약자 -->
+		<input type="hidden" name="pay_res_rid" type="hidden">
+		<!-- 사용 포인트 -->
+		<input type="hidden" name="point_cost" type="hidden">
+		<!-- 예약 정보 -->
 	</form>
-	
-	<!-- 주문 요청 form -->
-		<form class="order_form" action="/order" method="post">
-			<!-- 주문자 회원번호 -->
-			<input name="mem_id" value="${pay_mem_id}" type="hidden">
-			<!-- 예약자 -->
-			<input name="pay_res_rid" type="hidden">
-			<!-- 사용 포인트 -->
-			<input name="point_cost" type="hidden">
-			<!-- 예약 정보 -->
-		</form>
-
-      
+	      
    <script>
    
 	// 변수 선언 및 값 할당

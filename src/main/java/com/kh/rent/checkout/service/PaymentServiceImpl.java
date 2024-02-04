@@ -10,18 +10,29 @@ import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
 import com.kh.rent.reserve.domain.LicenseDTO;
+import com.kh.rent.reserve.domain.ReserveVO;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Service
 public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	private PaymentMapper paymentMapper; 
-
+	
 	@Override
-	public PaymentDTO getPaymentDTO(int pay_res_rid) {
+	public boolean addPayment(PaymentDTO paymentDTO) {
+		int count = paymentMapper.addPaymentRecord(paymentDTO);
+		return (count == 1) ? true : false;
 		
-		return paymentMapper.getPaymentInfo(pay_res_rid);
 	}
+
+//	@Override
+//	public PaymentDTO getPaymentDTO(int pay_res_rid) {
+//		
+//		return paymentMapper.getPaymentInfo(pay_res_rid);
+//	}
 
 	
 //	@Override
@@ -38,15 +49,6 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<LicenseDTO> getResRid() {
-		
-	List<LicenseDTO> list = paymentMapper.getResRid(); 	
-				
-	return list;
-
-	}
-
-	@Override
 	public int getPayNonResRid(int pay_res_rid) {
 		return paymentMapper.getPayNonResRid(pay_res_rid);
 	}
@@ -60,16 +62,29 @@ public class PaymentServiceImpl implements PaymentService {
 		paymentMapper.deductPayment(paymentDto);
 	}
 
+
 	@Override
-	public void getPaymentInfo(PaymentDTO paymentDto) {
-		// TODO Auto-generated method stub
+	public List<PaymentDTO> getPaymentInfo(String mem_id) {
 		
+		List<PaymentDTO> list = paymentMapper.getPaymentInfo(mem_id);
+		log.info("list:" + list);
+		return list;
 	}
 
 
 	@Override
-	public List<PaymentDTO> payNumber() {
-		return paymentMapper.payNumber();
+	public List<ReserveVO> payNumber(int res_rid) {
+		List<ReserveVO> list = paymentMapper.payNumber(res_rid);
+		log.info("ReserveVO list:" + list);
+		return list;
 	}
+
+	@Override
+	public List<PaymentDTO> getResRid() {
+		List<PaymentDTO> list = paymentMapper.getResRid();
+		return list;
+	}
+
+
 
 }

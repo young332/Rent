@@ -15,9 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PaymentDTO {
 	
+	private String mem_id;
+	
+	private int res_rid;
+	
+	private int mem_point;
+	
+	// 결제 고유 번호 (PK)
 	private int pay_pid;
 			
-	// 예약번호ID(FK)
+	// 결제 번호 (FK)
 	private int pay_res_rid;
 	
 	//사용자ID(FK)
@@ -50,11 +57,6 @@ public class PaymentDTO {
 	// 총 금액
 	private int res_totalpay;
 	
-	/* DB테이블에 존재하지 않는 데이터 */
 	
-	// 판매가
-	private int orderSalePrice;
-
-
 	
 }

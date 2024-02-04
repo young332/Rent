@@ -27,10 +27,11 @@ public class PaymentServiceTests {
 	public void testDeductPayment() {
 		Date day = new Date();
 		PaymentDTO paymentDTO = PaymentDTO.builder()
+				.pay_res_rid(4)
 				.pay_mem_id("MEMBER01")
 				.pay_type("PAY_P")
 				.pay_date(day)
-				.point_cost(-1000)
+				.point_cost(3000)
 				.build();
 		paymentService.pay(paymentDTO);
 		log.info("paymentDTO"+paymentDTO);
