@@ -1,7 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
-
+<script>
+	//회원정보수정하기
+	function fn_carInfoModify(car_index) {
+			
+		   alert("수정")
+		   /* $.ajax({
+		    type: 'GET',
+		    url: '/admin/member/getMemberInfo',  
+		    data: { mem_id: mem_id },
+		    success: function (data) {
+		      console.log('Success:', data);
+	
+		      
+		        $("#mem_id").val(data['mem_id']);
+			    $("#mem_name").val(data['mem_name']);
+			    $("#mem_adminck").val(data['mem_adminck']);
+			    var mem_adminck = data['mem_adminck'];
+			    if (mem_adminck == 0) {
+		        	$("#mem_adminck").val("0").prop("selected", true);
+		        } 
+		        if (mem_adminck == 1) {
+		        	$("#mem_adminck").val("1").prop("selected", true);
+		        }
+		        if (mem_adminck == 2) {
+		        	$("#mem_adminck").val("2").prop("selected", true);
+		        }
+			    
+			    
+			    
+			    $("#mem_birth").val(data['mem_birth']);
+			    $("#mem_phone").val(data['mem_phone']);
+			    $("#mem_email").val(data['mem_email']);
+			    $("#mem_zip_code").val(data['mem_zip_code']);
+			    $("#mem_addr").val(data['mem_addr']);
+	
+		      // 모달 창 열기
+		      $("#MembermodifyModal").modal("show");
+		    
+		    } */
+		    
+		  }); 
+		}
+</script>
     <!-- [ content ] Start -->
 <div class="container-fluid flex-grow-1 container-p-y">
     <h4 class="font-weight-bold py-3 mb-0">차량목록</h4>
@@ -64,6 +106,7 @@
                           <label class="custom-control-label" for="checkall"></label>
                         </div>
                       </th>
+                      <th scope="col">사진</th>
                       <th scope="col">차종</th>
                       <th scope="col">차번호</th>
                       <th scope="col">제조사</th>
@@ -75,7 +118,7 @@
                     </tr>
                   </thead>
                   <tbody>
-					<c:forEach var="memberVO" items="${MemberList}">
+					<c:forEach var="carInfo" items="${carInfoList}">
 					<tr>
 						<td>
 							<div class="custom-control custom-checkbox">
@@ -84,27 +127,19 @@
 								<label class="custom-control-label" for="chk0"></label>
 							</div>
 						</td>
-
-						<td>${memberVO.mem_id}</td>
-						<td><a href="javascript:void(0);"
-						onclick="javascript:fn_memberModify('${memberVO.mem_id}');">${memberVO.mem_name}</a>
-						</td>
 						<td>
-						    <div class="badge badge-outline-primary">
-						    <c:choose>
-	            				<c:when test="${memberVO.mem_adminck == 0}">일반회원</c:when>
-	            				<c:when test="${memberVO.mem_adminck == 1}">관리자</c:when>
-	            				<c:when test="${memberVO.mem_adminck == 2}">비회원</c:when>
-	            				<c:otherwise>알 수 없는 상태</c:otherwise>
-	            			</c:choose>
-	            			</div>
+							<img src="${pageContext.request.contextPath}/resources/upload/${carInfo.unique_file_nm}" style="width: 50px; height: 50px" alt="Image">
 						</td>
-						<td>${memberVO.mem_birth}</td>
-						<td>${memberVO.mem_email}</td>
-						<td>${memberVO.mem_phone}</td>
-						<td>${memberVO.mem_addr}</td>
-						<td>${memberVO.mem_point}</td>
-						<td>${memberVO.mem_cdate}</td>
+						<td><a href="javascript:void(0);"
+						onclick="javascript:fn_carInfoModify('${carInfo.car_index}');">${carInfo.car_name}</a>
+						</td>
+						<td>${carInfo.car_number}</td>
+						<td>${carInfo.car_company}</td>
+						<td>${carInfo.car_size}</td>
+						<td>${carInfo.car_cost}</td>
+						<td>${carInfo.use_yn}</td>
+						<td>${carInfo.create_user}</td>
+						<td>${carInfo.create_date}</td>
 					</tr>
 				</c:forEach>
 

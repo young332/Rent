@@ -29,6 +29,10 @@ public class CarInfoVO {
 	private String update_user;
 	private Timestamp update_date;
 	private Integer car_cost;
-	private String image_path;
+	private int file_id;
+	private String file_stre_cours;
+	private String orignl_file_nm;
+	private String unique_file_nm;
+	private String use_yn;
 	
 }
