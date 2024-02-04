@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.service.AdMemberService;
+import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.admin.service.CodeService;
 import com.kh.rent.admin.service.MenuService;
 import com.kh.rent.login.domain.LoginDTO;
@@ -43,6 +45,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdMemberService adMemberService;
+	
+	@Autowired
+	private CarInfoService carInfoService;
 	
 	
 	
@@ -111,6 +116,20 @@ public class AdminController {
 		
 	}
 	
+	
+	@GetMapping("/car/registerCar")
+	public void adminregisterCarGet(Model model) {
+		List<CommonCodeVO> carNamelist = carInfoService.selectCarName();
+		model.addAttribute("carNamelist", carNamelist);
+	}
+	
+	@GetMapping("/car/ListCar")
+	public void adminListCarGet(Model model) {
+		List<CarInfoVO> carInfoList = carInfoService.selectCarInfo();
+		model.addAttribute("carInfoList", carInfoList);
+		log.info(carInfoList);
+	}
+	
     // ----------- 로그인 --------------- 	
 	
 	@GetMapping("/login")
@@ -133,6 +152,7 @@ public class AdminController {
 		
 	}
 	
+
 	
 
 }
