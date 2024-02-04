@@ -105,7 +105,10 @@ public class AdminController {
 		
 	}
 	
-	
+	@GetMapping("/car/ListCar")
+	public void adminListCarGet() {
+		
+	}
 	
 
 }
