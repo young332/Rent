@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 
 public interface AdMemberService {
@@ -15,5 +16,5 @@ public interface AdMemberService {
 	public MemberVO selectMemberByid(String mem_id);
 	public int updateMember(MemberVO updateVO);
 	
-	
+	public MemberVO login(LoginDTO loginDTO);
 }

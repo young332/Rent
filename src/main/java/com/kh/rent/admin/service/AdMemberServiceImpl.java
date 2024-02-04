@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.mapper.AdMemberMapper;
+import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 
 @Service
@@ -39,6 +40,13 @@ public class AdMemberServiceImpl implements AdMemberService {
 	public int updateMember(MemberVO updateVO) {
 		int result = adMemberMapper.updateMember(updateVO);
 		return result;
+	}
+
+	//로그인
+	@Override
+	public MemberVO login(LoginDTO loginDTO) {
+		MemberVO memberVO = adMemberMapper.login(loginDTO);
+		return memberVO;
 	}
 
 
