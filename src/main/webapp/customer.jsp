@@ -2,18 +2,35 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
-  
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>고객센터 <i class="ion-ios-arrow-forward"></i></span></p>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>고객센터 <i class="ion-ios-arrow-forward"></i></span></p>
             <h1 class="mb-3 bread">고객센터</h1>
           </div>
         </div>
       </div>
     </section>
+<style>
+        .hidden-content {
+            display: none;
+        }
+        .custom-cursor {
+            cursor: pointer;
+        }
+    </style>    
+<script>
+$(function(){
+	$("#reservationTitle").click(function(){
+		console.log("클릭");
+		$(".hidden-content").toggle();
+	});
+});
+</script>     
+    
      <section class="ftco-section ftco-no-pt bg-light">
      </section>
   <section class="ftco-section ftco-no-pt bg-light">
@@ -29,7 +46,7 @@
     					<div class="form-group" style="margin-right: 20px;">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">예약 · 변경</a></h2>
+		    						<h2 class="mb-0 custom-cursor" id="reservationTitle">예약 · 변경</h2>
 		    					</div>
 		    				</div>
     					</div>
@@ -61,9 +78,10 @@
 		    					</div>
 		    				</div>
     					</div>
+    				</div>
     			</div>
     		</div>
-    		</div>
+     <div class="container hidden-content">
     		<div class="container">
     		<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -99,7 +117,7 @@
 		    					</div>
 		    					<div class="text">
 		    						<span class="mb-0">메인 상담 '예약확인' 클릭
-		    						(비회원일 경우,'로그인-> 비회원 예약학인' 클릭)</span>
+		    						(비회원일 경우  '로그인 → 비회원 예약학인' 클릭)</span>
 		    					</div>
 		    				</div>
     					</div>
@@ -116,6 +134,7 @@
     			</div>
     		</div>
     		</div>
+    	</div>	
     </section>
 	<section class="ftco-section ftco-no-pt bg-light">
     	<div class="container">
