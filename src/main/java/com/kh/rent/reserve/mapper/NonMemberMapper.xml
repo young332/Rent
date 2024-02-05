@@ -3,5 +3,18 @@
   PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.kh.rent.reserve.mapper.NonMemberMapper">
-  
+  	<!-- 비회원 예약 입력 -->
+  	<insert id="nonresinsert">
+  		insert into TBL_NONMEMBER
+  			( non_name, non_tel, non_car_id, non_rental_date,
+  			 non_return_date, non_license_num, non_license_type,non_license_birth)
+  		values
+  			(#{non_name}, #{non_tel},#{non_car_id},
+  			str_to_date(#{non_rental_date}, '%Y-%m-%dT%H:%i'), 
+  			  str_to_date(#{non_return_date}, '%Y-%m-%dT%H:%i'),
+  			  #{non_license_num},
+  			  #{non_license_type},
+  			  #{non_license_birth}
+  			)	
+  	</insert>
   </mapper>
