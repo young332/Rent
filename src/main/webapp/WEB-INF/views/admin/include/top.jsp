@@ -62,41 +62,20 @@
     
     <script>
    
-    function TopMenuClick(href, obj/* , menu_id */) {
-//     	 $("#sidenav-menu > li:first").remove();
+    function TopMenuClick(href, obj) {
         console.log("href: ", href);
          $.ajax({
 	        url: href,
 	        success: function(data) {
 	            console.log("data: ", data);
 	            $("#sub_menu").html(data);
-// 	            if (data.SubMenuList && data.SubMenuList.length > 0) {
-// 	                $.each(data.SubMenuList, function(index, subMenu) {
-	                	
-// 	                    var listItem = $("<li class='sidenav-item'>" +
-// 	                        "<a href='" + subMenu.menu_url + "' class='sidenav-link'>" +
-// 	                        "<div>" + subMenu.menu_name + "</div>" +
-// 	                        "</a>" +
-// 	                        "</li>");
 
-// 	                    $("#sidenav-menu").append(listItem);
-	                    
-// 	                });
-// 	            }
-	            
-	           
 	        }
 	    }); 
-		
-        
+ 
     }
    
     $(document).ready(function() {
-        // 상위 메뉴 클릭 시 해당 상위 메뉴에 속한 하위 메뉴 펼치기/숨기기 토글
-        $(".sidenav-toggle").on("click", function() {
-            $(this).next(".sidenav-menu").slideToggle();
-        });
-        
         $("#sub_menu").on("click", ".s-link", function(e) {
         	e.stopPropagation();
         	e.preventDefault();
@@ -105,7 +84,6 @@
         	TopMenuClick(href, $(this));
         });
         
-//         TopMenuClick("/admin/?menu_id=MENU001");
     });
     
     
@@ -114,10 +92,6 @@
 </head>
 
 <body>
-
-    	<%-- <c:set var="topMenuList" value="${responseMap['TopMenuList']}" />
-    	<c:set var="subMenuList" value="${responseMap['SubMenuList']}" /> --%>
-
     <!-- [ Preloader ] Start -->
     <div class="page-loader">
         <div class="bg-primary"></div>
@@ -133,13 +107,10 @@
                 <!-- Brand demo (see assets/css/demo/demo.css) -->
                 <div class="app-brand demo">
                     <span class="app-brand-logo demo">
-                        <img src="/resources/assets/img/logo.png" alt="Brand Logo" class="img-fluid">
+                        <img src="/resources/adimg/logoY.png" alt="Brand Logo" class="" style=" width: 65px;">
                     </span>
-                    <a href="index.html" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
-                    
-                    <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
-                        <i class="ion ion-md-menu align-middle"></i>
-                    </a>
+                    <a href="/admin/" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
+
                 </div>
                 <div class="sidenav-divider mt-0"></div>
 
@@ -148,7 +119,7 @@
 
                     <!-- Dashboards -->
                     <li class="sidenav-item active">
-                        <a href="/admin/main" class="sidenav-link">
+                        <a href="/admin/menu" class="sidenav-link">
                             <i class="sidenav-icon feather icon-home"></i>
                             <div>Dashboards</div>
                             <div class="pl-1 ml-auto">
@@ -194,14 +165,14 @@
                     
 
                     <!-- 회원관리 -->
-                    <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">회원</li>
+                    <!-- <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-header small font-weight-semibold">로그인</li>
                     <li class="sidenav-item">
-                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                        <a href="/admin/login" class="sidenav-link sidenav-toggle">
                             <i class="sidenav-icon feather icon-clipboard"></i>
-                            <div>회원관리</div>
+                            <div>로그인</div>
                         </a>
-                       <!--  <ul class="sidenav-menu">
+                         <ul class="sidenav-menu">
                             <li class="sidenav-item">
                                 <a href="forms_layouts.html" class="sidenav-link">
                                     <div>Layouts and elements</div>
@@ -212,61 +183,13 @@
                                     <div>Input groups</div>
                                 </a>
                             </li>
-                        </ul> -->
-                    </li>
-                    <!-- <li class="sidenav-item">
-                        <a href="/resources/tables_bootstrap.html" class="sidenav-link">
-                            <i class="sidenav-icon feather icon-grid"></i>
-                            <div>Tables</div>
-                        </a>
+                        </ul> 
                     </li> -->
 
-                    <!--  Icons -->
-                   <!--  <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">Icons</li>
-                    <li class="sidenav-item">
-                        <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-feather"></i>
-                            <div>Icons</div>
-                        </a>
-                        <ul class="sidenav-menu">
-                            <li class="sidenav-item">
-                                <a href="icons_feather.html" class="sidenav-link">
-                                    <div>Feather</div>
-                                </a>
-                            </li>
-                            <li class="sidenav-item">
-                                <a href="icons_linearicons.html" class="sidenav-link">
-                                    <div>Linearicons</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    Pages
-                    <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">Pages</li>
-                    <li class="sidenav-item">
-                        <a href="pages_authentication_login-v1.html" class="sidenav-link">
-                            <i class="sidenav-icon feather icon-lock"></i>
-                            <div>Login</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="pages_authentication_register-v1.html" class="sidenav-link">
-                            <i class="sidenav-icon feather icon-user"></i>
-                            <div>Signup</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="pages_faq.html" class="sidenav-link">
-                            <i class="sidenav-icon feather icon-anchor"></i>
-                            <div>FAQ</div>
-                        </a>
-                    </li> -->
                 </ul>
             </div>
             <!-- [ Layout sidenav ] End -->
+            
             <!-- [ Layout container ] Start -->
             <div class="layout-container">
                 <!-- [ Layout navbar ( Header ) ] Start -->
@@ -327,41 +250,6 @@
                                                 <div class="text-light small mt-1">12h ago</div>
                                             </div>
                                         </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <div class="ui-icon ui-icon-sm feather icon-user-plus bg-info border-0 text-white"></div>
-                                            <div class="media-body line-height-condenced ml-3">
-                                                <div class="text-dark">You have
-                                                    <strong>4</strong> new followers</div>
-                                                <div class="text-light small mt-1">
-                                                    Phasellus nunc nisl, posuere cursus pretium nec, dictum vehicula tellus.
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <div class="ui-icon ui-icon-sm feather icon-power bg-danger border-0 text-white"></div>
-                                            <div class="media-body line-height-condenced ml-3">
-                                                <div class="text-dark">Server restarted</div>
-                                                <div class="text-light small mt-1">
-                                                    19h ago
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <div class="ui-icon ui-icon-sm feather icon-alert-triangle bg-warning border-0 text-dark"></div>
-                                            <div class="media-body line-height-condenced ml-3">
-                                                <div class="text-dark">99% server load</div>
-                    
-                                               <div class="text-light small mt-1">
-                                                    Etiam nec fringilla magna. Donec mi metus.
-                                                </div>
-                                                <div class="text-light small mt-1">
-                                                    20h ago
-                                                </div>
-                                            </div>
-                                        </a>
                                     </div>
                                     <a href="javascript:" class="d-block text-center text-light small p-2 my-1">Show all notifications</a>
                                 </div>
@@ -387,36 +275,6 @@
                                                 </div>
                                             </div>
                                         </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <img src="/resources/assets/img/avatars/4-small.png" class="d-block ui-w-40 rounded-circle" alt>
-                                            <div class="media-body ml-3">
-                                                <div class="text-dark line-height-condenced">Lorem ipsum dolor sit amet, consectetuer.</div>
-                                                <div class="text-light small mt-1">
-                                                    Lary Doe &nbsp;·&nbsp; 1h ago
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <img src="/resources/assets/img/avatars/5-small.png" class="d-block ui-w-40 rounded-circle" alt>
-                                            <div class="media-body ml-3">
-                                                <div class="text-dark line-height-condenced">Lorem ipsum dolor sit amet elit.</div>
-                                                <div class="text-light small mt-1">
-                                                    Alice &nbsp;·&nbsp; 2h ago
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <img src="/resources/assets/img/avatars/11-small.png" class="d-block ui-w-40 rounded-circle" alt>
-                                            <div class="media-body ml-3">
-                                                <div class="text-dark line-height-condenced">Lorem ipsum dolor sit amet consectetuer amet elit dolor sit.</div>
-                                                <div class="text-light small mt-1">
-                                                    Suzen &nbsp;·&nbsp; 5h ago
-                                                </div>
-                                            </div>
-                                        </a>
                                     </div>
 
                                     <a href="javascript:" class="d-block text-center text-light small p-2 my-1">Show all messages</a>
@@ -433,12 +291,12 @@
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="javascript:" class="dropdown-item">
+ <!--                                    <a href="javascript:" class="dropdown-item">
                                         <i class="feather icon-user text-muted"></i> &nbsp; My profile</a>
                                     <a href="javascript:" class="dropdown-item">
                                         <i class="feather icon-mail text-muted"></i> &nbsp; Messages</a>
                                     <a href="javascript:" class="dropdown-item">
-                                        <i class="feather icon-settings text-muted"></i> &nbsp; Account settings</a>
+                                        <i class="feather icon-settings text-muted"></i> &nbsp; Account settings</a> -->
                                     <div class="dropdown-divider"></div>
                                     <a href="javascript:" class="dropdown-item">
                                         <i class="feather icon-power text-danger"></i> &nbsp; Log Out</a>
