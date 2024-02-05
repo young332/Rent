@@ -8,6 +8,7 @@ import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.myPage.domain.PWchangeDTO;
 
 public interface AdMemberService {
 	
@@ -16,5 +17,9 @@ public interface AdMemberService {
 	public MemberVO selectMemberByid(String mem_id);
 	public int updateMember(MemberVO updateVO);
 	
+	//로그인
 	public MemberVO login(LoginDTO loginDTO);
+	
+	// 비밀번호 변경하기
+	public int changePassword(PWchangeDTO pwChangeDTO);
 }

@@ -1,7 +1,5 @@
 package com.kh.rent.reserve.domain;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -34,7 +34,8 @@ public class CarInfoController {
 	private CarInfoService carInfoService;
 	
 	 // 업로드된 파일이 저장될 디렉토리 경로
-    @Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
+    //@Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
+    @Value("classpath:/upload")
     private String uploadPath;
 	
 //	@PostMapping("/CarInfoAdd")

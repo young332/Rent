@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="selectMemberByid" resultType="com.kh.rent.login.domain.MemberVO">
-		SELECT mem_id, mem_pw, mem_name, mem_adminck, mem_email, mem_birth, mem_phone, mem_addr
+		SELECT mem_id, mem_pw, mem_name, mem_adminck, mem_email, mem_birth, mem_phone, mem_zip_code, mem_addr
 		        FROM rent001.TBL_MEMBER where mem_id = #{mem_id};
 	</select>
 	
@@ -33,12 +33,46 @@
 	</update>
 	
 	<!-- 로그인 -->
-	<select id="login" resultType="com.kh.rent.login.domain.MemberVO">
+	<!-- <select id="login" resultType="com.kh.rent.login.domain.MemberVO">
 		SELECT * FROM rent001.TBL_MEMBER
 		WHERE mem_id = #{mem_id}
 		  AND mem_pw = #{mem_pw}
 		  AND mem_adminck = 1;
+	</select> -->
+	
+	<!-- 암호화비밀번호 로그인 -->
+	<select id="findByIdAndPw" resultType="com.kh.rent.login.domain.MemberVO" parameterType="com.kh.rent.login.domain.LoginDTO">
+		select *
+		from rent001.TBL_MEMBER
+		where mem_pw = #{mem_pw}
+		and mem_id = #{mem_id}
 	</select>
+	
+
+	<!-- 비밀번호 변경하기 -->
+	<update id="changePassword">
+		update TBL_MEMBER set
+			mem_pw = #{newPassword}
+		where mem_id = #{mem_id}
+	</update>
+	
+	
+	<!-- 회원정보검색 -->
+	<select id="searchMember" parameterType="com.kh.rent.login.domain.MemberVO" resultType="com.kh.rent.login.domain.MemberVO">
+        SELECT * FROM member
+        WHERE
+        <if test="searchCnd == 'all'">
+            1=1
+        </if>
+        <if test="searchCnd == 'mem_id'">
+            mem_id = #{searchWrd}
+        </if>
+        <if test="searchCnd == 'mem_name'">
+            mem_name LIKE CONCAT('%', #{searchWrd}, '%')
+        </if>
+    </select>
+	
+	
 	
            
 </mapper>
