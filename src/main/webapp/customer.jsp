@@ -24,10 +24,37 @@
     </style>    
 <script>
 $(function(){
+	//예약.변경
 	$("#reservationTitle").click(function(){
 		console.log("클릭");
-		$(".hidden-content").toggle();
+		$("#reservationTitle-hidden").toggle();
+		$("#breakdown-hidden, #insurance-hidden, #gascost-hidden, #etc-hidden").hide();
 	});
+	//고장.사고
+	$("#breakdown").click(function(){
+		console.log("클릭");
+		$("#breakdown-hidden").toggle();
+		$("#reservationTitle-hidden, #insurance-hidden, #gascost-hidden, #etc-hidden").hide();
+	});
+	//보험
+	$("#insurance").click(function(){
+		console.log("클릭");
+		$("#insurance-hidden").toggle();
+		$("#reservationTitle-hidden, #breakdown-hidden, #gascost-hidden, #etc-hidden").hide();
+	});
+	//유류비
+	$("#gascost").click(function(){
+		console.log("클릭");
+		$("#gascost-hidden").toggle();
+		 $("#reservationTitle-hidden, #breakdown-hidden, #insurance-hidden, #etc-hidden").hide();
+	});
+	//기타
+	$("#etc").click(function(){
+		console.log("클릭");
+		$("#etc-hidden").toggle();
+		$("#reservationTitle-hidden, #breakdown-hidden, #insurance-hidden, #gascost-hidden").hide();
+	});
+	
 });
 </script>     
     
@@ -37,7 +64,7 @@ $(function(){
     	<div class="container">
     		<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-          <span class="subheading" style="font-size:14pt">렌트카001 고객센터입니다.</span>
+          <span class="subheading" style="font-size:14pt">HAKA렌트카 고객센터입니다.</span>
             <h2 class="mb-2">무엇을 도와드릴까요?</h2>
           </div>
         </div>
@@ -53,35 +80,35 @@ $(function(){
     					<div class="form-group" style="margin-right: 20px;">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">고장 · 사고</a></h2>
+		    						<h2 class="mb-0 custom-cursor" id="breakdown">고장 · 사고</h2>
 		    					</div>
 		    				</div>
     					</div>
     					<div class="form-group" style="margin-right: 20px;">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">보험</a></h2>
+		    						<h2 class="mb-0 custom-cursor" id="insurance">보험</h2>
 		    					</div>
 		    				</div>
     					</div>
     					<div class="form-group" style="margin-right: 20px;">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">유류비</a></h2>
+		    						<h2 class="mb-0 custom-cursor" id="gascost">유류비</h2>
 		    					</div>
 		    				</div>
     					</div>
     					<div class="form-group">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">기타</a></h2>
+		    						<h2 class="mb-0 custom-cursor" id="etc">기타</h2>
 		    					</div>
 		    				</div>
     					</div>
     				</div>
     			</div>
     		</div>
-     <div class="container hidden-content">
+     <div class="container hidden-content" id="reservationTitle-hidden">
     		<div class="container">
     		<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -131,11 +158,177 @@ $(function(){
 		    					</div>
 		    				</div>
     					</div>
+    				</div>
     			</div>
     		</div>
+    	</div>
+    	 <div class="container hidden-content" id="breakdown-hidden">
+    		<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          <span class="subheading" style="font-size:14pt">자주 찾는 질문을 모아봤어요.</span>
+          </div>
+        </div>
+    		<div class="row d-flex mb-5 contact-info" style="justify-content: center; align-items: center;">
+    			<div >
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">긴급출동은 어떤 서비스를 제공하나요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">타이어펑크,배터리방전,연료부족,자동차키분실 시 긴급출동으로 접수해 주세요.</span>
+		    						<span class="mb-0">긴급출동은 고객센터로 전화주세요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">사고접수는 어떻게 하나요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">HAKA렌터카는 24시간 사고접수가 가능한 고객센터를 운영 중입니다.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">사고 시 면책금은 얼마인가요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">HAKA렌터카는 모든 차량이 자동차 종합보험에 가입되어 있어요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    				</div>
+    			</div>
     		</div>
-    	</div>	
+    	</div>
+    	 <div class="container hidden-content" id="insurance-hidden">
+    		<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          <span class="subheading" style="font-size:14pt">자주 찾는 질문을 모아봤어요.</span>
+          </div>
+        </div>
+    		<div class="row d-flex mb-5 contact-info" style="justify-content: center; align-items: center;">
+    			<div >
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">차량손해 면책제도에 대해 알고 싶어요.</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">HAKA렌트카는 모든 차량이 자동차 종합보험에 가입되어 있어요</span>
+		    						<span class="mb-0">완전자차 선택 시 고객부담금이 면제돼요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">휴차보상료에 대해 알고 싶어요.</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">사고로 인해 차량이 휴차할 경우, 수리 기간 동안 표준대여료(24시간 기준)의 50%에 해당하는
+		    						휴차보상료가 청구되며, 이는 임차인이 배상해야 해요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">사고 시 면책금은 얼마인가요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">HAKA렌터카는 모든 차량이 자동차 종합보험에 가입되어 있어요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    		 <div class="container hidden-content" id="gascost-hidden">
+    		<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          <span class="subheading" style="font-size:14pt">자주 찾는 질문을 모아봤어요.</span>
+          </div>
+        </div>
+    		<div class="row d-flex mb-5 contact-info" style="justify-content: center; align-items: center;">
+    			<div >
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">유류비 정산 기준은 어떻게 되나요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">광역시도별 평균 단가로 산정해요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">차량 반납 시 주유해야하나요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">차량 반납 전 인수 시 채워져 있던 기름만큼(FULL TANK) 주유 후 반납해 주세요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    	 <div class="container hidden-content" id="etc-hidden">
+    		<div class="container">
+    		<div class="row justify-content-center">
+          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          <span class="subheading" style="font-size:14pt">자주 찾는 질문을 모아봤어요.</span>
+          </div>
+        </div>
+    		<div class="row d-flex mb-5 contact-info" style="justify-content: center; align-items: center;">
+    			<div >
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">대여시 인수/반납 규정이 궁금해요.</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">예약자의 운전면허증 지참 후 인수 및 반납이 가능합니다.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">반려동물과 동승이 가능한가요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">다음 이용 고객에게 불편(알레르기 등)을 끼칠 우려가 있어 반려동물의 동승을 허용하지 않아요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    					<div class="form-group">
+    						<div class="car-wrap rounded ftco-animate">
+		    					<div class="text">
+		    						<h2 class="mb-0">분실물 발생 시 어떻게 하나요?</h2>
+		    					</div>
+		    					<div class="text">
+		    						<span class="mb-0">고객센터로 즉시 연락하여 확인요청해 주세요.</span>
+		    					</div>
+		    				</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>				
     </section>
+    
 	<section class="ftco-section ftco-no-pt bg-light">
     	<div class="container">
     		<div class="row justify-content-center">
@@ -185,7 +378,7 @@ $(function(){
 		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
 		    					</div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">쿠폰 룰렛 이벤트</a></h2>
+		    						<h2 class="mb-0"><a href="#">포인트 룰렛 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
 			    						<p class="price ml-auto">50,000<span>/포인트</span></p>
 		    						</div>
