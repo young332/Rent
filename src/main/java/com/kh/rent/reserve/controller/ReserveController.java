@@ -43,26 +43,29 @@ public class ReserveController {
 		log.info("reserve...");
 	}
 	
+	@GetMapping("/licenseinfo")
+	public void licenseinfo() {
+		
+	}
 
+    @GetMapping("/reserveinfo")
+    public String reserveinfo(@RequestBody ReserveInfoDTO reserveInfoDTO,
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
 
-	    @GetMapping("/reserveinfo")
-	    public String reserveinfo(@RequestBody ReserveInfoDTO reserveInfoDTO,
-	                              HttpSession session,
-	                              RedirectAttributes redirectAttributes) {
+        String topBookPickDate = reserveInfoDTO.getTopBookPickDate();
+        String topBookOffDate = reserveInfoDTO.getTopBookOffDate();
+        String totalPay = reserveInfoDTO.getTotalPay();
+        String carIndex = reserveInfoDTO.getCarIndex();
 
-	        String topBookPickDate = reserveInfoDTO.getTopBookPickDate();
-	        String topBookOffDate = reserveInfoDTO.getTopBookOffDate();
-	        String totalPay = reserveInfoDTO.getTotalPay();
-	        String carIndex = reserveInfoDTO.getCarIndex();
+        redirectAttributes.addAttribute("topBookPickDate", topBookPickDate);
+        redirectAttributes.addAttribute("topBookOffDate", topBookOffDate);
+        redirectAttributes.addAttribute("totalPay", totalPay);
+        redirectAttributes.addAttribute("carIndex", carIndex);
 
-	        redirectAttributes.addAttribute("topBookPickDate", topBookPickDate);
-	        redirectAttributes.addAttribute("topBookOffDate", topBookOffDate);
-	        redirectAttributes.addAttribute("totalPay", totalPay);
-	        redirectAttributes.addAttribute("carIndex", carIndex);
+        return "redirect:/reserve/licenseinfo";
+    }
 
-	        return "redirect:/reserve/licenseinfo";
-	    }
-	
 
 
 	// 선택
