@@ -34,15 +34,13 @@ public class AdMemberController {
 	@Autowired
 	private AdMemberService adMemberService;
 	
-	@Autowired
-	private MyPageService myPageService;
 	
 	@GetMapping(value = "/getMemberInfo", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
     public MemberVO getMemberInfo(@RequestParam String mem_id) {
 		System.out.println("getMemberInfo method called with mem_id: " + mem_id);
 		MemberVO memberVO = adMemberService.selectMemberByid(mem_id);
-		System.out.println("memberVO: " + memberVO);
+		//System.out.println("memberVO: " + memberVO);
         return memberVO;
     }
 	
@@ -63,20 +61,35 @@ public class AdMemberController {
 	}
 	
 	// 비밀번호 변경
-		@Transactional
-		@PutMapping("/pwdChange")
-		public ResponseEntity<String> pwdChange(HttpSession session, @RequestBody PWchangeDTO pwChangeDTO) {
-			MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-		    // 비밀번호 변경 로직 수행
-		    int result = myPageService.changePassword(pwChangeDTO);
-
-		    // 변경 결과에 따라 응답 반환
-		    if (result == 1) {
-		    	loginInfo.setMem_pw(pwChangeDTO.getNewPassword());
-		        return ResponseEntity.ok("success");
-		    } else {
-		        return ResponseEntity.ok("fail");
-		    }
-		}
+	@Transactional
+	@PutMapping("/pwdChange")
+	public ResponseEntity<String> pwdChange(HttpSession session, @RequestBody PWchangeDTO pwChangeDTO) {
+		//MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		log.info("mem_id:" + pwChangeDTO.getMem_id());
+		log.info("password:" + pwChangeDTO.getPassword());
+		log.info("newPassword:" + pwChangeDTO.getNewPassword());
+	    // 비밀번호 변경 로직 수행
+	    int result = adMemberService.changePassword(pwChangeDTO);
+	    log.info("pwdChange result:" + result);
+	    // 변경 결과에 따라 응답 반환
+	    if (result == 1) {
+	    	//로그인 한 회원 정보가 아닌 관리자가 수정하는 회원의 비밀번호 변경 
+	    	pwChangeDTO.setPassword(pwChangeDTO.getNewPassword());
+	        return ResponseEntity.ok("success");
+	    } else {
+	        return ResponseEntity.ok("fail");
+	    }
+	}
+	
+	//검색기능
+	/*
+	 * @GetMapping("/searchMember")
+	 * 
+	 * @ResponseBody public List<MemberVO> searchMember(@RequestParam String
+	 * searchCnd, @RequestParam String searchWrd) { // TODO: 검색 조건에 따라 회원을 조회하는 서비스
+	 * 메서드 호출 // 여기에서는 간단한 예시로 빈 리스트를 반환 return Collections.emptyList(); }
+	 */
+	
+	
 	
 }
