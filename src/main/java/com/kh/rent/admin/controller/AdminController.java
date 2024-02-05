@@ -105,16 +105,7 @@ public class AdminController {
 		model.addAttribute("DelMemberList", DelMemberList);
 	}
 
-	
-	@GetMapping("/car/registerCar")
-	public void adminregisterCarGet() {
-		
-	}
-	
-	@GetMapping("/car/ListCar")
-	public void adminListCarGet() {
-		
-	}
+
 	
 	
 	@GetMapping("/car/registerCar")
