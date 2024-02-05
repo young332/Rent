@@ -87,6 +87,7 @@ public class MyPageMapperTests {
 	}
 	
 	// 예약정보 조회하기
+
 	@Test
 	public void testGetReserveList() {
 		String mem_id = "MEMBER02";
@@ -106,3 +107,4 @@ public class MyPageMapperTests {
 	}
 	
 }
+

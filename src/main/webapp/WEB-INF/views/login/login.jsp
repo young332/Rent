@@ -6,6 +6,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 네이버로 로그인 -->
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+<!-- 카카오톡 로그인 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+
 <script>
 $(function(){
 	var loginResult = "${loginFailure}";
@@ -42,7 +46,19 @@ $(function(){
 			$("#modal-Non-member").modal("show");
 		});
 	
-	});
+		
+// 		$("#frmLogin").submit(function(e){
+// 			e.preventDefault();
+// 			console.log("Submit button clicked");
+// 			var inputName = $("#non_name").val();
+// 			var inputTel = $("#non_tel").val();
+			
+// 			if(inputName.trim() == ""){alert("이름을 입력해주세요"); $("#non_name").focus(); return false;}
+// 			if(inputTel.trim() == ""){alert("전화번호를 입력해주세요"); $("#non_tel").focus(); return false;}
+
+// 		});
+
+});	
 </script>
 <!-- top -->
     
@@ -117,19 +133,25 @@ $(function(){
 				<form action="/login/naverLoginPost" method="post">
 				<div class="form-group">
 					<div id="naverIdLogin">
-					<div id="naver_id_login"></div>
-					
 					<button type="submit" class="btn"  style="width: 80px; height: 60px;">
 					<img src="/resources/carbook-master/images/btn_naver.png" style="width: 100%; height: 100%;" alt="Naver Login">
 					</button>
-				  </div>
-					<button type="button" class="btn"  style="width: 50x; height: 80px;" onclick='location.href="'><img src="/resources/carbook-master/images/btn_kakao.png" style="width: 100%; height: 100%;" ></button>
-					<button type="button" class="btn"  style="width: 50x; height: 80px;" onclick='location.href="'><img src="/resources/carbook-master/images/web_neutral_rd_na@1x.png" style="width: 100%; height: 100%;" ></button>
+					</div>
+					<button type="button" class="btn"  style="width: 80px; height: 70px;">
+					<img src="/resources/carbook-master/images/btn_kakao.png" style="width: 100%; height: 100%;" >
+					</button>
+					
+					<button type="button" class="btn"  style="width: 80px; height: 70px;" onclick='location.href="'><img src="/resources/carbook-master/images/web_neutral_rd_na@1x.png" style="width: 100%; height: 100%;" ></button>
 				</div>
 			</form>
 			</div>
 		</div>
 	</div>
+<!-- 카카오 로그인 -->
+<script>
+Kakao.init('ad0e9d2b12012c07c7790d43080005cc'); // 사용하려는 앱의 JavaScript 키 입력
+</script>
+<!-- //카카오 -->	
 <!-- 네이버 로그인 test -->
 <script type="text/javascript">
         var naverLogin = new naver.LoginWithNaverId({
@@ -182,21 +204,17 @@ var naverLoginCallback = new naver.LoginWithNaverId({
     });
     console.log("End of script");
     function logout() {
-    	  // Clear sessionStorage
     	  sessionStorage.clear();
 
-    	  // Logout from Naver
     	  naverLoginCallback.logout();
 
-    	  // Redirect to the main page or login page
-    	  location.href = "/"; // You can change the URL as needed
+    	  location.href = "/"; 
     	}
 
-    	// Add event listener to the logout button
-    	var logoutButton = document.getElementById('btn_logout');
-    	logoutButton.addEventListener('click', function () {
-    	  logout();
-    	});    
+//     	var logoutButton = document.getElementById('btn_logout');
+//     	logoutButton.addEventListener('click', function () {
+//     	  logout();
+//     	});    
 </script>	
 <!-- //네이버 -->	
 <!--// 로그인 -->
@@ -213,17 +231,17 @@ var naverLoginCallback = new naver.LoginWithNaverId({
 							</button>
 							
 						</div>
-						<form action="/login/NonLoginPost" method="post" >
+						<form  id="frmLoginbtn" class="user" action="/login/NonLoginPost" method="post"  >
 							<div class="modal-body">
 								<label>이름</label>
 								<input type="text" class="form-control" id="non_name"  name="non_name"/>
 							</div>
 							<div class="modal-body">
 								<label>전화번호</label>
-								<input type="text" class="form-control" id="non_tel" name="non_tel"/>
+								<input type="text" class="form-control" id="non_tel" name="non_tel" placeholder="'-'없이 입력해주세요."/>
 							</div>
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary">예약조회</button>
+								<button type="submit" class="btn btn-primary" id="frmLogin">예약조회</button>
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">닫기</button>
 							</div>
