@@ -34,10 +34,10 @@
 				<h4>●운전자(예약자) 정보를 입력해 주세요</h4>
 				<h6>입력한 정보는 안전하게 보호할게요</h6>
 				<form role="form" action="/reserve/reserveinsert" method="post">
-					<input type="hidden" name="top_book_pick_date" value="${topBookPickDate}">
-				    <input type="hidden" name="top_book_off_date" value="${topBookOffDate}">
-				    <input type="hidden" name="total_pay" value="${totalPay}">
-				    <input type="hidden" name="car_index" value="${carIndex}">
+<%-- 					<input type="hidden" name="top_book_pick_date" value="${topBookPickDate}"> --%>
+<%-- 				    <input type="hidden" name="top_book_off_date" value="${topBookOffDate}"> --%>
+<%-- 				    <input type="hidden" name="total_pay" value="${totalPay}"> --%>
+<%-- 				    <input type="hidden" name="car_index" value="${carIndex}"> --%>
 					<div class="jumbotron card card-block"
 						style="background-color: white;">
 						<p>기본정보*</p>

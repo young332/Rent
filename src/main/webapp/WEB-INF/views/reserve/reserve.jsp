@@ -231,12 +231,14 @@ div.left-box {
 							    						<p class="price ml-auto"><span id="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
 							    						<p class="price ml-auto"> <span id="totalPay" ></span>원</p>
 						    						</div>
-						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
+						    						<p class="d-flex mb-0 d-block" >
+						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1  btn_reserve">예약하기</button></p>
 						    					</div>
 						    				</div>
 				    					</div>
 				    					</c:forEach>
 				    				</div>
+				    				
 				    			</div>
 				    		</div>
 						</div>
@@ -245,7 +247,16 @@ div.left-box {
     		
 			</form>
 		</section>
-     
+		
+		
+ <div style="display:none">
+	<form id="frmReserve" action="/reserve/licenseinfo" method="get">
+		<input type="hidden" name="top_book_pick_date">
+		<input type="hidden" name="top_book_off_date">
+		<input type="hidden" name="car_index">
+		<input type="hidden" name="totalPay">
+	</form>
+</div>    
 
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
@@ -510,12 +521,12 @@ $(function() {
 	$(document).ready(function() {
 	    // ... your existing code ...
 
-	    // Function to send data to the server asynchronously
 	    function sendDataToServer() {
 		    var topBookPickDate = $("#top_book_pick_date").val();
 		    var topBookOffDate = $("#top_book_off_date").val();
 		    var carIndex = $("#car_index").val();
-		    var totalPay = $("#totalPay").text(); // Assuming #totalPay is a text element
+		    var totalPay = $("#totalPay").text(); 
+		    
 		
 		    // Format dates to "yyyy-MM-dd HH:mm:ss"
 		    topBookPickDate = formatDateTime(topBookPickDate);
@@ -537,10 +548,12 @@ $(function() {
 		        data: sendData,
 		        success: function(rData) {
 		            console.log("Data sent successfully:", rData);
-		        },
-		        error: function(xhr, textStatus, errorThrown) {
-		            console.error("Error sending data:", textStatus, errorThrown);
+		            console.log("top_book_pick_date:",topBookPickDate);
+		            console.log("top_book_off_date:",topBookOffDate);
+		            console.log("car_index:",carIndex);
+		            console.log("totalPay:",totalPay);
 		        }
+		       
 		    });
 		}
 		
@@ -559,8 +572,23 @@ $(function() {
 
 
 	    // Trigger the function when needed (e.g., on a button click)
-	    $("#btn_reserve").click(function() {
-	    	sendDataToServer();
+	    $(".btn_reserve").click(function() {
+	    	console.log("reserver button");
+	    	var url = $(this).attr("data-url");
+	    	
+	    	var topBookPickDate = $("#top_book_pick_date").val();
+			var topBookOffDate = $("#top_book_off_date").val();
+			var carIndex = $("#car_index").val();
+			var totalPay = $("#totalPay").text(); 
+	    	
+			var frmReserve = $("#frmReserve");
+			frmReserve.find("input[name=top_book_pick_date]").val(topBookPickDate.replace('T', ' '));
+			frmReserve.find("input[name=top_book_off_date]").val(topBookOffDate.replace('T', ' '));
+			frmReserve.find("input[name=car_index]").val(carIndex);
+			frmReserve.find("input[name=totalPay]").val(totalPay);
+			
+			frmReserve.submit();
+	    	//sendDataToServer();
 	    	//return false;
 	    });
 	});

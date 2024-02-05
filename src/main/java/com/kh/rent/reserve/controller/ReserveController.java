@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,28 +45,41 @@ public class ReserveController {
 	}
 	
 	@GetMapping("/licenseinfo")
-	public void licenseinfo() {
+	public String licenseinfo(ReserveInfoDTO reserveInfoDTO,RedirectAttributes rttr,
+	                          Model model) {
 		
+		
+		    log.info("reserveInfoDTO:"+reserveInfoDTO);
+		    
+		    
+		    return "reserve/licenseinfo";
 	}
+		  
+		
 
-    @GetMapping("/reserveinfo")
-    public String reserveinfo(@RequestBody ReserveInfoDTO reserveInfoDTO,
-                              HttpSession session,
-                              RedirectAttributes redirectAttributes) {
+	@GetMapping("/reserveinfo")
+	@ResponseBody
+	public String reserveinfo(ReserveInfoDTO reserveInfoDTO,
+	                          HttpSession session,RedirectAttributes rttr) {
 
-        String topBookPickDate = reserveInfoDTO.getTopBookPickDate();
-        String topBookOffDate = reserveInfoDTO.getTopBookOffDate();
-        String totalPay = reserveInfoDTO.getTotalPay();
-        String carIndex = reserveInfoDTO.getCarIndex();
+	    String topBookPickDate = reserveInfoDTO.getTop_book_pick_date();
+	    String topBookOffDate = reserveInfoDTO.getTop_book_off_date();
+	    String totalPay = reserveInfoDTO.getTotalPay();
+	    String carIndex = reserveInfoDTO.getCar_index();
 
-        redirectAttributes.addAttribute("topBookPickDate", topBookPickDate);
-        redirectAttributes.addAttribute("topBookOffDate", topBookOffDate);
-        redirectAttributes.addAttribute("totalPay", totalPay);
-        redirectAttributes.addAttribute("carIndex", carIndex);
+	    log.info("topBookPickDate: " + topBookPickDate);
+	    log.info("topBookOffDate: " + topBookOffDate);
+	    log.info("carIndex: " + carIndex);
+	    log.info("totalPay: " + totalPay);
 
-        return "redirect:/reserve/licenseinfo";
-    }
+	    rttr.addAttribute("top_book_pick_date", topBookPickDate);
+	    rttr.addAttribute("top_book_off_date", topBookOffDate);
+	    rttr.addAttribute("totalPay", totalPay);
+	    rttr.addAttribute("car_index", carIndex);
+	    
 
+	    return "redirect:/reserve/licenseinfo";
+	}
 
 
 	// 선택

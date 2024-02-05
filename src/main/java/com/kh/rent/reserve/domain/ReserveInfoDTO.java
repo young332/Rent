@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ReserveInfoDTO {
-	private String topBookPickDate;
-	private String topBookOffDate;
-	private String carIndex;
+	private String top_book_pick_date;
+	private String top_book_off_date;
+	private String car_index;
 	private String totalPay;
 }
