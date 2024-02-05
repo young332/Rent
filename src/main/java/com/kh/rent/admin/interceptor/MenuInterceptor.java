@@ -48,10 +48,13 @@ public class MenuInterceptor implements HandlerInterceptor{
 		
 		log.info("postHandle...");
 		String path = request.getRequestURI();
+		
 		log.info("path:"+ path);
 		String command = path.substring("/admin/".length());
+		
 		log.info("command:"+ command);
 		String query = request.getQueryString();
+		
 		log.info("query:"+ query);
 		String menu_id = "MENU001";
 		if (query != null && !query.equals("")) {

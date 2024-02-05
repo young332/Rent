@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
 import com.kh.rent.login.mapper.MemberMapper;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 import net.nurigo.java_sdk.api.Message;
@@ -44,6 +46,15 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return null;
 	}
+	
+	//비회원로그인
+	@Override
+	public NonMemberVO NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO) {
+		NonMemberVO nonMemberVO = memberMapper.NonMembersLogin(nonMemberLoginDTO);
+		return nonMemberVO;
+	}
+
+	
 	
 	
 	@Override
@@ -104,5 +115,13 @@ public class MemberServiceImpl implements MemberService{
 		return count;
 	}
 
+	//이메일 중복체크
+	@Override
+	public int checkEmail(String mem_email) {
+		int count = memberMapper.checkEmail(mem_email);
+		return count;
+	}
+
+	
 
 }

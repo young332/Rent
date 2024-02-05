@@ -18,6 +18,12 @@
 <!-- 비밀번호변경 유효성 검사 스크립트 include -->
 <script src="/resources/js/change-pw-checker.js"></script>
 
+<<<<<<< HEAD
+=======
+<!-- 비밀번호 암호화 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 <script>
 //주소 검색
 function openZipSearch() {
@@ -52,6 +58,10 @@ $(function() {
 	$("#btn-pwdChange-save").click(function() {
 // 		var password1 = $("#password1").val();
 // 		console.log("password1:", password1);
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 	    validatePasswordChangeForm();
 	});
 	
@@ -79,9 +89,15 @@ $(function() {
     <section class="ftco-section">
 		<div class="container">
 			<div class="row">
+				<div class="col-md-2">
+				</div>
    				<div class="col-md-8">
     				<h3>
+<<<<<<< HEAD
 						개인정보수정
+=======
+						내 정보 수정
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 					</h3>
 					<br>
 					<div class="container">
@@ -130,7 +146,12 @@ $(function() {
 						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>
 					</div>
+<<<<<<< HEAD
 			  	
+=======
+				</div>
+				<div class="col-md-2">
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 				</div>
    			</div>
    		</div>

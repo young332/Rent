@@ -25,7 +25,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			log.info("preHandle..login");
 			HttpSession session = request.getSession();
 			MemberVO memberVO = (MemberVO)session.getAttribute("loginInfo");
-			if(memberVO != null) {
+			if(memberVO != null ) {
 				session.removeAttribute("loginInfo");
 			}
 			return true;
@@ -51,13 +51,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			String targetLocation = (String)session.getAttribute("targetLocation");
 			log.info("targetLocation:" + targetLocation);
 			session.removeAttribute(targetLocation);
-			if(targetLocation == null) {
+			
+			if(memberVO.getMem_adminck() == 1) { //관리자 로그인
+				modelAndView.setViewName("redirect:/admin/main");
+			} else {
+				
+				if(targetLocation == null) {
+					modelAndView.setViewName("redirect:/");
 				 
-				modelAndView.setViewName("redirect:/");
 			} else {
 				modelAndView.setViewName("redirect:" + targetLocation);
 				
 			}
+		}		
 			request.getSession().setAttribute("loginInfo", memberVO);
 			
 			//쿠키저장

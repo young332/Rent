@@ -32,6 +32,79 @@ div.left-box {
 	flex-direction: row;
 	border: 2px solid;
 }
+<<<<<<< HEAD
+=======
+
+.form-control {
+	flex: 1 0 auto;
+	border: 2px solid;
+}
+
+.top-search-box input[type="datetime-local"] {
+	width: 0%; /* 조절 가능한 너비로 설정 */
+}
+
+.top-search-box {
+	position: relative;
+	height: 100px;
+	margin-right: 40px;
+	border-radius: 5px;
+}
+
+.top-search-box h6 {
+	margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
+	font-size: 18px;
+	color: purple;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+#top_book_pick_date {
+	margin-top: 40px; /* 입력란 간격 조절 */
+	margin-right: 30px;
+	margin-left: 5px;
+}
+
+#top_book_off_date {
+	margin-top: 40px; /* 입력란 간격 조절 */
+	margin-right: 30px;
+}
+
+.btntop {
+	padding: 10px 20px; /* 버튼 내부 여백 조절 */
+	font-size: 16px; /* 버튼 텍스트 크기 조절 */
+	border-radius: 5px; /* 버튼 테두리 둥글게 만듭니다. */
+}
+
+.top-searchinput-box {
+	width: 100%;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	border: 2px solid;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+.top-searchinput-box h6 {
+	margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
+	font-size: 18px;
+	color: black;
+	margin-right: 10px;
+	margin-left:50px;
+	margin-top:10px;
+	
+}
+.fa-arrow-circle-right{
+	margin-top:15px;
+	margin-left:20px;
+    color: black;
+}
+#totalPay{
+	color:red;
+	font-size: 20px;
+	font-weight: bold;
+}
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 
 .form-control {
 	flex: 1 0 auto;
@@ -109,6 +182,7 @@ div.left-box {
 	
 	
 <section class="ftco-section ftco-cart">
+	<form method="post" action="/reserve/reserveinsert">
 			<div class="container">
 				<div class="row">
 					<div class="top-search-box" style="height: 65px;">
@@ -124,8 +198,13 @@ div.left-box {
 					<div class="top-searchinput-box" style="width: 1099px;">
 						<h6>대여일&nbsp;&nbsp;:</h6>
 						<input type="text" name="top_book_pick_date" readonly>
+<<<<<<< HEAD
 						
 						<h6>반납일&nbsp;&nbsp;:</h6>
+=======
+						<i class="fa fa-arrow-circle-right"style="height: 16px;"></i>
+						<h6 style="margin-left: 25px;">반납일&nbsp;&nbsp;:</h6>
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 						<input type="text" name="top_book_off_date"  readonly>
 						<h6>총&nbsp;&nbsp;: <span id="totalTimeSpan"></span> </h6>
 
@@ -143,9 +222,14 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-cartype" >차종<br>
+<<<<<<< HEAD
 									<input type="checkbox" id="car_sizeAll" name="car_size" value="전체">전체
 									<input type="checkbox" id="car_size_small" name="car_size" value="소형">소형
 									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형<br>
+=======
+									<input type="checkbox" id="car_size_small" name="car_size" value="소형">소형
+									<input type="checkbox" id="car_size_medium" name="car_size" value="중형">중형
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 									<input type="checkbox" id="car_size_large" name="car_size" value="대형">대형 
 									
 								</label>
@@ -153,7 +237,10 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-fuel" >연료<br> 
+<<<<<<< HEAD
 									<input type="checkbox" name="car_fuel" value="전체">전체
+=======
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="휘발유">휘발유
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="경유">경유<br>
 									<input type="checkbox"  name="car_fuel" id="car_fuel" value="하이브리드">하이브리드
@@ -163,7 +250,10 @@ div.left-box {
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-carcompany">제조사<br>
+<<<<<<< HEAD
 									<input type="checkbox" name="car_company" value="전체" >전체
+=======
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 									<input type="checkbox"  name="car_company" id="car_company" value="현대">현대
 									<input type="checkbox"  name="car_company" id="car_company"  value="기아">기아
 								</label>  
@@ -218,7 +308,12 @@ div.left-box {
 													    </c:if>
 													</c:if>
 
+<<<<<<< HEAD
 							    						<p class="price ml-auto">총요금 <span id="totalPay"></span></p>
+=======
+							    						<p class="price ml-auto"><span id="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
+							    						<p class="price ml-auto">총요금 <span id="totalPay" ></span>원</p>
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
 						    					</div>
@@ -232,7 +327,11 @@ div.left-box {
 						</div>
 					</div>
     		
+<<<<<<< HEAD
 			
+=======
+			</form>
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 		</section>
      
 
@@ -246,6 +345,7 @@ $(function() {
 	        console.log("CheckReset");
 	         
 	    });
+<<<<<<< HEAD
 	 $("#btnSearch").click(function(){
 		 
 	 });
@@ -335,6 +435,179 @@ $(function() {
 	
 	 
 	 //체크박스 3개 하나씩 선택되게
+=======
+	 $("#btnSearch").click(function() {
+		    
+
+		    
+		    var selectedPickDate = $("#top_book_pick_date").val();
+		    var selectedOffDate = $("#top_book_off_date").val();
+
+		
+		    var formattedPickDate = formatDateTime(selectedPickDate);
+		    var formattedOffDate = formatDateTime(selectedOffDate);
+
+		   
+		    $("input[name='top_book_pick_date']").val(formattedPickDate);
+		    $("input[name='top_book_off_date']").val(formattedOffDate);
+		});
+
+		
+		function formatDateTime(dateTimeString) {
+		    var options = {
+		        year: 'numeric',
+		        month: 'numeric',
+		        day: 'numeric',
+		        hour: 'numeric',
+		        minute: 'numeric',
+		        hour12: true,
+		    };
+		    return new Date(dateTimeString).toLocaleString('ko-KR', options);
+		}
+	
+	//달력 입력값 받음
+	 $(document).ready(function() {
+		 
+		    
+		    function getParameterByName(name, url) {
+		        if (!url) url = window.location.href;
+		        name = name.replace(/[\[\]]/g, "\\$&");
+		        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		            results = regex.exec(url);
+		        if (!results) return null;
+		        if (!results[2]) return '';
+		        return decodeURIComponent(results[2].replace(/\+/g, " "));
+		    }
+		    var bookPickDate = getParameterByName('book_pick_date');
+		    var bookOffDate = getParameterByName('book_off_date');
+		    $("#top_book_pick_date").val(bookPickDate);
+		    $("#top_book_off_date").val(bookOffDate);
+		    
+		   
+		});
+	 $(document).ready(function() {
+		    function getParameterByName(name, url) {
+		        if (!url) url = window.location.href;
+		        name = name.replace(/[\[\]]/g, "\\$&");
+		        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		            results = regex.exec(url);
+		        if (!results) return null;
+		        if (!results[2]) return '';
+		        return decodeURIComponent(results[2].replace(/\+/g, " "));
+		    }
+
+		    var bookPickDate = getParameterByName('book_pick_date');
+		    var bookOffDate = getParameterByName('book_off_date');
+
+		    
+		    function formatDateTime(dateTimeString) {
+		        var options = {
+		            year: 'numeric',
+		            month: 'numeric',
+		            day: 'numeric',
+		            hour: 'numeric',
+		            minute: 'numeric',
+		            hour12: true,
+		        };
+		        return new Date(dateTimeString).toLocaleString('ko-KR', options);
+		    }
+
+		    
+		    
+		    $("input[name='top_book_pick_date']").val(formatDateTime(bookPickDate));
+		    $("input[name='top_book_off_date']").val(formatDateTime(bookOffDate));
+		    
+		    
+		});
+	 
+	 $(document).ready(function() {
+		    function calculateTotalTime() {
+		        var pickDate = new Date($("#top_book_pick_date").val());
+		        var offDate = new Date($("#top_book_off_date").val());
+
+		        // 대여일 및 반납일의 차이 계산
+		        var timeDiff = offDate - pickDate;
+
+		        // 차이를 시간과 분으로 분리
+		        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+		        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+		        // 결과를 화면에 표시
+		        $("span[id='totalTimeSpan']").text(hours + "시간 " + minutes + "분");
+		        
+		    }
+
+		    // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
+		    $("#top_book_pick_date, #top_book_off_date").change(function() {
+		        calculateTotalTime();
+		      
+		        
+		    });
+
+		    // 초기 로딩 시에도 계산 함수 호출
+		    calculateTotalTime();
+		    
+		});
+
+	 //차들 총 가격
+
+		$(document).ready(function() {
+		    function calculateTotalCost() {
+		        var pickDate = new Date($("#top_book_pick_date").val());
+		        var offDate = new Date($("#top_book_off_date").val());
+		
+		        var timeDiff = offDate - pickDate;
+		        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+		
+		        $(".item").each(function() {
+		            var hourlyRate = parseFloat($(this).find("#hourPay").text());
+		            var totalCost = hours * hourlyRate;
+		            $(this).find("#totalPay").text(totalCost);
+		        });
+		
+		        // Asynchronous update
+		        updateTotalCostOnServer();
+		    }
+		
+		    $("#top_book_pick_date, #top_book_off_date").change(function() {
+		        calculateTotalCost();
+		    });
+		
+		    calculateTotalCost();
+		
+		    function updateTotalCostOnServer() {
+		        var pickDate = $("#top_book_pick_date").val();
+		        var offDate = $("#top_book_off_date").val();
+		
+		        // Additional data to send to the server if needed
+		        var additionalData = {
+		            // Add any additional data here if needed
+		        };
+		
+		        $.ajax({
+		            url: '/reserve/reservecars', 
+		            type: 'GET', 
+		            data: {
+		                pickDate: pickDate,
+		                offDate: offDate,
+		                additionalData: additionalData
+		            },
+		            success: function(response) {
+		                console.log(response);
+		            },
+		            error: function(error) {
+		                console.error(error);
+		            }
+		        });
+		    }
+		});
+		
+		
+
+
+	 
+	 //체크박스 3개 하나씩 선택되게함
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 	 $(document).ready(function() {
 		    $("input[name='car_size'], input[name='car_fuel'], input[name='car_company']").change(function() {
 		        var groupName = $(this).attr('name');
@@ -396,7 +669,14 @@ $(function() {
             data: sendData,
             success: function(rData) {
                 $("#cars-box").html(rData);
+<<<<<<< HEAD
                 setFooterTop();
+=======
+                
+                setFooterTop();
+                
+                
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
             },
         });
     }
@@ -415,6 +695,29 @@ $(function() {
     });
 
   
+<<<<<<< HEAD
+});
+
+
+
+	function setFooterTop() {
+		$("footer").css("position", "absolute");
+		$("footer").css("width", "100%");
+		var item = $(".right-box .item");
+		var y = parseInt(item.css("height"));
+        var top = ((y + 25) * (item.length)) + 1000;
+		if (top < 1600) {
+			top = 1600;
+		}
+        $("footer").css("top", top + "px");
+	}
+	
+	setFooterTop();
+	
+	
+	 
+=======
+>>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 });
 
 
@@ -439,6 +742,3 @@ $(function() {
 
 
 </script>
-
-
-

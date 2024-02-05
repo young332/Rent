@@ -47,4 +47,10 @@
 		where mem_id = #{mem_id}
 	</delete>
 	
+	<!-- 예약정보 조회하기(한사람) -->
+ 	<select id="getReserveList" resultType="com.kh.rent.reserve.domain.ReserveVO">
+ 		select * from TBL_RESERVE
+ 		where res_mem_id = #{mem_id}
+  	</select>
+	
 </mapper>

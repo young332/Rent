@@ -10,6 +10,14 @@
 		where mem_id = #{mem_id}
 		and mem_pw = #{mem_pw}
 	</select>
+	
+		<!-- 비회원 로그인 -->
+	<select id="NonMembersLogin" resultType="com.kh.rent.reserve.domain.NonMemberVO" parameterType="com.kh.rent.login.domain.NonMemberLoginDTO">
+		select * from rent001.TBL_NONMEMBER
+		where non_name = #{non_name}
+		and non_tel = #{non_tel}
+	</select>
+	
 
 	<!-- 회원가입 -->
 	<insert id="registerPost">
@@ -60,5 +68,10 @@
 		and mem_id = #{mem_id}
 	</select>
 	
+	<!-- 이메일 중복체크 -->
+	<select id="checkEmail" resultType="int">
+		select count(*) from TBL_MEMBER
+		where mem_email = #{mem_email}
+	</select>
 	
 </mapper>

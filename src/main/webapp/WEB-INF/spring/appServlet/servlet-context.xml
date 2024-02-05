@@ -36,6 +36,10 @@
 	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->	
 	<beans:bean id="naverLoginBO" class="com.kh.rent.login.domain.NaverLoginBO" />
 	
+	<!-- 파일업로드 -->
+	<beans:bean id="multipartResolver"
+	class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
+	
 
 	<!-- 인터셉터 -->
 	<beans:bean id="loginInterceptor"
@@ -44,6 +48,8 @@
 		class="com.kh.rent.login.interceptor.AuthInterceptor"></beans:bean>
 	<beans:bean id="menuInterceptor"
 		class="com.kh.rent.admin.interceptor.MenuInterceptor"></beans:bean>
+	<beans:bean id="adLoginInterceptor"
+	class="com.kh.rent.admin.interceptor.AdLoginInterceptor"></beans:bean>
 
 	<interceptors>
     
@@ -53,11 +59,9 @@
 		</interceptor>
     
 		<interceptor>
-			<mapping path="/myPage/**/*" />
-
-      <mapping path="/checkout/**/*"/>
-		  <mapping path="/reserve/**/*"/>
-		  <exclude-mapping path="/reserve/reservecars"/>
+			<mapping path="/myPage/myPage" />
+<!-- 			<mapping path="/myPage/reservationList"/> -->
+      		<mapping path="/checkout/**/*"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
     
@@ -67,8 +71,14 @@
 			<mapping path="/admin/**/*" />
 			<exclude-mapping path="/admin/menu/submenus/**/*"/>
 			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
+			<exclude-mapping path="/admin/member/getMemberInfo"/>
 
 			<beans:ref bean="menuInterceptor" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/loginPost" />
+			<beans:ref bean="adLoginInterceptor" />
 		</interceptor>
     
 	</interceptors>
