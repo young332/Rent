@@ -23,7 +23,6 @@ import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
 import com.kh.rent.reserve.domain.ReserveVO;
-import com.kh.rent.reserve.service.ReserveService;
 
 import lombok.extern.log4j.Log4j;
 
