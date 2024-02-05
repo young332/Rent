@@ -5,11 +5,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 네이버로 로그인 -->
-<<<<<<< HEAD
-<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-=======
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 <script>
 $(function(){
 	var loginResult = "${loginFailure}";
@@ -40,14 +36,11 @@ $(function(){
 				break;
 			}
 		}
-<<<<<<< HEAD
-=======
 		
 		$("#btn-Non-member").click(function(){
 			console.log("클릭");
 			$("#modal-Non-member").modal("show");
 		});
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 	
 	});
 </script>
@@ -92,12 +85,6 @@ $(function(){
 					<div class="form-group" style="display: flex;">
 						<button type="submit" class="btn btn-primary py-3 px-5">로그인</button>
 					</div>
-<<<<<<< HEAD
-					<div class="loginBtns">
-						<a href="/login/findId" style="margin-right: 30px;">아이디찾기</a> 
-						<a href="/login/findPw" style="margin-right: 30px;">비밀번호찾기</a>
-						<a href="/login/signUp">회원가입</a>
-=======
 					</div>
 					<div class="row d-flex mb-5 contact-info" style="justify-content: center; align-items: center;">
 					<div class="loginBtns" style="display: flex;">
@@ -105,7 +92,6 @@ $(function(){
 						<a href="/login/findId" style="margin-right: 20px;">아이디찾기</a> 
 						<a href="/login/findPw">비밀번호찾기</a>
 					</div>
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 					</div>
 				</form>
 			</c:if>
@@ -119,11 +105,7 @@ $(function(){
 					<div class="form-group">
 						<p style="margin-bottom: 150px;">발급된 예약번호로 예약내역을 확인해 보세요.</p>
 						<div class="form-group">
-<<<<<<< HEAD
-							<button type="button" id="btnclick"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
-=======
 							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 						</div>
 						<!-- 예약번호,이름,휴대폰번호 비회원예약확인 -->
 					</div>
@@ -135,12 +117,6 @@ $(function(){
 				<form action="/login/naverLoginPost" method="post">
 				<div class="form-group">
 					<div id="naverIdLogin">
-<<<<<<< HEAD
-					<button type="button" class="btn"  style="width: 50x; height: 80px;" onclick='location.href="${urlNaver}"'><img src="/resources/carbook-master/images/btn_naver.png" style="width: 100%; height: 100%;" ></button>
-					<button type="button" class="btn"  style="width: 50x; height: 80px;" onclick='location.href="'><img src="/resources/carbook-master/images/btn_kakao.png" style="width: 100%; height: 100%;" ></button>
-					<button type="button" class="btn"  style="width: 50x; height: 80px;" onclick='location.href="'><img src="/resources/carbook-master/images/web_neutral_rd_na@1x.png" style="width: 100%; height: 100%;" ></button>
-				  </div>
-=======
 					<div id="naver_id_login"></div>
 					
 					<button type="submit" class="btn"  style="width: 80px; height: 60px;">
@@ -253,58 +229,11 @@ var naverLoginCallback = new naver.LoginWithNaverId({
 							</div>
 						</form>
 					</div>
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 				</div>
-			</form>
 			</div>
 		</div>
 	</div>
-<<<<<<< HEAD
-<!--// 로그인 -->
-<!-- 비회원 모달 -->
-<div class="row">
-		<div class="col-md-12">
-			 <a id="modal-748842" href="#modal-container-748842" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
-			
-			<div class="modal fade" id="modal-container-748842" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="myModalLabel">
-								비회원 예약조회
-							</h5> 
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
-						<div class="modal-body">
-						<label>이름 : </label>
-						<input type="text" id="non-members-name"/>
-						</div>
-						<div class="modal-body">
-						<label>전화번호 : </label>
-						<input type="text" id="non-members-phone"/>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary">
-								예약조회
-							</button> 
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
-								닫기
-							</button>
-						</div>
-					</div>
-					
-				</div>
-				
-			</div>
-			
-		</div>
-	</div>
-<!-- //모달 -->
-=======
 	<!-- //모달 -->
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 
 </section>
 	

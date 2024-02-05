@@ -40,12 +40,8 @@ function openZipSearch() {
 
 var isValidPhone = false;
 var isValidPassword = false;
-<<<<<<< HEAD
-isCheckId = false;
-=======
 var isCheckId = false;
 var isValidEmail = false;
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 
 //아이디 중복 체크
 $(function(){
@@ -101,8 +97,6 @@ $(function(){
 		} else{
 			$("#dup-phone").text("");
 			isValidPhone = true;
-<<<<<<< HEAD
-=======
 		
 		$.ajax({
 			async: true,
@@ -167,76 +161,8 @@ $(function(){
 				}
 			});
 		});
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 		
-		$.ajax({
-			async: true,
-			type : 'post',
-			url : "/login/phoneCheck",
-			dataType : "text",
-			contentType: "application/json",
-			data: JSON.stringify({ "mem_phone": str }),
-			headers : {       
-				"Content-Type" : "application/json",      
-				"X-HTTP-Method-Override" : "POST"    
-			},
-			success : function(data){
-				console.log("data:" , data);
-				if(data == 0){
-					$("#dup-phone").text("사용가능한 번호입니다.").css("color","green");
-					isValidPhone = true;
-				}else{
-					$("#dup-phone").text("등록된 번호가 있습니다.").css("color","red");
-					isValidPhone = false;
-				}
-			}
-		});
-	  }
-
-	});
-		//문자인증
-		var responseData= "";
-		$("#check_send").click(function() {
-			console.log("클릭");
-			alert("인증번호 발송이 완료되었습니다.");
-			
-			var mem_phone = $("#mem_phone").val();
-			console.log("mem_phonMS:", mem_phone);
-			$.ajax({
-				async : true,
-				type : "GET",
-				url : "/login/phoneSend",
-				dataType : "text",
-				data: { "mem_phone": mem_phone }, 
-				headers : {
-					"Content-Type" : "application/json"
-				},
-				success : function(data) {
-					console.log("datMS:", data);
-					if(data =="error"){
-						alert("휴대폰 번호가 올바르지 않습니다.");
-					} else{
-						 $("#phoneDoubleCheck").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-				         $("#phoneDoubleCheck").css("color","red");
-				         responseData = data;
-				         
-					$("#phone_check").click(function() {
-						console.log("문자인증클릭");
-						if ($.trim(responseData) == $("#mem_phone_check").val()) {
-							alert("인증성공!\n휴대폰 인증이 정상적으로 완료되었습니다.");
-						} else {
-							alert("인증실패!\n인증번호가 올바르지 않습니다!");
-						}
-					  });	
-					}
-				  }
-			    
-		     });
-	        
-         });
 		
-<<<<<<< HEAD
-=======
 		
 		//문자인증
 		var responseData= "";
@@ -279,22 +205,14 @@ $(function(){
 	        
          });
 		
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 		//비밀번호 유효성검사 
 		function checkPassword(){
 			var pass1 = $("input[name='mem_pw']").val().trim();
 			var pass2 = $("input[name='mem_pw_check']").val().trim();
-<<<<<<< HEAD
-			var regExp = /^[a-zA-Z\d`~!@#$%^&*()-_=+]{8,16}$/;
-			console.log("pass1:" , pass1);
-			if(!regExp.test(pass1)){
-				$("#dup-password").text("비밀번호는 8~16자 입니다.").css("color","red");
-=======
 			var regExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*?=+_-])[A-Za-z0-9!@#$%^&*?=+_-]{8,16}$/i;
 			console.log("pass1:" , pass1);
 			if(!regExp.test(pass1)){
 				$("#dup-password").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.").css("color","red");
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
 				isValidPassword = false;
 			} else{
 				$("#dup-password").text(""); // 유효성 검사가 통과했을 때 메시지를 초기화

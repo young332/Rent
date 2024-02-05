@@ -10,9 +10,9 @@
 		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_date}, #{pay_type})
 	</insert>
 	
-	<!-- 결제 내역 조회-->
+	<!-- 결제(payment) 내역-->
 	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
-		SELECT pay_pid, pay_type, pay_res_rid, pay_mem_id, pay_date
+		SELECT pay_res_rid, pay_type, pay_mem_id, pay_date
 		FROM TBL_PAYMENT
 		WHERE pay_mem_id = #{pay_mem_id}
 	</select>
@@ -40,12 +40,10 @@
 	</select>
 	    
     <!-- 회원 예약 번호 불려오기 -->	
-	<select id="getResRid" resultType="com.kh.rent.checkout.domain.PaymentDTO">
-        SELECT 
-        FROM TBL_RESERVE
-        WHERE res_rid = #{pay_res_rid}
+	<select id="getResRid" resultType="com.kh.rent.reserve.domain.ReserveVO">
+        SELECT * FROM TBL_RESERVE
     </select>
-    
+        
     <!-- 비회원 예약 번호 불려오기 -->	
 	<select id="getPayNonResRid" parameterType="int" resultType="int">
         SELECT non_rid

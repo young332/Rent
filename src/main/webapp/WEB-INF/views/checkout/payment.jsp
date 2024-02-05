@@ -188,7 +188,7 @@
           <li class="list-group-item d-flex justify-content-between bg-light">
             <div class="text-success">
               <h6 class="my-0">포인트</h6>
-              <small id="view_use_pnt">0</small>
+              <small id="view_point_cost">0</small>
             </div>
             <span class="text-success"></span>
           </li>
@@ -270,7 +270,7 @@ int min = 5000;
 		  <tbody>
 		    <tr>
 		      <th>결제금액</th>
-		      <td><span class="bold txt_blue"><%=res_totalpay%>원</span></td>
+		      <td><span class="bold txt_blue"><%=65000 %>원</span></td>
 		    </tr>
 		    <tr>
 		      <th> 포인트 </th>
@@ -282,14 +282,14 @@ int min = 5000;
 		    <tr>
 		      <td></td>
 		      <td>
-		        <span> <input type="number" name="use_pnt" id="use_pnt" min="<%=min%>" max="<%=res_totalpay%>" onchange="updateViewUsePnt()"></span> p 
+		        <span> <input type="number" name="point_cost" id="point_cost" min="<%=min%>" max=<%=res_totalpay%> onchange="updateViewUsePnt()"></span> p 
 		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${res_totalpay + memberVO.mem_point}</span>p )
 		      </td>
 		    </tr>
 		    <tr>
 		      <td></td>
 		      <td>
-		      	<p class="bold txt_red"> 최종 결제 금액 : <span class="bold txt_red" id="result_pnt"><%=res_totalpay%></span> 원</p>
+		      	<p class="bold txt_red"> 최종 결제 금액 : <span class="bold txt_red" id="result_pnt">${reserveInfo.res_totalpay}</span> 원</p>
 		      </td>
 		    </tr>
 		  </tbody>
@@ -394,14 +394,16 @@ int min = 5000;
 
 	<form id="checkout_form">
 		<!-- 결제 번호 -->
-		<input type="hidden" id="point_cost" name="point_cost">
-		<!-- 주문자 회원번호 -->
-		<input type="hidden" name="mem_id" value="${pay_mem_id}" type="hidden">
+		<input type="hidden" name="pay_res_rid">
+		<!-- 사용자 ID -->
+		<input type="hidden" name="pay_mem_id" value="${loginInfo.mem_id}">
 		<!-- 예약자 -->
-		<input type="hidden" name="pay_res_rid" type="hidden">
+		<input type="hidden" name="res_rid">
+		<!-- 결제 타입 -->
+		<input type="hidden" name="pay_type">
 		<!-- 사용 포인트 -->
-		<input type="hidden" name="point_cost" type="hidden">
-		<!-- 예약 정보 -->
+		<input type="hidden" name="point_cost">
+		
 	</form>
 	      
    <script>
@@ -409,52 +411,20 @@ int min = 5000;
 	// 변수 선언 및 값 할당
    var mem_id = '${memberVO.mem_id}';
    
-   var point_cost = '${orderDTO.point_cost}';
+   var point_cost = '${paymentDTO.point_cost}';
  
    var point = '${memberVO.mem_point}';
    
    console.log("포인트: " + point);
       
-   var res_totalpay = <%= res_totalpay %>;
+   var res_totalpay = <%=65000 %>;
    
    function updateViewUsePnt(res_totalpay, point, min, uint) {
-	   var usePntInput = document.getElementById("use_pnt");
-	   var viewUsePnt = document.getElementById("view_use_pnt");
+	   var usePntInput = document.getElementById("point_cost");
+	   var viewUsePnt = document.getElementById("view_point_cost");
 	   
 	   viewUsePnt.innerText = usePntInput.value;
    }
-  
-	// radio box 클릭 이벤트 처리
-	$("#pointPayment").on("click", function() {
-	    if ($(this).is(":checked")) {
-	        // radio box가 체크된 경우의 동작을 여기에 추가
-	        console.log("pointPayment radio box가 체크되었습니다.");
-	        // 추가로 해야 할 작업을 여기에 구현
-	       	$(".order_point_input_btn").on("click", function() {
-	       		const maxPoint = "${MemberVO.mem_point}";
-	       		let state = $(this).data("state");
-	       		
-	       		if(state == "N") {
-	       			console.log("n동작");
-	       		$(".order_point_input").val(maxPoint);
-	       		
-	       		$(".order_point_input_btn_Y").css("display", "inline-block");
-	       		$(".order_point_input_btn_N").css("display", "none");
-	       		} else if (state == "Y") {
-	       			console.log("y동작");
-	       			//취소
-	       			//값 변경
-	       			$(".order_point_input").val(0);
-	       			//글 변경
-	       			$(".order_point_input_btn_Y").css("display", "none");
-	       			$(".order_point_input_btn_N").css("display", "inline-block");
-	       			
-	       		}
-	       	});
-	    } else if ($(this).not(":checked")) {
-	    	console.log("point 체크해주세요.");
-	    }
-	});
 
 	function chkPoint(res_totalpay, point, min,unit) {
 		//res_totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
@@ -473,7 +443,7 @@ int min = 5000;
 			}
 			
 		}
-		document.getElementById("use_pnt").value = v_point; //input 값 설정
+		document.getElementById("point_cost").value = v_point; //input 값 설정
 
 		changePoint(res_totalpay,point,min,unit);
 	}
@@ -481,22 +451,22 @@ int min = 5000;
 	function changePoint(res_totalpay,point,min,unit){
 		//input값을 가져옴 > left_pnt 변경 > 최종결제금액 변경
 		//res_totalpay : 결제 금액 / pnt : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
-		var v_point = parseInt(document.getElementById("use_pnt").value); //사용할 포인트 (input 입력값)
+		var v_point = parseInt(document.getElementById("point_cost").value); //사용할 포인트 (input 입력값)
 		if (v_point > point) //입력값이 사용가능 포인트보다 클때
 		{
 			v_point = point;
-			document.getElementById("use_pnt").value = v_point; //input 값 재설정
+			document.getElementById("point_cost").value = v_point; //input 값 재설정
 		}
 
 		if(v_point > res_totalpay ){ //결제금액보다 포인트가 더 클 때
 			v_point = res_totalpay; //사용할 포인트는 결제금액과 동일하게 설정
-			document.getElementById("use_pnt").value = v_point; //input 값 재설정
+			document.getElementById("point_cost").value = v_point; //input 값 재설정
 		}
 
 		if (v_point < min)  //최소 사용 단위보다 작을 때
 		{
 			v_point = 0; 
-			document.getElementById("use_pnt").value = v_point; //input 값 재설정
+			document.getElementById("point_cost").value = v_point; //input 값 재설정
 		} else {
 			// v_point = v_point - v_point%unit; //사용할 포인트 = 사용할 포인트 중 최소단위 이하 포인트를 뺀 포인트
 		}
@@ -508,7 +478,7 @@ int min = 5000;
 
 		}
 		
-		var viewUsePnt = document.getElementById("view_use_pnt")
+		var viewUsePnt = document.getElementById("view_point_cost")
 		if (viewUsePnt) {
 			viewUsePnt.innerText = v_point;
 		}
@@ -518,23 +488,24 @@ int min = 5000;
 	
 	$("#btn_pay").on("click", function() {
 		
-        // 포인트 정보를 폼에 추가 -> 예약번호로 수정하기 
-      	$("input[name='point_cost']").val($("#use_pnt").val());
-		console.log($(".checkout_form"));
-        // 결제 요청 폼 서버에 전송
-        $(".checkout_form").submit();
+		var pay_pid = $("#pay_pid").val(); 
+		var pay_res_rid = $("#pay_res_rid").val();
+		var point_cost = $("#point_cost").val();
+ 		console.log("point_cost:", point_cost);
+		var pay_mem_id = $("#pay_mem_id").val();
+ 		console.log("pay_mem_id:", pay_mem_id);
+ 		var pay_date = $("#pay_date").val();
+ 		var res_totalpay = $("#res_totalpay").val();
 
-		console.log("결제완료: ", $("#result_pnt").val());
-        
+		/* 서버 전송 */
+		$("#checkout_form").submit();
+
       
     });
-	
-    console.log("회원 ID: " + mem_id);
 
    </script>
    
 </body>
 </html>
 	
-
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>

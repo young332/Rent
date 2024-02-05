@@ -64,9 +64,9 @@ public class PaymentServiceImpl implements PaymentService {
 
 
 	@Override
-	public List<PaymentDTO> getPaymentInfo(String mem_id) {
+	public List<PaymentDTO> getPaymentInfo(String res_mem_id) {
 		
-		List<PaymentDTO> list = paymentMapper.getPaymentInfo(mem_id);
+		List<PaymentDTO> list = paymentMapper.getPaymentInfo(res_mem_id);
 		log.info("list:" + list);
 		return list;
 	}
@@ -80,8 +80,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<PaymentDTO> getResRid() {
-		List<PaymentDTO> list = paymentMapper.getResRid();
+	public List<ReserveVO> getResRid() {
+		List<ReserveVO> list = paymentMapper.getResRid();
 		return list;
 	}
 

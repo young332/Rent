@@ -13,7 +13,7 @@ public interface PaymentService {
 	public boolean addPayment(PaymentDTO paymentDTO);
 	
 	// 결제 조회
-	public List<PaymentDTO> getPaymentInfo(String mem_id);
+	public List<PaymentDTO> getPaymentInfo(String res_mem_id);
 	
 	// 결제 번호 조회
 	public List<ReserveVO> payNumber(int res_rid);
@@ -27,7 +27,7 @@ public interface PaymentService {
 	public int getMemberPoint(int mem_point);
 	
 	// 회원번호 조회
-	public List<PaymentDTO> getResRid();
+	public List<ReserveVO> getResRid();
 	
 	// 비회원 번호 조회
 	public int getPayNonResRid(int pay_res_rid);

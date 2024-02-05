@@ -1,5 +1,6 @@
 package com.kh.rent.checkout.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
@@ -35,32 +37,48 @@ public class CheckoutController {
 	private ReserveService reserveService;
 	
 	@GetMapping("/payment")
-	public void payment(HttpSession session, Model model) {
-		MemberVO memberVO = (MemberVO)session.getAttribute("loginInfo");
-		ReserveVO reserveVO = (ReserveVO)session.getAttribute("reserveInfo");
+	public void paymentGet(ReserveVO reserveVO,HttpSession session, Model model) {
+		//MemberVO memberVO = (MemberVO)session.getAttribute("loginInfo");	
+		List<ReserveVO> reserveList = paymentService.getResRid();
+		log.info("reserveVO: " + reserveVO);
 		
+//		List<PaymentDTO> paymentList = paymentService.getPaymentInfo(reserveVO.getRes_mem_id());	
+//		log.info("paymentList: " + paymentList);
+//		log.info("reserveList: " + reserveList);
 		
-		List<PaymentDTO> paymentList = paymentService.getPaymentInfo(memberVO.getMem_id());
-		
-		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("reserveList", reserveList);
 
 		
 	}
-	
+
     @PostMapping("/payment")
-    @ResponseBody
-    public String payment(@RequestBody PaymentDTO paymentDTO, HttpSession session) {
-    	MemberVO memberVO = (MemberVO)session.getAttribute("loginInfo");
-    	ReserveDTO reserveDTO = (ReserveDTO)session.getAttribute("reserveDTO");
-    	
-    	paymentService.pay(paymentDTO);
-    	
-    	log.info("paymentDTO" + paymentDTO);
-    	
-  //  	boolean result = paymentService.addPayment(paymentDTO);
-    	   	
-   		return "/myPage/myPage";
-    }
+	public String paymentPost(@RequestParam("pay_res_rid") int pay_res_rid,
+	                                 @RequestParam("res_totalpay") int res_totalpay,
+	                                 @RequestParam("point_cost") int point_cost,
+	                                 @RequestParam("pay_type") String pay_type,
+	                                 @RequestParam("pay_date") Date pay_date,
+	                                 @RequestParam("pay_mem_id") String pay_mem_id,
+	                                 Model model,
+	                                 HttpSession session) {
+
+	    
+	    model.addAttribute("pay_res_rid", pay_res_rid);
+	    model.addAttribute("res_totalpay", res_totalpay);
+	    model.addAttribute("point_cost", point_cost);
+	    model.addAttribute("pay_type", pay_type);
+	    model.addAttribute("pay_date", pay_date);
+	    model.addAttribute("pay_mem_id", pay_mem_id);
+
+	    
+	    session.setAttribute("pay_res_rid", pay_res_rid);
+	    session.setAttribute("res_totalpay", res_totalpay);
+	    session.setAttribute("point_cost", point_cost);
+	    session.setAttribute("pay_type", pay_type);
+	    session.setAttribute("pay_date", pay_date);
+	    session.setAttribute("pay_mem_id", pay_mem_id);
+	  
+	    return "redirect:/myPage/reservationList";
+	}
     
     @GetMapping("/point")
     public void point() {
