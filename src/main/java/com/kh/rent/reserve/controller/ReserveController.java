@@ -146,7 +146,6 @@ public class ReserveController {
 	    return "redirect:/checkout/payment";
 	}
 
-
-
+	
 
 }

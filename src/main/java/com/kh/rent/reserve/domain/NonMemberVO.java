@@ -1,6 +1,6 @@
 package com.kh.rent.reserve.domain;
 
-import java.sql.Date;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
