@@ -12,6 +12,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -60,6 +62,19 @@ public class MemberMapperTests {
 		MemberVO memberVO = memberMapper.login(loginDTO);
 		log.info("memberVO:" + memberVO);
 	}
+	//비회원
+	@Test
+	public void testNonMemberLogin() {
+		String non_name = "kim";
+		String non_tel = "123456789";
+		NonMemberLoginDTO loginDTO = NonMemberLoginDTO.builder()
+				.non_name(non_name)
+				.non_tel(non_tel)
+				.build();
+		  NonMemberVO nonMemberVO = memberMapper.NonMembersLogin(loginDTO);
+		log.info("nonMemberVO:" + nonMemberVO);
+	}
+	
 	
 	@Test //조회
 	public void testgetList() {
@@ -118,5 +133,11 @@ public class MemberMapperTests {
 	}
 	
 
+	@Test
+	public void testCheckEmail() {
+		String mem_email = "khproject2309@gmail.com";
+		int count = memberMapper.checkEmail(mem_email);
+		log.info("count : " + count);
+	}
 	
 }

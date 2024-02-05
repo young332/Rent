@@ -14,7 +14,7 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>회원가입 <i class="ion-ios-arrow-forward"></i></span></p>
             <h1 class="mb-3 bread">로그인</h1>
           </div>
         </div>
@@ -40,7 +40,8 @@ function openZipSearch() {
 
 var isValidPhone = false;
 var isValidPassword = false;
-isCheckId = false;
+var isCheckId = false;
+var isValidEmail = false;
 
 //아이디 중복 체크
 $(function(){
@@ -102,18 +103,18 @@ $(function(){
 			type : 'post',
 			url : "/login/phoneCheck",
 			dataType : "text",
-			contentType: "application/json",
-			data: JSON.stringify({ "mem_phone": str }),
+			data:  str,
 			headers : {       
 				"Content-Type" : "application/json",      
 				"X-HTTP-Method-Override" : "POST"    
 			},
 			success : function(data){
-				console.log("data:" , data);
+				console.log("dataS:" , data);
 				if(data == 0){
 					$("#dup-phone").text("사용가능한 번호입니다.").css("color","green");
 					isValidPhone = true;
 				}else{
+					console.log("dataF:" , data);
 					$("#dup-phone").text("등록된 번호가 있습니다.").css("color","red");
 					isValidPhone = false;
 				}
@@ -122,6 +123,47 @@ $(function(){
 	  }
 
 	});
+	
+		//이메일 중복체크
+		$("#mem_email").blur(function(){
+			var email = $(this).val().trim();
+
+			// 이메일 유효성 검사
+			    var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+			    if (email === "" || !regExp.test(email)) {
+			        $("#dup-email").text("유효하지 않는 이메일 주소입니다.").css("color", "red");
+			        isValidEmail = false;
+			        return;
+			    }
+			
+			$.ajax({
+				async: true,
+				type : 'post',
+				url : "/login/emailCheck",
+				dataType : "text",
+				data: email,
+				headers : {       
+					"Content-Type" : "application/json",  
+					"X-HTTP-Method-Override" : "POST"    
+				},
+				success : function(data){
+					console.log("data:" , data);
+					if(data == 0){
+						console.log("dataS:" , data);
+						$("#dup-email").text("사용가능한 이메일입니다.").css("color","green");
+						isValidEmail = true;
+					} else{
+						console.log("dataF:" , data);
+						$("#dup-email").text("등록된 이메일이 있습니다.").css("color","red");
+						isValidEmail = false;
+					}
+				}
+			});
+		});
+		
+		
+		
 		//문자인증
 		var responseData= "";
 		$("#check_send").click(function() {
@@ -167,10 +209,10 @@ $(function(){
 		function checkPassword(){
 			var pass1 = $("input[name='mem_pw']").val().trim();
 			var pass2 = $("input[name='mem_pw_check']").val().trim();
-			var regExp = /^[a-zA-Z\d`~!@#$%^&*()-_=+]{8,16}$/;
+			var regExp = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*?=+_-])[A-Za-z0-9!@#$%^&*?=+_-]{8,16}$/i;
 			console.log("pass1:" , pass1);
 			if(!regExp.test(pass1)){
-				$("#dup-password").text("비밀번호는 8~16자 입니다.").css("color","red");
+				$("#dup-password").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.").css("color","red");
 				isValidPassword = false;
 			} else{
 				$("#dup-password").text(""); // 유효성 검사가 통과했을 때 메시지를 초기화
@@ -226,7 +268,7 @@ $(function(){
       <div class="container">
         <div class="row d-flex mb-5 contact-info justify-content-center">
         	
-          <div class="col-md-6 block-9 mb-md-5">
+          <div class="col-md-8 block-9 mb-md-5">
           <div class="form-group">
           		<p style="font-size:30px;">회원가입</p>
             </div>
@@ -245,7 +287,7 @@ $(function(){
               </div>
               <div class="form-group">
               	<small>비밀번호</small>
-                <input type="password" id="mem_pw" name="mem_pw" class="form-control" placeholder="영문 8~16이내">
+                <input type="password" id="mem_pw" name="mem_pw" class="form-control" placeholder="영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자">
               	<input type="hidden" id="pwDoubleChk" value="비밀번호는 6자 이상 설정해주시기 바랍니다.">
               	<span id="dup-password"></span>
               </div>
@@ -289,6 +331,7 @@ $(function(){
               <small>이메일</small>
                 <input type="email" id="mem_email" name="mem_email" class="form-control">
               </div>
+              <span id="dup-email"></span>
               <div class="form-group">
               <small>주소</small>
               <div class="input-group">
