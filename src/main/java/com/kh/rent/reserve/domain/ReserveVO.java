@@ -21,6 +21,6 @@ public class ReserveVO {
 	private Date res_modi_date;
 	private String res_license_type;
 	private String res_license_num;
-	private Integer res_pay_pid;
 	private Integer res_totalpay;
+	private String res_status;
 }

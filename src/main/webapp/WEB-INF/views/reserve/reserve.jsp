@@ -209,7 +209,7 @@ div.left-box {
 						    					<div class="text">
 						    						<h2 class="mb-0">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
-						    							<input type="text" class="cat" id="car_index" value="${reserveDTO.car_index}" style="display: none;">
+						    							<input type="text" class="cat car_index" value="${reserveDTO.car_index}" style="display: none;">
 							    						<span class="cat">${reserveDTO.car_company}</span>|
 							    						<span class="cat">${reserveDTO.car_size}</span>|
 							    						<span class="cat">${reserveDTO.car_fuel}</span>|
@@ -228,8 +228,8 @@ div.left-box {
 													    </c:if>
 													</c:if>
 
-							    						<p class="price ml-auto"><span id="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
-							    						<p class="price ml-auto"> <span id="totalPay" ></span>원</p>
+							    						<p class="price ml-auto"><span class="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
+							    						<p class="price ml-auto"> <span class="totalPay" ></span>원</p>
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" >
 						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1  btn_reserve">예약하기</button></p>
@@ -385,7 +385,7 @@ $(function() {
 	$(document).ready(function () {
 	    function calculateTotalCost() {
 	        $(".item").each(function () {
-	            var hourlyRate = parseFloat($(this).find("#hourPay").text());
+	            var hourlyRate = parseFloat($(this).find(".hourPay").text());
 	            var pickDate = new Date($("#top_book_pick_date").val());
 	            var offDate = new Date($("#top_book_off_date").val());
 	            var timeDiff = offDate - pickDate;
@@ -398,7 +398,7 @@ $(function() {
 	            var roundedTotalCost = Math.round(totalCost);
 	            var formattedTotalCost = roundedTotalCost.toLocaleString('en-US', { minimumFractionDigits: 0 });
 	
-	            $(this).find("#totalPay").text(formattedTotalCost);
+	            $(this).find(".totalPay").text(formattedTotalCost);
 	        });
 	
 	      
@@ -517,81 +517,35 @@ $(function() {
 	
 	setFooterTop();
 	
-	//비동기로 대여일,반납일 자동차 고유번호,총가격 보내기
-	$(document).ready(function() {
-	    // ... your existing code ...
+	
 
-	    function sendDataToServer() {
-		    var topBookPickDate = $("#top_book_pick_date").val();
-		    var topBookOffDate = $("#top_book_off_date").val();
-		    var carIndex = $("#car_index").val();
-		    var totalPay = $("#totalPay").text(); 
-		    
-		
-		    // Format dates to "yyyy-MM-dd HH:mm:ss"
-		    topBookPickDate = formatDateTime(topBookPickDate);
-		    topBookOffDate = formatDateTime(topBookOffDate);
-		
-		    // Prepare data to be sent
-		    var sendData = {
-			    "top_book_pick_date": topBookPickDate,
-			    "top_book_off_date": topBookOffDate,
-			    "car_index": carIndex,
-			    "totalPay": totalPay
-			};
-
-		
-		    // Make an AJAX request to the server
-		    $.ajax({
-		        url: '/reserve/reserveinfo',
-		        type: 'GET',
-		        data: sendData,
-		        success: function(rData) {
-		            console.log("Data sent successfully:", rData);
-		            console.log("top_book_pick_date:",topBookPickDate);
-		            console.log("top_book_off_date:",topBookOffDate);
-		            console.log("car_index:",carIndex);
-		            console.log("totalPay:",totalPay);
-		        }
-		       
-		    });
-		}
-		
-	    function formatDateTime(dateTimeString) {
-	        var date = new Date(dateTimeString);
-
-	        var year = date.getFullYear();
-	        var month = ('0' + (date.getMonth() + 1)).slice(-2);
-	        var day = ('0' + date.getDate()).slice(-2);
-	        var hours = ('0' + date.getHours()).slice(-2);
-	        var minutes = ('0' + date.getMinutes()).slice(-2);
-	        var seconds = ('0' + date.getSeconds()).slice(-2);
-
-	        return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-	    }
-
-
-	    // Trigger the function when needed (e.g., on a button click)
 	    $(".btn_reserve").click(function() {
 	    	console.log("reserver button");
 	    	var url = $(this).attr("data-url");
 	    	
 	    	var topBookPickDate = $("#top_book_pick_date").val();
 			var topBookOffDate = $("#top_book_off_date").val();
-			var carIndex = $("#car_index").val();
-			var totalPay = $("#totalPay").text(); 
+			var carIndex = $(this).parent().prev().find(".car_index").val();
+			var totalPay = $(this).parent().prev().find(".totalPay").text(); 
+			
 	    	
+			console.log("topBookPickDate:",topBookPickDate);
+			console.log("topBookOffDate:",topBookOffDate);
+			console.log("carIndex:",carIndex);
+			console.log("totalPay:",totalPay);
+			
 			var frmReserve = $("#frmReserve");
 			frmReserve.find("input[name=top_book_pick_date]").val(topBookPickDate.replace('T', ' '));
 			frmReserve.find("input[name=top_book_off_date]").val(topBookOffDate.replace('T', ' '));
 			frmReserve.find("input[name=car_index]").val(carIndex);
 			frmReserve.find("input[name=totalPay]").val(totalPay);
 			
+			
 			frmReserve.submit();
 	    	//sendDataToServer();
 	    	//return false;
 	    });
-	});
+	
 	
 	
 	 

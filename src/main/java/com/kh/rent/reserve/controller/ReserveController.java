@@ -3,6 +3,7 @@ package com.kh.rent.reserve.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,41 +46,30 @@ public class ReserveController {
 	}
 	
 	@GetMapping("/licenseinfo")
-	public String licenseinfo(ReserveInfoDTO reserveInfoDTO,RedirectAttributes rttr,
-	                          Model model) {
-		
-		
-		    log.info("reserveInfoDTO:"+reserveInfoDTO);
+	public String licenseinfo(ReserveInfoDTO reserveInfoDTO,HttpSession session) {
+//		String topbookoffdate = reserveInfoDTO.getTop_book_off_date();
+//		String topbookpickdate = reserveInfoDTO.getTop_book_pick_date();
+//		String carindex = reserveInfoDTO.getCar_index();
+//		String totalpay = reserveInfoDTO.getTotalPay();
+//		
+//	    log.info("topbookoffdate:"+topbookoffdate);
+//	    log.info("topbookpickdate:"+topbookpickdate);
+//	    log.info("carindex:"+carindex);
+//	    log.info("totalpay:"+totalpay);
+	    log.info("reserveInfoDTO:"+reserveInfoDTO);
+	    
+	    session.setAttribute("reserveInfoDTO", reserveInfoDTO);
+//	    session.setAttribute("topbookpickdate", topbookpickdate);
+//	    session.setAttribute("carindex", carindex);
+//	    session.setAttribute("totalpay", totalpay);
+	    
+	    
 		    
 		    
 		    return "reserve/licenseinfo";
 	}
 		  
 		
-
-	@GetMapping("/reserveinfo")
-	@ResponseBody
-	public String reserveinfo(ReserveInfoDTO reserveInfoDTO,
-	                          HttpSession session,RedirectAttributes rttr) {
-
-	    String topBookPickDate = reserveInfoDTO.getTop_book_pick_date();
-	    String topBookOffDate = reserveInfoDTO.getTop_book_off_date();
-	    String totalPay = reserveInfoDTO.getTotalPay();
-	    String carIndex = reserveInfoDTO.getCar_index();
-
-	    log.info("topBookPickDate: " + topBookPickDate);
-	    log.info("topBookOffDate: " + topBookOffDate);
-	    log.info("carIndex: " + carIndex);
-	    log.info("totalPay: " + totalPay);
-
-	    rttr.addAttribute("top_book_pick_date", topBookPickDate);
-	    rttr.addAttribute("top_book_off_date", topBookOffDate);
-	    rttr.addAttribute("totalPay", totalPay);
-	    rttr.addAttribute("car_index", carIndex);
-	    
-
-	    return "redirect:/reserve/licenseinfo";
-	}
 
 
 	// 선택
@@ -128,21 +118,34 @@ public class ReserveController {
 	
 
 	@PostMapping("/reserveinsert")
-	public String reserveinsert(ReserveVO reserveVO,
-	                            @RequestParam("top_book_pick_date") String rentalDate,
-	                            @RequestParam("top_book_off_date") String returnDate,
-	                            @RequestParam("total_pay") Integer totalPay,
-	                            @RequestParam("res_license_type") String licenseType,
-	                            @RequestParam("res_license_num") String licenseNum,
-	                            HttpSession session, Model model) {
+	public String reserveinsert(ReserveVO reserveVO, HttpSession session, Model model) {
 	   
-		log.info("rentalDate"+rentalDate);
-		log.info("returnDate"+returnDate);
-		log.info("totalPay"+totalPay);
-		log.info("licenseType"+licenseType);
-		log.info("res_license_num"+licenseNum);
-		return "reserve/licenseinfo";
+		ReserveInfoDTO reserveInfoDTO = (ReserveInfoDTO) session.getAttribute("reserveInfoDTO");
+		String topbookoffdate = (String) reserveInfoDTO.getTop_book_off_date();
+	    String topbookpickdate = (String) reserveInfoDTO.getTop_book_pick_date();
+	    String carindex = (String) reserveInfoDTO.getCar_index();
+	    String totalPay = (String) reserveInfoDTO.getTotalPay();
+	    
+	    totalPay = totalPay.replaceAll(",", "");
+	    
+	    log.info("inserttopbookoffdate:"+topbookoffdate);
+	    log.info("inserttopbookpickdate:"+topbookpickdate);
+	    log.info("insertcarindex:"+carindex);
+	    log.info("inserttotalpay:"+totalPay);
+	    
+	    reserveVO.setRes_return_date(topbookoffdate);
+	    reserveVO.setRes_rental_date(topbookpickdate);
+	    reserveVO.setRes_car_id(carindex);
+	    reserveVO.setRes_totalpay(Integer.parseInt(totalPay));
+	    MemberVO memberVO = (MemberVO) session.getAttribute("loginInfo");
+	    reserveVO.setRes_mem_id(memberVO.getMem_id());
+	    log.info("reserveVO:"+reserveVO);
+	    
+	    reserveService.reserveinsert(reserveVO);
+
+	    return "redirect:/checkout/payment";
 	}
+
 
 
 

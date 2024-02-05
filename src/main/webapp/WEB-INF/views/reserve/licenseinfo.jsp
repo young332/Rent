@@ -33,11 +33,7 @@
 			<div class="col-md-12 ftco-animate">
 				<h4>●운전자(예약자) 정보를 입력해 주세요</h4>
 				<h6>입력한 정보는 안전하게 보호할게요</h6>
-				<form role="form" action="/reserve/reserveinsert" method="post">
-<%-- 					<input type="hidden" name="top_book_pick_date" value="${topBookPickDate}"> --%>
-<%-- 				    <input type="hidden" name="top_book_off_date" value="${topBookOffDate}"> --%>
-<%-- 				    <input type="hidden" name="total_pay" value="${totalPay}"> --%>
-<%-- 				    <input type="hidden" name="car_index" value="${carIndex}"> --%>
+				<form id="frmLicense" role="form" action="/reserve/reserveinsert" method="post">
 					<div class="jumbotron card card-block"
 						style="background-color: white;">
 						<p>기본정보*</p>
@@ -80,8 +76,8 @@
 
 						<p>
 							<button type="submit" class="btn btn-info btn-large"
-								name="paymentType" value="non-member">비회원전용 결제</button>
-							<button type="submit" class="btn btn-success btn-large"
+								name="paymentType" id="btnNonMemPay" value="non-member">비회원전용 결제</button>
+							<button type="button" id="btnMemPay" class="btn btn-success btn-large"
 								name="paymentType" value="member">회원전용 결제</button>
 						</p>
 
@@ -98,3 +94,15 @@
 
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp"%>
+
+<script>
+$(function() {
+	$("#btnMemPay").click(function() {
+		$("input[name=name]").remove();
+		$("input[name=tel]").remove();
+		$("input[name=birthdate]").remove();
+		$("#frmLicense").submit();
+	});
+});
+
+</script>

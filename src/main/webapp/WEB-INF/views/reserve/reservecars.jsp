@@ -32,7 +32,7 @@
 						</c:if>
 						
 						<p class="price ml-auto"><span id="hourPay" style="display: none;">${vo.car_cost}</span></p>
-							    						<p class="price ml-auto">총요금 <span id="totalPay" ></span>원</p>
+							    						<p class="price ml-auto">총요금 <span class="totalPay" ></span>원</p>
 						
 						</div>
 
@@ -53,7 +53,7 @@
 	$(document).ready(function () {
 	    function calculateTotalCost() {
 	        $(".item").each(function () {
-	            var hourlyRate = parseFloat($(this).find("#hourPay").text());
+	            var hourlyRate = parseFloat($(this).find(".hourPay").text());
 	            var pickDate = new Date($("#top_book_pick_date").val());
 	            var offDate = new Date($("#top_book_off_date").val());
 	            var timeDiff = offDate - pickDate;
@@ -66,7 +66,7 @@
 	            var roundedTotalCost = Math.round(totalCost);
 	            var formattedTotalCost = roundedTotalCost.toLocaleString('en-US', { minimumFractionDigits: 0 });
 	
-	            $(this).find("#totalPay").text(formattedTotalCost);
+	            $(this).find(".totalPay").text(formattedTotalCost);
 	        });
 	
 	        // Asynchronous update
