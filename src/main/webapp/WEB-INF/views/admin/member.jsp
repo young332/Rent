@@ -15,12 +15,32 @@
 <!-- 비밀번호변경 유효성 검사 스크립트 include -->
 <script src="/resources/js/change-pw-checker-admin.js"></script>
 
+<!-- 비밀번호 암호화 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
 <script>
+
+$(function() {
+	// 비밀번호변경 모달열기
+	$("#pwdChange").click(function() {
+		$("#password1").val("");
+		$("#newPassword").val("");
+		$("#confirmPassword").val("");
+		$("#invalid-message1").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.");
+		$("#invalid-message2").hide();
+		$("#modal-pwdChangeForm").modal("show");
+	});
+	
+	// 비밀번호변경 처리
+	$("#btn-pwdChange-save").click(function() {
+	    validatePasswordChangeForm();
+	});
+
+});
 
 //회원정보수정하기
 function fn_memberModify(mem_id) {
 		
-	  
 	   $.ajax({
 	    type: 'GET',
 	    url: '/admin/member/getMemberInfo',  
@@ -31,6 +51,7 @@ function fn_memberModify(mem_id) {
 	      
 	        $("#mem_id").val(data['mem_id']);
 		    $("#mem_name").val(data['mem_name']);
+		    $("#mem_pw").val(data['mem_pw']);
 		    $("#mem_adminck").val(data['mem_adminck']);
 		    var mem_adminck = data['mem_adminck'];
 		    if (mem_adminck == 0) {
@@ -42,9 +63,7 @@ function fn_memberModify(mem_id) {
 	        if (mem_adminck == 2) {
 	        	$("#mem_adminck").val("2").prop("selected", true);
 	        }
-		    
-		    
-		    
+		    	    
 		    $("#mem_birth").val(data['mem_birth']);
 		    $("#mem_phone").val(data['mem_phone']);
 		    $("#mem_email").val(data['mem_email']);
@@ -59,6 +78,26 @@ function fn_memberModify(mem_id) {
 	  }); 
 	}
 
+// 회원검색
+function fn_searchMember() {
+    var searchCnd = $("#searchCnd").val();
+    var searchWrd = $("#searchWrd").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/admin/member/searchMember', 
+        data: { searchCnd: searchCnd, searchWrd: searchWrd },
+        success: function (data) {
+            console.log('Search Result:', data);
+
+            // TODO: 검색 결과를 화면에 업데이트
+
+        },
+        error: function (error) {
+            console.error('Error:', error);
+        }
+    });
+}
 
 
 
@@ -80,30 +119,6 @@ function openZipSearch() {
     }).open();
 }
 
-$(function() {
-	// 비밀번호변경 모달열기
-	$("#pwdChange").click(function() {
-		$("#password1").val("");
-		$("#newPassword").val("");
-		$("#confirmPassword").val("");
-		$("#invalid-message1").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.");
-		$("#invalid-message2").hide();
-		$("#modal-pwdChangeForm").modal("show");
-	});
-	
-	// 비밀번호변경 처리
-	$("#btn-pwdChange-save").click(function() {
-// 		var password1 = $("#password1").val();
-// 		console.log("password1:", password1);
-	    validatePasswordChangeForm();
-	});
-	
-	
-	
-
-	
-});
-
 </script>
 
 
@@ -121,11 +136,11 @@ $(function() {
     <div class="card-body">
 
 		 <form method="post" id="frm" name="frm">
-			<input type="hidden" name="pageIndex" value="1"> <input
-				type="hidden" name="recordCountPerPage" value="10"> <input
-				type="hidden" name="emplyrId" value=""> <input type="hidden"
-				name="searchType" value=""> <input type="hidden" name="type"
-				value="">
+			<!-- <input type="hidden" name="pageIndex" value="1">  -->
+			<!-- <input type="hidden" name="recordCountPerPage" value="10"> --> 
+			<input type="hidden" name="Id" value="">
+			<input type="hidden" name="searchType" value="">
+			<input type="hidden" name="type"value="">
 
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group col-sm-12">
@@ -133,19 +148,17 @@ $(function() {
 					<div class="input-group col-sm">
 						<select class="custom-select" name="searchCnd">
 							<option value="all">전체</option>
-							<option value="emplyrId">아이디</option>
-							<option value="userNm">이름</option>
+							<option value="Id">아이디</option>
+							<option value="name">이름</option>
 
 						</select>
 					</div>
 					<div class="input-group col-sm app-search">
-						<input type="text" class="form-control" placeholder="검색어 입력"
-							name="searchWrd" value=""
-							onkeypress="javascript:fn_searchKeyPressed(event);"> <span
-							class="search-icon"></span>
+						<input type="text" class="form-control" placeholder="검색어 입력" name="searchWrd" value="" 
+						onkeypress="javascript:fn_searchKeyPressed(event);"> 
+						<span class="search-icon"></span>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="button"
-								onclick="javascript:fn_memberList('1');">Search</button>
+							<button class="btn btn-primary" type="button" onclick="javascript:fn_searchMember();">Search</button>
 						</div>
 					</div>
 				</div>
