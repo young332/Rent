@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.service.Sha256;
+import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.mapper.MyPageMapper;
 import com.kh.rent.reserve.domain.ReserveVO;
@@ -67,6 +68,13 @@ public class MyPageServiceImpl implements MyPageService{
 	public List<ReserveVO> getReserveList(String mem_id) {
 		List<ReserveVO> list = myPageMapper.getReserveList(mem_id);
 		return list;
+	}
+
+	// 예약번호로 차종 조회하기
+	@Override
+	public String getCarName(GetCarNameDTO getCarNameDTO) {
+		String carName = myPageMapper.getCarName(getCarNameDTO);
+		return carName;
 	}
 
 }

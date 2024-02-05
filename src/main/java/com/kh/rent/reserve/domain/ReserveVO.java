@@ -23,4 +23,5 @@ public class ReserveVO {
 	private String res_license_num;
 	private Integer res_pay_pid;
 	private Integer res_totalpay;
+	private String res_status;
 }

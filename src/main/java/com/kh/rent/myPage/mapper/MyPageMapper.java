@@ -3,6 +3,7 @@ package com.kh.rent.myPage.mapper;
 import java.util.List;
 
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
@@ -25,4 +26,7 @@ public interface MyPageMapper {
 	
 	// 예약정보 조회하기
 	public List<ReserveVO> getReserveList(String mem_id);
+	
+	// 예약번호로 차종 조회하기
+	public String getCarName(GetCarNameDTO getCarNameDTO);
 }

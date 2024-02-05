@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
@@ -86,10 +87,22 @@ public class MyPageMapperTests {
 	}
 	
 	// 예약정보 조회하기
-		@Test
-		public void testGetReserveList() {
-			String mem_id = "MEMBER02";
-			List<ReserveVO> list = myPageMapper.getReserveList(mem_id);
-			log.info("Reservelist:" + list);
-		}
+	@Test
+	public void testGetReserveList() {
+		String mem_id = "MEMBER02";
+		List<ReserveVO> list = myPageMapper.getReserveList(mem_id);
+		log.info("Reservelist:" + list);
+	}
+		
+	// 예약번호로 차종 조회하기
+	@Test
+	public void testGetCarName() {
+		GetCarNameDTO getCarNameDTO = GetCarNameDTO.builder()
+				.res_rid(4)
+				.res_car_id("3")
+				.build();
+		String car_name = myPageMapper.getCarName(getCarNameDTO);
+		log.info("car_name:" + car_name);
+	}
+	
 }

@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
 <script>
-// 포인트 자릿수 표시하기(콤마)
+// 금액 자릿수 표시하기(콤마)
 function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
