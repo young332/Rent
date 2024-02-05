@@ -77,12 +77,14 @@ $(function() {
     <section class="ftco-section">
 		<div class="container">
 			<div class="row">
+				<div class="col-md-2">
+				</div>
    				<div class="col-md-8">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
     				<h3>
 						내 정보
 					</h3>
-					<a href="/myPage/myPageInfo_modify" class="btn btn-primary">회원정보 수정하기</a>
+					<a href="/myPage/myPageInfo_modify" class="btn btn-primary">회원정보 수정</a>
 					</div>
 					<br>
 					<div class="container">
@@ -118,11 +120,13 @@ $(function() {
 							</div>
 							<input type="text" class="form-control" id="mem_addr" name="mem_addr" readonly="readonly" value="${loginInfo.mem_addr}">
 		             	</div>
+						<hr>
+						<button type="button" id="btn-deleteInfo" class="btn btn-danger">회원탈퇴</button>
 					  </form>
 					</div>
-					<hr>
-					<button id="btn-deleteInfo" class="btn btn-danger">회원탈퇴</button>
 			  	
+				</div>
+				<div class="col-md-2">
 				</div>
    			</div>
    		</div>

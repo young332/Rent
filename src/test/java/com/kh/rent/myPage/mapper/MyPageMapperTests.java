@@ -1,5 +1,7 @@
 package com.kh.rent.myPage.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
+import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -81,4 +84,12 @@ public class MyPageMapperTests {
 		int result = myPageMapper.deleteMember(mem_id);
 		log.info("result:" + result);
 	}
+	
+	// 예약정보 조회하기
+		@Test
+		public void testGetReserveList() {
+			String mem_id = "MEMBER02";
+			List<ReserveVO> list = myPageMapper.getReserveList(mem_id);
+			log.info("Reservelist:" + list);
+		}
 }
