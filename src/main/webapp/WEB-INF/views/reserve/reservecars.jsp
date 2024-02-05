@@ -31,13 +31,16 @@
 						    </c:if>
 						</c:if>
 						
-						<p class="price ml-auto">총요금 <span id="totalPay"></span></p>
+						<p class="price ml-auto"><span id="hourPay" style="display: none;">${vo.car_cost}</span></p>
+							    						<p class="price ml-auto">총요금 <span id="totalPay" ></span>원</p>
 						
 						</div>
-						<p class="d-flex mb-0 d-block" id="btn_reserve">
-							<a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a>
-						</p>
-					</div>
+
+							<p class="d-flex mb-0 d-block" id="btn_reserve">
+								<button type="submit" class="btn btn-primary py-2 mr-1">예약하기</button>
+							</p>
+
+						</div>
 				</div>
 			</div>
 
@@ -46,4 +49,37 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function () {
+	    function calculateTotalCost() {
+	        $(".item").each(function () {
+	            var hourlyRate = parseFloat($(this).find("#hourPay").text());
+	            var pickDate = new Date($("#top_book_pick_date").val());
+	            var offDate = new Date($("#top_book_off_date").val());
+	            var timeDiff = offDate - pickDate;
+	
+	            var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+	            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+	
+	            var totalCost = hours * hourlyRate + (minutes / 60) * hourlyRate;
+	
+	            var roundedTotalCost = Math.round(totalCost);
+	            var formattedTotalCost = roundedTotalCost.toLocaleString('en-US', { minimumFractionDigits: 0 });
+	
+	            $(this).find("#totalPay").text(formattedTotalCost);
+	        });
+	
+	        // Asynchronous update
+	        updateTotalCostOnServer();
+	    }
+	
+	    $("#top_book_pick_date, #top_book_off_date").change(function () {
+	        calculateTotalCost();
+	    });
+	
+	    calculateTotalCost();
+	});
+	
 
+
+</script>
