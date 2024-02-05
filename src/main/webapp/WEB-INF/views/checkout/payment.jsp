@@ -210,7 +210,9 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">운전자 정보</h4>
-        <form class="needs-validation" novalidate>
+        <form class="checkout_form" action="/payment" method="POST">
+        	<!-- 결제 번호 -->
+			<input type="hidden" id="pay_res_rid" name="pay_res_rid">
           <div class="row g-3">
             <div class="col-sm-12">
               <label for="name" class="form-label">이름</label>
@@ -219,7 +221,6 @@
              
               </div><br>
             </div>
-
 
             <div class="col-12">
               <label for="text" class="form-label">연락처<span class="text-muted"></span></label>
@@ -391,23 +392,8 @@ int min = 5000;
     </div>
   </main>
 </div>
-
-	<form id="checkout_form">
-		<!-- 결제 번호 -->
-		<input type="hidden" name="pay_res_rid">
-		<!-- 사용자 ID -->
-		<input type="hidden" name="pay_mem_id" value="${loginInfo.mem_id}">
-		<!-- 예약자 -->
-		<input type="hidden" name="res_rid">
-		<!-- 결제 타입 -->
-		<input type="hidden" name="pay_type">
-		<!-- 사용 포인트 -->
-		<input type="hidden" name="point_cost">
-		
-	</form>
-	      
+      
    <script>
-   
 	// 변수 선언 및 값 할당
    var mem_id = '${memberVO.mem_id}';
    
@@ -503,6 +489,7 @@ int min = 5000;
       
     });
 
+		
    </script>
    
 </body>

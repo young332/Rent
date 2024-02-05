@@ -3,8 +3,7 @@ package com.kh.rent.checkout.mapper;
 import java.util.List;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
-import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.reserve.domain.LicenseDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 public interface PaymentMapper {
@@ -25,7 +24,7 @@ public interface PaymentMapper {
 	public int getMemberPoint(int mem_point);
 	
 	// 예약번호 조회
-	public List<ReserveVO> getResRid();
+	public List<ReserveVO> getResRid(String mem_id);
 	
 	// 비회원 번호 조회
 	public int getPayNonResRid(int pay_res_rid);

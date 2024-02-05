@@ -1,6 +1,5 @@
 package com.kh.rent.checkout.controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.service.PaymentService;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.reserve.domain.LicenseDTO;
@@ -37,88 +37,29 @@ public class CheckoutController {
 	private ReserveService reserveService;
 	
 	@GetMapping("/payment")
-	public void paymentGet(ReserveVO reserveVO,HttpSession session, Model model) {
-		//MemberVO memberVO = (MemberVO)session.getAttribute("loginInfo");	
-		List<ReserveVO> reserveList = paymentService.getResRid();
-		log.info("reserveVO: " + reserveVO);
+	public void paymentGet(HttpSession session, Model model) {
+		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		String mem_id = loginInfo.getMem_id();
+		List<ReserveVO> reserveList = paymentService.getResRid(mem_id);
+		model.addAttribute("reserveList", reserveList);
+		log.info("paymentGet");
+		log.info("reserveList" + reserveList);
 		
 //		List<PaymentDTO> paymentList = paymentService.getPaymentInfo(reserveVO.getRes_mem_id());	
 //		log.info("paymentList: " + paymentList);
 //		log.info("reserveList: " + reserveList);
 		
-		model.addAttribute("reserveList", reserveList);
-
 		
 	}
 
-    @PostMapping("/payment")
-	public String paymentPost(@RequestParam("pay_res_rid") int pay_res_rid,
-	                                 @RequestParam("res_totalpay") int res_totalpay,
-	                                 @RequestParam("point_cost") int point_cost,
-	                                 @RequestParam("pay_type") String pay_type,
-	                                 @RequestParam("pay_date") Date pay_date,
-	                                 @RequestParam("pay_mem_id") String pay_mem_id,
-	                                 Model model,
-	                                 HttpSession session) {
 
-	    
-	    model.addAttribute("pay_res_rid", pay_res_rid);
-	    model.addAttribute("res_totalpay", res_totalpay);
-	    model.addAttribute("point_cost", point_cost);
-	    model.addAttribute("pay_type", pay_type);
-	    model.addAttribute("pay_date", pay_date);
-	    model.addAttribute("pay_mem_id", pay_mem_id);
-
-	    
-	    session.setAttribute("pay_res_rid", pay_res_rid);
-	    session.setAttribute("res_totalpay", res_totalpay);
-	    session.setAttribute("point_cost", point_cost);
-	    session.setAttribute("pay_type", pay_type);
-	    session.setAttribute("pay_date", pay_date);
-	    session.setAttribute("pay_mem_id", pay_mem_id);
-	  
-	    return "redirect:/myPage/reservationList";
+    @PostMapping("/checkout")
+	public String order(PaymentDTO paymentDTO) {
+		log.info(paymentDTO);
+		paymentService.pay(paymentDTO);
+		return "redirect:/myPage/reservationList";
 	}
     
-    @GetMapping("/point")
-    public void point() {
- 
-		log.info("point");
-	}
-
-
-//    @GetMapping("/payment")
-//    public void payment(MemberVO memberVO, HttpSession session, Model model) {
-//    	MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-//        if (loginInfo != null) {
-//            model.addAttribute("loginInfo", loginInfo);
-//        }
-//
-//    	log.info("payment");
-//    }
-//    
-//    @PostMapping("/payment")
-//    public String payment(@PathVariable("pay_res_rid") int pay_res_rid,
-//         PaymentDTO paymentDTO, Model model, HttpSession session) {
-//    	
-//    	MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-//    	if (loginInfo != null) {
-//    		model.addAttribute("loginInfo", loginInfo);
-//    	}
-//    	
-//    	
-//    	 PaymentDTO paymentDto = new PaymentDTO();
-//
-//    	 paymentService.pay(paymentDto);
-//
-//    	 List<PaymentDTO> paymentList = paymentService.payNumber();
-//
-//    	 model.addAttribute("paymentlist", paymentList);
-//
-//		
-//		return "/myPage/myPage";
-//		
-//	}
-
     
+  
 }

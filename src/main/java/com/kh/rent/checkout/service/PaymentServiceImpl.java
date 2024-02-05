@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
 import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
@@ -21,20 +22,13 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentMapper paymentMapper; 
 	
-	@Override
-	public boolean addPayment(PaymentDTO paymentDTO) {
-		int count = paymentMapper.addPaymentRecord(paymentDTO);
-		return (count == 1) ? true : false;
-		
-	}
-
 //	@Override
-//	public PaymentDTO getPaymentDTO(int pay_res_rid) {
+//	public boolean addPayment(PaymentVO paymentVO) {
+//		int count = paymentMapper.addPaymentRecord(paymentVO);
+//		return (count == 1) ? true : false;
 //		
-//		return paymentMapper.getPaymentInfo(pay_res_rid);
 //	}
 
-	
 //	@Override
 //	public int deductPayment(PaymentDTO paymentDTO) {
 //		
@@ -80,8 +74,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<ReserveVO> getResRid() {
-		List<ReserveVO> list = paymentMapper.getResRid();
+	public List<ReserveVO> getResRid(String mem_id) {
+		List<ReserveVO> list = paymentMapper.getResRid(mem_id);
 		return list;
 	}
 

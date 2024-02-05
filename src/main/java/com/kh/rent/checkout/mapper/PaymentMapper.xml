@@ -4,7 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.checkout.mapper.PaymentMapper">
 	
-	<!-- 결제 내역 생성 -->
 	<insert id="addPaymentRecord">
 		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_date, pay_type)
 		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_date}, #{pay_type})
@@ -39,11 +38,12 @@
 		where mem_id = #{pay_mem_id};	
 	</select>
 	    
-    <!-- 회원 예약 번호 불려오기 -->	
+    <!-- 예약정보 조회하기(한사람) -->	
 	<select id="getResRid" resultType="com.kh.rent.reserve.domain.ReserveVO">
-        SELECT * FROM TBL_RESERVE
+        select * from TBL_RESERVE
+ 		where res_mem_id = #{mem_id}
     </select>
-        
+           
     <!-- 비회원 예약 번호 불려오기 -->	
 	<select id="getPayNonResRid" parameterType="int" resultType="int">
         SELECT non_rid
