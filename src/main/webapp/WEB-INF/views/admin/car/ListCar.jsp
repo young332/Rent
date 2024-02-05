@@ -39,9 +39,9 @@
 		      // 모달 창 열기
 		      $("#MembermodifyModal").modal("show");
 		    
-		    } */
+		    } 
 		    
-		  }); 
+		  }); */
 		}
 </script>
     <!-- [ content ] Start -->

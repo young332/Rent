@@ -27,10 +27,11 @@ public class PaymentServiceTests {
 	public void testDeductPayment() {
 		Date day = new Date();
 		PaymentDTO paymentDTO = PaymentDTO.builder()
+				.pay_res_rid(4)
 				.pay_mem_id("MEMBER01")
 				.pay_type("PAY_P")
 				.pay_date(day)
-				.point_cost(-1000)
+				.point_cost(3000)
 				.build();
 		paymentService.pay(paymentDTO);
 		log.info("paymentDTO"+paymentDTO);
@@ -40,16 +41,62 @@ public class PaymentServiceTests {
 	//결제 내역
 	@Test
 	public void testPaymentRecord() {
+		for (int i = 0; i < 5; i++) { // 2, 4, 5
+			if (i == 2 || i == 4 || i == 5) {
+				Date day = new Date();
+				PaymentDTO paymentDTO = PaymentDTO.builder()
+						.pay_mem_id("MEMBER01")
+						.pay_date(day)
+						.pay_type("PAY_P")
+						.pay_res_rid(i)
+						.build();
+				paymentService.pay(paymentDTO);
+				log.info("paymentDTO" + paymentDTO);
+			}
+		}
+	}
+	
+	
+	@Test
+	public void testReserve() {
+		PaymentDTO paymentDTO = PaymentDTO.builder()
+				.res_rid(2)
+				.build();
+		paymentService.getResRid();
+		log.info("paymentDTO: " + paymentDTO);
+		
+		
+	}
+	
+	
+	@Test
+	public void testgetPaymentInfo() {
 		Date day = new Date();
 		PaymentDTO paymentDTO = PaymentDTO.builder()
-				.pay_res_rid(2)
+				.pay_res_rid(1)
+				.pay_type("PAY_P")
+				.pay_mem_id("MEMBER01")
+				.pay_date(day)
+				.build();
+		String res_mem_id = "MEMBER01";
+		paymentService.getPaymentInfo(res_mem_id);
+		log.info("paymentDTO: " + paymentDTO);
+
+	}
+	
+	@Test
+	public void testpayNumber() {
+		Date day = new Date();
+		PaymentDTO paymentDTO = PaymentDTO.builder()
 				.pay_mem_id("MEMBER01")
 				.pay_date(day)
 				.pay_type("PAY_P")
-				.pay_cost(3000)
+				.pay_res_rid(2)
+				.res_totalpay(50000)
 				.build();
-		paymentService.pay(paymentDTO);
-		log.info("paymentDTO" + paymentDTO);
+		int res_rid = 2;
+		paymentService.payNumber(res_rid);
+		log.info("paymentDTO: " + paymentDTO);
 	}
 	
 }
