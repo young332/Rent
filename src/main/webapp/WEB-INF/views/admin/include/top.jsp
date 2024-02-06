@@ -62,47 +62,13 @@
     
     <script>
    
-<<<<<<< HEAD
-    function TopMenuClick(href, obj/* , menu_id */) {
-//     	 $("#sidenav-menu > li:first").remove();
-=======
     function TopMenuClick(href, obj) {
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
         console.log("href: ", href);
          $.ajax({
 	        url: href,
 	        success: function(data) {
 	            console.log("data: ", data);
 	            $("#sub_menu").html(data);
-<<<<<<< HEAD
-// 	            if (data.SubMenuList && data.SubMenuList.length > 0) {
-// 	                $.each(data.SubMenuList, function(index, subMenu) {
-	                	
-// 	                    var listItem = $("<li class='sidenav-item'>" +
-// 	                        "<a href='" + subMenu.menu_url + "' class='sidenav-link'>" +
-// 	                        "<div>" + subMenu.menu_name + "</div>" +
-// 	                        "</a>" +
-// 	                        "</li>");
-
-// 	                    $("#sidenav-menu").append(listItem);
-	                    
-// 	                });
-// 	            }
-	            
-	           
-	        }
-	    }); 
-		
-        
-    }
-   
-    $(document).ready(function() {
-        // 상위 메뉴 클릭 시 해당 상위 메뉴에 속한 하위 메뉴 펼치기/숨기기 토글
-        $(".sidenav-toggle").on("click", function() {
-            $(this).next(".sidenav-menu").slideToggle();
-        });
-        
-=======
 
 	        }
 	    }); 
@@ -110,7 +76,6 @@
     }
    
     $(document).ready(function() {
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
         $("#sub_menu").on("click", ".s-link", function(e) {
         	e.stopPropagation();
         	e.preventDefault();
@@ -119,10 +84,6 @@
         	TopMenuClick(href, $(this));
         });
         
-<<<<<<< HEAD
-//         TopMenuClick("/admin/?menu_id=MENU001");
-=======
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
     });
     
     
@@ -131,10 +92,6 @@
 </head>
 
 <body>
-
-    	<%-- <c:set var="topMenuList" value="${responseMap['TopMenuList']}" />
-    	<c:set var="subMenuList" value="${responseMap['SubMenuList']}" /> --%>
-
     <!-- [ Preloader ] Start -->
     <div class="page-loader">
         <div class="bg-primary"></div>
@@ -152,16 +109,8 @@
                     <span class="app-brand-logo demo">
                         <img src="/resources/adimg/logoY.png" alt="Brand Logo" class="" style=" width: 65px;">
                     </span>
-<<<<<<< HEAD
-                    <a href="index.html" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
-                    
-                    <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
-                        <i class="ion ion-md-menu align-middle"></i>
-                    </a>
-=======
                     <a href="/admin/" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
 
->>>>>>> 1acb91656b37999e32352432386f479c3f38ff84
                 </div>
                 <div class="sidenav-divider mt-0"></div>
 
@@ -338,7 +287,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                                     <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
                                         <img src="/resources/assets/img/avatars/1.png" alt class="d-block ui-w-30 rounded-circle">
-                                        <span class="px-1 mr-lg-2 ml-2 ml-lg-0">Cindy Deitch</span>
+                                        <span class="px-1 mr-lg-2 ml-2 ml-lg-0">${loginInfo.mem_name}</span>
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">

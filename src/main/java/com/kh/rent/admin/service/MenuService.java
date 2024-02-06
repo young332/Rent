@@ -14,6 +14,8 @@ public interface MenuService {
 
 	public List<MenuVO> getSubMenu(@Param("parent_menu_id") String parent_menu_id);
 	
+	public List<MenuVO> getSubMenuYN(@Param("parent_menu_id") String parent_menu_id);
+	
 	public int addMenu(MenuVO menuVO);
 
 	public MenuVO getOneMenu(String menu_id);

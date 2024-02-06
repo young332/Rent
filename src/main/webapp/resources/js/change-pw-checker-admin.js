@@ -58,7 +58,7 @@
 	    var newPassword = $("#newPassword").val();
 	    var confirmPassword = $("#confirmPassword").val();
 	    
-	    var shaPassword1 = sha256(password1);
+	    var shaPassword1 = $("#password1").val();
 	    var shaNewPassword = sha256(newPassword);
 	    var shaConfirmPassword = sha256(confirmPassword);
 	    
