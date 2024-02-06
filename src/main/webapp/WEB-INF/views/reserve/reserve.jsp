@@ -199,7 +199,7 @@ div.left-box {
 				    			
 				    					<div class="item">
 				    						<div class="car-wrap rounded ftco-animate">
-						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/hyun1.jpg);">
+						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${reserveDTO.unique_file_nm});">
 						    					</div>
 						    					<div class="text">
 						    						<h2 class="mb-0" style="font-weight: bold; font-size: 30px;">${reserveDTO.car_name}</h2>
@@ -267,8 +267,6 @@ $(function() {
 	    });
 	 $("#btnSearch").click(function() {
 		    
-
-		    
 		    var selectedPickDate = $("#top_book_pick_date").val();
 		    var selectedOffDate = $("#top_book_off_date").val();
 
@@ -294,10 +292,8 @@ $(function() {
 		    return new Date(dateTimeString).toLocaleString('ko-KR', options);
 		}
 	
-	//달력 입력값 받음
+	//달력 상단입력값 받음
 	 $(document).ready(function() {
-		 
-		    
 		    function getParameterByName(name, url) {
 		        if (!url) url = window.location.href;
 		        name = name.replace(/[\[\]]/g, "\\$&");
@@ -309,11 +305,11 @@ $(function() {
 		    }
 		    var bookPickDate = getParameterByName('book_pick_date');
 		    var bookOffDate = getParameterByName('book_off_date');
+		    
 		    $("#top_book_pick_date").val(bookPickDate);
 		    $("#top_book_off_date").val(bookOffDate);
-		    
-		   
 		});
+	
 	 $(document).ready(function() {
 		    function getParameterByName(name, url) {
 		        if (!url) url = window.location.href;
@@ -432,9 +428,6 @@ $(function() {
 	 
 	 //비동기방식으로 체크박스 값보내서 체크된거만 화면에 보이게 하기
 	 $(function() {
-	    
-	
-	    
 	    function updateData() {
 	        var checkedValues = "";
 	        var carSizeValues = "";

@@ -175,7 +175,7 @@ public class ReserveController {
 	    log.info("nonMemberVO2:" + nonMemberVO);
 	    
 	    nonMemberService.nonmeminsert(nonMemberVO);
-	    log.info("데이터 추가됨");
+	    //log.info("하연 비회원 데이터 추가됨");
 	    return "success";
 	}
 

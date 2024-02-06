@@ -8,7 +8,7 @@
 			<div class="item">
 				<div class="car-wrap rounded ftco-animate fadeInUp ftco-animated">
 					<div class="img rounded d-flex align-items-end"
-						style="background-image: url(/resources/carbook-master/images/hyun1.jpg);">
+						style="background-image: url(/resources/upload/${vo.unique_file_nm});">
 					</div>
 					<div class="text">
 						<h2 class="mb-0" style="font-weight: bold; font-size: 30px;">${vo.car_name}</h2>

@@ -26,10 +26,16 @@
   	
   	</select>
   	
-  	<!-- car_info 리스트 -->
-	  <select id="getCarInfo" resultType="com.kh.rent.reserve.domain.ReserveDTO">
-	  		select * from TBL_CAR_INFO
-	  </select>
+  	 <!-- car_info 리스트 -->
+     <select id="getCarInfo" resultType="com.kh.rent.reserve.domain.ReserveDTO">
+            <!-- select * from TBL_CAR_INFO  -->
+           SELECT 
+            A.*, 
+            B.orignl_file_nm, B.unique_file_nm
+         FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
+         ON A.file_id = B.file_id 
+     </select>
+     
   <!-- 회원정보 리스트 -->
 	  <select id="getMemberInfo" resultType="com.kh.rent.login.domain.MemberVO">
 	  		select * from TBL_MEMBER
