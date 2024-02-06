@@ -287,13 +287,13 @@ $(function(){
               </div>
               <div class="form-group">
               	<small>비밀번호</small>
-                <input type="password" id="mem_pw" name="mem_pw" class="form-control" placeholder="영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자">
+                <input type="password" id="mem_pw" name="mem_pw" autocomplete="off" class="form-control" placeholder="영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자">
               	<input type="hidden" id="pwDoubleChk" value="비밀번호는 6자 이상 설정해주시기 바랍니다.">
               	<span id="dup-password"></span>
               </div>
               <div class="form-group">
               	<small>비밀번호 확인</small>
-                <input type="password"  id="mem_pw_check" name="mem_pw_check" class="form-control" placeholder="확인을 위해 한번 더 입력해주세요.">
+                <input type="password"  id="mem_pw_check" name="mem_pw_check" autocomplete="off" class="form-control" placeholder="확인을 위해 한번 더 입력해주세요.">
                 <input class="textErr" style="color: red;" value="비밀번호가 서로 맞지 않습니다." type="hidden">
               	<span id="dup-password-check"></span>
               </div>

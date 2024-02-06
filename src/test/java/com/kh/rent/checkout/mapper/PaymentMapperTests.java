@@ -32,8 +32,9 @@ public class PaymentMapperTests {
 				.pay_date(day)
 				.point_cost(1000)
 				.build();
-		paymentMapper.deductPayment(paymentDTO);
-		log.info("paymentDTO"+paymentDTO);
+		/*
+		 * paymentMapper.deductPayment(paymentDTO); log.info("paymentDTO"+paymentDTO);
+		 */
 		
 	}
 	

@@ -24,8 +24,6 @@ public class PaymentDTO {
 	// 예약 회원 아이디
 	private String mem_id;
 	
-	// 예약 상태
-	
 	// 사용 포인트
 	private int point_cost;
 
@@ -52,5 +50,7 @@ public class PaymentDTO {
 	
 	// 총 금액
 	private int res_totalpay;
+	
+	
 	
 }

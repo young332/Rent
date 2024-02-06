@@ -1,5 +1,7 @@
 package com.kh.rent.reserve.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +29,22 @@ public class NonMemberMapperTests {
 		NonMemberVO nonmemVO = new NonMemberVO();
 		nonmemVO.setNon_rental_date(date1);
 		nonmemVO.setNon_return_date(date2);
-		nonmemVO.setNon_name("kim");
-		nonmemVO.setNon_tel("123456789");
+		nonmemVO.setNon_name("jo");
+		nonmemVO.setNon_tel("01046648755");
 		nonmemVO.setNon_car_id("3");
-		nonmemVO.setNon_license_birth(1990-01-01);
-		nonmemVO.setNon_license_type("1종보통");
-		nonmemVO.setNon_license_num("12345290");
+		nonmemVO.setNon_license_birth("1998-05-16");
+		nonmemVO.setNon_license_type("2종보통");
+		nonmemVO.setNon_license_num("12565290");
+		nonmemVO.setNon_totalpay(900000);
 		
 		log.info("nonmemVO:" + nonmemVO);
-		nonMemberMapper.nonresinsert(nonmemVO);;
+		nonMemberMapper.nonmeminsert(nonmemVO);;
 		
+	}
+	@Test
+	public void testgetNonList() {
+		List<NonMemberVO> list = nonMemberMapper.getNonlist();
+		log.info("list"+list);
 	}
 
 }

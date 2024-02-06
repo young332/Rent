@@ -20,5 +20,8 @@ public class NonMemberVO {
 	private String non_return_date;
 	private String non_license_num;
 	private String non_license_type;
-	private Integer non_license_birth;
+
+	private String non_license_birth;
+	private String non_status;
+	private Integer non_totalpay;
 }

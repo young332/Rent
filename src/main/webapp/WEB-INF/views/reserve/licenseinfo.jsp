@@ -75,8 +75,8 @@
 						<br>
 
 						<p>
-							<button type="submit" class="btn btn-info btn-large"
-								name="paymentType" id="btnNonMemPay" value="non-member">비회원전용 결제</button>
+							<button type="button" class="btn btn-info btn-large"
+								name="paymentType" id="btnNonMemPay" value="non-member" data-url="/localhost">비회원예약</button>
 							<button type="button" id="btnMemPay" class="btn btn-success btn-large"
 								name="paymentType" value="member">회원전용 결제</button>
 						</p>
@@ -103,6 +103,33 @@ $(function() {
 		$("input[name=birthdate]").remove();
 		$("#frmLicense").submit();
 	});
+	
+	$("#btnNonMemPay").click(function() {
+	    var formData = {
+	        name: $("#name").val(),
+	        tel: $("#tel").val(),
+	        birthdate: $("#birthdate").val(),
+	        res_license_type: $("select[name=res_license_type]").val(),
+	        res_license_num: $("#licensenum").val()
+	    };
+
+		    console.log(formData.name);
+		    console.log(formData.tel);
+		    console.log(formData.birthdate);
+		    console.log(formData.res_license_type);
+		    console.log(formData.res_license_num);
+
+	    $.ajax({
+	        type: "POST",
+	        url: "/reserve/nonmeminsert",
+	        contentType: "application/json",
+	        data: JSON.stringify(formData),
+	        success: function(rData) {
+	            console.log(rData);
+	        }
+	    });
+	});
+
 });
 
 </script>

@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
 import com.kh.rent.reserve.domain.ReserveVO;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -40,9 +42,25 @@ public class MyPageController {
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
 		List<ReserveVO> reserveList = myPageService.getReserveList(mem_id);
+		
+		String[] carNames = new String[reserveList.size()];
+		for (int i = 0; i < reserveList.size(); i++) {
+			int rid = reserveList.get(i).getRes_rid();
+			String car_id = reserveList.get(i).getRes_car_id();
+			GetCarNameDTO getCarNameDTO = GetCarNameDTO.builder()
+					.res_rid(rid)
+					.res_car_id(car_id)
+					.build();
+			String car_name = myPageService.getCarName(getCarNameDTO);
+			carNames[i] = car_name.toString();
+		} 
+		String carNamesToString = Arrays.toString(carNames);
+		
 		model.addAttribute("reserveList", reserveList);
+		model.addAttribute("carNames", carNamesToString);
 		log.info("reservationListGet..");
 		log.info("reserveList" + reserveList);
+		log.info("carNamesToString" + carNamesToString);
 	}
 	
 	// 마이페이지
