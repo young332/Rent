@@ -3,20 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.checkout.mapper.PaymentMapper">
-	
+		
+	<!-- 결제 내역 기록-->
 	<insert id="addPaymentRecord">
 		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type, pay_status)
 		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type}, '결제완료')
 	</insert>
 	
-	<!-- 결제(payment) 내역-->
+	
 	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
 		SELECT pay_res_rid, pay_type, pay_mem_id, pay_date
 		FROM TBL_PAYMENT
 		WHERE pay_mem_id = #{pay_mem_id}
 	</select>
 		
-	<!-- 결제 번호 -->
+	<!-- 조인 res_rid = pay_res_rid -->
     <select id="payNumber" resultType="com.kh.rent.reserve.domain.ReserveVO">
     	select p.pay_mem_id, p.pay_date, p.pay_type,
     	p.pay_res_rid, r.res_totalpay
@@ -39,9 +40,14 @@
 		from TBL_MEMBER
 		where mem_id = #{pay_mem_id};	
 	</select>
+	
+	<select id="getResRid" resultType="com.kh.rent.reserve.domain.ReserveVO">
+        select * from TBL_RESERVE
+ 		where res_mem_id = #{mem_id}
+    </select>
 	    
     <!-- 예약정보 조회하기(한사람) -->	
-	<select id="getResRid" resultType="com.kh.rent.reserve.domain.ReserveVO">
+	<select id="getReserveList" resultType="com.kh.rent.reserve.domain.ReserveVO">
         select * from TBL_RESERVE
  		where res_mem_id = #{mem_id}
     </select>
@@ -60,10 +66,22 @@
 		where res_rid = #{pay_res_rid}
     </update>
     
+    <!-- res_totalpay 불려오기 -->
     <select id="getTotalPay" resultType="int">
     	select res_totalpay 
 		from TBL_RESERVE
 		where res_rid = #{pay_res_rid}
     </select>
+    
+    <!--결제 취소-->
+    <update id="paymentCancle">
+	    update TBL_PAYMENT
+	    set pay_status = '결제취소'
+	    where pay_res_rid = #{pay_res_rid}
+	</update>
+	
+	<!--예약 정보(예약 취소)-->
+	<select id="get"></select>
+	
 
 </mapper>

@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.checkout.domain.PaymentVO;
@@ -19,6 +21,7 @@ import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
+
 
 @Controller
 @Log4j
@@ -32,13 +35,16 @@ public class CheckoutController {
 	public void paymentGet(@ModelAttribute("res_rid") int res_rid, HttpSession session, Model model) {
 		log.info("paymentGet");
 
-//		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-//		String mem_id = loginInfo.getMem_id();
 		int totalPay = paymentService.getTotalPay(res_rid);
-//		List<ReserveVO> reserveList = paymentService.getResRid(mem_id);
-//		model.addAttribute("reserveList", reserveList);
+		
+		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		String mem_id = loginInfo.getMem_id();
+		List<ReserveVO> reserveList = paymentService.getReserveList(mem_id);
+		model.addAttribute("reserveList", reserveList);
+		
+		log.info("reserveList: " + reserveList);
+		
 		model.addAttribute("totalPay", totalPay);
-//		log.info("reserveList" + reserveList);
 
 	}
 
@@ -57,8 +63,6 @@ public class CheckoutController {
     	paymentVO.setPay_mem_id(mem_id);
     	paymentVO.setPay_type("PAY_P");
     	
-//    	List<ReserveVO> reserveList = paymentService.getResRid(mem_id);
-//		model.addAttribute("reserveList", reserveList);
     	log.info("paymentDTO2:" + paymentVO);
     	boolean result = paymentService.pay(paymentVO);
     	
@@ -68,61 +72,26 @@ public class CheckoutController {
     		session.setAttribute("loginInfo", loginInfo);
     	}
 //    	model.addAttribute("result", result);	
-//			rttr.addFlashAttribute("pay_result", String.valueOf(result));
+//		rttr.addFlashAttribute("pay_result", String.valueOf(result));
 
 	    return "redirect:/myPage/reservationList";
-//		return null;
+	    
     }
 	
-	
-//	@Controller
-//	@RequestMapping("/payment")
-//	public class PaymentController {
-//
-//	    @Autowired
-//	    private PaymentService paymentService;
-//
-//	    @Autowired
-//	    private ReserveService reserveService;  // Inject ReserveService for fetching reservation details
-//
-//	    @GetMapping("/process/{res_rid}")
-//	    public String processPayment(@PathVariable int res_rid, HttpSession session, Model model) {
-//	        // Check if the user is logged in
-//	        MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-//	        if (loginInfo == null) {
-//	            // Redirect to login page or handle the case when the user is not logged in
-//	            return "redirect:/login";
-//	        }
-//
-//	        // Fetch reservation details based on res_rid
-//	        ReserveVO reservation = paymentService.payNumber(res_rid);
-//
-//	        // Add reservation details to the model for rendering on the payment page
-//	        model.addAttribute("reservation", reservation);
-//
-//	        return "paymentPage"; // Replace with the actual payment page name
-//	    }
-//
-//	    @PostMapping("/process/{res_rid}")
-//	    public String completePayment(@PathVariable int res_rid, PaymentDTO paymentDTO, HttpSession session, Model model) {
-//	        // Validate payment and process it
-//	        boolean paymentResult = paymentService.processPayment(paymentDTO);
-//
-//	        if (paymentResult) {
-//	            boolean result = paymentService.pay(paymentDTO);
-//				log.info("result: " + result);
-//				model.addAttribute("result", result);	
-//				rttr.addFlashAttribute("pay_result", String.valueOf(result));
-//
-//	            return "redirect:/reservation/details/" + res_rid;
-//				
-//	        } else {
-//	            // Payment failed, handle accordingly
-//	            model.addAttribute("error", "Payment failed. Please try again.");
-//	            return "/payment"; // Redirect back to the payment page with an error message
-//	        }
-//	    }
-//	}
+    @PostMapping("/pay_cancel")
+    public String paycancelPost(@RequestParam("pay_res_rid") int pay_res_rid) {
+        
+    	log.info("결제 취소");
+        
+        // 결제 상태 변경 서비스 호출
+        paymentService.paymentCancle(pay_res_rid);
+        
+        
+        
+        // 결제 취소가 완료되면 다음 페이지로 리다이렉트
+        return "redirect:/myPage/reservationList";
+    }
+
 }
     
     

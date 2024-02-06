@@ -1,6 +1,7 @@
 package com.kh.rent.checkout.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
@@ -27,13 +28,19 @@ public interface PaymentMapper {
 	public List<ReserveVO> getResRid(String mem_id);
 	
 	// 비회원 번호 조회
-	public int getPayNonResRid(int pay_res_rid);
+//	public int getPayNonResRid(int pay_res_rid);
 	
 	// 예약상태 확인
 	public int reserveStatus(int pay_res_rid); 
 	
 	// 예약 금액
 	public int getTotalPay(int pay_res_rid);
+	
+	// 예약정보 조회하기
+	public List<ReserveVO> getReserveList(String mem_id);
+	
+	// 결제 상태 변경
+	public int paymentCancle(int pay_res_rid);
 	
 	
 }

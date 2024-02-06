@@ -1,7 +1,6 @@
 package com.kh.rent.checkout.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +31,10 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentMapper.getMemberPoint(mem_point);
 	}
 
-	@Override
-	public int getPayNonResRid(int pay_res_rid) {
-		return paymentMapper.getPayNonResRid(pay_res_rid);
-	}
+//	@Override
+//	public int getPayNonResRid(int pay_res_rid) {
+//		return paymentMapper.getPayNonResRid(pay_res_rid);
+//	}
 
 	@Transactional
 	@Override
@@ -76,11 +75,16 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentMapper.getTotalPay(pay_res_rid);
 	}
 
-//	@Override
-//	public List<ReserveVO> getResRid(String mem_id) {
-//		List<ReserveVO> list = paymentMapper.getResRid(mem_id);
-//		return list;
-//	}
+	@Override
+	public List<ReserveVO> getReserveList(String mem_id) {
+		List<ReserveVO> list = paymentMapper.getResRid(mem_id);
+		return list;
+	}
+
+	@Override
+	public int paymentCancle(int pay_res_rid) {
+		return paymentMapper.paymentCancle(pay_res_rid);
+	}
 
 
 
