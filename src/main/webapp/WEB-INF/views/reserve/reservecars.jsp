@@ -92,6 +92,14 @@
 	    	
 	    	var topBookPickDate = $("#top_book_pick_date").val();
 			var topBookOffDate = $("#top_book_off_date").val();
+			
+			// 대여일과 반납일 입력 값이 없는 경우
+	        if (!topBookPickDate || !topBookOffDate) {
+	            alert("날짜를 입력하세요.");
+	            return;
+	        }
+				
+			
 			var carIndex = $(this).parent().find(".car_index").val();
 			var totalPay = $(this).parent().find(".totalPay").text(); 
 			

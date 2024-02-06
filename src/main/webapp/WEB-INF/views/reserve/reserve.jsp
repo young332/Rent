@@ -524,6 +524,13 @@ $(function() {
 	    	
 	    	var topBookPickDate = $("#top_book_pick_date").val();
 			var topBookOffDate = $("#top_book_off_date").val();
+			
+			 // 대여일 및 반납일 값이 비어 있는지 확인
+	        if (topBookPickDate == '' || topBookOffDate == '') {
+	            alert("날짜를 입력하세요.");
+	            return; // 날짜를 입력하지 않았으므로 함수 종료
+	        }
+			
 			var carIndex = $(this).parent().prev().find(".car_index").val();
 			var totalPay = $(this).parent().prev().find(".totalPay").text(); 
 			

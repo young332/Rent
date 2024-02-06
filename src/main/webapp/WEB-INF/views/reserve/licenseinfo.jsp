@@ -62,13 +62,14 @@
 
 							</select>
 						</div>
-						<br> 면허번호<input type="text" id="licensenum"
+						<br> 
+						면허번호<input type="text" id="licensenum"
 							name="res_license_num" placeholder="면허번호를 입력해주세요.">
 
 						<div class="ex_box">
 							<p class="txt">
-								구면허증) 서울-01-123456-00 → 서울0112345600<br> 신면허증)
-								11-01-123456-00 → 110112345600
+								구면허증) 서울-01-123456-00 → 서울0112345600<br> 
+								신면허증) 11-01-123456-00 → 110112345600
 							</p>
 
 						</div>
@@ -98,13 +99,46 @@
 <script>
 $(function() {
 	$("#btnMemPay").click(function() {
+		
 		$("input[name=name]").remove();
 		$("input[name=tel]").remove();
 		$("input[name=birthdate]").remove();
+		 var non_license_type = $("select[name=res_license_type]").val().trim();
+		    var non_license_num = $("#licensenum").val().trim();
+		    // 입력 값이 비어 있는지 확인
+		    if (non_license_type === '' || non_license_num === '') {
+		        alert("입력값을 모두 입력하세요.");
+		        return; // 함수 종료
+		    }
+		    // 유효성 검사
+	        var validationResult = validateLicenseNumber(non_license_num);
+	        if (validationResult !== true) {
+	            alert(validationResult);
+	            return; // 함수 종료
+	        }
 		$("#frmLicense").submit();
+		
 	});
 	
 	$("#btnNonMemPay").click(function() {
+		// 입력된 값 가져오기
+	    var non_name = $("#name").val().trim();
+	    var non_tel = $("#tel").val().trim();
+	    var non_license_birth = $("#birthdate").val().trim();
+	    var non_license_type = $("select[name=res_license_type]").val().trim();
+	    var non_license_num = $("#licensenum").val().trim();
+		   // 입력 값이 비어 있는지 확인
+	    if (non_name === '' || non_tel === '' || non_license_birth === '' || non_license_type === '' || non_license_num === '') {
+	        alert("입력값을 모두 입력하세요.");
+	        return; // 함수 종료
+	    }
+	    // 유효성 검사
+        var validationResult = validateLicenseNumber(non_license_num);
+        if (validationResult !== true) {
+            alert(validationResult);
+            return; // 함수 종료
+        }
+
 	    var formData = {
     		non_name: $("#name").val(),
     		non_tel: $("#tel").val(),
@@ -116,8 +150,7 @@ $(function() {
 		
 		console.log("formData:",formData);
 		console.log("formData:",JSON.stringify(formData));
-		    
-
+		
 		    $.ajax({
 		        type: "POST",
 		        url: "/reserve/nonmeminsert",
@@ -132,7 +165,22 @@ $(function() {
 		    });
 	    
 	});
-
+	function validateLicenseNumber(licenseNumber) {
+        // 숫자만 입력했을 때는 12자까지 입력 가능
+        if (/^\d+$/.test(licenseNumber) && licenseNumber.length > 12) {
+            return "최대 12자까지 입력할 수 있습니다.";
+        }
+        // 한글과 숫자를 혼합하여 최대 12자까지 입력되도록 제한
+        if (!/^[가-힣0-9]{0,12}$/.test(licenseNumber)) {
+            return "면허번호를 올바르게 입력하세요.";
+        }
+    	 // 0~11자 입력했을 때는 12자 입력 요청
+        if (licenseNumber.length < 12) {
+            return "12자를 입력해주세요.";
+        }
+        return true; // 유효성 검사 통과
+    }
+	 
 });
 
 </script>
