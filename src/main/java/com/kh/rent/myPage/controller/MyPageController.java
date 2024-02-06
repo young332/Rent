@@ -25,6 +25,7 @@ import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
 import com.kh.rent.reserve.domain.ReserveVO;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -51,13 +52,15 @@ public class MyPageController {
 					.res_car_id(car_id)
 					.build();
 			String car_name = myPageService.getCarName(getCarNameDTO);
-			carNames[i] = car_name;
+			carNames[i] = car_name.toString();
 		} 
+		String carNamesToString = Arrays.toString(carNames);
+		
 		model.addAttribute("reserveList", reserveList);
-		model.addAttribute("carNames", carNames);
+		model.addAttribute("carNames", carNamesToString);
 		log.info("reservationListGet..");
 		log.info("reserveList" + reserveList);
-		log.info("carNames" + carNames);
+		log.info("carNamesToString" + carNamesToString);
 	}
 	
 	// 마이페이지
