@@ -2,6 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/include/top.jsp"%>
 
+<script>
+    function updateCarInfo() {
+        var selectedOption = $("#car_name option:selected");
+        var company = selectedOption.data("company");
+        var size = selectedOption.data("size");
+
+        $("#car_company").val(company);
+        $("#car_size").val(size);
+    }
+</script>
+
+
 <!-- [ content ] Start -->
 <div class="container-fluid flex-grow-1 container-p-y">
 	<h4 class="font-weight-bold py-3 mb-0">차량등록</h4>
@@ -25,9 +37,9 @@
 
 					<div class="form-group col-md-6 mb-3">
 						<label for="car_name" class="form-label">차량 이름</label> 
-						<select name="car_name" class="custom-select" id="car_name">
+						<select name="car_name" class="custom-select" id="car_name" onchange="updateCarInfo()">
 							<c:forEach var="car" items="${carNamelist}">
-								<option value="${car.code_name}">${car.code_name}</option>
+								<option value="${car.code_name}" data-company="${car.ref_1}" data-size="${car.ref_2}">${car.code_name}</option>
 							</c:forEach>
 						</select>
 					</div>
