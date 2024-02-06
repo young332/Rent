@@ -6,12 +6,12 @@
   
   <!-- 예약 입력 -->
   	<insert id="reserveinsert">
-  		insert into TBL_NONMEMBER
+  		insert into TBL_RESERVE
   			( res_rental_date, res_return_date, res_car_id, res_mem_id,
   			 res_license_type, res_license_num, res_totalpay)
   		values
-  			( str_to_date(#{res_rental_date}, '%Y-%m-%dT%H:%i'), 
-  			  str_to_date(#{res_return_date}, '%Y-%m-%dT%H:%i'),
+  			( str_to_date(#{res_rental_date}, '%Y-%m-%d %H:%i'), 
+  			  str_to_date(#{res_return_date}, '%Y-%m-%d %H:%i'),
   			  #{res_car_id},
   			  #{res_mem_id},
   			  #{res_license_type},

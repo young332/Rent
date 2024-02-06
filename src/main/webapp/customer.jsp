@@ -55,6 +55,12 @@ $(function(){
 		$("#reservationTitle-hidden, #breakdown-hidden, #insurance-hidden, #gascost-hidden").hide();
 	});
 	
+	$("#newyearPoint").click(function(){
+		console.log("클릭");
+		$("#modal-point-event").modal("show");
+	});
+	
+	
 });
 </script>     
     
@@ -342,7 +348,7 @@ $(function(){
     				<div class="carousel-car owl-carousel">
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
+		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url();">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">새해맞이 추가할인</a></h2>
@@ -353,11 +359,11 @@ $(function(){
 		    				</div>
     					</div>
     					<div class="item">
-    						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
-		    					</div>
+    						<div class="car-wrap rounded ftco-animate" id="signupCarWrap">
+		    					<div class="img rounded d-flex align-items-end"></div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">회원가입 시 포인트 무료충전</a></h2>
+		    					
+		    						<h2 class="mb-0"><a href="/login/signUp">회원가입 시 포인트 무료충전</a></h2>
 		    						<div class="d-flex mb-3">
 			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
 		    						</div>
@@ -389,6 +395,41 @@ $(function(){
     			</div>
     		</div>
     	</div>
+    	<!-- 이벤트 모달창 -->
+    	<div class="row">
+		<div class="col-md-12">
+			<div class="modal fade" id="modal-point-event" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								새해 맞이 100,000포인트 충전
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input type="radio" name="100,000point" id="100,000point"> 100,000point
+						</div>
+						<div class="modal-footer">
+							 
+							<button type="button" class="btn btn-primary">
+								확인
+							</button> 
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+    	<!-- //이벤트 모달창 끝 -->
     </section>
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>

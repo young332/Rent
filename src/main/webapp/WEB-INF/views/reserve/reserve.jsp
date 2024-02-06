@@ -97,11 +97,6 @@ div.left-box {
 	margin-left:20px;
     color: black;
 }
-#totalPay{
-	color:red;
-	font-size: 20px;
-	font-weight: bold;
-}
 
 
 </style>
@@ -120,7 +115,7 @@ div.left-box {
 	
 	
 <section class="ftco-section ftco-cart">
-	<form method="post" action="/reserve/reserveinsert">
+	<form method="get" action="/reserve/licenseinfo">
 			<div class="container">
 				<div class="row">
 					<div class="top-search-box" style="height: 65px;">
@@ -196,7 +191,7 @@ div.left-box {
 					
 		   			</div>
 		   			
-		   			<div id="cars-box" >
+		   			<div id="cars-box" class="cars-box">
 	    				<div class="right-box">
 								<div class="row">
 				    			<div class="col-md-12">
@@ -209,6 +204,7 @@ div.left-box {
 						    					<div class="text">
 						    						<h2 class="mb-0">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
+						    							<input type="text" class="cat car_index" value="${reserveDTO.car_index}" style="display: none;">
 							    						<span class="cat">${reserveDTO.car_company}</span>|
 							    						<span class="cat">${reserveDTO.car_size}</span>|
 							    						<span class="cat">${reserveDTO.car_fuel}</span>|
@@ -227,15 +223,19 @@ div.left-box {
 													    </c:if>
 													</c:if>
 
-							    						<p class="price ml-auto"><span id="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
-							    						<p class="price ml-auto">총요금 <span id="totalPay" ></span>원</p>
+							    						<p class="price ml-auto"><span class="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
+							    						<p class="price ml-auto">총요금<span class="totalPay" style="color: red; font-weight: bold; font-size: 20px;"></span>원</p>
+
 						    						</div>
-						    						<p class="d-flex mb-0 d-block" id="btn_reserve"><a href="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1">예약하기</a></p>
+						    						<p class="d-flex mb-0 d-block" >
+						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1 btn_reserve">예약하기</button>
+						    						</p>
 						    					</div>
 						    				</div>
 				    					</div>
 				    					</c:forEach>
 				    				</div>
+				    				
 				    			</div>
 				    		</div>
 						</div>
@@ -244,7 +244,16 @@ div.left-box {
     		
 			</form>
 		</section>
-     
+		
+		
+ <div style="display:none">
+	<form id="frmReserve" action="/reserve/licenseinfo" method="get">
+		<input type="hidden" name="top_book_pick_date">
+		<input type="hidden" name="top_book_off_date">
+		<input type="hidden" name="car_index">
+		<input type="hidden" name="totalPay">
+	</form>
+</div>    
 
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
@@ -370,59 +379,35 @@ $(function() {
 		});
 
 	 //차들 총 가격
+	$(document).ready(function () {
+	    function calculateTotalCost() {
+	        $(".item").each(function () {
+	            var hourlyRate = parseFloat($(this).find(".hourPay").text());
+	            var pickDate = new Date($("#top_book_pick_date").val());
+	            var offDate = new Date($("#top_book_off_date").val());
+	            var timeDiff = offDate - pickDate;
+	
+	            var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+	            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+	
+	            var totalCost = hours * hourlyRate + (minutes / 60) * hourlyRate;
+	
+	            var roundedTotalCost = Math.round(totalCost);
+	            var formattedTotalCost = roundedTotalCost.toLocaleString('en-US', { minimumFractionDigits: 0 });
+	
+	            $(this).find(".totalPay").text(formattedTotalCost);
+	        });
+	
+	      
+	    }
+	
+	    $("#top_book_pick_date, #top_book_off_date").change(function () {
+	        calculateTotalCost();
+	    });
+	
+	    calculateTotalCost();
+	});
 
-		$(document).ready(function() {
-		    function calculateTotalCost() {
-		        var pickDate = new Date($("#top_book_pick_date").val());
-		        var offDate = new Date($("#top_book_off_date").val());
-		
-		        var timeDiff = offDate - pickDate;
-		        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
-		
-		        $(".item").each(function() {
-		            var hourlyRate = parseFloat($(this).find("#hourPay").text());
-		            var totalCost = hours * hourlyRate;
-		            $(this).find("#totalPay").text(totalCost);
-		        });
-		
-		        // Asynchronous update
-		        updateTotalCostOnServer();
-		    }
-		
-		    $("#top_book_pick_date, #top_book_off_date").change(function() {
-		        calculateTotalCost();
-		    });
-		
-		    calculateTotalCost();
-		
-		    function updateTotalCostOnServer() {
-		        var pickDate = $("#top_book_pick_date").val();
-		        var offDate = $("#top_book_off_date").val();
-		
-		        // Additional data to send to the server if needed
-		        var additionalData = {
-		            // Add any additional data here if needed
-		        };
-		
-		        $.ajax({
-		            url: '/reserve/reservecars', 
-		            type: 'GET', 
-		            data: {
-		                pickDate: pickDate,
-		                offDate: offDate,
-		                additionalData: additionalData
-		            },
-		            success: function(response) {
-		                console.log(response);
-		            },
-		            error: function(error) {
-		                console.error(error);
-		            }
-		        });
-		    }
-		});
-		
-		
 
 
 	 
@@ -439,78 +424,79 @@ $(function() {
 	 
 	 //비동기방식으로 체크박스 값보내서 체크된거만 화면에 보이게 하기
 	 $(function() {
-    
-
-    
-    function updateData() {
-        var checkedValues = "";
-        var carSizeValues = "";
-        var carFuelValues = "";
-        var carCompanyValues = "";
-
-        $("input[name='car_size']:checked").each(function() {
-            carSizeValues = $(this).val();
-        });
-
-        $("input[name='car_fuel']:checked").each(function() {
-            carFuelValues = $(this).val();
-        });
-
-        $("input[name='car_company']:checked").each(function() {
-            carCompanyValues = $(this).val();
-        });
-
-        $("input[name='otheroptions']:checked").each(function() {
-            checkedValues += $(this).val() + ",";
-        });
-
-        carSizeValues = carSizeValues.replace(/,$/, "");
-        carFuelValues = carFuelValues.replace(/,$/, "");
-        carCompanyValues = carCompanyValues.replace(/,$/, "");
-        checkedValues = checkedValues.replace(/,$/, "");
-
-        var sendData = {
-            "car_size": carSizeValues,
-            "car_fuel": carFuelValues,
-            "car_company": carCompanyValues,
-            "op_cam": $("input[name='otheroptions'][value='후방카메라']").is(":checked") ? "Y" : "",
-            "op_bt": $("input[name='otheroptions'][value='블루투스']").is(":checked") ? "Y" : "",
-            "op_navi": $("input[name='otheroptions'][value='내비게이션']").is(":checked") ? "Y" : "",
-            "op_carseat": $("input[name='otheroptions'][value='카시트']").is(":checked") ? "Y" : ""
-        };
-
-        console.log('var sendData =', sendData);
-
-        $.ajax({
-            url: '/reserve/reservecars',
-            type: 'GET',
-            contentType: "application/json",
-            data: sendData,
-            success: function(rData) {
-                $("#cars-box").html(rData);
-                
-                setFooterTop();
-                
-                
-            },
-        });
-    }
-
-    
-    $("input[type='checkbox']").change(function() {
-        updateData();
-       
-    });
-
-    
-    $("#btnreset").click(function() {
-        $(":checkbox").prop("checked", false);
-        updateData();
-       
-    });
-
-  
-});
+	    
+	
+	    
+	    function updateData() {
+	        var checkedValues = "";
+	        var carSizeValues = "";
+	        var carFuelValues = "";
+	        var carCompanyValues = "";
+	
+	        $("input[name='car_size']:checked").each(function() {
+	            carSizeValues = $(this).val();
+	        });
+	
+	        $("input[name='car_fuel']:checked").each(function() {
+	            carFuelValues = $(this).val();
+	        });
+	
+	        $("input[name='car_company']:checked").each(function() {
+	            carCompanyValues = $(this).val();
+	        });
+	
+	        $("input[name='otheroptions']:checked").each(function() {
+	            checkedValues += $(this).val() + ",";
+	        });
+	
+	        carSizeValues = carSizeValues.replace(/,$/, "");
+	        carFuelValues = carFuelValues.replace(/,$/, "");
+	        carCompanyValues = carCompanyValues.replace(/,$/, "");
+	        checkedValues = checkedValues.replace(/,$/, "");
+	
+	        var sendData = {
+	            "car_size": carSizeValues,
+	            "car_fuel": carFuelValues,
+	            "car_company": carCompanyValues,
+	            "op_cam": $("input[name='otheroptions'][value='후방카메라']").is(":checked") ? "Y" : "",
+	            "op_bt": $("input[name='otheroptions'][value='블루투스']").is(":checked") ? "Y" : "",
+	            "op_navi": $("input[name='otheroptions'][value='내비게이션']").is(":checked") ? "Y" : "",
+	            "op_carseat": $("input[name='otheroptions'][value='카시트']").is(":checked") ? "Y" : ""
+	        };
+	
+	        console.log('var sendData =', sendData);
+	
+	        $.ajax({
+	            url: '/reserve/reservecars',
+	            type: 'GET',
+	            contentType: "application/json",
+	            data: sendData,
+	            success: function(rData) {
+	                $("#cars-box").html(rData);
+	             // console.log(rData);
+	                setFooterTop();
+	                
+	                
+	            },
+	        });
+	    }
+	
+	    
+	    $("input[type='checkbox']").change(function() {
+	        updateData();
+	       
+	    });
+	
+	    
+	    $(".btn_reserve").click(function() {
+	        $(":checkbox").prop("checked", false);
+	       
+	        updateData();
+	       
+	    });
+	
+	  
+	});
 
 
 
@@ -527,6 +513,36 @@ $(function() {
 	}
 	
 	setFooterTop();
+	
+	
+
+	    $(".btn_reserve").click(function() {
+	    	console.log("reserver button");
+	    	var url = $(this).attr("data-url");
+	    	
+	    	var topBookPickDate = $("#top_book_pick_date").val();
+			var topBookOffDate = $("#top_book_off_date").val();
+			var carIndex = $(this).parent().prev().find(".car_index").val();
+			var totalPay = $(this).parent().prev().find(".totalPay").text(); 
+			
+	    	
+			console.log("topBookPickDate:",topBookPickDate);
+			console.log("topBookOffDate:",topBookOffDate);
+			console.log("carIndex:",carIndex);
+			console.log("totalPay:",totalPay);
+			
+			var frmReserve = $("#frmReserve");
+			frmReserve.find("input[name=top_book_pick_date]").val(topBookPickDate.replace('T', ' '));
+			frmReserve.find("input[name=top_book_off_date]").val(topBookOffDate.replace('T', ' '));
+			frmReserve.find("input[name=car_index]").val(carIndex);
+			frmReserve.find("input[name=totalPay]").val(totalPay);
+			
+			
+			frmReserve.submit();
+	    	//sendDataToServer();
+	    	//return false;
+	    });
+	
 	
 	
 	 

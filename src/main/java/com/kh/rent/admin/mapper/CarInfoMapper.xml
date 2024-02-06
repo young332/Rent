@@ -21,7 +21,7 @@
 	</insert>
 
 	<select id="selectCarName" resultType="com.kh.rent.admin.domain.CommonCodeVO">
-		SELECT code_name FROM rent001.TBL_COMMON_CODE WHERE PARENT_CODE_ID = 'CAR_TYPE' AND USE_YN = 'Y' ORDER BY ORDERBY
+		SELECT code_name, ref_1, ref_2 FROM rent001.TBL_COMMON_CODE WHERE PARENT_CODE_ID = 'CAR_TYPE' AND USE_YN = 'Y' ORDER BY ORDERBY
 	</select>
 	
 	<select id="selectCarInfo" resultType="com.kh.rent.admin.domain.CarInfoVO">
@@ -30,54 +30,7 @@
 		ON A.file_id = B.file_id 
 	</select>
 
-	
-	<!-- <select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-	select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-	where parent_menu_id = '@'
-	</select>
-	
-	<select id="getSubMenuAll" resultType="com.kh.rent.admin.domain.MenuVO">
-		 select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-		where not parent_menu_id = '@' 
-		
- 	select menu_id
-	 ,parent_menu_id
-     ,menu_type
-     ,menu_name
-     ,menu_url
-     ,use_yn
-     ,orderby 
-	from TBL_MENU
-	where parent_menu_id = #{menu_id}
-		use_yn = 'Y' and menu_type = '1'
-	order by orderby 
 
-	</select>
-	
-	<select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE menu_id = #{menu_id}
-	</select>
-	
-	<select id="getSubMenu" parameterType="string" resultType="com.kh.rent.admin.domain.MenuVO">
-    	SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE parent_menu_id = #{parent_menu_id}
-	</select>
-	
-	<update id="updateMenu">
-		update TBL_MENU set
-			parent_menu_id = #{parent_menu_id},
-			menu_type = #{menu_type},
-			menu_name = #{menu_name},
-			menu_depth = #{menu_depth},
-			menu_url = #{menu_url},
-			orderby = #{orderby},
-			use_yn = #{use_yn}
-		where menu_id = #{menu_id}
-	</update>
-	
-	<delete id="delete">
-		delete from TBL_MENU
-		where menu_id = #{menu_id} 
-	</delete> -->
 
 	
 	
