@@ -51,7 +51,7 @@ public class MenuController {
 	@GetMapping(value = "/submenus/{parentMenu}" , produces = {MediaType.APPLICATION_JSON_VALUE} )
     @ResponseBody
     public List<MenuVO> getSubMenus(@PathVariable("parentMenu") String parentMenu, Model model) {
-		List<MenuVO> subMenuList = menuService.getSubMenu(parentMenu);
+		List<MenuVO> subMenuList = menuService.getSubMenuYN(parentMenu);
 		return subMenuList;
     }
 	
