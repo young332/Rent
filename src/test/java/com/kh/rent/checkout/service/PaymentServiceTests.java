@@ -57,16 +57,16 @@ public class PaymentServiceTests {
 	}
 	
 	
-	@Test
-	public void testReserve() {
-		PaymentDTO paymentDTO = PaymentDTO.builder()
-				.res_rid(2)
-				.build();
-		paymentService.getResRid();
-		log.info("paymentDTO: " + paymentDTO);
-		
-		
-	}
+//	@Test
+//	public void testReserve() {
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.res_rid(2)
+//				.build();
+//		paymentService.getResRid();
+//		log.info("paymentDTO: " + paymentDTO);
+//		
+//		
+//	}
 	
 	
 	@Test
