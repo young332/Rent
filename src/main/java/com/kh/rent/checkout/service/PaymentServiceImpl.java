@@ -6,13 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kh.rent.admin.domain.CarInfoVO;
-import com.kh.rent.checkout.domain.PaymentDTO;
-import com.kh.rent.checkout.domain.PaymentVO;
-import com.kh.rent.checkout.mapper.PaymentMapper;
-import com.kh.rent.reserve.domain.LicenseDTO;
-import com.kh.rent.reserve.domain.ReserveVO;
 
+import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.mapper.PaymentMapper;
+import com.kh.rent.reserve.domain.ReserveVO;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -22,29 +19,12 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentMapper paymentMapper; 
 	
-<<<<<<< HEAD
-	@Override
-	public boolean addPayment(PaymentDTO paymentDTO) {
-		int count = paymentMapper.addPaymentRecord(paymentDTO);
-		return (count == 1) ? true : false;
-		
-	}
-=======
 //	@Override
-//	public boolean addPayment(PaymentVO paymentVO) {
-//		int count = paymentMapper.addPaymentRecord(paymentVO);
+//	public boolean addPayment(PaymentDTO paymentDTO) {
+//		int count = paymentMapper.addPaymentRecord(paymentDTO);
 //		return (count == 1) ? true : false;
 //		
 //	}
-
-//	@Override
-//	public int deductPayment(PaymentDTO paymentDTO) {
-//		
-//		return paymentMapper.deductPayment(PaymentDTO paymentDTO);
-//		
-//	}
-//	
->>>>>>> branch 'simyoon' of https://github.com/young332/Rent.git
 
 	@Override
 	public int getMemberPoint(int mem_point) {
