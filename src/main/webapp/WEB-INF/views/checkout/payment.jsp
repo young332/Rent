@@ -211,8 +211,14 @@ ${reserveList}
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">운전자 정보</h4>
+<<<<<<< HEAD
         <form id="checkout_form" class="needs-validation" action="/checkout/payment" method="POST">
         	<input type="hidden" name="pay_res_rid" id="pay_res_rid">
+=======
+        <form class="checkout_form" action="/payment" method="POST">
+        	<!-- 결제 번호 -->
+			<input type="hidden" id="pay_res_rid" name="pay_res_rid">
+>>>>>>> branch 'simyoon' of https://github.com/young332/Rent.git
           <div class="row g-3">
             <div class="col-sm-12">
               <label for="name" class="form-label">이름</label>
@@ -221,7 +227,6 @@ ${reserveList}
              
               </div><br>
             </div>
-
 
             <div class="col-12">
               <label for="text" class="form-label">연락처<span class="text-muted"></span></label>
@@ -393,9 +398,8 @@ int min = 5000;
     </div>
   </main>
 </div>
-  
+
    <script>
-   
 	// 변수 선언 및 값 할당
    var mem_id = '${memberVO.mem_id}';
    
@@ -491,6 +495,7 @@ int min = 5000;
       
     });
 
+		
    </script>
    
 </body>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.service.PaymentService;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.reserve.domain.LicenseDTO;
@@ -36,16 +37,20 @@ public class CheckoutController {
 	
 	@GetMapping("/payment")
 	public void paymentGet(HttpSession session, Model model) {
-		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");	
+
+		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
 		List<ReserveVO> reserveList = paymentService.getResRid(mem_id);
 		model.addAttribute("reserveList", reserveList);
+		log.info("paymentGet");
 		log.info("reserveList" + reserveList);
-		log.info("payment");
 		
+//		List<PaymentDTO> paymentList = paymentService.getPaymentInfo(reserveVO.getRes_mem_id());	
+//		log.info("paymentList: " + paymentList);
+//		log.info("reserveList: " + reserveList);
+				
 	}
-	
-	
+
     @PostMapping("/payment")
 	public String paymentPost(PaymentDTO paymentDTO, Model model,
 	                                 HttpSession session,
@@ -65,11 +70,7 @@ public class CheckoutController {
 		rttr.addFlashAttribute("pay_result", String.valueOf(result));
 
 	    return "redirect:/myPage/reservationList";
-	}
-    
-    @GetMapping("/point")
-    public void point() {
- 
-		log.info("point");
-	}
+    }
 }
+    
+    

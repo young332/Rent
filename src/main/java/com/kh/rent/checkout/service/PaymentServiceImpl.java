@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
 import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
@@ -21,12 +22,29 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentMapper paymentMapper; 
 	
+<<<<<<< HEAD
 	@Override
 	public boolean addPayment(PaymentDTO paymentDTO) {
 		int count = paymentMapper.addPaymentRecord(paymentDTO);
 		return (count == 1) ? true : false;
 		
 	}
+=======
+//	@Override
+//	public boolean addPayment(PaymentVO paymentVO) {
+//		int count = paymentMapper.addPaymentRecord(paymentVO);
+//		return (count == 1) ? true : false;
+//		
+//	}
+
+//	@Override
+//	public int deductPayment(PaymentDTO paymentDTO) {
+//		
+//		return paymentMapper.deductPayment(PaymentDTO paymentDTO);
+//		
+//	}
+//	
+>>>>>>> branch 'simyoon' of https://github.com/young332/Rent.git
 
 	@Override
 	public int getMemberPoint(int mem_point) {

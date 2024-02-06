@@ -3,8 +3,6 @@ package com.kh.rent.checkout.mapper;
 import java.util.List;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
-import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 public interface PaymentMapper {
