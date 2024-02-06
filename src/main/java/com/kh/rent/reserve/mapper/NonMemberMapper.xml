@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
@@ -23,6 +24,6 @@
 	  <select id="getNonlist" resultType="com.kh.rent.reserve.domain.NonMemberVO">
 	  		select * from TBL_NONMEMBER
 	  </select>
-  	
-  	
+
+
   </mapper>

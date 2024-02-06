@@ -53,4 +53,12 @@
  		where res_mem_id = #{mem_id}
   	</select>
 	
+	<!-- 예약번호로 차종 조회하기 -->
+	<select id="getCarName" resultType="String">
+		select ci.car_name
+		from rent001.TBL_RESERVE as r
+		join rent001.TBL_CAR_INFO as ci on r.res_car_id = ci.car_index
+		where r.res_rid = #{res_rid} and r.res_car_id = #{res_car_id};
+	</select>
+	
 </mapper>

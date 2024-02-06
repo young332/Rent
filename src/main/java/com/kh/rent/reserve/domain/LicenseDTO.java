@@ -1,3 +1,4 @@
+
 package com.kh.rent.reserve.domain;
 
 
@@ -20,3 +21,5 @@ public class LicenseDTO {
 	private String res_license_num;
 	
 }
+
+

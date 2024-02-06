@@ -1,3 +1,4 @@
+
 package com.kh.rent.reserve.mapper;
 
 import java.util.List;
@@ -8,3 +9,4 @@ public interface NonMemberMapper {
 	public void nonmeminsert(NonMemberVO nonmemberVO);
 	public List<NonMemberVO> getNonlist();
 }
+

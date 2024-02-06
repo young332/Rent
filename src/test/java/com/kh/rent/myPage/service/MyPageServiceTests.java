@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
@@ -88,6 +89,17 @@ public class MyPageServiceTests {
 	public void testReserveList() {
 		List<ReserveVO> list = myPageService.getReserveList("MEMBER02");
 		log.info("Reservelist:" + list);
+	}
+	
+	// 예약번호로 차종 조회하기
+	@Test
+	public void testGetCarName() {
+		GetCarNameDTO getCarNameDTO = GetCarNameDTO.builder()
+				.res_rid(4)
+				.res_car_id("3")
+				.build();
+		String car_name = myPageService.getCarName(getCarNameDTO);
+		log.info("car_name:" + car_name);
 	}
 
 }

@@ -122,13 +122,17 @@
 		        $("#SubMenuModal #sub_menu_name").val(menu_name);
 		        $("#SubMenuModal #sub_orderby").val(orderby);
 		        $("#SubMenuModal #sub_menu_url").val(menu_url);
-
+		        
 		        if(use_yn == "Y"){
-		        	$('#SubMenuModal input[name="use_yn"]').attr('checked', 'checked');
+		        	$('#SubMenuModal .rdoY').prop('checked', true);
+		        	$('#SubMenuModal .rdoN').prop('checked', false);
 		        }
 		        if(use_yn == "N"){
-		        	$('#SubMenuModal input[name="use_yn"]').attr('checked', 'checked');
+		        	$('#SubMenuModal .rdoY').prop('checked', false);
+		        	$('#SubMenuModal .rdoN').prop('checked', true);
 		        }
+		        
+		        
 		        updateModalFooter(curMode);
 		        
 	        }  else{
@@ -418,22 +422,22 @@
 								<div class="clearfix"></div>
 							</div>
 							<fieldset class="form-group only-edit">
-			                <div class="row">
-		                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
-			                    <div class="col-sm-10">
-			                        <div class="custom-controls-stacked">
-			                            <label class="custom-control custom-radio">
-			                                <input name="use_yn" value="Y" type="radio" class="custom-control-input rdoY" checked>
-			                                <span class="custom-control-label">사용</span>
-			                            </label>
-			                            <label class="custom-control custom-radio">
-			                                <input name="use_yn" value="N" type="radio" class="custom-control-input rdoN" >
-			                                <span class="custom-control-label">미사용</span>
-			                            </label>
-			                        </div>
-			                    </div>
-		                	</div>
-			            </fieldset>
+				                <div class="row">
+			                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
+				                    <div class="col-sm-10">
+				                        <div class="custom-controls-stacked">
+				                            <label class="custom-control custom-radio">
+				                                <input name="use_yn" value="Y" type="radio" class="custom-control-input rdoY" checked>
+				                                <span class="custom-control-label">사용</span>
+				                            </label>
+				                            <label class="custom-control custom-radio">
+				                                <input name="use_yn" value="N" type="radio" class="custom-control-input rdoN" >
+				                                <span class="custom-control-label">미사용</span>
+				                            </label>
+				                        </div>
+				                    </div>
+			                	</div>
+				            </fieldset>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary btnAdd" id="btnTopAdd">등록</button>
 								<button type="button" class="btn btn-secondary"
@@ -467,7 +471,7 @@
 						<form action="/admin/menu/subMenuAdd" method="post" >
 							<input type="hidden" id="sub_parent_menu_id" name="parent_menu_id" value="">
 							<input type="hidden" name="menu_depth" value="2" id="sub_menu_depth">
-							<input type="hidden" name="use_yn" value="Y" id="sub_use_yn">
+							<!-- <input type="hidden" name="use_yn" value="Y" id="sub_use_yn"> -->
 							
 							<div class="form-row">
 								<div class="form-group col-md-6">
@@ -500,7 +504,23 @@
 								<input type="text" class="form-control" placeholder="메뉴 URL" name="menu_url" id="sub_menu_url">
 								<div class="clearfix"></div>
 							</div>
-						
+							<fieldset class="form-group only-edit">
+				                <div class="row">
+			                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
+				                    <div class="col-sm-10">
+				                        <div class="custom-controls-stacked">
+				                            <label class="custom-control custom-radio">
+				                                <input name="use_yn" value="Y" type="radio" class="custom-control-input rdoY" checked>
+				                                <span class="custom-control-label">사용</span>
+				                            </label>
+				                            <label class="custom-control custom-radio">
+				                                <input name="use_yn" value="N" type="radio" class="custom-control-input rdoN" >
+				                                <span class="custom-control-label">미사용</span>
+				                            </label>
+				                        </div>
+				                    </div>
+			                	</div>
+				            </fieldset>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary btnAdd" >등록</button>
 								<button type="button" class="btn btn-secondary"
