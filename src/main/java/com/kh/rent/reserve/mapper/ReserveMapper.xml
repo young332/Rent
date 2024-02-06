@@ -26,7 +26,7 @@
   	
   	</select>
   	
-  	 <!-- car_info 리스트 -->
+  	 <!-- car_info 리스트+소영씨 이미지추가 -->
      <select id="getCarInfo" resultType="com.kh.rent.reserve.domain.ReserveDTO">
             <!-- select * from TBL_CAR_INFO  -->
            SELECT 
