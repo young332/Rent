@@ -4,10 +4,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
+<!-- 테이블 CSS -->
+<%@ include file="/WEB-INF/views/include/reservationListStyle.jsp" %>
+
 <script>
-//금액 자릿수 표시하기(콤마)
+// 금액 자릿수 표시하기(콤마)
 function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// 결제 버튼 - 결제페이지 이동
+function pay(reservationId) {
+    window.location.href = '/checkout/payment?reservationId=' + reservationId;
 }
 
 $(document).ready(function() {
@@ -17,7 +25,14 @@ $(document).ready(function() {
 	        $(this).text(formatNumberWithCommas(totalpay));
 	    }
    	});
+	
+	$(".carName").each(function(i) {
+		var carNamesArray = '${carNames}'.slice(1, -1).split(',');
+        $(this).text(carNamesArray[i]);
+    });
+	
 });
+
 </script>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -31,7 +46,8 @@ $(document).ready(function() {
         </div>
       </div>
     </section>
-${reserveList}
+<%-- ${reserveList} --%>
+<%-- ${carNames} --%>
     <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
@@ -55,25 +71,36 @@ ${reserveList}
 		          <%-- 예약내역이 있는 경우 --%>
 					<div>
 						<c:if test="${not empty reserveList}">
-				            <table class="table" style="text-align:center;">
+				            <table>
 				              <thead>
-				                <tr>
-				                  <th>예약번호</th>
-				                  <th>이용기간</th>
-				                  <th>차종</th>
-				                  <th>금액</th>
-				                  <th>예약상태</th>
-				                </tr>
-				              </thead>
+							  <tr>
+							    <th rowspan="2">예약번호</th>
+							    <th colspan="2">대여기간</th>
+							    <th rowspan="2">차종</th>
+							    <th rowspan="2">결제금액</th>
+							    <th rowspan="2">예약상태</th>
+							    <th rowspan="2">취소</th>
+							  </tr>
+							  <tr>
+							    <th>대여시작일</th>
+							    <th>대여종료일</th>
+							  </tr>
+							</thead>
 				              <tbody>
 				                <%-- 예약 목록을 반복하여 출력 --%>
 				                <c:forEach var="reservation" items="${reserveList}">
 				                  <tr>
 				                    <td>${reservation.res_rid}</td>
-				                    <td>${reservation.res_rental_date} ~ ${reservation.res_return_date}</td>
-				                    <td>${reservation.res_license_type}(수정하기)</td>
+				                    <td>${reservation.res_rental_date}</td>
+				                    <td class="res_return_date">${reservation.res_return_date}</td>
+				                    <td class="carName"></td>
 				                    <td class="totalpay">${reservation.res_totalpay}</td>
-				                    <td>${reservation.res_status}</td>
+				                    <td class="res_status">${reservation.res_status}
+				                    <c:if test="${reservation.res_status eq '예약중'}">
+								    <button onclick="pay(${reservation.res_rid})">결제</button>
+									</c:if>
+									</td>
+				                    <td></td>
 				                  </tr>
 				                </c:forEach>
 				              </tbody>
