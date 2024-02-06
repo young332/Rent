@@ -33,7 +33,7 @@
 			<div class="col-md-12 ftco-animate">
 				<h4>●운전자(예약자) 정보를 입력해 주세요</h4>
 				<h6>입력한 정보는 안전하게 보호할게요</h6>
-				<form role="form" action="/reserve/reserveinsert" method="post">
+				<form id="frmLicense" role="form" action="/reserve/reserveinsert" method="post">
 					<div class="jumbotron card card-block"
 						style="background-color: white;">
 						<p>기본정보*</p>
@@ -53,19 +53,17 @@
 						</div>
 						<br>
 						<div class="form_row select_box ">
-							<label class="form_label">면허종류</label><br> <select>
-								<optionvalue="">
-								<option>면허종류를 선택해주세요
-								</optionvalue>
-								</option>
+							<label class="form_label">면허종류</label><br> <select
+								name="res_license_type">
+								<option value="">면허종류를 선택해주세요</option>
 								<option value="2종보통">2종보통</option>
 								<option value="1종보통">1종보통</option>
 								<option value="1종대형">1종대형</option>
 
 							</select>
 						</div>
-						<br> 면허번호<input type="text" id="licensenum" name="licensenum"
-							placeholder="면허번호를 입력해주세요.">
+						<br> 면허번호<input type="text" id="licensenum"
+							name="res_license_num" placeholder="면허번호를 입력해주세요.">
 
 						<div class="ex_box">
 							<p class="txt">
@@ -77,8 +75,10 @@
 						<br>
 
 						<p>
-							<a class="btn btn-success btn-large" href="/checkout/payment">비회원 현금결제</a> 
-							<a class="btn btn-info btn-large" href="/checkout/payment">회원전용 결제</a>
+							<button type="button" class="btn btn-info btn-large"
+								name="paymentType" id="btnNonMemPay" value="non-member" data-url="/localhost">비회원예약</button>
+							<button type="button" id="btnMemPay" class="btn btn-success btn-large"
+								name="paymentType" value="member">회원전용 결제</button>
 						</p>
 
 
@@ -94,3 +94,42 @@
 
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp"%>
+
+<script>
+$(function() {
+	$("#btnMemPay").click(function() {
+		$("input[name=name]").remove();
+		$("input[name=tel]").remove();
+		$("input[name=birthdate]").remove();
+		$("#frmLicense").submit();
+	});
+	
+	$("#btnNonMemPay").click(function() {
+	    var formData = {
+	        name: $("#name").val(),
+	        tel: $("#tel").val(),
+	        birthdate: $("#birthdate").val(),
+	        res_license_type: $("select[name=res_license_type]").val(),
+	        res_license_num: $("#licensenum").val()
+	    };
+
+		    console.log(formData.name);
+		    console.log(formData.tel);
+		    console.log(formData.birthdate);
+		    console.log(formData.res_license_type);
+		    console.log(formData.res_license_num);
+
+	    $.ajax({
+	        type: "POST",
+	        url: "/reserve/nonmeminsert",
+	        contentType: "application/json",
+	        data: JSON.stringify(formData),
+	        success: function(rData) {
+	            console.log(rData);
+	        }
+	    });
+	});
+
+});
+
+</script>
