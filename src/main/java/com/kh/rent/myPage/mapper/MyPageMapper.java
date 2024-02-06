@@ -30,5 +30,8 @@ public interface MyPageMapper {
 	
 	// 예약번호로 차종 조회하기
 	public String getCarName(GetCarNameDTO getCarNameDTO);
+	
+	// 결제정보 조회하기
+//	public List<>
 }
 
