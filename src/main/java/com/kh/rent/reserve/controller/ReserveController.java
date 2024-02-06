@@ -150,11 +150,14 @@ public class ReserveController {
 
 	    return "redirect:/myPage/reservationList";
 	}
-
+	
+	
 	
 	@PostMapping("/nonmeminsert")
 	public String Nonmeminsert(@RequestBody NonMemberVO nonMemberVO, HttpSession session) {
 
+		log.info("nonMemberVO:" + nonMemberVO);
+		
 	    ReserveInfoDTO reserveInfoDTO = (ReserveInfoDTO) session.getAttribute("reserveInfoDTO");
 	    String topbookoffdate = (String) reserveInfoDTO.getTop_book_off_date();
 	    String topbookpickdate = (String) reserveInfoDTO.getTop_book_pick_date();
@@ -168,10 +171,13 @@ public class ReserveController {
 	    nonMemberVO.setNon_car_id(carindex);
 	    nonMemberVO.setNon_totalpay(Integer.parseInt(totalPay));
 
+	    log.info("nonMemberVO2:" + nonMemberVO);
+	    
 	    nonMemberService.nonmeminsert(nonMemberVO);
 
-	    return "redirect:/localhost";
+	    return "success";
 	}
+
 
 
 
