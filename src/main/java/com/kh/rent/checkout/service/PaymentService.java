@@ -27,11 +27,7 @@ public interface PaymentService {
 	// 포인트 조회
 	public int getMemberPoint(int mem_point);
 	
-<<<<<<< HEAD
-	// 회원번호 조회
-=======
 	// 예약 번호 조회
->>>>>>> branch 'simyoon' of https://github.com/young332/Rent.git
 	public List<ReserveVO> getResRid(String mem_id);
 	
 	// 비회원 번호 조회
