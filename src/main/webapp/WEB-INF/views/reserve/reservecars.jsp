@@ -11,24 +11,24 @@
 						style="background-image: url(/resources/carbook-master/images/hyun1.jpg);">
 					</div>
 					<div class="text">
-						<h2 class="mb-0">${vo.car_name}</h2>
+						<h2 class="mb-0" style="font-weight: bold; font-size: 30px;">${vo.car_name}</h2>
 						<div class="d-flex mb-3">
 							<input type="text" class="cat car_index" value="${vo.car_index}" style="display: none;">
-							<span class="cat">${vo.car_company}</span>|
-							 <span class="cat">${vo.car_size}</span> |
-							 <span class="cat">${vo.car_fuel}</span> |
+							<span class="cat" style="color: black;">${vo.car_company}</span>|
+							 <span class="cat" style="color: black;">${vo.car_size}</span> |
+							 <span class="cat" style="color: black;">${vo.car_fuel}</span> |
 							<c:if test="${vo.op_carseat eq 'Y' || vo.op_navi eq 'Y' || vo.op_bt eq 'Y' || vo.op_cam eq 'Y'}">
 						    <c:if test="${vo.op_carseat eq 'Y'}">
-						        <span class="cat">카시트</span>|
+						        <span class="cat" style="color: black;">카시트</span>|
 						    </c:if>
 						    <c:if test="${vo.op_navi eq 'Y'}">
-						        <span class="cat">내비게이션</span>|
+						        <span class="cat" style="color: black;">내비게이션</span>|
 						    </c:if>
 						    <c:if test="${vo.op_bt eq 'Y'}">
-						        <span class="cat">블루투스</span>|
+						        <span class="cat" style="color: black;">블루투스</span>|
 						    </c:if>
 						    <c:if test="${vo.op_cam eq 'Y'}">
-						        <span class="cat">후방 카메라</span>
+						        <span class="cat" style="color: black;">후방 카메라</span>
 						    </c:if>
 						</c:if>
 						
@@ -62,7 +62,11 @@
 	
 	            var hours = Math.floor(timeDiff / (1000 * 60 * 60));
 	            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-	
+				
+	         // NaN 체크하여 0으로 대체
+	            hours = isNaN(hours) ? 0 : hours;
+	            minutes = isNaN(minutes) ? 0 : minutes;
+	            
 	            var totalCost = hours * hourlyRate + (minutes / 60) * hourlyRate;
 	
 	            var roundedTotalCost = Math.round(totalCost);

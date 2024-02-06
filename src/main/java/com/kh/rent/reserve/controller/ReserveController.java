@@ -154,6 +154,7 @@ public class ReserveController {
 	
 	
 	@PostMapping("/nonmeminsert")
+	@ResponseBody
 	public String Nonmeminsert(@RequestBody NonMemberVO nonMemberVO, HttpSession session) {
 
 		log.info("nonMemberVO:" + nonMemberVO);
@@ -174,7 +175,7 @@ public class ReserveController {
 	    log.info("nonMemberVO2:" + nonMemberVO);
 	    
 	    nonMemberService.nonmeminsert(nonMemberVO);
-
+	    log.info("데이터 추가됨");
 	    return "success";
 	}
 

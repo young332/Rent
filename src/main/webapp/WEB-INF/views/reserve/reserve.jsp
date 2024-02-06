@@ -202,24 +202,24 @@ div.left-box {
 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/carbook-master/images/hyun1.jpg);">
 						    					</div>
 						    					<div class="text">
-						    						<h2 class="mb-0">${reserveDTO.car_name}</h2>
+						    						<h2 class="mb-0" style="font-weight: bold; font-size: 30px;">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
 						    							<input type="text" class="cat car_index" value="${reserveDTO.car_index}" style="display: none;">
-							    						<span class="cat">${reserveDTO.car_company}</span>|
-							    						<span class="cat">${reserveDTO.car_size}</span>|
-							    						<span class="cat">${reserveDTO.car_fuel}</span>|
+							    						<span class="cat" style="color: black;">${reserveDTO.car_company}</span>|
+							    						<span class="cat" style="color: black;">${reserveDTO.car_size}</span>|
+							    						<span class="cat" style="color: black;">${reserveDTO.car_fuel}</span>|
 							    						<c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
 													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">
-													        <span class="cat">카시트</span>
+													        <span class="cat" style="color: black;">카시트</span>
 													    </c:if>
 													    <c:if test="${reserveDTO.op_navi eq 'Y'}">|
-													        <span class="cat">내비게이션</span>
+													        <span class="cat" style="color: black;">내비게이션</span>
 													    </c:if>
 													    <c:if test="${reserveDTO.op_bt eq 'Y'}">|
-													        <span class="cat">블루투스</span>
+													        <span class="cat" style="color: black;">블루투스</span>
 													    </c:if>
 													    <c:if test="${reserveDTO.op_cam eq 'Y'}">|
-													        <span class="cat">후방 카메라</span>
+													        <span class="cat" style="color: black;">후방 카메라</span>
 													    </c:if>
 													</c:if>
 
@@ -360,7 +360,11 @@ $(function() {
 		        // 차이를 시간과 분으로 분리
 		        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
 		        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-
+		     	
+		        // NaN일 경우 0으로 설정
+		        hours = isNaN(hours) ? 0 : hours;
+		        minutes = isNaN(minutes) ? 0 : minutes;
+		        
 		        // 결과를 화면에 표시
 		        $("span[id='totalTimeSpan']").text(hours + "시간 " + minutes + "분");
 		        
@@ -389,7 +393,11 @@ $(function() {
 	
 	            var hours = Math.floor(timeDiff / (1000 * 60 * 60));
 	            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-	
+				
+	         // NaN 체크하여 0으로 대체
+	            hours = isNaN(hours) ? 0 : hours;
+	            minutes = isNaN(minutes) ? 0 : minutes;
+	            
 	            var totalCost = hours * hourlyRate + (minutes / 60) * hourlyRate;
 	
 	            var roundedTotalCost = Math.round(totalCost);
@@ -542,6 +550,7 @@ $(function() {
 	    	//sendDataToServer();
 	    	//return false;
 	    });
+		
 	
 	
 	
