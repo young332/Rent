@@ -137,6 +137,7 @@ public class ReserveController {
 	    reserveVO.setRes_rental_date(topbookpickdate);
 	    reserveVO.setRes_car_id(carindex);
 	    reserveVO.setRes_totalpay(Integer.parseInt(totalPay));
+	    
 	    MemberVO memberVO = (MemberVO) session.getAttribute("loginInfo");
 	    reserveVO.setRes_mem_id(memberVO.getMem_id());
 	    log.info("reserveVO:"+reserveVO);

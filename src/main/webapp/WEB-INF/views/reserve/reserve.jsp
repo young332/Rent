@@ -196,7 +196,7 @@ div.left-box {
 					
 		   			</div>
 		   			
-		   			<div id="cars-box" >
+		   			<div id="cars-box" class="cars-box">
 	    				<div class="right-box">
 								<div class="row">
 				    			<div class="col-md-12">
@@ -229,10 +229,11 @@ div.left-box {
 													</c:if>
 
 							    						<p class="price ml-auto"><span class="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
-							    						<p class="price ml-auto"> <span class="totalPay" ></span>원</p>
+							    						<p class="price ml-auto">총요금<span class="totalPay" ></span>원</p>
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" >
-						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1  btn_reserve">예약하기</button></p>
+						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1 btn_reserve">예약하기</button>
+						    						</p>
 						    					</div>
 						    				</div>
 				    					</div>
@@ -476,7 +477,7 @@ $(function() {
 	            data: sendData,
 	            success: function(rData) {
 	                $("#cars-box").html(rData);
-	              
+	             // console.log(rData);
 	                setFooterTop();
 	                
 	                
@@ -491,7 +492,7 @@ $(function() {
 	    });
 	
 	    
-	    $("#btnreset").click(function() {
+	    $(".btn_reserve").click(function() {
 	        $(":checkbox").prop("checked", false);
 	       
 	        updateData();
