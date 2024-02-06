@@ -33,7 +33,8 @@
 						</c:if>
 						
 						<p class="price ml-auto hourPay hourPay"><span id="hourPay" style="display: none;">${vo.car_cost}</span></p>
-							    						<p class="price ml-auto ">총요금 <span class="totalPay" ></span>원</p>
+						<p class="price ml-auto">총요금<span class="totalPay" style="color: red; font-weight: bold; font-size: 20px;"></span>원</p>
+
 						
 						</div>
 

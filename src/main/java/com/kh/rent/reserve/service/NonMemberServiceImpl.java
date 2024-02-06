@@ -19,7 +19,7 @@ public class NonMemberServiceImpl implements NonMemberService{
 
 	@Override
 	public void nonmeminsert(NonMemberVO nonMemberVO) {
-		// TODO Auto-generated method stub
+		nonMemberMapper.nonmeminsert(nonMemberVO);
 		
 	}
 	
