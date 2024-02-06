@@ -52,14 +52,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			log.info("targetLocation:" + targetLocation);
 			session.removeAttribute(targetLocation);
 			
-			if(memberVO.getMem_adminck() == 1) { //관리자 로그인
-				modelAndView.setViewName("redirect:/admin/main");
-			} else {
-				
+//			if(memberVO.getMem_adminck() == 1) { //관리자 로그인
+//				modelAndView.setViewName("redirect:/admin/main");
+//			} else {
+//			
+//		}			
 				if(targetLocation == null) {
 					modelAndView.setViewName("redirect:/");
 				 
-			} else {
+			}
+				else {
 				modelAndView.setViewName("redirect:" + targetLocation);
 				
 			}
@@ -74,6 +76,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 				response.addCookie(cookie);
 			}
 		}
-	}
+	
 	
 }
