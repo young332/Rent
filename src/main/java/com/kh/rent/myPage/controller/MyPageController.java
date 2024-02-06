@@ -39,10 +39,12 @@ public class MyPageController {
 	// 예약확인 페이지
 	@GetMapping("/reservationList")
 	public void reservation(HttpSession session, Model model) {
+		// 예약내역
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
 		List<ReserveVO> reserveList = myPageService.getReserveList(mem_id);
 		
+		// 차종
 		String[] carNames = new String[reserveList.size()];
 		for (int i = 0; i < reserveList.size(); i++) {
 			int rid = reserveList.get(i).getRes_rid();
@@ -56,11 +58,13 @@ public class MyPageController {
 		} 
 		String carNamesToString = Arrays.toString(carNames);
 		
+		// 결제상태
+		
 		model.addAttribute("reserveList", reserveList);
 		model.addAttribute("carNames", carNamesToString);
 		log.info("reservationListGet..");
-		log.info("reserveList" + reserveList);
-		log.info("carNamesToString" + carNamesToString);
+//		log.info("reserveList" + reserveList);
+//		log.info("carNamesToString" + carNamesToString);
 	}
 	
 	// 마이페이지

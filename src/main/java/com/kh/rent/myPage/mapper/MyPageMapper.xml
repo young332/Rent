@@ -61,4 +61,9 @@
 		where r.res_rid = #{res_rid} and r.res_car_id = #{res_car_id};
 	</select>
 	
+	<!-- 결제정보 조회하기 -->
+	<select id="">
+	
+	</select>
+	
 </mapper>

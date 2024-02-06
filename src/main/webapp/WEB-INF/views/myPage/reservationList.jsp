@@ -15,7 +15,12 @@ function formatNumberWithCommas(number) {
 
 // 결제 버튼 - 결제페이지 이동
 function pay(reservationId) {
-    window.location.href = '/checkout/payment?reservationId=' + reservationId;
+    location.href = '/checkout/payment?reservationId=' + reservationId;
+}
+
+// 결제취소 버튼 - 결제취소 페이지 이동
+function pay_cancle(reservationId) {
+    location.href = '/checkout/pay_cancle?reservationId=' + reservationId;
 }
 
 $(document).ready(function() {
@@ -100,7 +105,16 @@ $(document).ready(function() {
 								    <button onclick="pay(${reservation.res_rid})">결제</button>
 									</c:if>
 									</td>
-				                    <td></td>
+									<td>
+									<c:choose>
+					                    <c:when test="${reservation.res_status eq '예약중'}">
+									    <button onclick="(${reservation.res_rid})">예약취소</button>
+										</c:when>
+					                    <c:when test="${reservation.res_status eq '예약완료'}">
+									    <button onclick="(${reservation.res_rid})">결제취소</button>
+										</c:when>
+									</c:choose>
+				                    </td>
 				                  </tr>
 				                </c:forEach>
 				              </tbody>
