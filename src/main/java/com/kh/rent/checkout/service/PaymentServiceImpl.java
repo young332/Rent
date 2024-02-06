@@ -42,12 +42,16 @@ public class PaymentServiceImpl implements PaymentService {
 	public boolean pay(PaymentVO paymentVO) {
 		// 결제 내역 기록 (insert)
 		int result1 = paymentMapper.addPaymentRecord(paymentVO);
+		log.info("result1:" + result1);
 		// 회원 포인트 차감 (update)
 		int result2 = paymentMapper.deductPayment(paymentVO);
+		log.info("result2:" + result2);
 		// 예약 상태 변경
-		int result3 = paymentMapper.reserveStatus(paymentVO);
+		log.info("res_rid:" + paymentVO.getPay_res_rid());
+//		int result3 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
+//		log.info("result3:" + result3);
 		
-		return (result1 + result2 + result3) == 3 ? true : false;
+		return (result1 + result2 ) == 2 ? true : false;
 	}
 
 
@@ -65,6 +69,11 @@ public class PaymentServiceImpl implements PaymentService {
 		List<ReserveVO> list = paymentMapper.payNumber(res_rid);
 		log.info("ReserveVO list:" + list);
 		return list;
+	}
+
+	@Override
+	public int getTotalPay(int pay_res_rid) {
+		return paymentMapper.getTotalPay(pay_res_rid);
 	}
 
 //	@Override

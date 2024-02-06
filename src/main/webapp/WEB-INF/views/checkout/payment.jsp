@@ -149,7 +149,7 @@ res_rid: ${res_rid}
             <div>
               <h6 class="my-0">${loginInfo.mem_id}님의 여정</h6>
               <small class="text-muted">울산지점</small><br>
-              <small class="text-muted">${paymentGet.res_rental_date} ~ ${paymentGet.res_return_date}</small>
+              <small class="text-muted">${reserveVO.res_rental_date} ~ ${reserveVO.res_return_date}</small>
               <small class="text-muted">${reserveVO.car_size}</small>
             </div>
           </li>
@@ -257,7 +257,7 @@ res_rid: ${res_rid}
             </div><br>
 
 <%
-int	res_totalpay = 65000;
+// int	res_totalpay = 65000;
 
 int unit = 100;
    
@@ -274,14 +274,14 @@ int min = 5000;
 		  <tbody>
 		    <tr>
 		      <th>결제금액</th>
-		      <td><span class="bold txt_blue"><%=65000 %>원</span></td>
+		      <td><span class="bold txt_blue">${totalPay}원</span></td>
 		    </tr>
 		    <tr>
 		      <th> 포인트 </th>
 		      <td>
 		        사용가능 포인트 : <span name="left_pnt">${loginInfo.mem_point}</span>p <br> 
 		        <c:choose>
-		        	<c:when test="${loginInfo.mem_point < 65000 }">
+		        	<c:when test="${loginInfo.mem_point < totalPay }">
 		        		<span style="color:red;">결제 포인트가 부족합니다.</span>
 		        	</c:when>
 		        	<c:otherwise>
@@ -297,16 +297,16 @@ int min = 5000;
 		    <tr>
 		      <td></td>
 		      <td>
-		      <c:if test="${loginInfo.mem_point > 65000}">
-		        <span> <input type="number" name="point_cost" id="point_cost" min="<%=min%>" max=<%=res_totalpay%> onchange="updateViewUsePnt()"></span> p 
-		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${res_totalpay + memberVO.mem_point}</span>p )
+		      <c:if test="${loginInfo.mem_point > totalPay}">
+		        <span> <input type="number" name="point_cost" id="point_cost" min="5000" max="${totalPay}" onchange="updateViewUsePnt()"></span> p 
+		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${totalPay + memberVO.mem_point}</span>p )
 		      </c:if>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td></td>
 		      <td>
-		      	<p class="bold txt_red"> 최종 결제 금액 : <span class="bold txt_red" id="result_pnt">${reserveInfo.res_totalpay}</span> 원</p>
+		      	<p class="bold txt_red"> 최종 결제 금액 : <span class="bold txt_red" id="result_pnt">0</span> 원</p>
 		      </td>
 		    </tr>
 		  </tbody>

@@ -30,12 +30,14 @@ public class CheckoutController {
 	
 	@GetMapping("/payment")
 	public void paymentGet(@ModelAttribute("res_rid") int res_rid, HttpSession session, Model model) {
+		log.info("paymentGet");
 
-		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-		String mem_id = loginInfo.getMem_id();
+//		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+//		String mem_id = loginInfo.getMem_id();
+		int totalPay = paymentService.getTotalPay(res_rid);
 //		List<ReserveVO> reserveList = paymentService.getResRid(mem_id);
 //		model.addAttribute("reserveList", reserveList);
-		log.info("paymentGet");
+		model.addAttribute("totalPay", totalPay);
 //		log.info("reserveList" + reserveList);
 
 	}
@@ -49,13 +51,22 @@ public class CheckoutController {
     	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");		
     	String mem_id = loginInfo.getMem_id();
     	log.info("mem_id:" + mem_id);
+    	
+    	int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    	
     	paymentVO.setPay_mem_id(mem_id);
     	paymentVO.setPay_type("PAY_P");
+    	
 //    	List<ReserveVO> reserveList = paymentService.getResRid(mem_id);
 //		model.addAttribute("reserveList", reserveList);
     	log.info("paymentDTO2:" + paymentVO);
     	boolean result = paymentService.pay(paymentVO);
+    	
     	log.info("result: " + result);
+    	if (result) {
+    		loginInfo.setMem_point(loginInfo.getMem_point() - totalPay);
+    		session.setAttribute("loginInfo", loginInfo);
+    	}
 //    	model.addAttribute("result", result);	
 //			rttr.addFlashAttribute("pay_result", String.valueOf(result));
 

@@ -5,8 +5,8 @@
 <mapper namespace="com.kh.rent.checkout.mapper.PaymentMapper">
 	
 	<insert id="addPaymentRecord">
-		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type)
-		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type})
+		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type, pay_status)
+		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type}, '결제완료')
 	</insert>
 	
 	<!-- 결제(payment) 내역-->
@@ -55,9 +55,15 @@
     
     <!-- 예약 상태 변경 -->
     <update id="reserveStatus">
-    	update tbl_reserve set
+    	update TBL_RESERVE set
 		res_status = '결제완료'
 		where res_rid = #{pay_res_rid}
     </update>
+    
+    <select id="getTotalPay" resultType="int">
+    	select res_totalpay 
+		from TBL_RESERVE
+		where res_rid = #{pay_res_rid}
+    </select>
 
 </mapper>

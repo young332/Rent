@@ -30,7 +30,10 @@ public interface PaymentMapper {
 	public int getPayNonResRid(int pay_res_rid);
 	
 	// 예약상태 확인
-	public int reserveStatus(PaymentVO paymentVO);  
+	public int reserveStatus(int pay_res_rid); 
+	
+	// 예약 금액
+	public int getTotalPay(int pay_res_rid);
 	
 	
 }
