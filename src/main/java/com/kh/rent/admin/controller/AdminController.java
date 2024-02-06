@@ -143,6 +143,15 @@ public class AdminController {
 		
 	}
 	
+	//로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("nonMemberVO");  // 세션에서 비회원 정보 제거
+		session.invalidate();
+		log.info("logout");
+		return "redirect:/admin/login";
+	}
+	
 
 	
 

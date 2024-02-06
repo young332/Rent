@@ -39,7 +39,7 @@
 	<!-- 파일업로드 -->
 	<beans:bean id="multipartResolver"
 	class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
-	
+
 
 	<!-- 인터셉터 -->
 	<beans:bean id="loginInterceptor"

@@ -2,6 +2,8 @@ package com.kh.rent.admin.controller;
 
 import java.io.IOException;
 import org.springframework.util.StringUtils;
+
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -35,19 +37,9 @@ public class CarInfoController {
 	
 	 // 업로드된 파일이 저장될 디렉토리 경로
     //@Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
-    @Value("classpath:/upload")
-    private String uploadPath;
-	
-//	@PostMapping("/CarInfoAdd")
-//	public String CarInfoAdd(CarInfoVO carInfoVO, RedirectAttributes rttr) {
-//		log.info("carInfoVO:" + carInfoVO);
-//		int count = carInfoService.addCar(carInfoVO);
-//		if(count == 1) {
-//			rttr.addFlashAttribute("AddMenuName",carInfoVO.getCar_number());
-//		}
-//		
-//		return "redirect:/admin/car/registerCar";
-//	}
+	//@Value("${upload.directory}")
+	@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
+    private String uploadDirectory;
 	
 	// 차량 등록 처리
     @PostMapping("/CarInfoAdd")
@@ -55,26 +47,30 @@ public class CarInfoController {
                              @RequestParam("image_path") MultipartFile imagePath,
                              RedirectAttributes rttr) {
         log.info("carInfoVO:" + carInfoVO);
-        
+        log.info("uploadDirectory:" +uploadDirectory);
         FileVO fileVO = new FileVO();
-        
+  
         try {
             // 업로드할 파일에 대한 정보 설정
             UUID uuid = UUID.randomUUID();
             String originalFilename = imagePath.getOriginalFilename();
             String uniqueFilename = uuid + "_" + originalFilename;
             
-            Path destination = Paths.get(uploadPath, uniqueFilename);
+            //Path destination = Paths.get(uploadPath, uniqueFilename);
+            
+            // 상대경로를 기반으로 Path 객체 생성
+            Path relativeDestination = Paths.get(uploadDirectory, uniqueFilename);
+
             
             String fileExtension = StringUtils.getFilenameExtension(originalFilename);
             
             long fileSize = imagePath.getSize();
             
             // 파일 업로드
-            imagePath.transferTo(destination.toFile());
+            imagePath.transferTo(relativeDestination.toFile());
             
             fileVO.setFile_sn(1);
-            fileVO.setFile_stre_cours(uploadPath);
+            fileVO.setFile_stre_cours(uploadDirectory);
             fileVO.setOrignl_file_nm(originalFilename);
             fileVO.setUnique_file_nm(uniqueFilename);
             fileVO.setFile_extension(fileExtension);
