@@ -5,8 +5,8 @@
 <mapper namespace="com.kh.rent.checkout.mapper.PaymentMapper">
 	
 	<insert id="addPaymentRecord">
-		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_date, pay_type)
-		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_date}, #{pay_type})
+		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type)
+		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type})
 	</insert>
 	
 	<!-- 결제(payment) 내역-->
@@ -27,7 +27,9 @@
 	
 	<!-- 포인트 차감 -->
 	<update id="deductPayment" parameterType="map">
-		update TBL_MEMBER set mem_point = mem_point - #{point_cost}
+		update TBL_MEMBER set mem_point = mem_point - (select res_totalpay 
+													   from TBL_RESERVE
+													   where res_rid = #{pay_res_rid})
 		where mem_id = #{pay_mem_id}
 	</update>
 	
@@ -55,7 +57,7 @@
     <update id="reserveStatus">
     	update tbl_reserve set
 		res_status = '결제완료'
-		where res_rid = #{res_rid}
+		where res_rid = #{pay_res_rid}
     </update>
 
 </mapper>

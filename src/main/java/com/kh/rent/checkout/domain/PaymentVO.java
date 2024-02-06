@@ -22,6 +22,6 @@ public class PaymentVO {
 	
 	private Date pay_date;
 	
-	private int pay_type;
+	private String pay_type;
 	
 }

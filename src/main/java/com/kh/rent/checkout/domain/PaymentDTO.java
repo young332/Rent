@@ -51,4 +51,6 @@ public class PaymentDTO {
 	// 총 금액
 	private int res_totalpay;
 	
+	
+	
 }

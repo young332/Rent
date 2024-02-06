@@ -3,12 +3,13 @@ package com.kh.rent.checkout.mapper;
 import java.util.List;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 public interface PaymentMapper {
 	
 	// 결제 내역 (insert)
-	public int addPaymentRecord(PaymentDTO paymentDTO);
+	public int addPaymentRecord(PaymentVO paymentVO);
 	
 	// 결제 조회
 	public List<PaymentDTO> getPaymentInfo(String pay_mem_id);
@@ -17,7 +18,7 @@ public interface PaymentMapper {
 	public List<ReserveVO> payNumber(int res_rid);
 	
 	// 포인트 차감
-	public int deductPayment(PaymentDTO paymentDTO);
+	public int deductPayment(PaymentVO paymentVO);
 	
 	// 포인트 조회
 	public int getMemberPoint(int mem_point);
@@ -29,7 +30,7 @@ public interface PaymentMapper {
 	public int getPayNonResRid(int pay_res_rid);
 	
 	// 예약상태 확인
-	public int reserveStatus(PaymentDTO paymentDTO);  
+	public int reserveStatus(PaymentVO paymentVO);  
 	
 	
 }

@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
 import com.kh.rent.reserve.domain.ReserveVO;
+
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -38,13 +39,13 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Transactional
 	@Override
-	public boolean pay(PaymentDTO paymentDto) {
+	public boolean pay(PaymentVO paymentVO) {
 		// 결제 내역 기록 (insert)
-		int result1 = paymentMapper.addPaymentRecord(paymentDto);
+		int result1 = paymentMapper.addPaymentRecord(paymentVO);
 		// 회원 포인트 차감 (update)
-		int result2 = paymentMapper.deductPayment(paymentDto);
+		int result2 = paymentMapper.deductPayment(paymentVO);
 		// 예약 상태 변경
-		int result3 = paymentMapper.reserveStatus(paymentDto);
+		int result3 = paymentMapper.reserveStatus(paymentVO);
 		
 		return (result1 + result2 + result3) == 3 ? true : false;
 	}
@@ -66,11 +67,11 @@ public class PaymentServiceImpl implements PaymentService {
 		return list;
 	}
 
-	@Override
-	public List<ReserveVO> getResRid(String mem_id) {
-		List<ReserveVO> list = paymentMapper.getResRid(mem_id);
-		return list;
-	}
+//	@Override
+//	public List<ReserveVO> getResRid(String mem_id) {
+//		List<ReserveVO> list = paymentMapper.getResRid(mem_id);
+//		return list;
+//	}
 
 
 

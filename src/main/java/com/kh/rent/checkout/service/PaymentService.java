@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
-import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 public interface PaymentService {
@@ -20,7 +18,7 @@ public interface PaymentService {
 	public List<ReserveVO> payNumber(int res_rid);
 	
 	// 결제 및 포인트 차감
-	public boolean pay(PaymentDTO paymentDTO);
+	public boolean pay(PaymentVO paymentVO);
 		
 //	public int deductPayment(PaymentDTO paymentDTO);
 	
@@ -28,13 +26,9 @@ public interface PaymentService {
 	public int getMemberPoint(int mem_point);
 	
 	// 예약 번호 조회
-	public List<ReserveVO> getResRid(String mem_id);
+//	public List<ReserveVO> getResRid(String mem_id);
 	
 	// 비회원 번호 조회
 	public int getPayNonResRid(int pay_res_rid);
-	
-
-	
-	
 
 }
