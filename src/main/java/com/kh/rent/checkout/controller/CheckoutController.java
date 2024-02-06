@@ -53,7 +53,7 @@ public class CheckoutController {
 	                                 HttpSession session,
 	                                 RedirectAttributes rttr) {
     	
-    	log.info("paymentDTO:" + paymentVO);
+    	log.info("paymentVO:" + paymentVO);
     	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");		
     	String mem_id = loginInfo.getMem_id();
     	log.info("mem_id:" + mem_id);

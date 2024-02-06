@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
+import com.kh.rent.login.mapper.MemberMapper;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
@@ -18,6 +19,9 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	private PaymentMapper paymentMapper; 
+	
+	@Autowired 
+	private MemberMapper memberMapper;
 	
 //	@Override
 //	public boolean addPayment(PaymentDTO paymentDTO) {
@@ -80,10 +84,27 @@ public class PaymentServiceImpl implements PaymentService {
 		List<ReserveVO> list = paymentMapper.getResRid(mem_id);
 		return list;
 	}
-
+	
+	// 주문취소
+	@Transactional //여러 쿼리가 실행이 되기 때문에 하나의 단위로 동작을 위해
 	@Override
-	public int paymentCancle(int pay_res_rid) {
-		return paymentMapper.paymentCancle(pay_res_rid);
+	public void paymentCancle(PaymentDTO paymentDTO) {
+			
+		// 주문 취소 DB
+        paymentMapper.paymentCancle(paymentDTO);
+
+        // 돈, 포인트, 재고 변환
+        // 회원 정보 가져오기
+   //     ReserveVO reserveVO = paymentMapper.getReserve(paymentDTO.getRes_rid());
+   //     String mem_id = reserveVO.getRes_mem_id();
+   //     int res_totalpay = reserveVO.getRes_totalpay();
+
+        // 포인트 차감
+   //     int calPoint = paymentMapper.getMemberPoint(mem_id) + res_totalpay;
+   //     paymentMapper.deductPayment(mem_id, calPoint);
+
+        // 예약 상태 변경
+        paymentMapper.reserveStatus(paymentDTO.getRes_rid());
 	}
 
 

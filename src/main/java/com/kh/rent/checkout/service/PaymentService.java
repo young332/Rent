@@ -36,6 +36,6 @@ public interface PaymentService {
 	public int getTotalPay(int pay_res_rid);
 	
 	// 결제 상태 변경
-	public int paymentCancle(int pay_res_rid);
+	public void paymentCancle(PaymentDTO paymentDTO);
 
 }

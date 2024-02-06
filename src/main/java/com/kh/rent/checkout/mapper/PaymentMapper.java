@@ -40,7 +40,8 @@ public interface PaymentMapper {
 	public List<ReserveVO> getReserveList(String mem_id);
 	
 	// 결제 상태 변경
-	public int paymentCancle(int pay_res_rid);
+	public void paymentCancle(PaymentDTO paymentDTO);
 	
-	
+	// 예약 정보(결제 취소)
+	public void getReserve(PaymentDTO paymentDTO);
 }

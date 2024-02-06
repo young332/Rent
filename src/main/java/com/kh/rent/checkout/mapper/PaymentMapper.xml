@@ -80,8 +80,11 @@
 	    where pay_res_rid = #{pay_res_rid}
 	</update>
 	
-	<!--예약 정보(예약 취소)-->
-	<select id="get"></select>
+	<!--예약 정보(결제 취소)-->
+	<select id="getReserve" resultType="com.kh.rent.reserve.domain.reserveVO">
+		select * from TBL_RESERVE
+		where res_rid = #{res_rid}
+	</select>
 	
 
 </mapper>
