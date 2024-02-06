@@ -98,8 +98,15 @@
 
 <script>
 $(function() {
+	 // 로그인 여부 확인
+    var isLoggedIn = ${not empty loginInfo};
 	$("#btnMemPay").click(function() {
-		
+		// 로그인 여부 확인
+        if (!isLoggedIn) {
+            alert("로그인 후 이용해 주세요.");
+            return;
+        }
+
 		$("input[name=name]").remove();
 		$("input[name=tel]").remove();
 		$("input[name=birthdate]").remove();
@@ -121,6 +128,11 @@ $(function() {
 	});
 	
 	$("#btnNonMemPay").click(function() {
+		// 로그인 여부 확인
+        if (isLoggedIn) {
+            alert("회원전용결제를 이용해 주세요.");
+            return;
+        }
 		// 입력된 값 가져오기
 	    var non_name = $("#name").val().trim();
 	    var non_tel = $("#tel").val().trim();
@@ -176,7 +188,7 @@ $(function() {
         }
     	 // 0~11자 입력했을 때는 12자 입력 요청
         if (licenseNumber.length < 12) {
-            return "12자를 입력해주세요.";
+            return "면허번호 12자를 입력해주세요.";
         }
         return true; // 유효성 검사 통과
     }

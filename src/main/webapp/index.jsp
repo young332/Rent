@@ -180,16 +180,61 @@ $(function() {
 		console.log("p:", p);
 		console.log("o:", o);
 	});
-
-     $("#bntSearch").click(function() {
-         
-         var pickDate = $("#book_pick_date").val();
-         var offDate = $("#book_off_date").val();
-         var reservationURL = "/reserve/reserve?book_pick_date=" + pickDate + "&book_off_date=" + offDate;
+	$("#bntSearch").click(function() {
+        var pickDate = $("#book_pick_date").val();
+        var offDate = $("#book_off_date").val();
         
-         $("#reservationLink").attr("href", reservationURL);
-     });
-	   
+        if (!pickDate || !offDate) {
+            alert("대여일과 반납일을 모두 선택해주세요.");
+            return; 
+        }
+
+        var reservationURL = "/reserve/reserve?book_pick_date=" + pickDate + "&book_off_date=" + offDate;
+        $("#reservationLink").attr("href", reservationURL);
+    });
+
+     $("input[type='datetime-local']").change(function() {
+	    	
+	        var selectedDateTime = $(this).val();
+
+	        var selectedDate = new Date(selectedDateTime);
+
+	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
+	        var isDawnTime = selectedDate.getHours() < 6;
+
+	        // 새벽 시간인 경우 알림 띄우기
+	        if (isDawnTime) {
+	            alert("새벽 시간은 선택할 수 없습니다.");
+	            $(this).val("");
+	        }
+	        var today = new Date();
+	        today.setHours(0, 0, 0, 0); 
+
+	        var selectedDateTime = $(this).val();
+
+	        var selectedDate = new Date(selectedDateTime);
+
+	        var isBeforeToday = selectedDate < today;
+
+	        // 오늘 이전인 경우 알림 띄우기
+	        if (isBeforeToday) {
+	            alert("날짜를 다시 입력해주세요.");
+	            $(this).val("");
+	        }
+	     // 대여일과 반납일을 비교하여 반납일이 대여일보다 전인 경우 알림 띄우기
+	        var pickDateTime = $("#book_pick_date").val();
+	        var pickDate = new Date(pickDateTime);
+	        var offDateTime = $(this).val();
+	        var offDate = new Date(offDateTime);
+
+	        if (offDate < pickDate) {
+	            alert("반납일을 다시 입력해주세요.");
+	            $(this).val("");
+	        }
+	    });
+		
+   
+	    
 });
 </script> 
     

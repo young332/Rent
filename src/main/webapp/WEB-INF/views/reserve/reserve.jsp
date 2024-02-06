@@ -387,7 +387,13 @@ $(function() {
 	            var pickDate = new Date($("#top_book_pick_date").val());
 	            var offDate = new Date($("#top_book_off_date").val());
 	            var timeDiff = offDate - pickDate;
-	
+				
+	            if (offDate < pickDate) {
+	                alert("반납일을 다시 입력해주세요.");
+	                $("#top_book_off_date").val(""); 
+	                return; 
+	            }
+	            
 	            var hours = Math.floor(timeDiff / (1000 * 60 * 60));
 	            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
 				
@@ -528,7 +534,7 @@ $(function() {
 			 // 대여일 및 반납일 값이 비어 있는지 확인
 	        if (topBookPickDate == '' || topBookOffDate == '') {
 	            alert("날짜를 입력하세요.");
-	            return; // 날짜를 입력하지 않았으므로 함수 종료
+	            return;
 	        }
 			
 			var carIndex = $(this).parent().prev().find(".car_index").val();
@@ -551,9 +557,36 @@ $(function() {
 	    	//sendDataToServer();
 	    	//return false;
 	    });
-		
-	
-	
+		$("input[type='datetime-local']").change(function() {
+	    	
+	        var selectedDateTime = $(this).val();
+
+	        var selectedDate = new Date(selectedDateTime);
+			
+	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
+	        var isDawnTime = selectedDate.getHours() < 6;
+
+	        // 새벽 시간인 경우 알림 띄우기
+	        if (isDawnTime) {
+	            alert("새벽 시간은 선택할 수 없습니다.");
+	            $(this).val("");
+	        }
+	        var today = new Date();
+	        today.setHours(0, 0, 0, 0); 
+
+	        var selectedDateTime = $(this).val();
+
+	        var selectedDate = new Date(selectedDateTime);
+
+	        var isBeforeToday = selectedDate < today;
+
+	        // 오늘 이전인 경우 알림 띄우기
+	        if (isBeforeToday) {
+	            alert("날짜를 다시 입력해주세요.");
+	            $(this).val("");
+	        }
+	       
+	    });
 	
 	 
 });
