@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
-import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
@@ -21,27 +20,12 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentMapper paymentMapper; 
 	
-	@Override
-	public boolean addPayment(PaymentDTO paymentDTO) {
-		int count = paymentMapper.addPaymentRecord(paymentDTO);
-		return (count == 1) ? true : false;
-		
-	}
-
 //	@Override
-//	public PaymentDTO getPaymentDTO(int pay_res_rid) {
-//		
-//		return paymentMapper.getPaymentInfo(pay_res_rid);
-//	}
-
-	
-//	@Override
-//	public int deductPayment(PaymentDTO paymentDTO) {
-//		
-//		return paymentMapper.deductPayment(PaymentDTO paymentDTO);
+//	public boolean addPayment(PaymentDTO paymentDTO) {
+//		int count = paymentMapper.addPaymentRecord(paymentDTO);
+//		return (count == 1) ? true : false;
 //		
 //	}
-//	
 
 	@Override
 	public int getMemberPoint(int mem_point) {
@@ -55,18 +39,22 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Transactional
 	@Override
-	public void pay(PaymentDTO paymentDto) {
+	public boolean pay(PaymentVO paymentVO) {
 		// 결제 내역 기록 (insert)
-		paymentMapper.addPaymentRecord(paymentDto);
+		int result1 = paymentMapper.addPaymentRecord(paymentVO);
 		// 회원 포인트 차감 (update)
-		paymentMapper.deductPayment(paymentDto);
+		int result2 = paymentMapper.deductPayment(paymentVO);
+		// 예약 상태 변경
+		int result3 = paymentMapper.reserveStatus(paymentVO);
+		
+		return (result1 + result2 + result3) == 3 ? true : false;
 	}
 
 
 	@Override
-	public List<PaymentDTO> getPaymentInfo(String res_mem_id) {
+	public List<PaymentDTO> getPaymentInfo(String pay_mem_id) {
 		
-		List<PaymentDTO> list = paymentMapper.getPaymentInfo(res_mem_id);
+		List<PaymentDTO> list = paymentMapper.getPaymentInfo(pay_mem_id);
 		log.info("list:" + list);
 		return list;
 	}
@@ -79,11 +67,11 @@ public class PaymentServiceImpl implements PaymentService {
 		return list;
 	}
 
-	@Override
-	public List<ReserveVO> getResRid() {
-		List<ReserveVO> list = paymentMapper.getResRid();
-		return list;
-	}
+//	@Override
+//	public List<ReserveVO> getResRid(String mem_id) {
+//		List<ReserveVO> list = paymentMapper.getResRid(mem_id);
+//		return list;
+//	}
 
 
 

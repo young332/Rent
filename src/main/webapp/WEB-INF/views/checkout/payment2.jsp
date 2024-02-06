@@ -129,7 +129,6 @@
 <body>
 
 ${reserveList}	
-res_rid: ${res_rid}
 
 <div class="container">
   <main>
@@ -159,7 +158,7 @@ res_rid: ${res_rid}
 		    <small class="text-muted">${loginInfo.mem_name}</small>
 			</div>
           </li>
-        <ul class="list-group mb-3" type="none">
+        <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">표준가</h6>
@@ -199,8 +198,7 @@ res_rid: ${res_rid}
             <strong id="result_pnt">${result_pnt}</strong>
           </li>
           <li>
-           <button id="btn_pay" class="w-100 btn btn-primary btn-lg" type="button"
-           	style="display:none;">결제 하기</button>
+           <button id="btn_pay" class="w-100 btn btn-primary btn-lg" type="button">결제 하기</button>
            </li>
         </ul>
 
@@ -213,17 +211,17 @@ res_rid: ${res_rid}
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">운전자 정보</h4>
-<!--         <form id="checkout_form" class="needs-validation"> -->
         <form id="checkout_form" class="needs-validation" action="/checkout/payment" method="POST">
-        	<input type="hidden" name="pay_res_rid" id="pay_res_rid" value="${res_rid}">
+        	<input type="hidden" name="pay_res_rid" id="pay_res_rid">
           <div class="row g-3">
             <div class="col-sm-12">
               <label for="name" class="form-label">이름</label>
-              <input type="text" class="form-control" id="name" value="${loginInfo.mem_name}">
+              <input type="text" class="form-control" id="name" value=${loginInfo.mem_name}>
               <div class="invalid-feedback">
              
               </div><br>
             </div>
+
 
             <div class="col-12">
               <label for="text" class="form-label">연락처<span class="text-muted"></span></label>
@@ -279,28 +277,15 @@ int min = 5000;
 		    <tr>
 		      <th> 포인트 </th>
 		      <td>
-		        사용가능 포인트 : <span name="left_pnt">${loginInfo.mem_point}</span>p <br> 
-		        <c:choose>
-		        	<c:when test="${loginInfo.mem_point < 65000 }">
-		        		<span style="color:red;">결제 포인트가 부족합니다.</span>
-		        	</c:when>
-		        	<c:otherwise>
-		        		<span><input type="checkbox" id="chk_use" onclick="chkPoint(res_totalpay, ${memberVO.mem_point}, min)">포인트 사용</span>
+		        사용가능 포인트 : <span name="left_pnt">${loginInfo.mem_point}</span>p  <span><input type="checkbox" id="chk_use" onclick="chkPoint(res_totalpay, ${memberVO.mem_point}, min)">포인트 사용</span>
 <%-- 		        <span style="float:right">포인트는 최소 <%=min%>p부터 <%=unit%>p단위로 사용 가능합니다.</span> --%>
-		        	</c:otherwise>
-		        </c:choose>
-		        
-		        
 		      </td>
 		    </tr>
-		    
 		    <tr>
 		      <td></td>
 		      <td>
-		      <c:if test="${loginInfo.mem_point > 65000}">
 		        <span> <input type="number" name="point_cost" id="point_cost" min="<%=min%>" max=<%=res_totalpay%> onchange="updateViewUsePnt()"></span> p 
 		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${res_totalpay + memberVO.mem_point}</span>p )
-		      </c:if>
 		      </td>
 		    </tr>
 		    <tr>
@@ -408,8 +393,9 @@ int min = 5000;
     </div>
   </main>
 </div>
-
+  
    <script>
+   
 	// 변수 선언 및 값 할당
    var mem_id = '${memberVO.mem_id}';
    
@@ -504,16 +490,7 @@ int min = 5000;
 
       
     });
-	
-	$("#chk_use").change(function() {
-		if ($(this).prop("checked")) {
-			$("#btn_pay").show();
-		} else {
-			$("#btn_pay").hide();
-		}
-	});
 
-		
    </script>
    
 </body>
