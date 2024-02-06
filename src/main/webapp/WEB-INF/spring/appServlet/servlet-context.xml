@@ -60,7 +60,7 @@
     
 		<interceptor>
 			<mapping path="/myPage/myPage" />
-<!-- 			<mapping path="/myPage/reservationList"/> -->
+			<mapping path="/myPage/reservationList"/>
       		<mapping path="/checkout/**/*"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
