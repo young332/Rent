@@ -8,11 +8,11 @@
 <script>
 $(function(){
 	
-	$("#formRegister").submit(function() {
+	$("#board_content").on('keyup', function() {
 		
-        var text = $("#board_content").val();
+		var text = $(this).val();
         text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        $("#board_content").val(text);
+        $(this).val(text);
     });
 	
 });
@@ -53,13 +53,6 @@ $(function(){
 						내용
 					</label>
 					<textarea rows="10" class="form-control textarea" id="board_content" name="board_content" required style="white-space: pre-wrap;">${BoardVO.board_content}</textarea>
-				</div>
-				<div class="form-group">
-				<label for="board_content">
-						조회수
-					</label>
-					<input type="text" class="form-control" id="readcount" name="readcount"
-					value="${BoardVO.readcount}"	required/>
 				</div>
 				<button type="submit" class="btn btn-primary">
 					완료

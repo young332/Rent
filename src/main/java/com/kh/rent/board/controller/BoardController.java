@@ -1,5 +1,7 @@
 package com.kh.rent.board.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -43,18 +45,27 @@ public class BoardController {
 	}
 
 	@GetMapping("/list")
-	public void list(Model model) {
+	public String list(Model model) {
 		log.info("list");
-		
 		List<BoardVO> list = boardService.getList();
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formattedDateTime = now.format(formatter);
+		model.addAttribute("dateTime",formattedDateTime);
 		model.addAttribute("boardVO", list);
 		log.info("model:" +  model);
+		
+		return "/board/list";
 	}
 	
 	@GetMapping("/get")
 	public void get(Long board_no,Model model) {
 		log.info("modify");
 		BoardVO boardVO = boardService.get(board_no);
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formattedDateTime = now.format(formatter);
+		model.addAttribute("dateTime",formattedDateTime);
 		model.addAttribute("boardVO",boardVO);
 		log.info("boardVO:" + boardVO);
 	}
