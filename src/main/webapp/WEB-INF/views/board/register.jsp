@@ -7,15 +7,7 @@
 
 <script>
 $(function(){
-	$(".board-row").click(function() {
-		console.log("클릭");
-		var boardNo = $(this).data("board-no");
-		console.log("boardNo:" , boardNo);
-        window.location.href = "get?board_no=" + boardNo;
-		
 	
-		
-	});
 });
 </script>   
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -37,33 +29,48 @@ $(function(){
             <h2 class="mb-2">HAKA렌트카 공지사항</h2>
           </div>
         </div>
-	<div class="row">
+<div class="row">
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
 			<table class="table">
 				<thead>
-					<c:forEach items="${board}" var="board">
-							<tr class="board-row" data-board-no="${board.board_no}">
-								<th>${board.board_no}</th>
-								<th>${board.board_title}</th>
-								<th style="text-align: right;"><fmt:formatDate value="${board.board_cdate}" pattern="yyyy-MM-dd"/></th>
-								<th style="text-align: right;">조회수  ${board.readcount}</th>
-							</tr>
-						</c:forEach>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							제목
+						</th>
+						<th>
+							내용
+						</th>
+						<th>
+							Status
+						</th>
+					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<td>
+							글번호
+						</td>
+						<td>
+							<input type="text" name="board_title" id="board_title">
+						</td>
+						<td>
+							<input type="text" name="board_content" id="board_content">
+						</td>
+						<td>
+							Default
+						</td>
+					</tr>
 				</tbody>
 			</table>
-			<div class="col-md-12">
-			<div class="d-flex justify-content-end">
-			<button type="button" class="btn btn-secondary btn-oper">등록</button>
-			</div>
-			</div>
 		</div>
 		<div class="col-md-2">
 		</div>
-	</div>
+	</div>	
 </div>
 </section>
 	

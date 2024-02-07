@@ -39,6 +39,9 @@ public interface PaymentMapper {
 	// 예약정보 조회하기
 	public List<ReserveVO> getReserveList(String mem_id);
 	
+	// 예약 상태 변경 (예약 취소)
+	public int reserveCancel(int pay_res_rid);
+	
 	// 결제 상태 변경
 	public int paymentCancel(int pay_res_rid);
 	

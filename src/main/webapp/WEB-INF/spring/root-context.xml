@@ -65,6 +65,8 @@
 		base-package="com.kh.rent.reserve.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.myPage.mapper" />
+		<mybatis-spring:scan
+		base-package="com.kh.rent.board.mapper" />
 
 
 
@@ -89,6 +91,9 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+	
 	
 	<!-- 메일보내기 -->
    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

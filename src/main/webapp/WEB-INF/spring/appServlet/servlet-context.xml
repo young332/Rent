@@ -22,6 +22,9 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.kh.rent" />
+	
+<!-- 	<context:component-scan base-package="com.kh.rent.MainController" /> -->
+	
 	<context:component-scan base-package="com.kh.rent.admin.controller" />
 
 	<context:component-scan base-package="com.kh.rent.login.controller" />
@@ -39,7 +42,7 @@
 	<!-- 파일업로드 -->
 	<beans:bean id="multipartResolver"
 	class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
-	
+
 
 	<!-- 인터셉터 -->
 	<beans:bean id="loginInterceptor"
@@ -50,6 +53,8 @@
 		class="com.kh.rent.admin.interceptor.MenuInterceptor"></beans:bean>
 	<beans:bean id="adLoginInterceptor"
 	class="com.kh.rent.admin.interceptor.AdLoginInterceptor"></beans:bean>
+	<beans:bean id="adauthInterceptor"
+		class="com.kh.rent.admin.interceptor.AdAuthInterceptor"></beans:bean>
 
 	<interceptors>
     
@@ -69,11 +74,22 @@
 			<mapping path="/admin/" />
 			<mapping path="/admin/menu/*" />
 			<mapping path="/admin/**/*" />
+			<exclude-mapping path="/admin/login"/>
 			<exclude-mapping path="/admin/menu/submenus/**/*"/>
 			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
 			<exclude-mapping path="/admin/member/getMemberInfo"/>
+			<exclude-mapping path="/admin/car/getCarInfo"/>
 
 			<beans:ref bean="menuInterceptor" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/member/" />
+			<mapping path="/admin/menu/" />
+			<mapping path="/admin/car/" />
+			<mapping path="/admin/commonCode/" />
+			<exclude-mapping path="/admin/login"/>
+			<beans:ref bean="adauthInterceptor" />
 		</interceptor>
 		
 		<interceptor>

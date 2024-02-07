@@ -74,10 +74,17 @@
 		where res_rid = #{pay_res_rid}
     </select>
     
-    <!-- 예약 상태 변경(결제 취소) -->
-    <update id="reserveCancle">
-    	update TBL_RESERVE set
+     <!-- 결제 상태 변경 (결제취소) -->
+    <update id="payCancel">
+    	update TBL_PAYMENT set
 		res_status = '결제취소'
+		where res_rid = #{pay_res_rid}
+    </update>
+    
+    <!-- 예약 상태 변경(예약취소) -->
+    <update id="reserveCancel">
+    	update TBL_RESERVE set
+		res_status = '예약취소'
 		where res_rid = #{pay_res_rid}
     </update>
     

@@ -95,10 +95,12 @@ public class PaymentServiceImpl implements PaymentService {
 		log.info("result1: " + result1);
 		
 		//예약 상태 변경
-		int result2 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
+		int result2 = paymentMapper.reserveCancel(paymentVO.getPay_res_rid());
 		log.info("result2: " + result2);
+		int result3 = paymentMapper.paymentCancel(paymentVO.getPay_res_rid());
+		log.info("result3: " + result3);
 		
-        return (result1 + result2) == 2 ? true : false;
+        return (result1 + result2 + result3) == 3 ? true : false;
 	}
 
 

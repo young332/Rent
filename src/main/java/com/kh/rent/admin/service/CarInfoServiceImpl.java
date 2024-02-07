@@ -45,4 +45,16 @@ public class CarInfoServiceImpl implements CarInfoService {
 		return carInfoList;
 	}
 
+	@Override
+	public int updateCarInfo(CarInfoVO carInfoVO) {
+		int count = carInfoMapper.updateCarInfo(carInfoVO);
+		return count;
+	}
+
+	@Override
+	public CarInfoVO selectCarInfoByIndex(Integer car_index) {
+		CarInfoVO carInfoVO = carInfoMapper.selectCarInfoByIndex(car_index);
+		return carInfoVO;
+	}
+
 }

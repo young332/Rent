@@ -133,7 +133,7 @@
 				<div class="form-group mb-3">
 					<label for="create_user" class="form-label">등록자</label><input
 						type="text" class="form-control" id="create_user"
-						name="create_user" required>
+						name="create_user" value="${loginInfo.mem_name}" required>
 				</div>
 				<div class="form-group">
 					<label class="form-label w-100">차량사진</label> <input type="file"
