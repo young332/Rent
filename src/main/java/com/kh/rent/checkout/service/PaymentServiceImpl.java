@@ -49,10 +49,10 @@ public class PaymentServiceImpl implements PaymentService {
 		// 예약 상태 변경
 		log.info("res_rid:" + paymentVO.getPay_res_rid());
 		
-//		int result3 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
-//		log.info("result3:" + result3);
+		int result3 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
+		log.info("result3:" + result3);
 		
-		return (result1 + result2 ) == 2 ? true : false;
+		return (result1 + result2 + result3) == 3 ? true : false;
 	}
 
 
@@ -74,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Override
 	public int getTotalPay(int pay_res_rid) {
-		return paymentMapper.getTotalPay(pay_res_rid);
+		return paymentMapper.getTotalPay(pay_res_rid);	
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class PaymentServiceImpl implements PaymentService {
 		return list;
 	}
 	
-	// 주문취소
+	// 예약 취소
 	@Transactional //여러 쿼리가 실행이 되기 때문에 하나의 단위로 동작을 위해
 	@Override
 	public boolean paymentCancel(PaymentVO paymentVO) {	
@@ -95,12 +95,19 @@ public class PaymentServiceImpl implements PaymentService {
 		log.info("result1: " + result1);
 		
 		//예약 상태 변경
-		int result2 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
+		int result2 = paymentMapper.reserveCancel(paymentVO.getPay_res_rid());
 		log.info("result2: " + result2);
 		
         return (result1 + result2) == 2 ? true : false;
 	}
-
-
+	
+	// 결제 취소
+	@Override
+	public int payCancel(int pay_pid) {
+		
+		int result = paymentMapper.payCancel(pay_pid);
+		return result;
+	}
+	
 
 }
