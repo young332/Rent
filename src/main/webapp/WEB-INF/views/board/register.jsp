@@ -31,42 +31,34 @@ $(function(){
         </div>
 <div class="row">
 		<div class="col-md-2">
-		</div>
-		<div class="col-md-8">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>
-							#
-						</th>
-						<th>
-							제목
-						</th>
-						<th>
-							내용
-						</th>
-						<th>
-							Status
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							글번호
-						</td>
-						<td>
-							<input type="text" name="board_title" id="board_title">
-						</td>
-						<td>
-							<input type="text" name="board_content" id="board_content">
-						</td>
-						<td>
-							Default
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			</div>
+			<div class="col-md-8">
+				<form role="form" action="/board/register" method="post">
+				<div class="form-group">
+					<label for="board_title">
+						제목
+					</label>
+					<input type="text" class="form-control" id="board_title" name="board_title"
+					value="${BoardVO.board_title}" required/>
+				</div>
+				<div class="form-group">
+					<label for="board_content">
+						내용
+					</label>
+					<textarea class="form-control" id="board_content" name="board_content"
+					required>${BoardVO.board_content}</textarea>
+				</div>
+				<div class="form-group">
+				<label for="board_content">
+						조회수
+					</label>
+					<input type="text" class="form-control" id="readcount" name="readcount"
+					value="${BoardVO.readcount}"	required/>
+				</div>
+				<button type="submit" class="btn btn-primary">
+					완료
+				</button>
+			</form>
 		</div>
 		<div class="col-md-2">
 		</div>
