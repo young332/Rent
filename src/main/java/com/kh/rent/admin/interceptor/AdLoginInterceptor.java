@@ -30,12 +30,13 @@ public class AdLoginInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		/*
-		 * log.info("preHandle.....preHandle"); HttpSession session =
-		 * request.getSession(); MemberVO memberVO =
-		 * (MemberVO)session.getAttribute("loginInfo"); if(memberVO == null) {
-		 * response.sendRedirect("/admin/login"); return false; }
-		 */
+		
+		log.info("preHandle..login");
+		HttpSession session = request.getSession();
+		MemberVO memberVO = (MemberVO)session.getAttribute("loginInfo");
+		if(memberVO != null ) {
+			session.removeAttribute("loginInfo");
+		}
 		return true;
 	}
 	

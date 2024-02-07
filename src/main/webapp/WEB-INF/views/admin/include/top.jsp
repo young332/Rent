@@ -56,8 +56,8 @@
     <script src="/resources/assets/libs/chart-am4/animated.js"></script>
 
     <!-- Demo -->
-    <script src="/resources/assets/js/demo.js"></script>
-    <script src="/resources/assets/js/analytics.js"></script>
+    <!-- <script src="/resources/assets/js/demo.js"></script> -->
+    <!-- <script src="/resources/assets/js/analytics.js"></script> -->
     <!-- <script src="/resources/assets/js/pages/dashboards_index.js"></script> -->
     
     <script>

@@ -5,44 +5,61 @@
 	//회원정보수정하기
 	function fn_carInfoModify(car_index) {
 			
-		   alert("수정")
-		   /* $.ajax({
+		   //alert("수정")
+		    $.ajax({
 		    type: 'GET',
-		    url: '/admin/member/getMemberInfo',  
-		    data: { mem_id: mem_id },
+		    url: '/admin/car/getCarInfo',  
+		    data: {car_index : car_index },
 		    success: function (data) {
 		      console.log('Success:', data);
 	
 		      
-		        $("#mem_id").val(data['mem_id']);
-			    $("#mem_name").val(data['mem_name']);
-			    $("#mem_adminck").val(data['mem_adminck']);
-			    var mem_adminck = data['mem_adminck'];
-			    if (mem_adminck == 0) {
-		        	$("#mem_adminck").val("0").prop("selected", true);
+		        $("#car_name").val(data['car_name']);
+			    $("#car_number").val(data['car_number']);
+			    $("#car_company").val(data['car_company']);
+			    $("#car_size").val(data['car_size']);
+			    $("#car_fuel").val(data['car_fuel']);
+			    $("#car_cost").val(data['car_cost']);
+			    var op_carseat = data['op_carseat'];
+			    if (op_carseat == "Y") {
+		        	$('input[name="op_carseat"]').prop("selected", true);
 		        } 
-		        if (mem_adminck == 1) {
-		        	$("#mem_adminck").val("1").prop("selected", true);
+			    var op_navi = data['op_navi'];
+			    if (op_navi == "Y") {
+		        	$('input[name="op_navi"]').prop("selected", true);
 		        }
-		        if (mem_adminck == 2) {
-		        	$("#mem_adminck").val("2").prop("selected", true);
+			    var op_bt = data['op_bt'];
+			    if (op_bt == "Y") {
+		        	$('input[name="op_bt"]').prop("selected", true);
 		        }
+			    var op_cam = data['op_cam'];
+			    if (op_cam == "Y") {
+		        	$('input[name="op_cam"]').prop("selected", true);
+		        }
+
+			    $("#create_user").val(data['create_user']);
+			    $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
 			    
-			    
-			    
-			    $("#mem_birth").val(data['mem_birth']);
-			    $("#mem_phone").val(data['mem_phone']);
-			    $("#mem_email").val(data['mem_email']);
-			    $("#mem_zip_code").val(data['mem_zip_code']);
-			    $("#mem_addr").val(data['mem_addr']);
-	
+
 		      // 모달 창 열기
-		      $("#MembermodifyModal").modal("show");
+		      $("#CarmodifyModal").modal("show");
 		    
 		    } 
 		    
-		  }); */
+		  }); 
 		}
+	
+	function updateCarInfo() {
+        var selectedOption = $("#car_name option:selected");
+        var company = selectedOption.data("company");
+        var size = selectedOption.data("size");
+
+        $("#car_company").val(company);
+        $("#car_size").val(size);
+        
+    }
+	
+	
 </script>
     <!-- [ content ] Start -->
 <div class="container-fluid flex-grow-1 container-p-y">
@@ -180,72 +197,126 @@
 <!-- 회원정보 수정 -->
 <div class="row">
 	<div class="col-md-12">
-		<div class="modal fade" id="MembermodifyModal" role="dialog"
+		<div class="modal fade" id="CarmodifyModal" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg " role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="messageModalLabel">회원정보 수정</h5>
+						<h5 class="modal-title" id="messageModalLabel">차량정보 수정</h5>
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">×</span>
 						</button>
 					</div>
 
 					<div class="modal-body">
-						<form id="formModify" action="/admin/member/memberModify_submit" method="post">
-						<div class="form-row">
-						    <div class="form-group col-md-6">
-						      <label for="id">아이디</label>
-						      <input type="text" class="form-control" id="mem_id" name="mem_id" value="" readonly>
-						    </div>
-						    <div class="form-group col-md-6">
-						      <label for="name">이름</label>
-						      <input type="text" class="form-control" id="mem_name" name="mem_name" value="" readonly>
-						    </div>
-					    </div>
-					    <div class="form-group">
-						    <label for="pwd">비밀번호</label>
-						    <div style="display: flex; align-items: center;">
-					      	<input type="password" class="form-control" id="mem_pw" name="mem_pw" 
-					      		   value="" style="margin-right: 10px;" readonly>
-					     	<button type="button" id="pwdChange" class="btn btn-primary" style="flex-shrink: 0;">변경</button>
-					      </div>
+						<form id="formModify" action="/admin/car/CarInfoModify" method="post">
+						<!-- 기본 정보 -->
+					<div class="form-row">
+						<div class="form-group col-md-6 mb-3">
+							<label for="car_name" class="form-label">차량 이름</label> 
+							<select name="car_name" class="custom-select" id="car_name" onchange="updateCarInfo()">
+								<c:forEach var="car" items="${carNamelist}">
+									<option value="${car.code_name}" data-company="${car.ref_1}" data-size="${car.ref_2}">${car.code_name}</option>
+								</c:forEach>
+							</select>
 						</div>
-						<div class="form-row">
-						    <div class="form-group col-md-6">
-								<label class="form-label">회원구분</label>
-								<select name="mem_adminck" class="custom-select" id="mem_adminck">
-									<option value="0" selected>일반회원</option>
-									<option value="1">관리자</option>
-									<option value="2">비회원</option>
-								</select>
-							</div>
-						    <div class="form-group col-md-6">
-						      <label for="birthDay">생년월일</label>
-						      <input type="date" class="form-control" id="mem_birth" name="mem_birth" value="" required>
-						    </div>
-					    </div>
-					    <div class="form-row">
-						    <div class="form-group col-md-6">
-						      <label for="phoneNumber">휴대폰 번호</label>
-						      <input type="text" class="form-control" id="mem_phone" name="mem_phone" value="" required>
-						    </div>
-						    <div class="form-group col-md-6">
-						      <label for="email">이메일</label>
-						      <input type="email" class="form-control" id="mem_email" name="mem_email" value="" required>
-						    </div>
+	
+						<div class="form-group col-md-6 mb-3">
+							<label for="car_number" class="form-label">차량 번호</label> <input
+								type="text" class="form-control" id="car_number"
+								name="car_number" required>
 						</div>
-					    <div class="form-group">
-			              <small>주소</small>
-			              <div class="input-group" style="display: flex; align-items: center;">
-			              	<input type="text"  class="form-control"  id="mem_zip_code" name="mem_zip_code" 
-			              		   value="" style="margin-right: 10px;" readonly>
-							<span class="input-group-btn">
-							<input type="button"  onclick="openZipSearch();" value="우편번호 찾기" class="btn btn-secondary">
-							</span>
-							</div>
-							<input type="text" class="form-control" id="mem_addr" name="mem_addr" readonly="readonly" value="">
-			              </div>
+					</div>
+	
+					<!-- 기타 정보 -->
+					<div class="form-row">
+						<div class="form-group col-md-6 mb-3">
+							<label for="car_company" class="form-label">제조사</label> <input
+								type="text" class="form-control" id="car_company"
+								name="car_company">
+						</div>
+	
+						<div class="form-group col-md-6 mb-3">
+							<label for="car_size" class="form-label">크기</label> <input
+								type="text" class="form-control" id="car_size" name="car_size">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6 mb-5">
+							<label for="car_fuel" class="form-label">연료 종류</label> <input
+								type="text" class="form-control" id="car_fuel" name="car_fuel">
+						</div>
+						<div class="form-group col-md-6 mb-5">
+							<label for="car_cost" class="form-label">시간당 차량 가격</label> <input
+								type="number" class="form-control" id="car_cost" name="car_cost"
+								required>
+						</div>
+					</div>
+	
+					<!-- 옵션 정보 -->
+	
+					<p class="font-weight-bold mb-5">추가 옵션</p>
+					<div class="form-row">
+						<div class="form-group col-md-3 mb-5">
+							<label>카시트</label> <label class="custom-control custom-radio">
+								<input name="op_carseat" value="Y" type="radio"
+								class="custom-control-input rdoY" checked> <span
+								class="custom-control-label">사용</span>
+							</label> <label class="custom-control custom-radio"> <input
+								name="op_carseat" value="N" type="radio"
+								class="custom-control-input rdoN"> <span
+								class="custom-control-label">미사용</span>
+							</label>
+						</div>
+	
+						<div class="form-group col-md-3 mb-5">
+							<label>내비게이션</label> <label class="custom-control custom-radio">
+								<input name="op_navi" value="Y" type="radio"
+								class="custom-control-input rdoY" checked> <span
+								class="custom-control-label">사용</span>
+							</label> <label class="custom-control custom-radio"> <input
+								name="op_navi" value="N" type="radio"
+								class="custom-control-input rdoN"> <span
+								class="custom-control-label">미사용</span>
+							</label>
+						</div>
+	
+						<div class="form-group col-md-3 mb-5">
+							<label>블루투스</label> <label class="custom-control custom-radio">
+								<input name="op_bt" value="Y" type="radio"
+								class="custom-control-input rdoY" checked> <span
+								class="custom-control-label">사용</span>
+							</label> <label class="custom-control custom-radio"> <input
+								name="op_bt" value="N" type="radio"
+								class="custom-control-input rdoN"> <span
+								class="custom-control-label">미사용</span>
+							</label>
+						</div>
+	
+						<div class="form-group col-md-3 mb-5">
+							<label>후방 카메라</label> <label class="custom-control custom-radio">
+								<input name="op_cam" value="Y" type="radio"
+								class="custom-control-input rdoY" checked> <span
+								class="custom-control-label">사용</span>
+							</label> <label class="custom-control custom-radio"> <input
+								name="op_cam" value="N" type="radio"
+								class="custom-control-input rdoN"> <span
+								class="custom-control-label">미사용</span>
+							</label>
+						</div>
+					</div>
+					<!-- 기타 정보 -->
+					<div class="form-group mb-3">
+						<label for="create_user" class="form-label">등록자</label><input
+							type="text" class="form-control" id="create_user"
+							name="create_user" required>
+					</div>
+					<div class="form-group">
+						<img id="file" src="" style="width: 100px; height: 100px" alt="Image">
+						<label class="form-label w-100">차량사진</label> <input type="file"
+							name="image_path"> <small class="form-text text-muted">차량이미지를
+							첨부하세요.</small>
+					</div>
 						<hr>
 						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>

@@ -50,6 +50,8 @@
 		class="com.kh.rent.admin.interceptor.MenuInterceptor"></beans:bean>
 	<beans:bean id="adLoginInterceptor"
 	class="com.kh.rent.admin.interceptor.AdLoginInterceptor"></beans:bean>
+	<beans:bean id="adauthInterceptor"
+		class="com.kh.rent.admin.interceptor.AdAuthInterceptor"></beans:bean>
 
 	<interceptors>
     
@@ -69,11 +71,22 @@
 			<mapping path="/admin/" />
 			<mapping path="/admin/menu/*" />
 			<mapping path="/admin/**/*" />
+			<exclude-mapping path="/admin/login"/>
 			<exclude-mapping path="/admin/menu/submenus/**/*"/>
 			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
 			<exclude-mapping path="/admin/member/getMemberInfo"/>
+			<exclude-mapping path="/admin/car/getCarInfo"/>
 
 			<beans:ref bean="menuInterceptor" />
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/member/" />
+			<mapping path="/admin/menu/" />
+			<mapping path="/admin/car/" />
+			<mapping path="/admin/commonCode/" />
+			<exclude-mapping path="/admin/login"/>
+			<beans:ref bean="adauthInterceptor" />
 		</interceptor>
 		
 		<interceptor>

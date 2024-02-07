@@ -11,11 +11,13 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,6 +26,7 @@ import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.FileVO;
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.service.CarInfoService;
+import com.kh.rent.login.domain.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -35,7 +38,7 @@ public class CarInfoController {
 	@Autowired
 	private CarInfoService carInfoService;
 	
-	 // 업로드된 파일이 저장될 디렉토리 경로
+	// 업로드된 파일이 저장될 디렉토리 경로
     //@Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
 	//@Value("${upload.directory}")
 	@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
@@ -94,5 +97,27 @@ public class CarInfoController {
         
         return "redirect:/admin/car/ListCar";
     }
+    
+    
+	@GetMapping(value = "/getCarInfo", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+    public CarInfoVO getMemberInfo(@RequestParam Integer car_index) {
+		System.out.println("car_index: " + car_index);
+		CarInfoVO carInfoVO = carInfoService.selectCarInfoByIndex(car_index);
+        return carInfoVO;
+    }
+    
+    
+    @PostMapping("/CarInfoModify")
+    public String CarInfoModify(CarInfoVO carInfoVO, RedirectAttributes rttr) {
+    	int count = carInfoService.updateCarInfo(carInfoVO);
+    	if (count == 1) {
+            rttr.addFlashAttribute("ModifyCarName", carInfoVO.getCar_number());
+        }
+    	
+    	return "redirect:/admin/car/ListCar";
+    }
+    
+    
 
 }
