@@ -133,6 +133,7 @@ $(function() {
 	            return; // 함수 종료
 	        }
 		$("#frmLicense").submit();
+		//alert("예약이 완료되었습니다.");
 		
 	});
 	
@@ -180,8 +181,11 @@ $(function() {
 		        success: function(rData) {
 		            console.log("rData:", rData);
 		            if (rData=="success") {
+		            	alert("예약이 완료되었습니다.");
 		            	location.href = "/";
-		            }
+		            } else {
+	                    alert("예약에 실패했습니다. 다시 시도해주세요.");
+	                }
 		        }
 		    });
 	    
