@@ -388,6 +388,7 @@ $(function() {
 	            var offDate = new Date($("#top_book_off_date").val());
 	            var timeDiff = offDate - pickDate;
 				
+	            //반납일이 대여일보다 이전 날짜 선택시 알람
 	            if (offDate < pickDate) {
 	                alert("반납일을 다시 입력해주세요.");
 	                $("#top_book_off_date").val(""); 
