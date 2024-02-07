@@ -150,8 +150,7 @@ public class ReserveController {
 
 	    return "redirect:/myPage/reservationList";
 	}
-	
-	
+
 	
 	@PostMapping("/nonmeminsert")
 	@ResponseBody
