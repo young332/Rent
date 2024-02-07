@@ -11,8 +11,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.GetCarNameDTO;
+import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
-import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -84,10 +84,17 @@ public class MyPageServiceTests {
 			log.info("result:" + result);
 		}
 		
+	// 예약정보 현재시각기준 업데이트
+	@Test
+	public void testUpdateTBLReserve() {
+		String mem_id = "MEMBER02";
+		myPageService.updateTBLReserve(mem_id);
+	}	
+		
 	// 예약정보 조회하기
 	@Test
 	public void testReserveList() {
-		List<ReserveVO> list = myPageService.getReserveList("MEMBER02");
+		List<GetStatusDTO> list = myPageService.getReserveList("MEMBER02");
 		log.info("Reservelist:" + list);
 	}
 	
@@ -101,5 +108,13 @@ public class MyPageServiceTests {
 		String car_name = myPageService.getCarName(getCarNameDTO);
 		log.info("car_name:" + car_name);
 	}
-
+	
+	// 예약취소
+	@Test
+	public void testCancleReservation() {
+		int res_rid = 22;
+		int result = myPageService.cancelReservation(res_rid);
+		log.info("cancleResult:" + result);
+	}
+	
 }
