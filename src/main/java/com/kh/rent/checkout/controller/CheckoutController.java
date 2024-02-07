@@ -108,11 +108,18 @@ public class CheckoutController {
     	int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
     	paymentVO.setPay_mem_id(mem_id);
     	
-    	boolean result = paymentService.paymentCancel(paymentVO);
-
+    	List<ReserveVO> reservelist = paymentService.getReserveList(mem_id);
+    	model.addAttribute(reservelist);
     	
-  	
-     
+    	log.info("reservelist" + reservelist);
+    	
+    	boolean result = paymentService.paymentCancel(paymentVO);
+    	log.info("result: " + result);
+    	if (result) {
+    		loginInfo.setMem_point(loginInfo.getMem_point() + totalPay);
+    		session.setAttribute("loginInfo", loginInfo);
+    	}
+
         // 결제 취소가 완료되면 다음 페이지로 리다이렉트
         return "redirect:/myPage/reservationList";
     }
