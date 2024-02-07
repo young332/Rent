@@ -20,9 +20,6 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentMapper paymentMapper; 
 	
-	@Autowired 
-	private MemberMapper memberMapper;
-	
 //	@Override
 //	public boolean addPayment(PaymentDTO paymentDTO) {
 //		int count = paymentMapper.addPaymentRecord(paymentDTO);
@@ -35,10 +32,10 @@ public class PaymentServiceImpl implements PaymentService {
 		return paymentMapper.getMemberPoint(mem_point);
 	}
 
-//	@Override
-//	public int getPayNonResRid(int pay_res_rid) {
-//		return paymentMapper.getPayNonResRid(pay_res_rid);
-//	}
+	@Override
+	public int getPayNonResRid(int pay_res_rid) {
+		return paymentMapper.getPayNonResRid(pay_res_rid);
+	}
 
 	@Transactional
 	@Override
@@ -51,6 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
 		log.info("result2:" + result2);
 		// 예약 상태 변경
 		log.info("res_rid:" + paymentVO.getPay_res_rid());
+		
 //		int result3 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
 //		log.info("result3:" + result3);
 		
@@ -88,23 +86,19 @@ public class PaymentServiceImpl implements PaymentService {
 	// 주문취소
 	@Transactional //여러 쿼리가 실행이 되기 때문에 하나의 단위로 동작을 위해
 	@Override
-	public void paymentCancle(PaymentDTO paymentDTO) {
-			
-		// 주문 취소 DB
-        paymentMapper.paymentCancle(paymentDTO);
-
-        // 돈, 포인트, 재고 변환
-        // 회원 정보 가져오기
-   //     ReserveVO reserveVO = paymentMapper.getReserve(paymentDTO.getRes_rid());
-   //     String mem_id = reserveVO.getRes_mem_id();
-   //     int res_totalpay = reserveVO.getRes_totalpay();
-
-        // 포인트 차감
-   //     int calPoint = paymentMapper.getMemberPoint(mem_id) + res_totalpay;
-   //     paymentMapper.deductPayment(mem_id, calPoint);
-
-        // 예약 상태 변경
-        paymentMapper.reserveStatus(paymentDTO.getRes_rid());
+	public boolean paymentCancel(PaymentVO paymentVO) {	
+		
+        //결제 기록 내역
+				
+		//회원 포인트 증가
+		int result1 = paymentMapper.refundPay(paymentVO);
+		log.info("result1: " + result1);
+		
+		//예약 상태 변경
+		int result2 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
+		log.info("result2: " + result2);
+		
+        return (result1 + result2) == 2 ? true : false;
 	}
 
 

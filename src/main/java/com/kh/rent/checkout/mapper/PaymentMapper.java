@@ -28,7 +28,7 @@ public interface PaymentMapper {
 	public List<ReserveVO> getResRid(String mem_id);
 	
 	// 비회원 번호 조회
-//	public int getPayNonResRid(int pay_res_rid);
+	public int getPayNonResRid(int pay_res_rid);
 	
 	// 예약상태 확인
 	public int reserveStatus(int pay_res_rid); 
@@ -40,8 +40,9 @@ public interface PaymentMapper {
 	public List<ReserveVO> getReserveList(String mem_id);
 	
 	// 결제 상태 변경
-	public void paymentCancle(PaymentDTO paymentDTO);
+	public int paymentCancel(int pay_res_rid);
 	
-	// 예약 정보(결제 취소)
-	public void getReserve(PaymentDTO paymentDTO);
+	// 포인트 증가(환불)
+	public int refundPay(PaymentVO paymentVO);
+
 }

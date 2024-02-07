@@ -10,7 +10,13 @@
 		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type}, '결제완료')
 	</insert>
 	
-	
+	 <!-- 예약 상태 변경 -->
+    <update id="reserveStatus">
+    	update TBL_RESERVE set
+		res_status = '결제완료'
+		where res_rid = #{pay_res_rid}
+    </update>
+		
 	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
 		SELECT pay_res_rid, pay_type, pay_mem_id, pay_date
 		FROM TBL_PAYMENT
@@ -26,7 +32,7 @@
     	ON p.pay_res_rid = r.res_rid;
     </select>
 	
-	<!-- 포인트 차감 -->
+	<!-- 포인트 차감 (결제) -->
 	<update id="deductPayment" parameterType="map">
 		update TBL_MEMBER set mem_point = mem_point - (select res_totalpay 
 													   from TBL_RESERVE
@@ -41,6 +47,7 @@
 		where mem_id = #{pay_mem_id};	
 	</select>
 	
+	<!-- res_rid 불려오기 -->
 	<select id="getResRid" resultType="com.kh.rent.reserve.domain.ReserveVO">
         select * from TBL_RESERVE
  		where res_mem_id = #{mem_id}
@@ -59,12 +66,6 @@
         WHERE non_rid = #{pay_res_rid}
     </select>
     
-    <!-- 예약 상태 변경 -->
-    <update id="reserveStatus">
-    	update TBL_RESERVE set
-		res_status = '결제완료'
-		where res_rid = #{pay_res_rid}
-    </update>
     
     <!-- res_totalpay 불려오기 -->
     <select id="getTotalPay" resultType="int">
@@ -73,18 +74,19 @@
 		where res_rid = #{pay_res_rid}
     </select>
     
-    <!--결제 취소-->
-    <update id="paymentCancle">
-	    update TBL_PAYMENT
-	    set pay_status = '결제취소'
-	    where pay_res_rid = #{pay_res_rid}
+    <!-- 예약 상태 변경(결제 취소) -->
+    <update id="reserveCancle">
+    	update TBL_RESERVE set
+		res_status = '결제취소'
+		where res_rid = #{pay_res_rid}
+    </update>
+    
+	<!-- 포인트 증가 (환불) -->
+	<update id="refundPay" parameterType="map">
+		update TBL_MEMBER set mem_point = mem_point + (select res_totalpay from TBL_RESERVE
+														from TBL_RESERVE
+														where res_rid = #{pay_res_rid})
+		where mem_id = #{pay_mem_id}
 	</update>
 	
-	<!--예약 정보(결제 취소)-->
-	<select id="getReserve" resultType="com.kh.rent.reserve.domain.reserveVO">
-		select * from TBL_RESERVE
-		where res_rid = #{res_rid}
-	</select>
-	
-
 </mapper>

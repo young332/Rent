@@ -33,6 +33,7 @@ public class CheckoutController {
 	
 	@GetMapping("/payment")
 	public void paymentGet(@ModelAttribute("res_rid") int res_rid, HttpSession session, Model model) {
+		
 		log.info("paymentGet");
 
 		int totalPay = paymentService.getTotalPay(res_rid);
@@ -77,17 +78,41 @@ public class CheckoutController {
 	    return "redirect:/myPage/reservationList";
 	    
     }
+    
+    @GetMapping("/pay_cancel")
+    public void paycancelGet(@ModelAttribute("res_rid") int res_rid, HttpSession session, Model model) {
+    	
+    	log.info("결제취소");
+    	
+    	int totalPay = paymentService.getTotalPay(res_rid);
+    	
+//    	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+//    	String mem_id = loginInfo.getMem_id();
+//    	List<ReserveVO> reservelist = paymentService.getReserveList(mem_id);
+//    	model.addAttribute(reservelist);
+    	
+    	model.addAttribute("totalPay", totalPay);
+    	
+    }
 	
     @PostMapping("/pay_cancel")
-    public String paycancelPost(@RequestParam("pay_res_rid") int pay_res_rid) {
-        
-    	log.info("결제 취소");
-        
-        // 결제 상태 변경 서비스 호출
-        paymentService.paymentCancle(pay_res_rid);
-        
-        
-        
+    public String paycancelPost(PaymentVO paymentVO, Model model, 
+    								HttpSession session,
+    								RedirectAttributes rttr) {
+    	log.info("paymentVO: " + paymentVO);
+    	
+    	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+    	String mem_id = loginInfo.getMem_id();
+    	log.info("mem_id:" + mem_id);
+    	
+    	int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    	paymentVO.setPay_mem_id(mem_id);
+    	
+    	boolean result = paymentService.paymentCancel(paymentVO);
+
+    	
+  	
+     
         // 결제 취소가 완료되면 다음 페이지로 리다이렉트
         return "redirect:/myPage/reservationList";
     }

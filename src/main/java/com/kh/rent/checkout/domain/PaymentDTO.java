@@ -1,5 +1,7 @@
 package com.kh.rent.checkout.domain;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +34,8 @@ public class PaymentDTO {
 	private String pay_mem_id;
 	
 	private String pay_type;
+	
+	private Date pay_date;
 	
 	
 }

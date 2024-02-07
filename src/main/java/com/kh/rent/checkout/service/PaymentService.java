@@ -30,12 +30,12 @@ public interface PaymentService {
 	public List<ReserveVO> getReserveList(String mem_id);
 	
 	// 비회원 번호 조회
-//	public int getPayNonResRid(int pay_res_rid);
+	public int getPayNonResRid(int pay_res_rid);
 	
 	// 예약 금액
 	public int getTotalPay(int pay_res_rid);
 	
-	// 결제 상태 변경
-	public void paymentCancle(PaymentDTO paymentDTO);
-
+	// 결제취소
+	public boolean paymentCancel(PaymentVO paymentVO);
+	
 }
