@@ -16,7 +16,7 @@
 <!-- 		res_status = '결제완료' -->
 <!-- 		where res_rid = #{pay_res_rid} -->
     	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
-		res_status = '예약중'
+		res_status = '예약완료'
 		where res_rid = #{pay_res_rid}
 		and pay_status = '결제완료'
     </update>
