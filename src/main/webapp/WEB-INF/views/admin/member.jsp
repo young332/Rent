@@ -23,7 +23,9 @@
 $(function() {
 	// 비밀번호변경 모달열기
 	$("#pwdChange").click(function() {
-		$("#password1").val("");
+		var password1 = $("#mem_pw").val();
+		console.log(password1);
+		$("#password1").val(password1);
 		$("#newPassword").val("");
 		$("#confirmPassword").val("");
 		$("#invalid-message1").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.");
@@ -354,7 +356,7 @@ function openZipSearch() {
 							<span aria-hidden="true">×</span>
 						</button>
 						</div>
-						<div class="modal-body">
+ 						<div class="modal-body">
 							<label for="pwd">현재 비밀번호</label>
 							<input type="password" class="form-control" id="password1">
 						</div>

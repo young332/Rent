@@ -47,9 +47,26 @@
 		where mem_id = #{mem_id}
 	</delete>
 	
+	<!-- 예약정보 현재시각기준 업데이트 -->
+	<update id="updateTBLReserve">
+	<![CDATA[
+		update rent001.TBL_RESERVE
+		set res_status = 
+   			case 
+	        when res_rental_date <= now() and res_return_date >= now() then '이용중'
+	        when res_return_date < now() then '이용완료'
+	        else res_status
+    	end,
+    	res_modi_date = NOW()
+    	where res_mem_id = #{mem_id}
+   	]]>
+	</update>
+	
 	<!-- 예약정보 조회하기(한사람) -->
- 	<select id="getReserveList" resultType="com.kh.rent.reserve.domain.ReserveVO">
- 		select * from TBL_RESERVE
+ 	<select id="getReserveList" resultType="com.kh.rent.myPage.domain.GetStatusDTO">
+ 		select r.*, p.pay_status, p.pay_pid
+		from TBL_RESERVE as r
+		left join TBL_PAYMENT as p on r.res_rid = p.pay_res_rid
  		where res_mem_id = #{mem_id}
   	</select>
 	
@@ -58,7 +75,23 @@
 		select ci.car_name
 		from rent001.TBL_RESERVE as r
 		join rent001.TBL_CAR_INFO as ci on r.res_car_id = ci.car_index
-		where r.res_rid = #{res_rid} and r.res_car_id = #{res_car_id};
+		where r.res_rid = #{res_rid} and r.res_car_id = #{res_car_id}
 	</select>
+	
+	<!-- 예약취소 -->
+	<update id="cancelReservation">
+		update rent001.TBL_RESERVE
+		set res_status = '예약취소'
+		where res_rid = #{res_rid}
+		and res_status = '예약중'
+	</update>
+	
+	<!-- 예약정보 조회하기(비회원) -->
+ 	<select id="getNonMemberList" resultType="com.kh.rent.reserve.domain.NonMemberVO">
+ 		select *
+ 		from rent001.TBL_NONMEMBER
+ 		where non_name = #{non_name}
+ 		and non_tel = #{non_tel}
+  	</select>
 	
 </mapper>

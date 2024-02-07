@@ -102,33 +102,34 @@
     <script src="/resources/assets/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
     <!-- <!-- Demo -->
-    <script src="/resources/assets/js/demo.js"></script><script src="assets/js/analytics.js"></script> -->
+    <!-- <script src="/resources/assets/js/demo.js"></script>
+    <script src="assets/js/analytics.js"></script> -->
     
     <script>
-$(function(){
-	var loginResult = "${loginFailure}";
-	if(loginResult == "true"){
-		alert("아이디와 비밀번호를 다시 확인해주세요");
-			$("#mem_id").focus();
-		}
-
-	//쿠키 아이디
-	var cookie = document.cookie;
-		console.log("cookie:",cookie);
-		var cookies = cookie.split(";");
-		console.log("cookies:" , cookies);
-		for (var v = 0; v < cookies.length; v++) {
-			var aCookie = cookies[v].split("=");
-			if (aCookie[0].trim() == "savedId") {
-				var savedId = aCookie[1];
-				console.log("savedId:", savedId);
-				$("#mem_id").val(savedId);
-				$("#mem_pw").focus();
-				break;
-			}
-		}
-	
-	});
+		$(function(){
+			var loginResult = "${loginFailure}";
+			if(loginResult == "true"){
+				alert("아이디와 비밀번호를 다시 확인해주세요");
+					$("#mem_id").focus();
+				}
+		
+			//쿠키 아이디
+			var cookie = document.cookie;
+				console.log("cookie:",cookie);
+				var cookies = cookie.split(";");
+				console.log("cookies:" , cookies);
+				for (var v = 0; v < cookies.length; v++) {
+					var aCookie = cookies[v].split("=");
+					if (aCookie[0].trim() == "savedId") {
+						var savedId = aCookie[1];
+						console.log("savedId:", savedId);
+						$("#mem_id").val(savedId);
+						$("#mem_pw").focus();
+						break;
+					}
+				}
+			
+			});
 
 </script>
     

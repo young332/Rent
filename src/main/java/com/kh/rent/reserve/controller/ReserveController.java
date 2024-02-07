@@ -3,6 +3,7 @@ package com.kh.rent.reserve.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.reserve.domain.LicenseDTO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 import com.kh.rent.reserve.domain.ReserveDTO;
+import com.kh.rent.reserve.domain.ReserveInfoDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
+import com.kh.rent.reserve.service.NonMemberService;
 import com.kh.rent.reserve.service.ReserveService;
 
 import lombok.extern.log4j.Log4j;
@@ -30,6 +38,8 @@ import lombok.extern.log4j.Log4j;
 public class ReserveController {
 	@Autowired
 	private ReserveService reserveService;
+	@Autowired
+	private NonMemberService nonMemberService;
 	
 	@GetMapping("/reserve")
 	public void reserve( CarInfoVO carinfoVO, HttpSession session, Model model) {
@@ -39,6 +49,33 @@ public class ReserveController {
 		log.info("reserve...");
 	}
 	
+	@GetMapping("/licenseinfo")
+	public String licenseinfo(ReserveInfoDTO reserveInfoDTO,HttpSession session) {
+//		String topbookoffdate = reserveInfoDTO.getTop_book_off_date();
+//		String topbookpickdate = reserveInfoDTO.getTop_book_pick_date();
+//		String carindex = reserveInfoDTO.getCar_index();
+//		String totalpay = reserveInfoDTO.getTotalPay();
+//		
+//	    log.info("topbookoffdate:"+topbookoffdate);
+//	    log.info("topbookpickdate:"+topbookpickdate);
+//	    log.info("carindex:"+carindex);
+//	    log.info("totalpay:"+totalpay);
+	    log.info("reserveInfoDTO:"+reserveInfoDTO);
+	    
+	    session.setAttribute("reserveInfoDTO", reserveInfoDTO);
+//	    session.setAttribute("topbookpickdate", topbookpickdate);
+//	    session.setAttribute("carindex", carindex);
+//	    session.setAttribute("totalpay", totalpay);
+	    
+	    
+		    
+		    
+		    return "reserve/licenseinfo";
+	}
+		  
+		
+
+
 	// 선택
 	@GetMapping("/reservecars")
 	public String reservecars(@RequestParam(name = "car_company", required = false) String carCompany,
@@ -48,6 +85,7 @@ public class ReserveController {
                            @RequestParam(name = "op_navi", required = false) String opNavi,
                            @RequestParam(name = "op_bt", required = false) String opBt,
                            @RequestParam(name = "op_cam", required = false) String opCam,
+                           
                           
 				            Model model) {
 			log.info("Selected carCompany: " + carCompany);
@@ -70,9 +108,10 @@ public class ReserveController {
 			
 			
 			
-			
 			List<ReserveDTO> checkcarlist = reserveService.selectCheck(reserveDTO);
 			model.addAttribute("checkcarlist", checkcarlist);
+
+			
 			
 			log.info("checkcarlist: " + checkcarlist);
 			
@@ -81,49 +120,65 @@ public class ReserveController {
 	}
 	
 	
-	@GetMapping("/licenseinfo")
-	public String licenseinfo(HttpSession session, Model model) {
-	    MemberVO loginInfo = (MemberVO) session.getAttribute("loginInfo");
-	    if (loginInfo != null) {
-	        model.addAttribute("loginInfo", loginInfo);
-	    }
-	    
-	    return "reserve/licenseinfo";
-	}
-	
-	@PostMapping("/licenseinfo")
-	public String processLicenseInfo(@RequestParam("name") String name,
-	                                 @RequestParam("tel") String tel,
-	                                 @RequestParam("birthdate") String birthdate,
-	                                 @RequestParam("licenseType") String licenseType,
-	                                 @RequestParam("licensenum") String licensenum,
-	                                 Model model,
-	                                 HttpSession session) {
 
-	    // Store the information in the model for later retrieval
-	    model.addAttribute("name", name);
-	    model.addAttribute("tel", tel);
-	    model.addAttribute("birthdate", birthdate);
-	    model.addAttribute("licenseType", licenseType);
-	    model.addAttribute("licensenum", licensenum);
-
-	    // Additionally, you can save this information to the session if needed
-	    // Example:
-	    session.setAttribute("name", name);
-	    session.setAttribute("tel", tel);
-	    session.setAttribute("birthdate", birthdate);
-	    session.setAttribute("licenseType", licenseType);
-	    session.setAttribute("licensenum", licensenum);
-
-	    // Redirect to the payment page
-	    return "redirect:/checkout/payment";
-	}
-
-	
 	@PostMapping("/reserveinsert")
-	public String reserveinsert(ReserveVO reserveVO) {
-		reserveService.reserveinsert(reserveVO);
-		log.info("reserveVO"+reserveVO);
-		return "redirect:/checkout/payment";
+	public String reserveinsert(ReserveVO reserveVO, HttpSession session, Model model) {
+	   
+		ReserveInfoDTO reserveInfoDTO = (ReserveInfoDTO) session.getAttribute("reserveInfoDTO");
+		String topbookoffdate = (String) reserveInfoDTO.getTop_book_off_date();
+	    String topbookpickdate = (String) reserveInfoDTO.getTop_book_pick_date();
+	    String carindex = (String) reserveInfoDTO.getCar_index();
+	    String totalPay = (String) reserveInfoDTO.getTotalPay();
+	    
+	    totalPay = totalPay.replaceAll(",", "");
+	    
+	    log.info("inserttopbookoffdate:"+topbookoffdate);
+	    log.info("inserttopbookpickdate:"+topbookpickdate);
+	    log.info("insertcarindex:"+carindex);
+	    log.info("inserttotalpay:"+totalPay);
+	    
+	    reserveVO.setRes_return_date(topbookoffdate);
+	    reserveVO.setRes_rental_date(topbookpickdate);
+	    reserveVO.setRes_car_id(carindex);
+	    reserveVO.setRes_totalpay(Integer.parseInt(totalPay));
+	    
+	    MemberVO memberVO = (MemberVO) session.getAttribute("loginInfo");
+	    reserveVO.setRes_mem_id(memberVO.getMem_id());
+	    log.info("reserveVO:"+reserveVO);
+	    
+	    reserveService.reserveinsert(reserveVO);
+
+	    return "redirect:/myPage/reservationList";
 	}
+
+	
+	@PostMapping("/nonmeminsert")
+	@ResponseBody
+	public String Nonmeminsert(@RequestBody NonMemberVO nonMemberVO, HttpSession session) {
+
+		log.info("nonMemberVO:" + nonMemberVO);
+		
+	    ReserveInfoDTO reserveInfoDTO = (ReserveInfoDTO) session.getAttribute("reserveInfoDTO");
+	    String topbookoffdate = (String) reserveInfoDTO.getTop_book_off_date();
+	    String topbookpickdate = (String) reserveInfoDTO.getTop_book_pick_date();
+	    String carindex = (String) reserveInfoDTO.getCar_index();
+	    String totalPay = (String) reserveInfoDTO.getTotalPay();
+
+	    totalPay = totalPay.replaceAll(",", "");
+
+	    nonMemberVO.setNon_rental_date(topbookpickdate);
+	    nonMemberVO.setNon_return_date(topbookoffdate);
+	    nonMemberVO.setNon_car_id(carindex);
+	    nonMemberVO.setNon_totalpay(Integer.parseInt(totalPay));
+
+	    log.info("nonMemberVO2:" + nonMemberVO);
+	    
+	    nonMemberService.nonmeminsert(nonMemberVO);
+	    //log.info("하연 비회원 데이터 추가됨");
+	    return "success";
+	}
+
+
+
 }
+

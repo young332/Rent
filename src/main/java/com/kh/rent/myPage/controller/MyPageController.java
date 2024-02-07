@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
+import com.kh.rent.myPage.domain.GetCarNameDTO;
+import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
-import com.kh.rent.reserve.domain.ReserveVO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -37,12 +41,32 @@ public class MyPageController {
 	// 예약확인 페이지
 	@GetMapping("/reservationList")
 	public void reservation(HttpSession session, Model model) {
+		// 예약내역
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
-		List<ReserveVO> reserveList = myPageService.getReserveList(mem_id);
+		myPageService.updateTBLReserve(mem_id);
+		List<GetStatusDTO> reserveList = myPageService.getReserveList(mem_id);
+		
+		// 차종
+		String[] carNames = new String[reserveList.size()];
+		for (int i = 0; i < reserveList.size(); i++) {
+			int rid = reserveList.get(i).getRes_rid();
+			String car_id = reserveList.get(i).getRes_car_id();
+			GetCarNameDTO getCarNameDTO = GetCarNameDTO.builder()
+					.res_rid(rid)
+					.res_car_id(car_id)
+					.build();
+			String car_name = myPageService.getCarName(getCarNameDTO);
+			carNames[i] = car_name.toString();
+		} 
+		String carNamesToString = Arrays.toString(carNames);
+		
+		// 결제상태
 		model.addAttribute("reserveList", reserveList);
+		model.addAttribute("carNames", carNamesToString);
 		log.info("reservationListGet..");
-		log.info("reserveList" + reserveList);
+//		log.info("reserveList" + reserveList);
+//		log.info("carNamesToString" + carNamesToString);
 	}
 	
 	// 마이페이지
@@ -119,4 +143,31 @@ public class MyPageController {
 			return "fail";
 		}
 	}
+	
+	// 예약취소
+	@DeleteMapping("/res_cancel/{res_rid}")
+	@ResponseBody
+	@Transactional
+	public String cancelReservation(@PathVariable("res_rid") int res_rid) {
+		log.info("cancelReservation...");
+		int count = myPageService.cancelReservation(res_rid);
+		if (count == 1) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 비회원 예약페이지
+	@GetMapping("/reservationList_guest")
+	public void reservation_guest(HttpSession session, Model model) {
+		log.info("reservation_guest...");
+		NonMemberLoginDTO nonMemberLoginDTO = (NonMemberLoginDTO)session.getAttribute("nonMemberLoginDTO");
+		List<NonMemberVO> nonMember = myPageService.getNonMemberList(nonMemberLoginDTO);
+		log.info("nonMember:" + nonMember);
+		
+		model.addAttribute("nonMember", nonMember);
+	}
+	
+	
 }

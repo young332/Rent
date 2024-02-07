@@ -14,6 +14,8 @@ public interface MenuMapper {
 
 	public List<MenuVO> getSubMenu(@Param("parent_menu_id") String parent_menu_id);
 	
+	public List<MenuVO> getSubMenuYN(@Param("parent_menu_id") String parent_menu_id);
+	
 	public MenuVO getOneMenu(String menu_id);
 
 	public int insertMenu(MenuVO menuVO);

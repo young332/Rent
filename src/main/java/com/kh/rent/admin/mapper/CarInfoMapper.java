@@ -18,20 +18,10 @@ public interface CarInfoMapper {
 	public List<CommonCodeVO> selectCarName();
 	
 	public List<CarInfoVO> selectCarInfo();
-	/*
-	 * public List<MenuVO> getTopMenu();
-	 * 
-	 * public List<MenuVO> getSubMenuAll(String menu_id);
-	 * 
-	 * public List<MenuVO> getSubMenu(@Param("parent_menu_id") String
-	 * parent_menu_id);
-	 * 
-	 * public MenuVO getOneMenu(String menu_id);
-	 * 
-	 * 
-	 * public int updateMenu(MenuVO menuVO);
-	 * 
-	 * public int delete(String menu_id);
-	 */
+	
+	public CarInfoVO selectCarInfoByIndex(Integer car_index);
+	
+	public int updateCarInfo(CarInfoVO carInfoVO);
+
 
 }

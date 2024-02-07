@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.login.service.Sha256;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
 import com.kh.rent.myPage.domain.GetCarNameDTO;
+import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.mapper.MyPageMapper;
-import com.kh.rent.reserve.domain.ReserveVO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -65,8 +65,8 @@ public class MyPageServiceImpl implements MyPageService{
 
 	// 예약정보 조회하기
 	@Override
-	public List<ReserveVO> getReserveList(String mem_id) {
-		List<ReserveVO> list = myPageMapper.getReserveList(mem_id);
+	public List<GetStatusDTO> getReserveList(String mem_id) {
+		List<GetStatusDTO> list = myPageMapper.getReserveList(mem_id);
 		return list;
 	}
 
@@ -75,6 +75,26 @@ public class MyPageServiceImpl implements MyPageService{
 	public String getCarName(GetCarNameDTO getCarNameDTO) {
 		String carName = myPageMapper.getCarName(getCarNameDTO);
 		return carName;
+	}
+
+	// 예약정보 현재시각기준 업데이트
+	@Override
+	public void updateTBLReserve(String mem_id) {
+		myPageMapper.updateTBLReserve(mem_id);
+	}
+
+	// 예약취소
+	@Override
+	public int cancelReservation(int res_rid) {
+		int result = myPageMapper.cancelReservation(res_rid);
+		return result;
+	}
+
+	// 예약정보 조회하기(비회원)
+	@Override
+	public List<NonMemberVO> getNonMemberList(NonMemberLoginDTO nonMemberLoginDTO) {
+		List<NonMemberVO> list = myPageMapper.getNonMemberList(nonMemberLoginDTO);
+		return list;
 	}
 
 }

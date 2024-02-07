@@ -21,63 +21,46 @@
 	</insert>
 
 	<select id="selectCarName" resultType="com.kh.rent.admin.domain.CommonCodeVO">
-		SELECT code_name FROM rent001.TBL_COMMON_CODE WHERE PARENT_CODE_ID = 'CAR_TYPE' AND USE_YN = 'Y' ORDER BY ORDERBY
+		SELECT code_name, ref_1, ref_2 
+		FROM rent001.TBL_COMMON_CODE 
+		WHERE PARENT_CODE_ID = 'CAR_TYPE' AND USE_YN = 'Y' ORDER BY ORDERBY
 	</select>
 	
 	<select id="selectCarInfo" resultType="com.kh.rent.admin.domain.CarInfoVO">
-		SELECT A.car_index, A.car_name, A.car_number, A.car_company, A.car_size, A.car_fuel, A.car_cost, A.create_user, A.use_yn, A.create_date, A.file_id, B.file_stre_cours, B.orignl_file_nm, B.unique_file_nm
+		SELECT 
+			A.car_index, A.car_name, A.car_number, A.car_company, A.car_size, A.car_fuel, A.car_cost, A.create_user, 
+			A.use_yn, A.create_date, A.file_id, B.file_stre_cours, 
+			B.orignl_file_nm, B.unique_file_nm
 		FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
 		ON A.file_id = B.file_id 
 	</select>
-
 	
-	<!-- <select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-	select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-	where parent_menu_id = '@'
+	<select id="selectCarInfoByIndex" resultType="com.kh.rent.admin.domain.CarInfoVO">
+		SELECT A.*, B.orignl_file_nm, B.unique_file_nm
+		        FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
+		ON A.file_id = B.file_id where car_index = #{car_index};
 	</select>
 	
-	<select id="getSubMenuAll" resultType="com.kh.rent.admin.domain.MenuVO">
-		 select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-		where not parent_menu_id = '@' 
-		
- 	select menu_id
-	 ,parent_menu_id
-     ,menu_type
-     ,menu_name
-     ,menu_url
-     ,use_yn
-     ,orderby 
-	from TBL_MENU
-	where parent_menu_id = #{menu_id}
-		use_yn = 'Y' and menu_type = '1'
-	order by orderby 
-
-	</select>
-	
-	<select id="getOneMenu" resultType="com.kh.rent.admin.domain.MenuVO">
-		SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE menu_id = #{menu_id}
-	</select>
-	
-	<select id="getSubMenu" parameterType="string" resultType="com.kh.rent.admin.domain.MenuVO">
-    	SELECT menu_id, parent_menu_id , menu_type, menu_name, menu_url, use_yn, orderby FROM TBL_MENU WHERE parent_menu_id = #{parent_menu_id}
-	</select>
-	
-	<update id="updateMenu">
-		update TBL_MENU set
-			parent_menu_id = #{parent_menu_id},
-			menu_type = #{menu_type},
-			menu_name = #{menu_name},
-			menu_depth = #{menu_depth},
-			menu_url = #{menu_url},
-			orderby = #{orderby},
+	<update id="updateCarInfo">
+		update TBL_CAR_INFO set
+			car_name = #{car_name},
+			car_number = #{car_number},
+			car_company = #{car_company},
+			car_size = #{car_size},
+			car_fuel = #{car_fuel},
+			car_cost = #{car_cost},
+			op_carseat = #{op_carseat},
+			op_navi = #{op_navi},
+			op_bt = #{op_bt},
+			create_user = #{create_user},
+			update_user = #{update_user},
+			file_id = #{file_id},
 			use_yn = #{use_yn}
-		where menu_id = #{menu_id}
-	</update>
+		where car_index = #{car_index}
 	
-	<delete id="delete">
-		delete from TBL_MENU
-		where menu_id = #{menu_id} 
-	</delete> -->
+	</update>
+
+
 
 	
 	
