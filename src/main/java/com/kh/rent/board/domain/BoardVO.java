@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-@JsonFormat(pattern="yyyy-MM-dd")
 public class BoardVO {
 	
 	private Long board_no;

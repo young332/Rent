@@ -113,7 +113,7 @@
 		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${vo.unique_file_nm});">
 		    					</div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">${vo.car_name }</a></h2>
+		    						<h2 class="mb-0" ><a href="#" class="car-select" data-car-index="${vo.car_index}">${vo.car_name }</a></h2>
 		    						<div class="d-flex mb-3">
 		    						<input type="text" class="cat car_index" value="${vo.car_index}" style="display: none;">
 			    						<span class="cat">${vo.car_company}</span>
@@ -196,7 +196,12 @@ $(function() {
 	            $(this).val("");
 	        }
 	    });
-		
+     // 차량 이름을 클릭했을 때 인덕스값 넘김
+     $(".car-select").click(function(e) {
+         e.preventDefault(); 
+         var carIndex = $(this).data("car-index");
+         window.location.href = "/reserve/reserve?car_index=" + carIndex; 
+     });
    
 	    
 });
