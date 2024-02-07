@@ -60,9 +60,9 @@ public class BoardServiceTests {
 	@Test
 	public void testModify() {
 		BoardVO boardVO = BoardVO.builder()
-				.board_title("서비스수정")
-				.board_content("서비스 수정 내용")
-				.board_no(11L)
+				.board_title("서비스수정- 수정")
+				.board_content("서비스 수정 내용 - 수정")
+				.board_no(1L)
 				.build();
 		int count = boardService.modify(boardVO);
 		log.info("count : "+ count);

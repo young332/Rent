@@ -4,35 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>   
-
-<script>
-$(function(){
-	$(".board-row").click(function() {
-		console.log("클릭");
-		var boardNo = $(this).data("board-no");
-		console.log("boardNo:" , boardNo);
-       	window.location.href = "get?board_no=" + boardNo;
-        
-        $.ajax({
-        	type: "GET",
-            url: "/board/readCount?board_no=" + boardNo,
-            success: function(rData) {
-            	console.log("rData:" , rData);
-            },
-            error : function(){
-            	console.log("error");
-            }
-        });
-        
-	});
-	
-        var registerResult = "${registerResult}";
-        if(registerResult !== "") {
-            alert("등록이 완료되었습니다.");
-        }
-	
-});
-</script>   
+ 
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -44,7 +16,6 @@ $(function(){
         </div>
       </div>
     </section>
-
    <section class="ftco-section contact-section">
       <div class="container-fluid">
       <div class="row justify-content-center">
@@ -52,33 +23,31 @@ $(function(){
             <h2 class="mb-2">HAKA렌트카 공지사항</h2>
           </div>
         </div>
-	<div class="row">
+<div class="row">
+		<div class="col-md-2">
+			</div>
+			<div class="col-md-8">
+				<form id="frmModify" role="form" action="/board/modify" method="post">
+				<div class="form-group">
+					<label for="board_title">
+						제목
+					</label>
+					<input type="text" class="form-control" id="board_title" name="board_title" value="${boardVO.board_title}" required/>
+				</div>
+				<div class="form-group">
+					<label for="board_content">
+						내용
+					</label>
+					<textarea class="form-control" id="board_content" name="board_content" required>${boardVO.board_content}</textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">
+					완료
+				</button>
+			</form>
+		</div>
 		<div class="col-md-2">
 		</div>
-		<div class="col-md-8">
-			<table class="table">
-				<thead>
-					<c:forEach items="${boardVO}" var="boardVO">
-							<tr class="board-row" data-board-no="${boardVO.board_no}">
-								<th>${boardVO.board_no}</th>
-								<th>${boardVO.board_title}</th>
-								<th style="text-align: right;"><fmt:formatDate value="${boardVO.board_cdate}" pattern="yyyy-MM-dd"/></th>
-								<th style="text-align: right;">조회수  ${boardVO.readcount}</th>
-							</tr>
-						</c:forEach>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-			<div class="col-md-12">
-			<div class="d-flex justify-content-end">
-			<button type="button" class="btn btn-secondary btn-oper" onclick="location.href='/board/register'">등록</button>
-			</div>
-			</div>
-		</div>
-		<div class="col-md-2">
-		</div>
-	</div>
+	</div>	
 </div>
 </section>
 	
