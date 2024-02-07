@@ -29,6 +29,7 @@
 			<div class="col-md-8">
 				<form id="frmModify" role="form" action="/board/modify" method="post">
 				<div class="form-group">
+				<input type="hidden" name="board_no" value="${boardVO.board_no}">
 					<label for="board_title">
 						제목
 					</label>

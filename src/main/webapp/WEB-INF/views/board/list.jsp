@@ -56,25 +56,32 @@ $(function(){
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8">
+		<div class="col-md-12">
+			<div class="d-flex justify-content-end">
+				<button type="button" class="btn btn-secondary btn-oper" onclick="location.href='/board/register'">등록</button>
+			</div>
+		</div>
 			<table class="table">
 				<thead>
-					<c:forEach items="${boardVO}" var="boardVO">
-							<tr class="board-row" data-board-no="${boardVO.board_no}">
-								<th>${boardVO.board_no}</th>
-								<th>${boardVO.board_title}</th>
-								<th style="text-align: right;"><fmt:formatDate value="${boardVO.board_cdate}" pattern="yyyy-MM-dd"/></th>
-								<th style="text-align: right;">조회수  ${boardVO.readcount}</th>
-							</tr>
-						</c:forEach>
+					<tr>
+							<th>글번호</th>
+							<th>제목</th>
+							<th style="text-align: right;">등록일</th>
+							<th style="text-align: right;">조회수</th>
+					</tr>		
 				</thead>
 				<tbody>
+				<c:forEach items="${boardVO}" var="boardVO">
+							<tr class="board-row" data-board-no="${boardVO.board_no}">
+								<td>${boardVO.board_no}</td>
+								<td>${boardVO.board_title}</td>
+								<td style="text-align: right;"><fmt:formatDate value="${boardVO.board_cdate}" pattern="yyyy-MM-dd"/></td>
+								<td style="text-align: right;">${boardVO.readcount}</td>
+							</tr>
+						</c:forEach>
 				</tbody>
 			</table>
-			<div class="col-md-12">
-			<div class="d-flex justify-content-end">
-			<button type="button" class="btn btn-secondary btn-oper" onclick="location.href='/board/register'">등록</button>
-			</div>
-			</div>
+			
 		</div>
 		<div class="col-md-2">
 		</div>
