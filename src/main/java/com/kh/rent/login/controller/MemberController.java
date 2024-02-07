@@ -86,7 +86,7 @@ public class MemberController {
 		NonMemberVO nonMemberVO = memberService.NonMemberLogin(nonMemberLoginDTO);
 		if(nonMemberVO != null) {
 			session.setAttribute("nonMemberVO", nonMemberVO);
-			return "redirect:/myPage/reservationList";
+			return "redirect:/myPage/reservationList_guest";
 		}
 		rttr.addFlashAttribute("nonLoginResult", "fail");
 		return "redirect:/login/login";

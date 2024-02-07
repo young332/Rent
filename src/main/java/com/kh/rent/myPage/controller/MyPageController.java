@@ -156,5 +156,11 @@ public class MyPageController {
 		}
 	}
 	
+	// 비회원 예약페이지
+	@GetMapping("/reservationList_guest")
+	public void reservation_guest(HttpSession session, Model model) {
+		log.info("reservation_guest...");
+	}
+	
 	
 }
