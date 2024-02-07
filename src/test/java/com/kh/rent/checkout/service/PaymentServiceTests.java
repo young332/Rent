@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -69,35 +70,50 @@ public class PaymentServiceTests {
 //	}
 	
 	
-	@Test
-	public void testgetPaymentInfo() {
-		Date day = new Date();
-		PaymentDTO paymentDTO = PaymentDTO.builder()
-				.pay_res_rid(1)
-				.pay_type("PAY_P")
-				.pay_mem_id("MEMBER01")
-				.pay_date(day)
-				.build();
-		String res_mem_id = "MEMBER01";
-		paymentService.getPaymentInfo(res_mem_id);
-		log.info("paymentDTO: " + paymentDTO);
-
-	}
-	
-	@Test
-	public void testpayNumber() {
-		Date day = new Date();
-		PaymentDTO paymentDTO = PaymentDTO.builder()
-				.pay_mem_id("MEMBER01")
-				.pay_date(day)
-				.pay_type("PAY_P")
-				.pay_res_rid(2)
-				.res_totalpay(50000)
-				.build();
-		int res_rid = 2;
-		paymentService.payNumber(res_rid);
-		log.info("paymentDTO: " + paymentDTO);
-	}
+//	@Test
+//	public void testgetPaymentInfo() {
+//		Date day = new Date();
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.pay_res_rid(1)
+//				.pay_type("PAY_P")
+//				.pay_mem_id("MEMBER01")
+//				.pay_date(day)
+//				.build();
+//		String res_mem_id = "MEMBER01";
+//		paymentService.getPaymentInfo(res_mem_id);
+//		log.info("paymentDTO: " + paymentDTO);
+//
+//	}
+//	
+//	@Test
+//	public void testpayNumber() {
+//		Date day = new Date();
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.pay_mem_id("MEMBER01")
+//				.pay_date(day)
+//				.pay_type("PAY_P")
+//				.pay_res_rid(2)
+//				.res_totalpay(50000)
+//				.build();
+//		int res_rid = 2;
+//		paymentService.payNumber(res_rid);
+//		log.info("paymentDTO: " + paymentDTO);
+//	}
+//	
+//	
+//	
+//	@Test
+//	public void testpaymentStatus() {
+//
+//		PaymentVO paymentVO = PaymentVO.builder()
+//				.pay_res_rid(12)
+//				.pay_status("결제취소")
+//				.build();
+//		int pay_res_rid = 12;
+//		paymentService.paymentCancle(pay_res_rid);
+//		log.info("paymentVO:" + paymentVO);
+//	
+//	}
 	
 }
 

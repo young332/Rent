@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
+import com.kh.rent.checkout.domain.PaymentVO;
+
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,13 +25,27 @@ public class PaymentMapperTests {
 	private PaymentMapper paymentMapper;
 	
 	//포인트 차감
+
+//	@Test
+//	public void testDeductPayment() {
+//		Date day = new Date();
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.pay_mem_id("MEMBER01")
+//				.pay_type("PAY_P")
+//				.pay_date(day)
+//				.point_cost(1000)
+//				.build();
+//		paymentMapper.deductPayment(paymentDTO);
+//		log.info("paymentDTO"+paymentDTO);
+//		
+//	}
+
 	@Test
 	public void testDeductPayment() {
 		Date day = new Date();
 		PaymentDTO paymentDTO = PaymentDTO.builder()
 				.pay_mem_id("MEMBER01")
 				.pay_type("PAY_P")
-				.pay_date(day)
 				.point_cost(1000)
 				.build();
 		/*
@@ -37,6 +53,5 @@ public class PaymentMapperTests {
 		 */
 		
 	}
-	
 	
 }
