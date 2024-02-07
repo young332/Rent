@@ -2,23 +2,114 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kh.rent.mapper.PaymentMapper">
-	<select id="getPaymentInfo" resultType="com.kh.rent.mapper.PaymentDTO">
-		SELECT
-    		pay_res_rid,
-    		pay_mem_id,
-    		pay_date,
-    		pay_cost,
-    		point_id,
-    		point_user_id,
-    		point_code,
-    		point_use_date,
-    		point_cost
-		FROM
-   		 TBL_PAYMENT
-		WHERE
-    		pay_res_rid = #{pay_res_rid}
-	</select>	
+<mapper namespace="com.kh.rent.checkout.mapper.PaymentMapper">
+		
+	<!-- 결제 내역 기록-->
+	<insert id="addPaymentRecord">
+		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type, pay_status)
+		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type}, '결제완료')
+	</insert>
 	
-
+	 <!-- 예약 상태 변경 -->
+    <update id="reserveStatus">
+<!--     	update TBL_RESERVE set -->
+<!-- 		res_status = '결제완료' -->
+<!-- 		where res_rid = #{pay_res_rid} -->
+    	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
+		res_status = '예약중'
+		where res_rid = #{pay_res_rid}
+		and pay_status = '결제완료'
+    </update>
+		
+	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
+		SELECT pay_res_rid, pay_type, pay_mem_id, pay_date
+		FROM TBL_PAYMENT
+		WHERE pay_mem_id = #{pay_mem_id}
+	</select>
+		
+	<!-- 조인 res_rid = pay_res_rid -->
+    <select id="payNumber" resultType="com.kh.rent.reserve.domain.ReserveVO">
+    	select p.pay_mem_id, p.pay_date, p.pay_type,
+    	p.pay_res_rid, r.res_totalpay
+    	from TBL_PAYMENT as p
+    	JOIN TBL_RESERVE as r
+    	ON p.pay_res_rid = r.res_rid;
+    </select>
+	
+	<!-- 포인트 차감 (결제) -->
+	<update id="deductPayment" parameterType="map">
+		update TBL_MEMBER set mem_point = mem_point - (select res_totalpay 
+													   from TBL_RESERVE
+													   where res_rid = #{pay_res_rid})
+		where mem_id = #{pay_mem_id}
+	</update>
+	
+	<!-- 포인트 조회 -->
+	<select id="getMemberPoint" parameterType="map" resultType="int">
+		select mem_point
+		from TBL_MEMBER
+		where mem_id = #{pay_mem_id};	
+	</select>
+	
+	<!-- res_rid 불려오기 -->
+	<select id="getResRid" resultType="com.kh.rent.reserve.domain.ReserveVO">
+        select * from TBL_RESERVE
+ 		where res_mem_id = #{mem_id}
+    </select>
+	    
+    <!-- 예약정보 조회하기(한사람) -->	
+	<select id="getReserveList" resultType="com.kh.rent.reserve.domain.ReserveVO">
+        select * from TBL_RESERVE
+ 		where res_mem_id = #{mem_id}
+    </select>
+           
+    <!-- 비회원 예약 번호 불려오기 -->	
+	<select id="getPayNonResRid" parameterType="int" resultType="int">
+        SELECT non_rid
+        FROM TBL_NONMEMBER
+        WHERE non_rid = #{pay_res_rid}
+    </select>
+    
+    
+    <!-- res_totalpay 불려오기 -->
+    <select id="getTotalPay" resultType="int">
+    	select res_totalpay 
+		from TBL_RESERVE
+		where res_rid = #{pay_res_rid}
+    </select>
+    
+    <!-- pay_pid 불려오기 -->
+    <select id="getpaypid" resultType="int">
+    	select pay_pid
+		from TBL_PAYMENT
+		where res_rid = #{pay_pid}
+    </select>
+    
+     <!-- 결제 상태 변경 (결제취소) -->
+    <update id="payCancel">
+    	update TBL_PAYMENT set
+		pay_status = '결제취소'
+		where pay_pid = #{pay_pid}
+    </update>
+    
+    <!-- 예약 상태 변경(예약취소) -->
+    <update id="reserveCancel">
+    	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
+		res_status = '예약취소'
+		where res_rid = #{pay_res_rid}
+		and pay_status = '결제취소'
+    </update>
+    
+	<!-- 포인트 증가 (환불) -->
+	<update id="refundPay" parameterType="map">
+    update TBL_MEMBER set mem_point = mem_point + (
+        select res_totalpay
+        from TBL_RESERVE
+        where res_rid = (
+            select pay_res_rid from TBL_PAYMENT where pay_pid = #{pay_pid}
+        )
+    )
+    where mem_id = #{pay_mem_id}
+	</update>
+	
 </mapper>

@@ -1,5 +1,7 @@
 package com.kh.rent.myPage.service;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
+import com.kh.rent.myPage.domain.GetCarNameDTO;
+import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -79,5 +85,49 @@ public class MyPageServiceTests {
 			int result = myPageService.deleteMember(mem_id);
 			log.info("result:" + result);
 		}
-
+		
+	// 예약정보 현재시각기준 업데이트
+	@Test
+	public void testUpdateTBLReserve() {
+		String mem_id = "MEMBER02";
+		myPageService.updateTBLReserve(mem_id);
+	}	
+		
+	// 예약정보 조회하기
+	@Test
+	public void testReserveList() {
+		List<GetStatusDTO> list = myPageService.getReserveList("MEMBER02");
+		log.info("Reservelist:" + list);
+	}
+	
+	// 예약번호로 차종 조회하기
+	@Test
+	public void testGetCarName() {
+		GetCarNameDTO getCarNameDTO = GetCarNameDTO.builder()
+				.res_rid(4)
+				.res_car_id("3")
+				.build();
+		String car_name = myPageService.getCarName(getCarNameDTO);
+		log.info("car_name:" + car_name);
+	}
+	
+	// 예약취소
+	@Test
+	public void testCancleReservation() {
+		int res_rid = 22;
+		int result = myPageService.cancelReservation(res_rid);
+		log.info("cancleResult:" + result);
+	}
+	
+	// 예약정보 조회하기(비회원)
+	@Test
+	public void testGetNonMemberList() {
+		NonMemberLoginDTO nonDTO = NonMemberLoginDTO.builder()
+				.non_name("jo")
+				.non_tel("01046648755")
+				.build();
+		List<NonMemberVO> list = myPageService.getNonMemberList(nonDTO);
+		log.info("non_Reservelist:" + list);
+	}
+	
 }

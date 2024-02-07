@@ -7,24 +7,72 @@
   <!-- 예약 입력 -->
   	<insert id="reserveinsert">
   		insert into TBL_RESERVE
-  			( res_rental_date, res_return_date, res_car_id, res_mem_id, res_license_type, res_license_num)
+  			( res_rental_date, res_return_date, res_car_id, res_mem_id,
+  			 res_license_type, res_license_num, res_totalpay)
   		values
-  			( str_to_date(#{res_rental_date}, '%Y-%m-%dT%H:%i'), 
-  			  str_to_date(#{res_return_date}, '%Y-%m-%dT%H:%i'),
+  			( str_to_date(#{res_rental_date}, '%Y-%m-%d %H:%i'), 
+  			  str_to_date(#{res_return_date}, '%Y-%m-%d %H:%i'),
   			  #{res_car_id},
   			  #{res_mem_id},
   			  #{res_license_type},
-  			  #{res_license_num}
+  			  #{res_license_num},
+  			  #{res_totalpay}
   			)	
   	</insert>
+  	
   <!-- 예약 입력 조회 -->	
   	<select id="getList" resultType="com.kh.rent.reserve.domain.ReserveVO">
   		select * from TBL_RESERVE
   	
   	</select>
-  	<!-- car_info 리스트 -->
-  <select id="getCarInfo" resultType="com.kh.rent.admin.domain.CarInfoVO">
-  		select * from TBL_CAR_INFO
-  </select>
+  	
+  	 <!-- car_info 리스트+소영씨 이미지추가 -->
+     <select id="getCarInfo" resultType="com.kh.rent.reserve.domain.ReserveDTO">
+            <!-- select * from TBL_CAR_INFO  -->
+           SELECT 
+            A.*, 
+            B.orignl_file_nm, B.unique_file_nm
+         FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
+         ON A.file_id = B.file_id 
+     </select>
+     
+  <!-- 회원정보 리스트 -->
+	  <select id="getMemberInfo" resultType="com.kh.rent.login.domain.MemberVO">
+	  		select * from TBL_MEMBER
+	  </select>
+	  
+	 <!-- 선택한 차 보이기 --> 
+	 <select  id="findByCindex" resultType="com.kh.rent.reserve.domain.ReserveDTO">
+	 	select * from TBL_CAR_INFO
+  		where car_index = #{car_index}
+	 </select>
+  	
+  	<!-- 체크박스선택시 값 불러오기 -->
+  	<select id="selectCheck" resultType="com.kh.rent.reserve.domain.ReserveDTO" parameterType="map">
+	    SELECT *
+	    FROM TBL_CAR_INFO
+	    WHERE 1=1
+	    <if test="car_company != null and car_company != ''">
+	        AND car_company = #{car_company}
+	    </if>
+	    <if test="car_size != null and car_size != ''">
+	        AND car_size = #{car_size}
+	    </if>
+	    <if test="car_fuel != null and car_fuel != ''">
+	        AND car_fuel = #{car_fuel}
+	    </if>
+	    <if test="op_carseat != null and op_carseat != ''">
+	        AND op_carseat = #{op_carseat}
+	    </if>
+	    <if test="op_navi != null and op_navi != ''">
+	        AND op_navi = #{op_navi}
+	    </if>
+	    <if test="op_bt != null and op_bt != ''">
+	        AND op_bt = #{op_bt}
+	    </if>
+	    <if test="op_cam != null and op_cam != ''">
+	        AND op_cam = #{op_cam}
+	    </if>
+	</select>
   	
   </mapper>

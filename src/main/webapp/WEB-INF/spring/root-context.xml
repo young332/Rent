@@ -59,11 +59,14 @@
 		base-package="com.kh.rent.admin.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.point.mapper" />
-
+	<mybatis-spring:scan
+		base-package="com.kh.rent.checkout.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.reserve.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.myPage.mapper" />
+		<mybatis-spring:scan
+		base-package="com.kh.rent.board.mapper" />
 
 
 
@@ -72,14 +75,13 @@
 	<context:component-scan
 		base-package="com.kh.rent.admin.service" />
 	<context:component-scan
-		base-package="com.kh.rent.aop" />
-	<context:component-scan
-
 		base-package="com.kh.rent.point.service" />
 	<context:component-scan
 		base-package="com.kh.rent.reserve.service" />
 	<context:component-scan
-		base-package="com.kh.rent.myPage.service" />	
+		base-package="com.kh.rent.myPage.service" />
+	<context:component-scan
+	base-package="com.kh.rent.checkout.service" />	
 
 
 	<!-- @Transactional 사용 가능하게 -->
@@ -89,6 +91,9 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+	
 	
 	<!-- 메일보내기 -->
    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

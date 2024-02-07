@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.admin.domain.CarInfoVO;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 import com.kh.rent.reserve.mapper.ReserveMapperTests;
 
@@ -52,6 +53,24 @@ public class ReserveMapperTests {
 	public void testGetCarInfo() {
 		List<CarInfoVO> carlist = reserveMapper.getCarInfo();
 		log.info("carlist"+carlist);
+	}
+	
+	@Test
+	public void testSelectCheck() {
+		ReserveDTO car = new ReserveDTO();
+//		car.setCar_fuel("휘발유");
+//		car.setCar_company("현대");
+		car.setOp_carseat("Y");
+		car.setOp_navi("N");
+		
+		List<ReserveDTO> list = reserveMapper.selectCheck(car);
+		log.info("list"+list);
+	}
+	@Test
+	public void testFindByCindex() {
+		String car_index="3";
+		ReserveDTO rserveDto =reserveMapper.findByCindex(car_index);
+		log.info("rserveDto:"+rserveDto);
 	}
 	
 }

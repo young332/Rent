@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.rent.admin.mapper.CarInfoMapper">
+	
+    <insert id="insertCar">
+	    INSERT INTO TBL_CAR_INFO (car_name, car_number, car_company, car_size, car_fuel, car_cost,
+	                              op_carseat, op_navi, op_bt, op_cam, create_user, update_user, update_date, file_id)
+	    VALUES (
+	        #{car_name}, #{car_number}, #{car_company}, #{car_size}, #{car_fuel}, #{car_cost}, 
+	        #{op_carseat}, #{op_navi}, #{op_bt}, #{op_cam}, #{create_user}, #{update_user}, #{update_date}, #{file_id}
+	    )
+	</insert>
+	
+    <insert id="insertFile" useGeneratedKeys="true" keyProperty="file_id" parameterType="com.kh.rent.admin.domain.FileVO">
+	    INSERT INTO TBL_FILE (file_sn, file_stre_cours, orignl_file_nm, unique_file_nm, file_extension, file_size)
+		VALUES (
+		    #{file_sn}, #{file_stre_cours}, #{orignl_file_nm}, #{unique_file_nm},#{file_extension}, #{file_size}
+		)
+	</insert>
+
+	<select id="selectCarName" resultType="com.kh.rent.admin.domain.CommonCodeVO">
+		SELECT code_name, ref_1, ref_2 
+		FROM rent001.TBL_COMMON_CODE 
+		WHERE PARENT_CODE_ID = 'CAR_TYPE' AND USE_YN = 'Y' ORDER BY ORDERBY
+	</select>
+	
+	<select id="selectCarInfo" resultType="com.kh.rent.admin.domain.CarInfoVO">
+		SELECT 
+			A.car_index, A.car_name, A.car_number, A.car_company, A.car_size, A.car_fuel, A.car_cost, A.create_user, 
+			A.use_yn, A.create_date, A.file_id, B.file_stre_cours, 
+			B.orignl_file_nm, B.unique_file_nm
+		FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
+		ON A.file_id = B.file_id 
+	</select>
+	
+	<select id="selectCarInfoByIndex" resultType="com.kh.rent.admin.domain.CarInfoVO">
+		SELECT A.*, B.orignl_file_nm, B.unique_file_nm
+		        FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
+		ON A.file_id = B.file_id where car_index = #{car_index};
+	</select>
+	
+	<update id="updateCarInfo">
+		update TBL_CAR_INFO set
+			car_name = #{car_name},
+			car_number = #{car_number},
+			car_company = #{car_company},
+			car_size = #{car_size},
+			car_fuel = #{car_fuel},
+			car_cost = #{car_cost},
+			op_carseat = #{op_carseat},
+			op_navi = #{op_navi},
+			op_bt = #{op_bt},
+			create_user = #{create_user},
+			update_user = #{update_user},
+			file_id = #{file_id},
+			use_yn = #{use_yn}
+		where car_index = #{car_index}
+	
+	</update>
+
+
+
+	
+	
+	
+	
+
+</mapper>

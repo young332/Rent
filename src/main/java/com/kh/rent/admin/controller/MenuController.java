@@ -48,10 +48,10 @@ public class MenuController {
 		return "redirect:/admin/menu";
 	}
 	
-	@GetMapping(value = "/submenus/{parentMenu}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value = "/submenus/{parentMenu}" , produces = {MediaType.APPLICATION_JSON_VALUE} )
     @ResponseBody
     public List<MenuVO> getSubMenus(@PathVariable("parentMenu") String parentMenu, Model model) {
-		List<MenuVO> subMenuList = menuService.getSubMenu(parentMenu);
+		List<MenuVO> subMenuList = menuService.getSubMenuYN(parentMenu);
 		return subMenuList;
     }
 	

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.rent.admin.mapper.AdMemberMapper">
+	
+	<select id="selectAllMember" resultType="com.kh.rent.login.domain.MemberVO">
+		SELECT mem_id, mem_name, mem_adminck, mem_email, mem_birth, mem_phone, mem_addr, mem_cdate, 
+		       mem_udate, mem_point FROM rent001.TBL_MEMBER;
+	</select>   
+	
+	<select id="selectDelMember" resultType="com.kh.rent.admin.domain.DelMemberVO">
+		SELECT del_id, del_name, del_adminck, del_email, del_birth, del_phone, del_addr, del_ddate, 
+		       del_point FROM rent001.TBL_DEL_MEMBER;
+	</select>
+	
+	<select id="selectMemberByid" resultType="com.kh.rent.login.domain.MemberVO">
+		SELECT mem_id, mem_pw, mem_name, mem_adminck, mem_email, mem_birth, mem_phone, mem_zip_code, mem_addr
+		        FROM rent001.TBL_MEMBER where mem_id = #{mem_id};
+	</select>
+	
+	<!-- 회원정보 수정하기 -->
+	<update id="updateMember">
+		update TBL_MEMBER set
+			mem_adminck = #{mem_adminck},
+			mem_email = #{mem_email},
+			mem_birth = #{mem_birth},
+			mem_phone = #{mem_phone},
+			mem_zip_code = #{mem_zip_code},
+			mem_addr = #{mem_addr},
+			mem_udate = now()
+		where mem_id = #{mem_id}
+	</update>
+	
+	<!-- 로그인 -->
+	<!-- <select id="login" resultType="com.kh.rent.login.domain.MemberVO">
+		SELECT * FROM rent001.TBL_MEMBER
+		WHERE mem_id = #{mem_id}
+		  AND mem_pw = #{mem_pw}
+		  AND mem_adminck = 1;
+	</select> -->
+	
+	<!-- 암호화비밀번호 로그인 -->
+	<select id="findByIdAndPw" resultType="com.kh.rent.login.domain.MemberVO" parameterType="com.kh.rent.login.domain.LoginDTO">
+		select *
+		from rent001.TBL_MEMBER
+		where mem_pw = #{mem_pw}
+		and mem_id = #{mem_id}
+	</select>
+	
+
+	<!-- 비밀번호 변경하기 -->
+	<update id="changePassword">
+		update TBL_MEMBER set
+			mem_pw = #{newPassword}
+		where mem_id = #{mem_id}
+	</update>
+	
+	
+	<!-- 회원정보검색 -->
+	<select id="searchMember" parameterType="com.kh.rent.login.domain.MemberVO" resultType="com.kh.rent.login.domain.MemberVO">
+        SELECT * FROM member
+        WHERE
+        <if test="searchCnd == 'all'">
+            1=1
+        </if>
+        <if test="searchCnd == 'mem_id'">
+            mem_id = #{searchWrd}
+        </if>
+        <if test="searchCnd == 'mem_name'">
+            mem_name LIKE CONCAT('%', #{searchWrd}, '%')
+        </if>
+    </select>
+	
+	
+	
+           
+</mapper>

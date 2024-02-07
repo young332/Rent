@@ -26,18 +26,6 @@ public class MenuInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-        
-//		String menu_id = request.getParameter("menu_id");
-//		log.info("menu_id:"+ menu_id);
-//		
-//		List<MenuVO> topMenuList = menuService.getTopMenu();
-//        List<MenuVO> subMenuList = menuService.getSubMenu(menu_id);
-//        
-//        log.info("IntertopMenuList:"+topMenuList);
-//        log.info("IntersubMenuList:"+subMenuList);
-//   
-//        request.setAttribute("topMenuList", topMenuList);
-//        request.setAttribute("subMenuList", subMenuList);
 		
         return true;
 	}
@@ -48,10 +36,13 @@ public class MenuInterceptor implements HandlerInterceptor{
 		
 		log.info("postHandle...");
 		String path = request.getRequestURI();
+		
 		log.info("path:"+ path);
 		String command = path.substring("/admin/".length());
+		
 		log.info("command:"+ command);
 		String query = request.getQueryString();
+		
 		log.info("query:"+ query);
 		String menu_id = "MENU001";
 		if (query != null && !query.equals("")) {

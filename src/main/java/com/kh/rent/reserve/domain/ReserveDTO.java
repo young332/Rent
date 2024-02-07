@@ -13,13 +13,19 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReserveDTO {
 	private String car_index;
-    private String res_rid;
-
+   
     private String car_name;
     private String car_company;
     private String car_size;
+    private String car_fuel;
     private String op_carseat;
     private String op_navi;
     private String op_bt;
     private String op_cam;
+    private Integer car_cost;
+    
+   //소영씨 첨부파일
+    private int file_id;
+    private String unique_file_nm;
+    private String use_yn;
 }

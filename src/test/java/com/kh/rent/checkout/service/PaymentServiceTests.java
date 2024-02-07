@@ -1,5 +1,7 @@
 package com.kh.rent.checkout.service;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
-import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.checkout.domain.PaymentVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -19,39 +21,99 @@ import lombok.extern.log4j.Log4j;
 public class PaymentServiceTests {
 	
 	@Autowired
-    private PaymentService PaymentService;
+    private PaymentService paymentService;
 	
-	@Test
-    public void testPaymentDeduction() {
-        
-        int pay_res_rid = 1;
-        String pay_mem_id = "MEMBER01";
-        int pay_cost = 100; // 테스트하고자 하는 결제 금액
-
-       
-        PaymentDTO paymentInfoBefore = PaymentService.getPaymentDTO(pay_res_rid);
-        int memberPointBefore = getMemberPoint(PaymentDTO.builder()
-        						.pay_cost(pay_cost)
-        						.pay_res_rid(pay_res_rid)
-        						.build());
-
-        
-        PaymentService.deductPayment(pay_res_rid, pay_cost);
-
-        
-        PaymentDTO paymentInfoAfter = PaymentService.getPaymentDTO(pay_res_rid);
-        int memberPointAfter = getMemberPoint(MemberVO.builder().build());
-
-       
-       
-    }
-
-	    private int getMemberPoint(PaymentDTO paymentDTO) {
-	       
-		   
-	        return 1000;
-	    }
+	//포인트 차감
+//	@Test
+//	public void testDeductPayment() {
+//		Date day = new Date();
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.pay_res_rid(4)
+//				.pay_mem_id("MEMBER01")
+//				.pay_type("PAY_P")
+//				.pay_date(day)
+//				.point_cost(3000)
+//				.build();
+//		paymentService.pay(paymentDTO);
+//		log.info("paymentDTO"+paymentDTO);
+//		
+//	}
 	
-
+	//결제 내역
+//	@Test
+//	public void testPaymentRecord() {
+//		for (int i = 0; i < 5; i++) { // 2, 4, 5
+//			if (i == 2 || i == 4 || i == 5) {
+//				Date day = new Date();
+//				PaymentDTO paymentDTO = PaymentDTO.builder()
+//						.pay_mem_id("MEMBER01")
+//						.pay_date(day)
+//						.pay_type("PAY_P")
+//						.pay_res_rid(i)
+//						.build();
+//				paymentService.pay(paymentDTO);
+//				log.info("paymentDTO" + paymentDTO);
+//			}
+//		}
+//	}
+	
+	
+//	@Test
+//	public void testReserve() {
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.res_rid(2)
+//				.build();
+//		paymentService.getResRid();
+//		log.info("paymentDTO: " + paymentDTO);
+//		
+//		
+//	}
+	
+	
+//	@Test
+//	public void testgetPaymentInfo() {
+//		Date day = new Date();
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.pay_res_rid(1)
+//				.pay_type("PAY_P")
+//				.pay_mem_id("MEMBER01")
+//				.pay_date(day)
+//				.build();
+//		String res_mem_id = "MEMBER01";
+//		paymentService.getPaymentInfo(res_mem_id);
+//		log.info("paymentDTO: " + paymentDTO);
+//
+//	}
+//	
+//	@Test
+//	public void testpayNumber() {
+//		Date day = new Date();
+//		PaymentDTO paymentDTO = PaymentDTO.builder()
+//				.pay_mem_id("MEMBER01")
+//				.pay_date(day)
+//				.pay_type("PAY_P")
+//				.pay_res_rid(2)
+//				.res_totalpay(50000)
+//				.build();
+//		int res_rid = 2;
+//		paymentService.payNumber(res_rid);
+//		log.info("paymentDTO: " + paymentDTO);
+//	}
+//	
+//	
+//	
+//	@Test
+//	public void testpaymentStatus() {
+//
+//		PaymentVO paymentVO = PaymentVO.builder()
+//				.pay_res_rid(12)
+//				.pay_status("결제취소")
+//				.build();
+//		int pay_res_rid = 12;
+//		paymentService.paymentCancle(pay_res_rid);
+//		log.info("paymentVO:" + paymentVO);
+//	
+//	}
+	
 }
 

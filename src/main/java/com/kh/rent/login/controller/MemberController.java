@@ -30,8 +30,10 @@ import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NaverLoginBO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
 import com.kh.rent.login.service.MemberService;
 import com.kh.rent.login.service.Sha256;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -77,10 +79,25 @@ public class MemberController {
 		model.addAttribute("useCookie", loginDTO.getUseCookie());
 		
 	}
+	//비회원조회
+	@PostMapping("/NonLoginPost")
+	public String NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO, HttpSession session, RedirectAttributes rttr) {
+		log.info("nonMemberLoginDTO:" + nonMemberLoginDTO);
+//		NonMemberVO nonMemberVO = memberService.NonMemberLogin(nonMemberLoginDTO);
+		if(nonMemberLoginDTO != null) {
+			session.setAttribute("nonMemberLoginDTO", nonMemberLoginDTO);
+			return "redirect:/myPage/reservationList_guest";
+		}
+		rttr.addFlashAttribute("nonLoginResult", "fail");
+		return "redirect:/login/login";
+		
+		
+	}
 	
 	//로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
+		session.removeAttribute("nonMemberVO");  // 세션에서 비회원 정보 제거
 		session.invalidate();
 		log.info("logout");
 		return "redirect:/login/login";
@@ -181,7 +198,7 @@ public class MemberController {
 	public String checkPhone(@RequestBody String mem_phone) {
 		log.info("mem_phone:" + mem_phone);
 		int count = memberService.checkPhone(mem_phone);
-		log.info("count:" + count);
+		log.info("mem_phone_count:" + count);
 		return Integer.toString(count);
 	}
 	
@@ -196,6 +213,15 @@ public class MemberController {
 		log.info("randomNumber_send:" + randomNumber);
 		return Integer.toString(randomNumber);
 	}
+	//이메일 중복체크
+	@ResponseBody
+	@PostMapping(value = "/emailCheck" )
+	public String checkEmail(@RequestBody String mem_email) {
+		log.info("mem_email:" + mem_email);
+		int count = memberService.checkEmail(mem_email);
+		log.info("email_count:" + count);
+		return Integer.toString(count);
+	}
 	
 //	//네이버 로그인
 //	@RequestMapping("/naverLogin")
@@ -206,7 +232,9 @@ public class MemberController {
 		
 	//로그인 첫 화면 요청 메소드
 	@RequestMapping(value = "/naverLoginPost", method = {RequestMethod.GET, RequestMethod.POST})
-	public String login(Model model, HttpSession session) {
+	public String naverLogin(Model model, HttpSession session) {
+	
+		log.info("네이버로그인");
 		//네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출
 		String naverAuthUrl = naverLoginBO.getAuthourizationUrl(session);
 		//인증요청문 확인
@@ -217,16 +245,20 @@ public class MemberController {
 			
 		//생성한 인증 url을 view로 전달
 		return "/login/login";
-		}
+		
+	}
 		
 		//네이버 로그인 성공시 callback호출 메소드
 		@RequestMapping(value = "/callbackNaver", method = {RequestMethod.GET , RequestMethod.POST})
 		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws ParseException , IOException {
+			
 			log.info("로그인 성공 callbackNaver");
+			
 			OAuth2AccessToken oauthToken;
 			oauthToken = naverLoginBO.getAccessToken(session, code, state);
-			//로그인 사용자 정보를 읽어온다.
-			apiResult = naverLoginBO.getUserProfile(oauthToken);
+			
+			//1.로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBO.getUserProfile(oauthToken); //String형식의 json데이터
 			
 			/** apiResult json 구조		
 			 * {"resultcode":"00",		
@@ -236,22 +268,33 @@ public class MemberController {
 			 *  **/		
 			
 			//2. String형식인 apiResult를 json형태로 바꿈		
-			JSONParser jsonParser = new JSONParser();		
-			JSONObject jsonObj;
+			JSONParser parser = new JSONParser();		
+			Object obj = parser.parse(apiResult);
+			JSONObject jsonObj = (JSONObject)obj;
 			
-			jsonObj = (JSONObject) jsonParser.parse(apiResult);
+			//3. 데이터 파싱
+			//top레벨 단게 _response 피싱
 			JSONObject response_obj = (JSONObject)jsonObj.get("response");
-			
-			//프로필조회
-			String email = (String)response_obj.get("email");
+			//response의 nickname값 파싱
 			String name = (String)response_obj.get("name");
 			
-			//세션에 사용자 정보등록
-			session.setAttribute("signIn", apiResult);
-			session.setAttribute("email", email);
-			session.setAttribute("name", name);
+			log.info("name:" + name);
 			
-			return "redirect:/login/login";
+			/*
+			 * //프로필조회 String email = (String)response_obj.get("email"); String name =
+			 * (String)response_obj.get("name");
+			 */
+			
+			
+			//세션에 사용자 정보등록
+			session.setAttribute("sessionId", name); //세션 생성
+			
+			model.addAttribute("result", apiResult);
+			
+//			session.setAttribute("email", email);
+//			session.setAttribute("name", name);
+			
+			return "/login/login";
 		}
 	
 }
