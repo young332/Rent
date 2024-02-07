@@ -35,7 +35,10 @@ public interface PaymentService {
 	// 예약 금액
 	public int getTotalPay(int pay_res_rid);
 	
-	// 결제취소
+	// 환불
 	public boolean paymentCancel(PaymentVO paymentVO);
+	
+	// 결제취소
+	public int payCancel(int pay_pid);
 	
 }

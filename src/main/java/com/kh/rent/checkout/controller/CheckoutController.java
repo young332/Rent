@@ -84,9 +84,9 @@ public class CheckoutController {
     
     
     @ResponseBody
-    @PostMapping("/pay_cancel/{res_rid}")
-    public String paycancelPost(PaymentVO paymentVO, Model model,
-            									HttpSession session) {
+    @GetMapping("/pay_cancel/{pay_pid}")
+	public String paycancelPost(
+			PaymentVO paymentVO, @PathVariable("pay_pid") int pay_pid, HttpSession session) {
     	log.info("결제취소");
     	
     	
@@ -94,23 +94,34 @@ public class CheckoutController {
     	String mem_id = loginInfo.getMem_id();
     	log.info("mem_id:" + mem_id);
     	
-    	int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    	
     	paymentVO.setPay_mem_id(mem_id);
+    	paymentVO.setPay_pid(pay_pid);
+    
     	
-    	List<ReserveVO> reservelist = paymentService.getReserveList(mem_id);
-    	model.addAttribute(reservelist);
-    	
-    	log.info("reservelist" + reservelist);
-    	
-    	boolean result = paymentService.paymentCancel(paymentVO);
-    	log.info("result: " + result);
-    	if (result) {
-    		loginInfo.setMem_point(loginInfo.getMem_point() + totalPay);
-    		session.setAttribute("loginInfo", loginInfo);
-    	}
+    	int count = paymentService.payCancel(pay_pid);
+    	log.info("count: " + count);
+    	if (count == 1) {
+    		
+    		//int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    		boolean result = paymentService.paymentCancel(paymentVO);
+        	log.info("result: " + result);
+        	//log.info("totalPay: " + totalPay);
+        	
+        	if (result) {
+        		//loginInfo.setMem_point(loginInfo.getMem_point() + totalPay);
+        		session.setAttribute("loginInfo", loginInfo);
+        		return "success";
+        	}
 
-        // 결제 취소가 완료되면 다음 페이지로 리다이렉트
-        return "redirect:/myPage/reservationList";
+    		return "success";
+    		
+    	} else {
+    		
+    		return "fall";
+    	}
+    	
+    
     }
 
 }
