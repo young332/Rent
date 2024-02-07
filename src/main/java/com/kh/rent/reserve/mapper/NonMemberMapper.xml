@@ -11,8 +11,8 @@
   			 non_license_birth, non_totalpay)
   		values
   			(#{non_name}, #{non_tel},#{non_car_id},
-  			str_to_date(#{non_rental_date}, '%Y-%m-%dT%H:%i'), 
-  			  str_to_date(#{non_return_date}, '%Y-%m-%dT%H:%i'),
+  			str_to_date(#{non_rental_date}, '%Y-%m-%d %H:%i'), 
+  			  str_to_date(#{non_return_date}, '%Y-%m-%d %H:%i'),
   			  #{non_license_num},
   			  #{non_license_type},
   			  #{non_license_birth},

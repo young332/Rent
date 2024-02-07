@@ -23,4 +23,9 @@ public class ReserveDTO {
     private String op_bt;
     private String op_cam;
     private Integer car_cost;
+    
+   //소영씨 첨부파일
+    private int file_id;
+    private String unique_file_nm;
+    private String use_yn;
 }

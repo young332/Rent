@@ -56,8 +56,8 @@
     <script src="/resources/assets/libs/chart-am4/animated.js"></script>
 
     <!-- Demo -->
-    <script src="/resources/assets/js/demo.js"></script>
-    <script src="/resources/assets/js/analytics.js"></script>
+    <!-- <script src="/resources/assets/js/demo.js"></script> -->
+    <!-- <script src="/resources/assets/js/analytics.js"></script> -->
     <!-- <script src="/resources/assets/js/pages/dashboards_index.js"></script> -->
     
     <script>
@@ -298,8 +298,8 @@
                                     <a href="javascript:" class="dropdown-item">
                                         <i class="feather icon-settings text-muted"></i> &nbsp; Account settings</a> -->
                                     <div class="dropdown-divider"></div>
-                                    <a href="javascript:" class="dropdown-item">
-                                        <i class="feather icon-power text-danger"></i> &nbsp; Log Out</a>
+                                    <a href="/admin/logout" class="dropdown-item">
+                                        <i class="feather icon-power text-danger"></i>&nbsp; 로그아웃</a>
                                 </div>
                             </div>
                         </div>

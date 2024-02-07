@@ -117,6 +117,8 @@ public class AdminController {
 	@GetMapping("/car/ListCar")
 	public void adminListCarGet(Model model) {
 		List<CarInfoVO> carInfoList = carInfoService.selectCarInfo();
+		List<CommonCodeVO> carNamelist = carInfoService.selectCarName();
+		model.addAttribute("carNamelist", carNamelist);
 		model.addAttribute("carInfoList", carInfoList);
 		log.info(carInfoList);
 	}
@@ -141,6 +143,14 @@ public class AdminController {
 		model.addAttribute("loginInfo", memberVO);
 		model.addAttribute("useCookie", loginDTO.getUseCookie());
 		
+	}
+	
+	//로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		log.info("logout");
+		return "redirect:/admin/login";
 	}
 	
 

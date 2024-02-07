@@ -147,10 +147,12 @@ res_rid: ${res_rid}
         </h4>
         <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">${loginInfo.mem_id}님의 여정</h6>
-              <small class="text-muted">울산지점</small><br>
-              <small class="text-muted">${paymentGet.res_rental_date} ~ ${paymentGet.res_return_date}</small>
-              <small class="text-muted">${reserveVO.car_size}</small>
+              <h6 class="my-0">${loginInfo.mem_name}님의 여정</h6><br>
+              <c:if test="${not empty reserveList}">
+				<c:set var="firstReservation" value="${reserveList[0]}" />
+              	<h6 class="my-0">울산지점</h6><br>
+              	<h6>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</h6>
+			  </c:if>
             </div>
           </li>
         <li class="list-group-item d-flex justify-content-between lh-sm">
@@ -166,7 +168,7 @@ res_rid: ${res_rid}
             </div>
 	            <span class="text-muted">
 	            	<span class="bold txt_blue">
-	            	<%=65000%>원
+	            	${totalPay}원
 	            	</span>
 	            </span>
           </li>
@@ -219,7 +221,7 @@ res_rid: ${res_rid}
           <div class="row g-3">
             <div class="col-sm-12">
               <label for="name" class="form-label">이름</label>
-              <input type="text" class="form-control" id="name" value="${loginInfo.mem_name}">
+              <input type="text" class="form-control" id="name" value="${loginInfo.mem_name}" readonly>
               <div class="invalid-feedback">
              
               </div><br>
@@ -227,7 +229,7 @@ res_rid: ${res_rid}
 
             <div class="col-12">
               <label for="text" class="form-label">연락처<span class="text-muted"></span></label>
-              <input type="text" class="form-control" id="phone" value=${loginInfo.mem_phone}>
+              <input type="text" class="form-control" id="phone" value=${loginInfo.mem_phone} readonly>
               <div class="invalid-feedback">
                 연락처 불려오기
               </div><br>
@@ -235,7 +237,7 @@ res_rid: ${res_rid}
 
             <div class="col-12">
               <label for="birth" class="form-label">생년월일</label>
-              <input type="text" class="form-control" id="birth" value=${loginInfo.mem_birth}>
+              <input type="text" class="form-control" id="birth" value=${loginInfo.mem_birth} readonly>
               <div class="invalid-feedback">
                 생년월일 불려오기
               </div><br>
@@ -245,19 +247,19 @@ res_rid: ${res_rid}
           <h4 class="mb-3">Payment</h4>
           </div>
 
-          <div class="col-md-7 col-lg-8">
-            <div class="form-check">
-              <input id="pointPayment" name="paymentMethod" type="radio" class="form-check-input" checked required>
-              <label class="form-check-label" for="credit">포인트 결제</label>
-            </div>
-            <div class="form-check">
-              <input id="creditPayment" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="debit">현금 결제 (비회원 전용)</label>
-            </div>
-            </div><br>
+<!--           <div class="col-md-7 col-lg-8"> -->
+<!--             <div class="form-check"> -->
+<!--               <input id="pointPayment" name="paymentMethod" type="radio" class="form-check-input" checked required> -->
+<!--               <label class="form-check-label" for="credit">포인트 결제</label> -->
+<!--             </div> -->
+<!--             <div class="form-check"> -->
+<!--               <input id="creditPayment" name="paymentMethod" type="radio" class="form-check-input" required> -->
+<!--               <label class="form-check-label" for="debit">현금 결제 (비회원 전용)</label> -->
+<!--             </div> -->
+<!--             </div><br> -->
 
 <%
-int	res_totalpay = 65000;
+// int	res_totalpay = 65000;
 
 int unit = 100;
    
@@ -274,14 +276,14 @@ int min = 5000;
 		  <tbody>
 		    <tr>
 		      <th>결제금액</th>
-		      <td><span class="bold txt_blue"><%=65000 %>원</span></td>
+		      <td><span class="bold txt_blue">${totalPay}원</span></td>
 		    </tr>
 		    <tr>
 		      <th> 포인트 </th>
 		      <td>
 		        사용가능 포인트 : <span name="left_pnt">${loginInfo.mem_point}</span>p <br> 
 		        <c:choose>
-		        	<c:when test="${loginInfo.mem_point < 65000 }">
+		        	<c:when test="${loginInfo.mem_point < totalPay }">
 		        		<span style="color:red;">결제 포인트가 부족합니다.</span>
 		        	</c:when>
 		        	<c:otherwise>
@@ -297,16 +299,16 @@ int min = 5000;
 		    <tr>
 		      <td></td>
 		      <td>
-		      <c:if test="${loginInfo.mem_point > 65000}">
-		        <span> <input type="number" name="point_cost" id="point_cost" min="<%=min%>" max=<%=res_totalpay%> onchange="updateViewUsePnt()"></span> p 
-		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${res_totalpay + memberVO.mem_point}</span>p )
+		      <c:if test="${loginInfo.mem_point > totalPay}">
+		        <span> <input type="number" name="point_cost" id="point_cost" min="5000" max="${totalPay}" onchange="updateViewUsePnt()"></span> p 
+		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${memberVO.mem_point}</span>p )
 		      </c:if>
 		      </td>
 		    </tr>
 		    <tr>
 		      <td></td>
 		      <td>
-		      	<p class="bold txt_red"> 최종 결제 금액 : <span class="bold txt_red" id="result_pnt">${reserveInfo.res_totalpay}</span> 원</p>
+		      	<p class="bold txt_red"> 최종 결제 금액 : <span class="bold txt_red" id="result_pnt">0</span> 원</p>
 		      </td>
 		    </tr>
 		  </tbody>
@@ -329,7 +331,7 @@ int min = 5000;
           				<ul class="agree_list">
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree01" name="0" readonly="">
+          				<input type="checkbox" id="agree01" name="agree01" readonly="">
           				<label for="agree01">고유식별정보 수집 및 이용 동의(필수)</label>
           				</span>
           				<span class="view">
@@ -337,19 +339,19 @@ int min = 5000;
           				</span></li>
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree02" name="1" readonly="">
+          				<input type="checkbox" id="agree02" name="agree02" readonly="">
           				<label for="agree02">대여자격 확인 동의(필수)
           				</label></span><span class="view">
           				<a id="agree02" name="1">보기</a>
           				</span></li><li><span class="chk_box">
-          				<input type="checkbox" id="agree03" name="2" readonly="">
+          				<input type="checkbox" id="agree03" name="agree03" readonly="">
           				<label for="agree03">개인정보 수집 및 이용 동의(필수)</label>
           				</span><span class="view"><a id="agree03" name="2">보기</a>
           				</span>
           				</li>
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree04" name="3" readonly="">
+          				<input type="checkbox" id="agree04" name="agree04" readonly="">
           				<label for="agree04">개인정보 제3자 제공 동의(필수)</label>
           				</span><span class="view">
           				<a id="agree04" name="3">보기</a>
@@ -357,7 +359,7 @@ int min = 5000;
           				</li>
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree05" name="4" readonly="">
+          				<input type="checkbox" id="agree05" name="agree05" readonly="">
           				<label for="agree05">고유식별정보 제3자 제공에 관한 동의(필수)</label>
           				</span>
           				<span class="view">
@@ -366,7 +368,7 @@ int min = 5000;
           				</li>
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree06" name="5" readonly="">
+          				<input type="checkbox" id="agree06" name="agree06" readonly="">
           				<label for="agree06">자동차 표준 대여약관(필수)</label>
           				</span>
           				<span class="view">
@@ -375,7 +377,7 @@ int min = 5000;
           				</li>
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree07" name="6" readonly="">
+          				<input type="checkbox" id="agree07" name="agree07" readonly="">
           				<label for="agree07">취소 및 위약금 규정 동의(필수)</label>
           				</span>
           				<span class="view">
@@ -384,7 +386,7 @@ int min = 5000;
           				</li>
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree08" name="7" readonly="">
+          				<input type="checkbox" id="agree08" name="agree08" readonly="">
           				<label for="agree08">전자금융거래 이용약관(필수)</label>
           				</span>
           				<span class="view">
@@ -419,17 +421,17 @@ int min = 5000;
    
    console.log("포인트: " + point);
       
-   var res_totalpay = <%=65000 %>;
+   var res_totalpay = '${totalPay}';
    
-   function updateViewUsePnt(res_totalpay, point, min, uint) {
+   function updateViewUsePnt(res_totalpay, point, min) {
 	   var usePntInput = document.getElementById("point_cost");
 	   var viewUsePnt = document.getElementById("view_point_cost");
 	   
 	   viewUsePnt.innerText = usePntInput.value;
    }
 
-	function chkPoint(res_totalpay, point, min,unit) {
-		//res_totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
+	function chkPoint(totalpay, point, min) {
+		//totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
 		var v_point = 0; //사용할 포인트 (input 입력값)
 	
 		if (document.getElementById("chk_use").checked)  
@@ -440,17 +442,17 @@ int min = 5000;
 				
 			}
 
-			if(point > res_totalpay ){ //결제금액보다 포인트가 더 클 때
-				v_point = res_totalpay; //사용할 포인트는 결제금액과 동일하게 설정
+			if(point >= min && point > totalpay ){ //결제금액보다 포인트가 더 클 때
+				v_point = totalpay; //사용할 포인트는 결제금액과 동일하게 설정
 			}
 			
 		}
 		document.getElementById("point_cost").value = v_point; //input 값 설정
 
-		changePoint(res_totalpay,point,min,unit);
+		changePoint(totalpay,point,min);
 	}
 	
-	function changePoint(res_totalpay,point,min,unit){
+	function changePoint(totalpay,point,min){
 		//input값을 가져옴 > left_pnt 변경 > 최종결제금액 변경
 		//res_totalpay : 결제 금액 / pnt : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
 		var v_point = parseInt(document.getElementById("point_cost").value); //사용할 포인트 (input 입력값)
@@ -460,8 +462,8 @@ int min = 5000;
 			document.getElementById("point_cost").value = v_point; //input 값 재설정
 		}
 
-		if(v_point > res_totalpay ){ //결제금액보다 포인트가 더 클 때
-			v_point = res_totalpay; //사용할 포인트는 결제금액과 동일하게 설정
+		if(v_point > totalpay ){ //결제금액보다 포인트가 더 클 때
+			v_point = totalpay; //사용할 포인트는 결제금액과 동일하게 설정
 			document.getElementById("point_cost").value = v_point; //input 값 재설정
 		}
 
@@ -485,18 +487,32 @@ int min = 5000;
 			viewUsePnt.innerText = v_point;
 		}
 		
-		document.getElementById("result_pnt").innerHTML = res_totalpay - v_point; //최종 결제금액 = 결제금액 - 사용할 포인트
+		document.getElementById("result_pnt").innerHTML = totalpay - v_point; //최종 결제금액 = 결제금액 - 사용할 포인트
 	}
 	
-	$("#btn_pay").on("click", function() {
-		
+	// totalChk checkbox 요소 가져오기
+	var totalChk = document.getElementById("totalChk");
+
+	// totalChk checkbox 요소에 클릭 이벤트 핸들러 추가
+	totalChk.addEventListener("click", function() {
+	    // 모든 필수/선택 약관에 대한 checkbox 요소들 가져오기
+	    var checkboxes = document.querySelectorAll('.agree_chk_wrap input[type="checkbox"]');
+	    
+	    // totalChk checkbox의 상태에 따라 모든 필수/선택 약관 checkbox의 상태 변경
+	    for (var i = 0; i < checkboxes.length; i++) {
+	        checkboxes[i].checked = totalChk.checked;
+	    }
+	});
+
+	
+	$("#btn_pay").on("click", function(e) {
+	
  		var res_rid = $("#res_rid").val(); 
 		var pay_res_rid = $("#pay_res_rid").val();
 		var point_cost = $("#point_cost").val();
  		console.log("point_cost:", point_cost);
  		var pay_mem_id = $("#pay_mem_id").val();
   		console.log("pay_mem_id:", pay_mem_id);
-//  		var pay_date = $("#pay_date").val();
  		var res_totalpay = $("#res_totalpay").val();
 
 		/* 서버 전송 */
@@ -511,6 +527,8 @@ int min = 5000;
 		} else {
 			$("#btn_pay").hide();
 		}
+		
+		updateViewUsePnt(totalpay, point, min);
 	});
 
 		
