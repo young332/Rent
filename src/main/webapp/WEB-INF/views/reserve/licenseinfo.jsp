@@ -5,7 +5,10 @@
 <script src="/resources/js/myscript.js"></script>
 <style>
 .ex_box {
-	font-size: 10px;
+	font-size: 15px;
+}
+.txt_birth{
+	font-size:13px;
 }
 </style>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
@@ -40,9 +43,15 @@
 						이름<input type="text" id="name" name="name"
 							placeholder="이름을 입력해주세요." value="${loginInfo.mem_name}"><br>
 						전화번호<input type="text" id="tel" name="tel"
-							placeholder="전화번호를 입력해주세요." value="${loginInfo.mem_phone}"><br>
+							placeholder="'-'없이 입력해주세요." value="${loginInfo.mem_phone}"><br>
 						생년월일<input type="text" id="birthdate" name="birthdate"
-							placeholder="생년월일을 입력해주세요." value="${loginInfo.mem_birth}"><br>
+							placeholder="생년월일을 입력해주세요." value="${loginInfo.mem_birth}">
+							<p class="txt_birth">
+								예시)1900-00-00
+							</p><br>
+							
+
+						
 						<br>
 						<p>운전면허 정보</p>
 						<div class="license_img">
@@ -64,7 +73,7 @@
 						</div>
 						<br> 
 						면허번호<input type="text" id="licensenum"
-							name="res_license_num" placeholder="면허번호를 입력해주세요.">
+							name="res_license_num" placeholder="면허번호 최대 12자를 입력해주세요.">
 
 						<div class="ex_box">
 							<p class="txt">

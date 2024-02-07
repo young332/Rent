@@ -15,4 +15,5 @@ public interface ReserveService {
 	public List<CarInfoVO> getCarInfo();
 	public List<ReserveDTO> selectCheck(ReserveDTO reserveDTO);
 	public List<MemberVO> getMemberInfo();
+	public ReserveDTO getMemberInfo(String car_index);
 }
