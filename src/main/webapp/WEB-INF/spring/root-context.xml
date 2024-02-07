@@ -65,6 +65,8 @@
 		base-package="com.kh.rent.reserve.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.myPage.mapper" />
+		<mybatis-spring:scan
+		base-package="com.kh.rent.board.mapper" />
 
 
 

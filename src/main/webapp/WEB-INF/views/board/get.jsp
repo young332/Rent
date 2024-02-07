@@ -4,20 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>   
-
-<script>
-$(function(){
-	$(".board-row").click(function() {
-		console.log("클릭");
-		var boardNo = $(this).data("board-no");
-		console.log("boardNo:" , boardNo);
-        window.location.href = "get?board_no=" + boardNo;
-		
-	
-		
-	});
-});
-</script>   
+   
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -43,21 +30,25 @@ $(function(){
 		<div class="col-md-8">
 			<table class="table">
 				<thead>
-					<c:forEach items="${board}" var="board">
-							<tr class="board-row" data-board-no="${board.board_no}">
-								<th>${board.board_no}</th>
-								<th>${board.board_title}</th>
-								<th style="text-align: right;"><fmt:formatDate value="${board.board_cdate}" pattern="yyyy-MM-dd"/></th>
-								<th style="text-align: right;">조회수  ${board.readcount}</th>
-							</tr>
-						</c:forEach>
-				</thead>
-				<tbody>
-				</tbody>
+					 <tbody>
+                        <tr>
+                            <th>${boardVO.board_title}</th>
+                        </tr>
+                        <tr>
+                            <th><fmt:formatDate value="${boardVO.board_cdate}" pattern="yyyy-MM-dd"/></th>
+                        </tr>
+                        <tr>
+                            <th>${boardVO.board_content}</th>
+                        </tr>
+                    </tbody>
 			</table>
+			<div class="col-md-12 text-center">
+				<button type="button" class="btn btn-secondary btn-oper" onclick="location.href='/board/list'">목록</button>
+			</div>
 			<div class="col-md-12">
-			<div class="d-flex justify-content-end">
-			<button type="button" class="btn btn-secondary btn-oper">등록</button>
+				<div class="d-flex justify-content-end">
+					<button type="button" class="btn btn-secondary btn-oper mr-2">수정</button>
+					<button type="button" class="btn btn-secondary btn-oper">삭제</button>
 			</div>
 			</div>
 		</div>
