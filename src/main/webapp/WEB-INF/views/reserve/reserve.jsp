@@ -131,9 +131,9 @@ div.left-box {
 				<div class="row">
 					<div class="top-searchinput-box" style="width: 1099px;">
 						<h6>대여일&nbsp;&nbsp;:</h6>
-						<input type="text" name="top_book_pick_date" readonly>
+						<input type="text" name="top_book_pick_date" readonly >
 						<i class="fa fa-arrow-circle-right"style="height: 16px;"></i>
-						<h6 style="margin-left: 25px;">반납일&nbsp;&nbsp;:</h6>
+						<h6 style="margin-left: 25px;" value="">반납일&nbsp;&nbsp;:</h6>
 						<input type="text" name="top_book_off_date"  readonly>
 						<h6>총&nbsp;&nbsp;: <span id="totalTimeSpan"></span> </h6>
 
@@ -203,7 +203,7 @@ div.left-box {
 						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${reserveDTO.unique_file_nm});">
 						    					</div>
 						    					<div class="text">
-						    						<h2 class="mb-0" style="font-weight: bold; font-size: 30px;">${reserveDTO.car_name}</h2>
+						    						<h2 class="mb-0"  style="font-weight: bold; font-size: 30px;">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
 						    							<input type="text" class="cat car_index" value="${reserveDTO.car_index}" style="display: none;">
 							    						<span class="cat" style="color: black;">${reserveDTO.car_company}</span>|
@@ -345,7 +345,22 @@ $(function() {
 		    
 		    
 		});
-	 
+	 //메인페이지에서 선택한 차 만 보이게 하기
+	 $(document).ready(function() {
+		    var carIndexParam = "${param.car_index}";
+		
+		    if (carIndexParam) {
+		        $(".item").each(function() {
+		            var carIndex = $(this).find(".car_index").val();
+		
+		            if (carIndex !== carIndexParam) {
+		                $(this).detach();
+		            }
+		        });
+		    }
+		});
+
+
 	 $(document).ready(function() {
 		    function calculateTotalTime() {
 		        var pickDate = new Date($("#top_book_pick_date").val());
@@ -379,7 +394,7 @@ $(function() {
 		    
 		});
 
-	 //차들 총 가격
+	 //차들 총가격
 	$(document).ready(function () {
 	    function calculateTotalCost() {
 	        $(".item").each(function () {
