@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
-import com.kh.rent.login.mapper.MemberMapper;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
@@ -106,6 +105,7 @@ public class PaymentServiceImpl implements PaymentService {
 	public int payCancel(int pay_pid) {
 		
 		int result = paymentMapper.payCancel(pay_pid);
+		
 		return result;
 	}
 	

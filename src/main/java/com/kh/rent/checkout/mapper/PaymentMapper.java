@@ -49,5 +49,8 @@ public interface PaymentMapper {
 	public int refundPay(PaymentVO paymentVO);
 	
 	public int getpaypid(int pay_pid);
+	
+	//예약 상태 변경(결제취소 -> 예약취소)
+	public int pay_reserve_cancel(int pay_res_rid);
 
 }

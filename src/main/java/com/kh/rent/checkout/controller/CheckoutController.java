@@ -103,14 +103,12 @@ public class CheckoutController {
     	log.info("count: " + count);
     	if (count == 1) {
     		
-    		//int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
     		boolean result = paymentService.paymentCancel(paymentVO);
         	log.info("result: " + result);
-        	//log.info("totalPay: " + totalPay);
         	
         	if (result) {
-        		//loginInfo.setMem_point(loginInfo.getMem_point() + totalPay);
-        		session.setAttribute("loginInfo", loginInfo);
+        		
+        		session.setAttribute("result", result);
         		return "success";
         	}
 

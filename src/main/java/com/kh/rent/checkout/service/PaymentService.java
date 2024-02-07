@@ -41,4 +41,5 @@ public interface PaymentService {
 	// 결제취소
 	public int payCancel(int pay_pid);
 	
+		
 }
