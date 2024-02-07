@@ -83,9 +83,9 @@ public class MemberController {
 	@PostMapping("/NonLoginPost")
 	public String NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO, HttpSession session, RedirectAttributes rttr) {
 		log.info("nonMemberLoginDTO:" + nonMemberLoginDTO);
-		NonMemberVO nonMemberVO = memberService.NonMemberLogin(nonMemberLoginDTO);
-		if(nonMemberVO != null) {
-			session.setAttribute("nonMemberVO", nonMemberVO);
+//		NonMemberVO nonMemberVO = memberService.NonMemberLogin(nonMemberLoginDTO);
+		if(nonMemberLoginDTO != null) {
+			session.setAttribute("nonMemberLoginDTO", nonMemberLoginDTO);
 			return "redirect:/myPage/reservationList_guest";
 		}
 		rttr.addFlashAttribute("nonLoginResult", "fail");

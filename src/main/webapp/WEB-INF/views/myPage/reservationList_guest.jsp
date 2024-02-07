@@ -63,7 +63,7 @@ $(document).ready(function() {
         </div>
       </div>
     </section>
-${nonMemberVO}
+${nonMember}
 <%-- ${reserveList} --%>
 <%-- ${carNames} --%>
 <%-- ${reserveList} --%>
@@ -73,72 +73,44 @@ ${nonMemberVO}
     			<div class="col-md-12 ftco-animate">
     				<div style="display: flex; align-items: flex-end;">
 						<h3>
-							${nonMemberVO.mem_name}님의 예약내역
+							${nonMember.non_name}님의 예약내역
 						</h3>
-						<c:if test="${not empty reserveList}">
-							<c:set var="firstReservation" value="${reserveList[0]}" />
-								<p>(${firstReservation.res_license_type}, ${firstReservation.res_license_num})</p>
-						</c:if>
+							<c:set var="firstReservation" value="${nonMember[0]}" />
+							<p>(${firstReservation.res_license_type}, ${firstReservation.res_license_num})</p>
 					</div>
-		          <%-- 예약내역이 없는 경우 --%>
-		         	<c:if test="${empty reserveList}">
-						<div class="jumbotron card card-block">
-				            <p>예약내역이 없습니다.</p>
-				            <p><a class="btn btn-primary btn-large" href="/reserve/reserve">예약하러 가기</a></p>
-				        </div>
-		          	</c:if>
 		          <%-- 예약내역이 있는 경우 --%>
 					<div>
-						<c:if test="${not empty reserveList}">
-				            <table>
-				              <thead>
-							  <tr>
-							    <th rowspan="2">예약번호</th>
-							    <th colspan="2">대여기간</th>
-							    <th rowspan="2">차종</th>
-							    <th rowspan="2">결제금액</th>
-							    <th rowspan="2">예약상태</th>
-							    <th rowspan="2">취소</th>
-							  </tr>
-							  <tr>
-							    <th>대여시작일</th>
-							    <th>대여종료일</th>
-							  </tr>
-							</thead>
-				              <tbody>
-				                <%-- 예약 목록을 반복하여 출력 --%>
-				                <c:forEach var="reservation" items="${reserveList}">
-				                  <tr>
-				                    <td class="res_rid">${reservation.res_rid}</td>
-				                    <td>${reservation.res_rental_date}</td>
-				                    <td class="res_return_date">${reservation.res_return_date}</td>
-				                    <td class="carName"></td>
-				                    <td class="totalpay">${reservation.res_totalpay}</td>
-			                    	<c:choose>
-										<c:when test="${reservation.pay_status eq '결제완료'}">
-					                    	<td>${reservation.pay_status}</td>
-										</c:when>
-										<c:otherwise>
-											<td>${reservation.res_status}
-												<c:if test="${reservation.res_status eq '예약중'}">
-													<button onclick="pay(${reservation.res_rid})">결제</button>
-												</c:if>
-											</td>
-										</c:otherwise>
-									</c:choose>
-									<td>
-					                    <c:if test="${reservation.res_status eq '예약중'}">
-									    <button onclick="res_cancel(${reservation.res_rid})">예약취소</button>
-										</c:if>
-					                    <c:if test="${reservation.pay_status eq '결제완료'}">
-									    <button onclick="pay_cancel(${reservation.pay_pid})">결제취소</button>
-										</c:if>
-				                    </td>
-				                  </tr>
-				                </c:forEach>
-				              </tbody>
-				            </table>
-			          	</c:if>
+			            <table>
+			              <thead>
+						  <tr>
+						    <th rowspan="2">예약번호</th>
+						    <th colspan="2">대여기간</th>
+						    <th rowspan="2">차종</th>
+						    <th rowspan="2">결제금액</th>
+						    <th rowspan="2">예약상태</th>
+						    <th rowspan="2">취소</th>
+						  </tr>
+						  <tr>
+						    <th>대여시작일</th>
+						    <th>대여종료일</th>
+						  </tr>
+						</thead>
+			              <tbody>
+			                <%-- 예약 목록을 반복하여 출력 --%>
+			                <c:forEach var="reservation" items="${nonMember}">
+			                  <tr>
+			                    <td class="non_rid">${reservation.non_rid}</td>
+			                    <td>${reservation.non_rental_date}</td>
+			                    <td class="res_return_date">${reservation.non_return_date}</td>
+			                    <td class="carName"></td>
+			                    <td class="totalpay">${reservation.non_totalpay}</td>
+								<td>${reservation.non_status}</td>
+								<td><button onclick="non_res_cancel(${reservation.non_rid})">예약취소</button>
+			                    </td>
+			                  </tr>
+			                </c:forEach>
+			              </tbody>
+			            </table>
 		        	</div>
 			      </div>
 			    </div>

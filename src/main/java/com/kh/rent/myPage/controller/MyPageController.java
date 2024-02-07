@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.domain.NonMemberLoginDTO;
 import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 import lombok.extern.log4j.Log4j;
@@ -160,6 +162,11 @@ public class MyPageController {
 	@GetMapping("/reservationList_guest")
 	public void reservation_guest(HttpSession session, Model model) {
 		log.info("reservation_guest...");
+		NonMemberLoginDTO nonMemberLoginDTO = (NonMemberLoginDTO)session.getAttribute("nonMemberLoginDTO");
+		List<NonMemberVO> nonMember = myPageService.getNonMemberList(nonMemberLoginDTO);
+		log.info("nonMember:" + nonMember);
+		
+		model.addAttribute("nonMember", nonMember);
 	}
 	
 	

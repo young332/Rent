@@ -18,7 +18,7 @@ function pay(reservationId) {
     location.href = '/checkout/payment?res_rid=' + reservationId;
 }
 
-// 결제취소 버튼 - 결제취소 페이지 이동
+// 결제취소 버튼 - 결제취소처리
 function pay_cancel(paymentId) {
     var confirmflag = confirm("결제취소 하시겠습니까?");
     if(confirmflag){
@@ -39,7 +39,7 @@ function pay_cancel(paymentId) {
     }
 }
 
-// 예약취소 버튼 - 예약취소 페이지 이동
+// 예약취소 버튼 - 예약취소처리
 function res_cancel(reservationId) {
 	console.log("reservationId:" + reservationId);
     var confirmflag = confirm("예약취소 하시겠습니까?");
