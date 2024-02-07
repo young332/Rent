@@ -15,7 +15,50 @@ function formatNumberWithCommas(number) {
 
 // 결제 버튼 - 결제페이지 이동
 function pay(reservationId) {
-    window.location.href = '/checkout/payment?reservationId=' + reservationId;
+    location.href = '/checkout/payment?res_rid=' + reservationId;
+}
+
+// 결제취소 버튼 - 결제취소 페이지 이동
+function pay_cancel(paymentId) {
+    var confirmflag = confirm("결제취소 하시겠습니까?");
+    if(confirmflag){
+		console.log("결제취소:" + confirmflag);
+		$.ajax({
+			method: "GET",
+			url: "/checkout/pay_cancel/" + paymentId,
+			success: function(rData) {
+				console.log("rData:", rData);
+				if (rData == "success") {
+					alert("결제취소 했습니다.");
+					location.href = "/myPage/reservationList";
+				} else {
+					alert("결제취소 불가");
+				}
+			}
+		});
+    }
+}
+
+// 예약취소 버튼 - 예약취소 페이지 이동
+function res_cancel(reservationId) {
+	console.log("reservationId:" + reservationId);
+    var confirmflag = confirm("예약취소 하시겠습니까?");
+    if(confirmflag){
+		console.log("예약취소:" + confirmflag);
+		$.ajax({
+			method: "DELETE",
+			url: "/myPage/res_cancel/" + reservationId,
+			success: function(rData) {
+				console.log("rData:", rData);
+				if (rData == "success") {
+					alert("예약취소 했습니다.");
+					location.href = "/myPage/reservationList";
+				} else {
+					alert("예약취소 불가");
+				}
+			}
+		});
+    }
 }
 
 $(document).ready(function() {
@@ -48,6 +91,7 @@ $(document).ready(function() {
     </section>
 <%-- ${reserveList} --%>
 <%-- ${carNames} --%>
+<%-- ${reserveList} --%>
     <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
@@ -90,17 +134,31 @@ $(document).ready(function() {
 				                <%-- 예약 목록을 반복하여 출력 --%>
 				                <c:forEach var="reservation" items="${reserveList}">
 				                  <tr>
-				                    <td>${reservation.res_rid}</td>
+				                    <td class="res_rid">${reservation.res_rid}</td>
 				                    <td>${reservation.res_rental_date}</td>
 				                    <td class="res_return_date">${reservation.res_return_date}</td>
 				                    <td class="carName"></td>
 				                    <td class="totalpay">${reservation.res_totalpay}</td>
-				                    <td class="res_status">${reservation.res_status}
-				                    <c:if test="${reservation.res_status eq '예약중'}">
-								    <button onclick="pay(${reservation.res_rid})">결제</button>
-									</c:if>
-									</td>
-				                    <td></td>
+			                    	<c:choose>
+										<c:when test="${reservation.pay_status eq '결제완료'}">
+					                    	<td>${reservation.pay_status}</td>
+										</c:when>
+										<c:otherwise>
+											<td>${reservation.res_status}
+												<c:if test="${reservation.res_status eq '예약중'}">
+													<button onclick="pay(${reservation.res_rid})">결제</button>
+												</c:if>
+											</td>
+										</c:otherwise>
+									</c:choose>
+									<td>
+					                    <c:if test="${reservation.res_status eq '예약중'}">
+									    <button onclick="res_cancel(${reservation.res_rid})">예약취소</button>
+										</c:if>
+					                    <c:if test="${reservation.pay_status eq '결제완료'}">
+									    <button onclick="pay_cancel(${reservation.pay_pid})">결제취소</button>
+										</c:if>
+				                    </td>
 				                  </tr>
 				                </c:forEach>
 				              </tbody>
