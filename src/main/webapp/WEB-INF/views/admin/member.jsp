@@ -20,6 +20,61 @@
 
 <script>
 
+//검색폼 전송
+
+/* $("#frmSearch").submit(function(event) {
+    event.preventDefault(); // 기본 제출 동작을 막음
+    
+    var type = $(this).find("[name=type]").val();
+    var keyword = $(this).find("[name=keyword]").val();
+
+    if(type === ""){
+        alert("검색조건을 선택해주세요.");
+        $("[name=type]").focus();
+        return false;
+    }
+
+    if(keyword.trim() === ""){
+        alert("검색어를 입력해주세요.");
+        $("[name=keyword]").focus();
+        return false;
+    }
+
+    // AJAX를 통한 검색 요청
+    $.ajax({
+        type: "GET",
+        url: "/admin/member/search", // 검색을 처리하는 서버의 URL
+        data: { type: type, keyword: keyword }, // 검색 조건을 데이터로 전송
+        success: function(response) {
+            // 검색 결과를 처리하는 코드
+            console.log("검색 결과:", response);
+            // 여기서 검색 결과를 사용하여 UI를 업데이트하거나 표시할 수 있습니다.
+        },
+        error: function(xhr, status, error) {
+            // 오류 처리 코드
+            console.error("검색 오류:", error);
+        }
+    });
+}); */
+
+
+$("#frmSearch").submit(function(){
+	var type = $(this).find("[name=type]").val();
+	console.log("type:", type);
+	if(type==""){
+		alert("검색조건을 선택해주세요.");
+		$("[name=type]").focus();
+		return false;
+	}
+	var keyword = $(this).find("[name=keyword]").val();
+	if(keyword.trim() ==""){
+		alert("검색어을 선택해주세요.");
+		$("[name=keyword]").focus();
+		return false;
+	}
+	
+});
+
 $(function() {
 	// 비밀번호변경 모달열기
 	$("#pwdChange").click(function() {
@@ -137,42 +192,32 @@ function openZipSearch() {
     
     <div class="card-body">
 
-		 <form method="post" id="frm" name="frm">
-			<!-- <input type="hidden" name="pageIndex" value="1">  -->
-			<!-- <input type="hidden" name="recordCountPerPage" value="10"> --> 
-			<input type="hidden" name="Id" value="">
-			<input type="hidden" name="searchType" value="">
-			<input type="hidden" name="type"value="">
 
 			<div class="alert alert-light bg-light text-dark sch_wrap">
-				<div class="input-group col-sm-12">
-					
-					<div class="input-group col-sm">
-						<select class="custom-select" name="searchCnd">
-							<option value="all">전체</option>
-							<option value="Id">아이디</option>
-							<option value="name">이름</option>
-
+				<div class="input-group">
+				  <form id="frmSearch" action="/admin/member" method="get" class="form-inline">		
+					<div class="input-group form-group col">
+						<select class="custom-select" name="type">
+							<option value="">-------</option>
+							<option value="I" ${param.type=='I' ? 'selected' : ''}>아이디</option>
+							<option value="N" ${param.type=='N' ? 'selected' : ''}>이름</option>
 						</select>
 					</div>
-					<div class="input-group col-sm app-search">
-						<input type="text" class="form-control" placeholder="검색어 입력" name="searchWrd" value="" 
-						onkeypress="javascript:fn_searchKeyPressed(event);"> 
+					<div class="input-group form-group col app-search">
+						<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}"> 
 						<span class="search-icon"></span>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="button" onclick="javascript:fn_searchMember();">Search</button>
+							<button class="btn btn-primary" type="submit">검색</button>
 						</div>
 					</div>
+				  </form>
 				</div>
 			</div>
-		</form> 
+
 
 		<div class="dt-buttons col-sm-12 mb-3">
                 <button class="btn btn-secondary flaot-left" type="button" onclick="javascript:fn_excel('member','');"><span>엑셀 다운로드</span></button>
-                <div class="float-right" style="vertical-align: bottom;">
-                 <button class="btn btn-danger mr-2" type="button" onclick="javascript:fn_memberChkDel();"><span>선택 삭제</span></button>
-                  <button class="btn btn-success" type="button" onclick="javascript:fn_memberWrite();"><span>회원 등록</span></button>
-                </div>
+                <div class="float-right" style="vertical-align: bottom;"></div>
         </div>
               <div data-simplebar="init" class="table-responsive"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
                 <table class="table mb-0 table-hover table-responsive-xl">

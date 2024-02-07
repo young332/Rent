@@ -2,7 +2,38 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
 <script>
-	//회원정보수정하기
+	
+	//알림창 설정
+	$(function(){
+		var AddCar = '<c:out value="${AddCar}"/>';
+		var ModifyCar = '<c:out value="${ModifyCar}"/>';
+		var errorMessage = '<c:out value="${errorMessage}"/>';
+		console.log("AddCar: " , AddCar);
+		console.log("ModifyCar: " , ModifyCar);
+		console.log("errorMessage: " , errorMessage);
+		
+		
+		var v = "";
+		if(AddCar == "success"){
+			v = "등록";
+		} else if(ModifyCar == "success"){
+			v = "수정";
+		}  /* else if(deleteMenuName){
+			v = "삭제";
+		}  */
+		
+		if(AddCar == "success" || ModifyCar == "success" /* || deleteMenuName */) {
+			$("#alertModal").find(".modal-body").text(" 차량이 "+ v +" 되었습니다.");
+			$("#alertModal").find(".modal-title").text("차량 "+ v);
+			
+			$("#alertModal").modal("show");
+			
+		} else if(errorMessage){
+			$("#alertModal").find(".modal-body").text("해당요청을 수행하지 못했습니다.");
+		}
+	});
+	
+	//차량정보수정
 	function fn_carInfoModify(car_index) {
 			
 		   //alert("수정")
@@ -11,33 +42,34 @@
 		    url: '/admin/car/getCarInfo',  
 		    data: {car_index : car_index },
 		    success: function (data) {
-		      console.log('Success:', data);
+		    console.log('Success:', data);
 	
-		      
+		    
+		        $("#car_index").val(data['car_index']);
 		        $("#car_name").val(data['car_name']);
 			    $("#car_number").val(data['car_number']);
 			    $("#car_company").val(data['car_company']);
 			    $("#car_size").val(data['car_size']);
 			    $("#car_fuel").val(data['car_fuel']);
 			    $("#car_cost").val(data['car_cost']);
-			    var op_carseat = data['op_carseat'];
-			    if (op_carseat == "Y") {
-		        	$('input[name="op_carseat"]').prop("selected", true);
-		        } 
-			    var op_navi = data['op_navi'];
-			    if (op_navi == "Y") {
-		        	$('input[name="op_navi"]').prop("selected", true);
-		        }
-			    var op_bt = data['op_bt'];
-			    if (op_bt == "Y") {
-		        	$('input[name="op_bt"]').prop("selected", true);
-		        }
-			    var op_cam = data['op_cam'];
-			    if (op_cam == "Y") {
-		        	$('input[name="op_cam"]').prop("selected", true);
-		        }
 
-			    $("#create_user").val(data['create_user']);
+			    var op_carseat = data['op_carseat'];
+			    var op_navi = data['op_navi'];
+			    var op_bt = data['op_bt'];
+			    var op_cam = data['op_cam'];
+			    var use_yn = data['use_yn'];
+			    
+			    // op_carseat, op_navi, op_bt, op_cam, use_yn에 대한 처리
+			    var options = ["op_carseat", "op_navi", "op_bt", "op_cam", "use_yn"];
+			    $.each(options, function(index, option) {
+			        if (data[option] == "Y") {
+			            $('input[name="' + option + '"][value="Y"]').prop("checked", true);
+			        } else {
+			            $('input[name="' + option + '"][value="N"]').prop("checked", true);
+			        }
+			    });
+
+			    $("#update_user").val(${loginInfo.mem_name});
 			    $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
 			    
 
@@ -210,6 +242,8 @@
 
 					<div class="modal-body">
 						<form id="formModify" action="/admin/car/CarInfoModify" method="post">
+						<input type="hidden" name="car_index" id="car_index">
+						<input type="hidden" name="update_user" id="update_user" value="${loginInfo.mem_name}">
 						<!-- 기본 정보 -->
 					<div class="form-row">
 						<div class="form-group col-md-6 mb-3">
@@ -258,14 +292,14 @@
 					<p class="font-weight-bold mb-5">추가 옵션</p>
 					<div class="form-row">
 						<div class="form-group col-md-3 mb-5">
-							<label>카시트</label> <label class="custom-control custom-radio">
-								<input name="op_carseat" value="Y" type="radio"
-								class="custom-control-input rdoY" checked> <span
-								class="custom-control-label">사용</span>
-							</label> <label class="custom-control custom-radio"> <input
-								name="op_carseat" value="N" type="radio"
-								class="custom-control-input rdoN"> <span
-								class="custom-control-label">미사용</span>
+							<label>카시트</label> 
+							<label class="custom-control custom-radio">
+								<input name="op_carseat" value="Y" type="radio" class="custom-control-input rdoY" checked>
+								<span class="custom-control-label">사용</span>
+							</label> 
+							<label class="custom-control custom-radio"> 
+								<input name="op_carseat" value="N" type="radio" class="custom-control-input rdoN">
+								<span class="custom-control-label">미사용</span>
 							</label>
 						</div>
 	
@@ -306,17 +340,30 @@
 						</div>
 					</div>
 					<!-- 기타 정보 -->
-					<div class="form-group mb-3">
-						<label for="create_user" class="form-label">등록자</label><input
-							type="text" class="form-control" id="create_user"
-							name="create_user" required>
-					</div>
-					<div class="form-group">
+					<fieldset class="form-group only-edit">
+		                <div class="row">
+	                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
+		                    <div class="col-sm-10">
+		                        <div class="custom-controls-stacked">
+		                            <label class="custom-control custom-radio">
+		                                <input name="use_yn" value="Y" type="radio" class="custom-control-input rdoY" checked>
+		                                <span class="custom-control-label">사용</span>
+		                            </label>
+		                            <label class="custom-control custom-radio">
+		                                <input name="use_yn" value="N" type="radio" class="custom-control-input rdoN" >
+		                                <span class="custom-control-label">미사용</span>
+		                            </label>
+		                        </div>
+		                    </div>
+	                	</div>
+		            </fieldset>
+		            
+					<!-- <div class="form-group">
 						<img id="file" src="" style="width: 100px; height: 100px" alt="Image">
 						<label class="form-label w-100">차량사진</label> <input type="file"
 							name="image_path"> <small class="form-text text-muted">차량이미지를
 							첨부하세요.</small>
-					</div>
+					</div> -->
 						<hr>
 						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>
@@ -327,5 +374,28 @@
 		</div>
 	</div>
 </div>
-
+<!-- 알림 모달 -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="modal fade" id="alertModal" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="alertModalLable">알림</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 모달끝 -->
 <%@ include file="/WEB-INF/views/admin/include/bottom.jsp" %> 

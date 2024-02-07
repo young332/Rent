@@ -3,11 +3,28 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.admin.mapper.AdMemberMapper">
-	
+
+<sql id="search">
+		<where>
+			<foreach item="type" collection="typeArr">
+				<choose>
+					<when test="type == 'I'.toString()">
+						mem_id like '%'|| #{keyword} ||'%'
+					</when>
+					<when test="type == 'N'.toString()">
+						or mem_name like '%'|| #{keyword} ||'%'
+					</when>
+				</choose>
+			</foreach>
+		</where>
+	</sql>
+
 	<select id="selectAllMember" resultType="com.kh.rent.login.domain.MemberVO">
-		SELECT mem_id, mem_name, mem_adminck, mem_email, mem_birth, mem_phone, mem_addr, mem_cdate, 
-		       mem_udate, mem_point FROM rent001.TBL_MEMBER;
-	</select>   
+	    SELECT mem_id, mem_name, mem_adminck, mem_email, mem_birth, mem_phone, mem_addr, mem_cdate, 
+	           mem_udate, mem_point 
+	    FROM rent001.TBL_MEMBER
+	    <include refid="search"/> 
+	</select>  
 	
 	<select id="selectDelMember" resultType="com.kh.rent.admin.domain.DelMemberVO">
 		SELECT del_id, del_name, del_adminck, del_email, del_birth, del_phone, del_addr, del_ddate, 
