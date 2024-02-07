@@ -86,4 +86,12 @@
 		and res_status = '예약중'
 	</update>
 	
+	<!-- 예약정보 조회하기(비회원) -->
+ 	<select id="getNonMemberList" resultType="com.kh.rent.reserve.domain.NonMemberVO">
+ 		select *
+ 		from rent001.TBL_NONMEMBER
+ 		where non_name = #{non_name}
+ 		and non_tel = #{non_tel}
+  	</select>
+	
 </mapper>
