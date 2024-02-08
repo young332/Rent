@@ -50,15 +50,26 @@
 	<!-- 예약정보 현재시각기준 업데이트 -->
 	<update id="updateTBLReserve">
 	<![CDATA[
-		update rent001.TBL_RESERVE
-		set res_status = 
-   			case 
-	        when res_rental_date <= now() and res_return_date >= now() then '이용중'
-	        when res_return_date < now() then '이용완료'
-	        else res_status
-    	end,
-    	res_modi_date = NOW()
-    	where res_mem_id = #{mem_id}
+		update rent001.TBL_RESERVE as r
+		left join TBL_PAYMENT as p on r.res_rid = p.pay_res_rid
+		set r.res_status = 
+		    case 
+		        when r.res_status != '예약취소' 
+		            and r.res_rental_date <= now() 
+		            and r.res_return_date >= now() 
+		            and p.pay_status is null then '예약취소'
+		        when r.res_status != '예약취소' 
+		            and r.res_rental_date <= now() 
+		            and r.res_return_date >= now() then '이용중'
+		        when r.res_status != '예약취소' 
+		            and r.res_return_date < now() then '이용완료'
+		        when r.res_status != '예약취소' 
+		            and r.res_return_date < now()
+		            and p.pay_status is null then '예약취소'
+		        else r.res_status
+		    end,
+		    r.res_modi_date = now()
+		where r.res_mem_id = #{mem_id}
    	]]>
 	</update>
 	
@@ -84,6 +95,44 @@
 		set res_status = '예약취소'
 		where res_rid = #{res_rid}
 		and res_status = '예약중'
+	</update>
+	
+	<!-- 예약정보 현재시각기준 업데이트(비회원) -->
+	<update id="updateNonMember">
+	<![CDATA[
+		update rent001.TBL_NONMEMBER
+		set non_status = 
+   			case 
+	        when non_status != '예약취소' and non_rental_date <= now() and non_return_date >= now() then '이용중'
+	        when non_status != '예약취소' and non_return_date < now() then '이용완료'
+	        else non_status
+    	end,
+    	non_modi_date = NOW()
+    	where non_name = #{non_name} and non_tel = #{non_tel}
+   	]]>
+	</update>
+	
+	<!-- 예약정보 조회하기(비회원) -->
+ 	<select id="getMemberList_non" resultType="com.kh.rent.reserve.domain.NonMemberVO">
+ 		select *
+ 		from rent001.TBL_NONMEMBER
+ 		where non_name = #{non_name}
+ 		and non_tel = #{non_tel}
+  	</select>
+  	
+	<!-- 예약번호로 차종 조회하기(비회원) -->
+	<select id="getCarName_non" resultType="String">
+		select ci.car_name
+		from rent001.TBL_NONMEMBER as n
+		join rent001.TBL_CAR_INFO as ci on n.non_car_id = ci.car_index
+		where n.non_rid = #{res_rid} and n.non_car_id = #{res_car_id}
+	</select>
+	
+	<!-- 예약취소 -->
+	<update id="cancelReservation_non">
+		update rent001.TBL_NONMEMBER
+		set non_status = '예약취소'
+		where non_rid = #{non_rid}
 	</update>
 	
 </mapper>

@@ -12,9 +12,13 @@
 	
 	 <!-- 예약 상태 변경 -->
     <update id="reserveStatus">
-    	update TBL_RESERVE set
-		res_status = '결제완료'
+<!--     	update TBL_RESERVE set -->
+<!-- 		res_status = '결제완료' -->
+<!-- 		where res_rid = #{pay_res_rid} -->
+    	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
+		res_status = '예약중'
 		where res_rid = #{pay_res_rid}
+		and pay_status = '결제완료'
     </update>
 		
 	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
@@ -74,19 +78,38 @@
 		where res_rid = #{pay_res_rid}
     </select>
     
-    <!-- 예약 상태 변경(결제 취소) -->
-    <update id="reserveCancle">
-    	update TBL_RESERVE set
-		res_status = '결제취소'
+    <!-- pay_pid 불려오기 -->
+    <select id="getpaypid" resultType="int">
+    	select pay_pid
+		from TBL_PAYMENT
+		where res_rid = #{pay_pid}
+    </select>
+    
+     <!-- 결제 상태 변경 (결제취소) -->
+    <update id="payCancel">
+    	update TBL_PAYMENT set
+		pay_status = '결제취소'
+		where pay_pid = #{pay_pid}
+    </update>
+    
+    <!-- 예약 상태 변경(예약취소) -->
+    <update id="reserveCancel">
+    	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
+		res_status = '예약취소'
 		where res_rid = #{pay_res_rid}
+		and pay_status = '결제취소'
     </update>
     
 	<!-- 포인트 증가 (환불) -->
 	<update id="refundPay" parameterType="map">
-		update TBL_MEMBER set mem_point = mem_point + (select res_totalpay from TBL_RESERVE
-														from TBL_RESERVE
-														where res_rid = #{pay_res_rid})
-		where mem_id = #{pay_mem_id}
+    update TBL_MEMBER set mem_point = mem_point + (
+        select res_totalpay
+        from TBL_RESERVE
+        where res_rid = (
+            select pay_res_rid from TBL_PAYMENT where pay_pid = #{pay_pid}
+        )
+    )
+    where mem_id = #{pay_mem_id}
 	</update>
 	
 </mapper>

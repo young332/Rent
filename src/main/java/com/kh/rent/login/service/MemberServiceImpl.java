@@ -49,9 +49,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	//비회원로그인
 	@Override
-	public NonMemberVO NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO) {
-		NonMemberVO nonMemberVO = memberMapper.NonMembersLogin(nonMemberLoginDTO);
-		return nonMemberVO;
+	public int NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO) {
+		int count = memberMapper.checkNoMemberInfo(nonMemberLoginDTO);
+		return count;
 	}
 
 	

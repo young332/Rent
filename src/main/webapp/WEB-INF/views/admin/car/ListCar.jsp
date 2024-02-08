@@ -2,63 +2,165 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
 <script>
-	//회원정보수정하기
-	function fn_carInfoModify(car_index) {
-			
-		   //alert("수정")
-		    $.ajax({
-		    type: 'GET',
-		    url: '/admin/car/getCarInfo',  
-		    data: {car_index : car_index },
-		    success: function (data) {
-		      console.log('Success:', data);
+//알림창 설정
+$(function(){
 	
-		      
-		        $("#car_name").val(data['car_name']);
-			    $("#car_number").val(data['car_number']);
-			    $("#car_company").val(data['car_company']);
-			    $("#car_size").val(data['car_size']);
-			    $("#car_fuel").val(data['car_fuel']);
-			    $("#car_cost").val(data['car_cost']);
-			    var op_carseat = data['op_carseat'];
-			    if (op_carseat == "Y") {
-		        	$('input[name="op_carseat"]').prop("selected", true);
-		        } 
-			    var op_navi = data['op_navi'];
-			    if (op_navi == "Y") {
-		        	$('input[name="op_navi"]').prop("selected", true);
-		        }
-			    var op_bt = data['op_bt'];
-			    if (op_bt == "Y") {
-		        	$('input[name="op_bt"]').prop("selected", true);
-		        }
-			    var op_cam = data['op_cam'];
-			    if (op_cam == "Y") {
-		        	$('input[name="op_cam"]').prop("selected", true);
-		        }
+	var AddCar = '<c:out value="${AddCar}"/>';
+	var ModifyCar = '<c:out value="${ModifyCar}"/>';
+	var errorMessage = '<c:out value="${errorMessage}"/>';
+	console.log("AddCar: " , AddCar);
+	console.log("ModifyCar: " , ModifyCar);
+	console.log("errorMessage: " , errorMessage);
+	
+	
+	var v = "";
+	if(AddCar == "success"){
+		v = "등록";
+	} else if(ModifyCar == "success"){
+		v = "수정";
+	}  /* else if(deleteMenuName){
+		v = "삭제";
+	}  */
+	
+	if(AddCar == "success" || ModifyCar == "success" /* || deleteMenuName */) {
+		$("#alertModal").find(".modal-body").text(" 차량이 "+ v +" 되었습니다.");
+		$("#alertModal").find(".modal-title").text("차량 "+ v);
+		
+		$("#alertModal").modal("show");
+		
+	} else if(errorMessage){
+		$("#alertModal").find(".modal-body").text("해당요청을 수행하지 못했습니다.");
+	}
+	
+	
+	//검색
+	$("#frmSearch").submit(function(event) {
+	    event.preventDefault(); // 기본 제출 동작을 막음
+	    
+	    var type = $(this).find("[name=type]").val();
+	    var keyword = $(this).find("[name=keyword]").val();
+	    console.log("type",type );
+	    console.log("keyword", keyword);
 
-			    $("#create_user").val(data['create_user']);
-			    $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
-			    
+	    if(type == ""){
+	        alert("검색조건을 선택해주세요.");
+	        $("[name=type]").focus();
+	        return false;
+	    }
 
-		      // 모달 창 열기
-		      $("#CarmodifyModal").modal("show");
+	    if(keyword.trim() == ""){
+	        alert("검색어를 입력해주세요.");
+	        $("[name=keyword]").focus();
+	        return false;
+	    }
+
+	    
+	    $.ajax({
+	        type: "GET",
+	        url: "/admin/car/search", 
+	        data: { type: type, 
+	        	    keyword: keyword },
+	        success: function(response) {
+	        	console.log("검색 결과:", response);
+
+	            var tbody = $(".table tbody");
+
+	            tbody.empty();
+
+	            $.each(response, function(index, carInfo) {
+	                var row = $("<tr>");
+
+	                var checkboxCell = $("<td>");
+	                var checkboxDiv = $("<div class='custom-control custom-checkbox'>");
+	                var checkboxInput = $("<input type='checkbox' class='custom-control-input chk'>")
+	                    .attr("id", "chk" + index) // 인덱스를 기반으로 유일한 ID 생성
+	                    .attr("emplyrid", "jml8758")
+	                    .attr("membertype", "general");
+	                var checkboxLabel = $("<label class='custom-control-label'>").attr("for", "chk" + index);
+	                checkboxDiv.append(checkboxInput).append(checkboxLabel);
+	                checkboxCell.append(checkboxDiv);
+	                row.append(checkboxCell);
+
+	                
+	                row.append($("<td>").html("<img src='" + response[index].unique_file_nm + "' style='width: 50px; height: 50px' alt='Image'>"));
+	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_carInfoModify('" + response[index].car_index + "');\">" + response[index].car_name + "</a>"));
+	                row.append($("<td>").text(response[index].car_number));
+	                row.append($("<td>").text(response[index].car_company));
+	                row.append($("<td>").text(response[index].car_size));
+	                row.append($("<td>").text(response[index].car_cost));
+	                row.append($("<td>").text(response[index].use_yn));
+	                row.append($("<td>").text(response[index].create_user));
+	                row.append($("<td>").text(response[index].create_date));
+
+	                tbody.append(row);
+	            });
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("검색 오류:", error);
+	        }
+	    });
+	});
+
+});
+
+//차량정보수정
+function fn_carInfoModify(car_index) {
+		
+	   //alert("수정")
+	    $.ajax({
+	    type: 'GET',
+	    url: '/admin/car/getCarInfo',  
+	    data: {car_index : car_index },
+	    success: function (data) {
+	    console.log('Success:', data);
+
+	    
+	        $("#car_index").val(data['car_index']);
+	        $("#car_name").val(data['car_name']);
+		    $("#car_number").val(data['car_number']);
+		    $("#car_company").val(data['car_company']);
+		    $("#car_size").val(data['car_size']);
+		    $("#car_fuel").val(data['car_fuel']);
+		    $("#car_cost").val(data['car_cost']);
+
+		    var op_carseat = data['op_carseat'];
+		    var op_navi = data['op_navi'];
+		    var op_bt = data['op_bt'];
+		    var op_cam = data['op_cam'];
+		    var use_yn = data['use_yn'];
 		    
-		    } 
-		    
-		  }); 
-		}
-	
-	function updateCarInfo() {
-        var selectedOption = $("#car_name option:selected");
-        var company = selectedOption.data("company");
-        var size = selectedOption.data("size");
+		    // op_carseat, op_navi, op_bt, op_cam, use_yn에 대한 처리
+		    var options = ["op_carseat", "op_navi", "op_bt", "op_cam", "use_yn"];
+		    $.each(options, function(index, option) {
+		        if (data[option] == "Y") {
+		            $('input[name="' + option + '"][value="Y"]').prop("checked", true);
+		        } else {
+		            $('input[name="' + option + '"][value="N"]').prop("checked", true);
+		        }
+		    });
 
-        $("#car_company").val(company);
-        $("#car_size").val(size);
-        
-    }
-	
+		    $("#update_user").val(${loginInfo.mem_name});
+		    $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
+		    
+
+	      // 모달 창 열기
+	      $("#CarmodifyModal").modal("show");
+	    
+	    } 
+	    
+	  }); 
+	}
+
+function updateCarInfo() {
+       var selectedOption = $("#car_name option:selected");
+       var company = selectedOption.data("company");
+       var size = selectedOption.data("size");
+
+       $("#car_company").val(company);
+       $("#car_size").val(size);
+       
+   }
+
 	
 </script>
     <!-- [ content ] Start -->
@@ -74,32 +176,22 @@
     
     <div class="card-body">
 
-		 <form method="post" id="frm" name="frm">
-			<input type="hidden" name="pageIndex" value="1"> <input
-				type="hidden" name="recordCountPerPage" value="10"> <input
-				type="hidden" name="emplyrId" value=""> <input type="hidden"
-				name="searchType" value=""> <input type="hidden" name="type"
-				value="">
-
+		 <form method="get" id="frmSearch" name="frm">
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group col-sm-12">
-					
 					<div class="input-group col-sm">
-						<select class="custom-select" name="searchCnd">
+						<select class="custom-select" name="type">
 							<option value="all">전체</option>
-							<option value="emplyrId">제조사</option>
-							<option value="userNm">차종</option>
-
+							<option value="C" ${param.type=='C' ? 'selected' : ''}>제조사</option>
+							<option value="T" ${param.type=='T' ? 'selected' : ''}>차종</option>
+							<option value="N" ${param.type=='N' ? 'selected' : ''}>번호</option>
 						</select>
 					</div>
 					<div class="input-group col-sm app-search">
-						<input type="text" class="form-control" placeholder="검색어 입력"
-							name="searchWrd" value=""
-							onkeypress="javascript:fn_searchKeyPressed(event);"> <span
-							class="search-icon"></span>
+						<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}">
+						<span class="search-icon"></span>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="button"
-								onclick="javascript:fn_memberList('1');">Search</button>
+							<button class="btn btn-primary" type="submit" >검색</button>
 						</div>
 					</div>
 				</div>
@@ -210,6 +302,8 @@
 
 					<div class="modal-body">
 						<form id="formModify" action="/admin/car/CarInfoModify" method="post">
+						<input type="hidden" name="car_index" id="car_index">
+						<input type="hidden" name="update_user" id="update_user" value="${loginInfo.mem_name}">
 						<!-- 기본 정보 -->
 					<div class="form-row">
 						<div class="form-group col-md-6 mb-3">
@@ -258,14 +352,14 @@
 					<p class="font-weight-bold mb-5">추가 옵션</p>
 					<div class="form-row">
 						<div class="form-group col-md-3 mb-5">
-							<label>카시트</label> <label class="custom-control custom-radio">
-								<input name="op_carseat" value="Y" type="radio"
-								class="custom-control-input rdoY" checked> <span
-								class="custom-control-label">사용</span>
-							</label> <label class="custom-control custom-radio"> <input
-								name="op_carseat" value="N" type="radio"
-								class="custom-control-input rdoN"> <span
-								class="custom-control-label">미사용</span>
+							<label>카시트</label> 
+							<label class="custom-control custom-radio">
+								<input name="op_carseat" value="Y" type="radio" class="custom-control-input rdoY" checked>
+								<span class="custom-control-label">사용</span>
+							</label> 
+							<label class="custom-control custom-radio"> 
+								<input name="op_carseat" value="N" type="radio" class="custom-control-input rdoN">
+								<span class="custom-control-label">미사용</span>
 							</label>
 						</div>
 	
@@ -306,17 +400,30 @@
 						</div>
 					</div>
 					<!-- 기타 정보 -->
-					<div class="form-group mb-3">
-						<label for="create_user" class="form-label">등록자</label><input
-							type="text" class="form-control" id="create_user"
-							name="create_user" required>
-					</div>
-					<div class="form-group">
+					<fieldset class="form-group only-edit">
+		                <div class="row">
+	                    <label class="col-form-label col-sm-2 text-sm-right pt-sm-0">사용유무</label>
+		                    <div class="col-sm-10">
+		                        <div class="custom-controls-stacked">
+		                            <label class="custom-control custom-radio">
+		                                <input name="use_yn" value="Y" type="radio" class="custom-control-input rdoY" checked>
+		                                <span class="custom-control-label">사용</span>
+		                            </label>
+		                            <label class="custom-control custom-radio">
+		                                <input name="use_yn" value="N" type="radio" class="custom-control-input rdoN" >
+		                                <span class="custom-control-label">미사용</span>
+		                            </label>
+		                        </div>
+		                    </div>
+	                	</div>
+		            </fieldset>
+		            
+					<!-- <div class="form-group">
 						<img id="file" src="" style="width: 100px; height: 100px" alt="Image">
 						<label class="form-label w-100">차량사진</label> <input type="file"
 							name="image_path"> <small class="form-text text-muted">차량이미지를
 							첨부하세요.</small>
-					</div>
+					</div> -->
 						<hr>
 						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>
@@ -327,5 +434,28 @@
 		</div>
 	</div>
 </div>
-
+<!-- 알림 모달 -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="modal fade" id="alertModal" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="alertModalLable">알림</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 모달끝 -->
 <%@ include file="/WEB-INF/views/admin/include/bottom.jsp" %> 

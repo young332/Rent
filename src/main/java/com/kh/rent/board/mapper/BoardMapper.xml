@@ -6,8 +6,10 @@
  
  <!-- 등록 -->
  	<insert id="insert">
-    INSERT INTO TBL_BOARD (BOARD_TITLE, BOARD_CONTENT,READCOUNT)
-    VALUES (#{board_title}, #{board_content},#{readcount})
+    INSERT INTO TBL_BOARD 
+    	(BOARD_TITLE, BOARD_CONTENT)
+    VALUES 
+    	(#{board_title}, #{board_content})
 </insert>
  
  <!-- 글목록 -->
@@ -29,7 +31,6 @@
  			board_content = #{board_content},
  			board_udate = now()
  		where board_no = #{board_no}	
- 			
  	</update>
  	
  <!-- 삭제 -->

@@ -3,7 +3,7 @@
  * Copyright 2011-2019 The Bootstrap Authors
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
+ */ 
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -8149,7 +8149,7 @@ a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
-  color: #1089ff; }
+  color: #000000; }
   a:hover, a:focus {
     text-decoration: none;
     color: #1089ff;
@@ -8192,11 +8192,11 @@ h1, h2, h3, h4, h5,
     padding-bottom: .9rem;
     padding-left: 20px;
     padding-right: 20px;
-    color: #fff;
-    font-weight: 400;
+    color: #000;
+    font-weight: bold;
     opacity: 1 !important; }
     .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
-      color: #01d28e; }
+      color: #f64b00; }
     @media (max-width: 991.98px) {
       .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
         padding-left: 0;
@@ -8356,8 +8356,8 @@ h1, h2, h3, h4, h5,
     right: 0;
     bottom: 0;
     content: '';
-    opacity: .3;
-    background: #000000;
+    opacity: .1;
+    background: #727272;
     height: 850px; }
   @media (max-width: 991.98px) {
     .hero-wrap {
@@ -8614,8 +8614,8 @@ h1, h2, h3, h4, h5,
   .btn:hover, .btn:active, .btn:focus {
     outline: none; }
   .btn.btn-primary {
-    background: #1089ff !important;
-    border: 1px solid #1089ff !important;
+    background: #f07039 !important;
+    border: 1px solid #f07039 !important;
     color: #fff !important; }
     .btn.btn-primary:hover {
       border: 1px solid #1089ff;
@@ -8630,8 +8630,8 @@ h1, h2, h3, h4, h5,
         background: #1089ff;
         color: #fff; }
   .btn.btn-secondary {
-    background: #01d28e !important;
-    border: 1px solid #01d28e !important;
+    background: #f07039 !important;
+    border: 1px solid #f07039 !important;
     color: #fff !important; }
     .btn.btn-secondary:hover {
       border: 1px solid #01d28e;
@@ -9000,7 +9000,7 @@ h1, h2, h3, h4, h5,
   margin-bottom: 20px; }
   .services .icon span {
     font-size: 40px;
-    color: #1089ff; }
+    color: #ff940a; }
 
 .services h3 {
   font-size: 17px;
@@ -9114,7 +9114,7 @@ textarea.form-control {
   visibility: hidden; }
 
 .bg-primary {
-  background: #1089ff !important; }
+  background: #393939 !important; }
 
 .bg-black {
   background: #000000; }
@@ -9287,7 +9287,7 @@ textarea.form-control {
   font-size: 18px;
   display: block;
   margin-bottom: 5px;
-  color: #1089ff;
+  color: #f07039;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 2px;

@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.kh.rent.board.domain.BoardVO;
 import com.kh.rent.board.mapper.BoardMapper;
 
+import lombok.extern.log4j.Log4j;
+
 @Service
+@Log4j
 public class BoardServiceImpl implements BoardService{
 
 	@Autowired
@@ -36,6 +39,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int modify(BoardVO boardVO) {
 		int count = boardMapper.update(boardVO);
+		log.info("count : " + count);
 		return count;
 	}
 

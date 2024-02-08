@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>   
-
 <script>
 $(function(){
 	
@@ -16,8 +15,8 @@ $(function(){
     });
 	
 });
-</script>   
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+</script> 
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
@@ -27,9 +26,8 @@ $(function(){
           </div>
         </div>
       </div>
-    </section>
-
-   <section class="ftco-section contact-section">
+</section>
+<section class="ftco-section contact-section">
       <div class="container-fluid">
       <div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -40,19 +38,19 @@ $(function(){
 		<div class="col-md-2">
 			</div>
 			<div class="col-md-8">
-				<form role="formRegister" action="/board/register" method="post">
+				<form id="frmModify" role="form" action="/board/modify" method="post">
 				<div class="form-group">
+				<input type="hidden" name="board_no" value="${boardVO.board_no}">
 					<label for="board_title">
 						제목
 					</label>
-					<input type="text" class="form-control" id="board_title" name="board_title"
-					value="${BoardVO.board_title}" required/>
+					<input type="text" class="form-control" id="board_title" name="board_title" value="${boardVO.board_title}" required/>
 				</div>
 				<div class="form-group">
 					<label for="board_content">
 						내용
 					</label>
-					<textarea rows="10" class="form-control textarea" id="board_content" name="board_content" required style="white-space: pre-wrap;">${BoardVO.board_content}</textarea>
+					<textarea rows="10" class="form-control" id="board_content" name="board_content" required>${boardVO.board_content}</textarea>
 				</div>
 				<button type="submit" class="btn btn-primary">
 					완료

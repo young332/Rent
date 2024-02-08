@@ -26,19 +26,40 @@
 		WHERE PARENT_CODE_ID = 'CAR_TYPE' AND USE_YN = 'Y' ORDER BY ORDERBY
 	</select>
 	
+	<!-- 검색 -->
+	<sql id="search">
+	    <where>
+	            <choose>
+	                <when test="type == 'C'.toString()">
+	                    car_company like concat('%' , #{keyword} , '%')
+	                </when>
+	                <when test="type == 'T'.toString()">
+	                    car_name like concat('%' , #{keyword} , '%') 
+	                </when>
+	                <when test="type == 'N'.toString()">
+	                    car_number like concat('%' , #{keyword} , '%') 
+	                </when>
+	            </choose>
+	    </where>
+	</sql>
+	
+	
+	
+	
 	<select id="selectCarInfo" resultType="com.kh.rent.admin.domain.CarInfoVO">
 		SELECT 
 			A.car_index, A.car_name, A.car_number, A.car_company, A.car_size, A.car_fuel, A.car_cost, A.create_user, 
 			A.use_yn, A.create_date, A.file_id, B.file_stre_cours, 
 			B.orignl_file_nm, B.unique_file_nm
 		FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
-		ON A.file_id = B.file_id 
+		ON A.file_id = B.file_id
+		<include refid="search"/>
 	</select>
 	
 	<select id="selectCarInfoByIndex" resultType="com.kh.rent.admin.domain.CarInfoVO">
 		SELECT A.*, B.orignl_file_nm, B.unique_file_nm
 		        FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
-		ON A.file_id = B.file_id where car_index = #{car_index};
+		ON A.file_id = B.file_id where car_index = #{car_index}
 	</select>
 	
 	<update id="updateCarInfo">
@@ -52,13 +73,25 @@
 			op_carseat = #{op_carseat},
 			op_navi = #{op_navi},
 			op_bt = #{op_bt},
-			create_user = #{create_user},
 			update_user = #{update_user},
-			file_id = #{file_id},
-			use_yn = #{use_yn}
+			update_date = now(),
+<!-- 			file_id = #{file_id},-->
+			use_yn = #{use_yn} 
 		where car_index = #{car_index}
 	
 	</update>
+	
+	<!-- 파일 수정  -->
+<!-- 	<insert id="updateFile" useGeneratedKeys="true" keyProperty="file_id" parameterType="com.kh.rent.admin.domain.FileVO">
+	    update TBL_FILE set
+		    file_sn = #{file_sn}, 
+		    file_stre_cours = #{file_stre_cours}, 
+		    orignl_file_nm = #{orignl_file_nm}, 
+		    unique_file_nm = #{unique_file_nm}, 
+		    file_extension = #{file_extension}, 
+		    file_size = #{file_size}
+		where file_id = #{file_id}
+	</insert> -->
 
 
 

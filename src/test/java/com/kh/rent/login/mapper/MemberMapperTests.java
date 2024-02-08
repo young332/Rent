@@ -65,15 +65,16 @@ public class MemberMapperTests {
 	//비회원
 	@Test
 	public void testNonMemberLogin() {
-		String non_name = "kim";
-		String non_tel = "123456789";
+		String non_name = "노가입";
+		String non_tel = "01065659494";
 		NonMemberLoginDTO loginDTO = NonMemberLoginDTO.builder()
 				.non_name(non_name)
 				.non_tel(non_tel)
 				.build();
-		  NonMemberVO nonMemberVO = memberMapper.NonMembersLogin(loginDTO);
-		log.info("nonMemberVO:" + nonMemberVO);
+		 int count = memberMapper.checkNoMemberInfo(loginDTO);
+		 log.info("count:" + count);
 	}
+
 	
 	
 	@Test //조회

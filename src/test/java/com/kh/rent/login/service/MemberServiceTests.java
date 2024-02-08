@@ -39,14 +39,14 @@ public class MemberServiceTests {
 	//비회원로그인
 	@Test
 	public void testNonMemberLogin() {
-		String non_name = "kim";
-		String non_tel = "123456789";
+		String non_name = "노가입";
+		String non_tel = "01065659494";
 		NonMemberLoginDTO nonMemberLoginDTO = NonMemberLoginDTO.builder()
 				.non_name(non_name)
 				.non_tel(non_tel)
 				.build();
-		NonMemberVO nonMemberVO  = memberService.NonMemberLogin(nonMemberLoginDTO);
-		log.info("nonMemberVO:" + nonMemberVO);
+		 int count  = memberService.NonMemberLogin(nonMemberLoginDTO);
+		log.info("count:" + count);
 		
 	}
 	

@@ -39,7 +39,7 @@
 						<label for="car_name" class="form-label">차량 이름</label> 
 						<select name="car_name" class="custom-select" id="car_name" onchange="updateCarInfo()">
 							<c:forEach var="car" items="${carNamelist}">
-								<option value="${car.code_name}" data-company="${car.ref_1}" data-size="${car.ref_2}">${car.code_name}</option>
+								<option value="${car.code_name}" data-company="${car.ref_2}" data-size="${car.ref_1}">${car.code_name}</option>
 							</c:forEach>
 						</select>
 					</div>

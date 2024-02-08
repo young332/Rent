@@ -25,6 +25,7 @@ import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.FileVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.login.domain.MemberVO;
 
@@ -92,7 +93,7 @@ public class CarInfoController {
         
         int count = carInfoService.addCar(carInfoVO);
         if (count == 1) {
-            rttr.addFlashAttribute("AddMenuName", carInfoVO.getCar_number());
+            rttr.addFlashAttribute("AddCar", "success");
         }
         
         return "redirect:/admin/car/ListCar";
@@ -110,13 +111,27 @@ public class CarInfoController {
     
     @PostMapping("/CarInfoModify")
     public String CarInfoModify(CarInfoVO carInfoVO, RedirectAttributes rttr) {
+    	log.info("carInfoVO: "+carInfoVO);
     	int count = carInfoService.updateCarInfo(carInfoVO);
     	if (count == 1) {
-            rttr.addFlashAttribute("ModifyCarName", carInfoVO.getCar_number());
+            rttr.addFlashAttribute("ModifyCar", "success");
         }
     	
     	return "redirect:/admin/car/ListCar";
     }
+    
+	 //검색기능
+	 @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+	 @ResponseBody
+	 public List<CarInfoVO> search(@RequestParam String type, @RequestParam String keyword) {
+		 Search search = new Search(type, keyword);
+		 search.setKeyword(keyword);
+		 search.setType(type);
+		 log.info("search:" +search);
+		 List<CarInfoVO> carInfoList = carInfoService.selectCarInfo(search);
+		 log.info("carInfoList:"+carInfoList);
+		 return carInfoList;
+	 }
     
     
 

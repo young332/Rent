@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.AdMemberService;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
@@ -38,9 +39,8 @@ public class AdMemberController {
 	@GetMapping(value = "/getMemberInfo", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
     public MemberVO getMemberInfo(@RequestParam String mem_id) {
-		System.out.println("getMemberInfo method called with mem_id: " + mem_id);
+		System.out.println("getMemberInfo mem_id: " + mem_id);
 		MemberVO memberVO = adMemberService.selectMemberByid(mem_id);
-		//System.out.println("memberVO: " + memberVO);
         return memberVO;
     }
 	
@@ -82,13 +82,19 @@ public class AdMemberController {
 	}
 	
 	//검색기능
-	/*
-	 * @GetMapping("/searchMember")
-	 * 
-	 * @ResponseBody public List<MemberVO> searchMember(@RequestParam String
-	 * searchCnd, @RequestParam String searchWrd) { // TODO: 검색 조건에 따라 회원을 조회하는 서비스
-	 * 메서드 호출 // 여기에서는 간단한 예시로 빈 리스트를 반환 return Collections.emptyList(); }
-	 */
+	 @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+	 @ResponseBody
+	 public List<MemberVO> search(@RequestParam String type, @RequestParam String keyword) {
+		 Search search = new Search(type, keyword);
+		 search.setKeyword(keyword);
+		 search.setType(type);
+		 log.info("search:" +search);
+		 List<MemberVO> MemberList = adMemberService.selectAllMember(search);
+		 log.info("MemberList:"+MemberList);
+		 return MemberList;
+	 }
+	 
+	
 	
 	
 	

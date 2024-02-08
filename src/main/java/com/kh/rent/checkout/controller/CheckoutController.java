@@ -6,13 +6,16 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.checkout.domain.PaymentVO;
@@ -79,49 +82,46 @@ public class CheckoutController {
 	    
     }
     
-    @GetMapping("/pay_cancel")
-    public void paycancelGet(@ModelAttribute("res_rid") int res_rid, HttpSession session, Model model) {
-    	
+    
+    @ResponseBody
+    @GetMapping("/pay_cancel/{pay_pid}")
+	public String paycancelPost(
+			PaymentVO paymentVO, @PathVariable("pay_pid") int pay_pid, HttpSession session) {
     	log.info("결제취소");
     	
-    	int totalPay = paymentService.getTotalPay(res_rid);
-    	
-//    	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
-//    	String mem_id = loginInfo.getMem_id();
-//    	List<ReserveVO> reservelist = paymentService.getReserveList(mem_id);
-//    	model.addAttribute(reservelist);
-    	
-    	model.addAttribute("totalPay", totalPay);
-    	
-    }
-	
-    @PostMapping("/pay_cancel")
-    public String paycancelPost(PaymentVO paymentVO, Model model, 
-    								HttpSession session,
-    								RedirectAttributes rttr) {
-    	log.info("paymentVO: " + paymentVO);
     	
     	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
     	String mem_id = loginInfo.getMem_id();
     	log.info("mem_id:" + mem_id);
     	
-    	int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    	
     	paymentVO.setPay_mem_id(mem_id);
+    	paymentVO.setPay_pid(pay_pid);
+    
     	
-    	List<ReserveVO> reservelist = paymentService.getReserveList(mem_id);
-    	model.addAttribute(reservelist);
-    	
-    	log.info("reservelist" + reservelist);
-    	
-    	boolean result = paymentService.paymentCancel(paymentVO);
-    	log.info("result: " + result);
-    	if (result) {
-    		loginInfo.setMem_point(loginInfo.getMem_point() + totalPay);
-    		session.setAttribute("loginInfo", loginInfo);
-    	}
+    	int count = paymentService.payCancel(pay_pid);
+    	log.info("count: " + count);
+    	if (count == 1) {
+    		
+    		//int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    		boolean result = paymentService.paymentCancel(paymentVO);
+        	log.info("result: " + result);
+        	//log.info("totalPay: " + totalPay);
+        	
+        	if (result) {
+        		//loginInfo.setMem_point(loginInfo.getMem_point() + totalPay);
+        		session.setAttribute("loginInfo", loginInfo);
+        		return "success";
+        	}
 
-        // 결제 취소가 완료되면 다음 페이지로 리다이렉트
-        return "redirect:/myPage/reservationList";
+    		return "success";
+    		
+    	} else {
+    		
+    		return "fall";
+    	}
+    	
+    
     }
 
 }

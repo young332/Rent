@@ -22,6 +22,7 @@ import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.AdMemberService;
 import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.admin.service.CodeService;
@@ -92,9 +93,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("/member")
-	public void adminMemberGet(Model model) {
-		List<MemberVO> MemberList = adMemberService.selectAllMember();
-		log.info("MemberList:"+MemberList);
+	public void adminMemberGet(Model model, Search search) {
+		List<MemberVO> MemberList = adMemberService.selectAllMember(search);
+		//log.info("search:" +search);
+		//log.info("MemberList:"+MemberList);
 		model.addAttribute("MemberList", MemberList);
 	}
 	
@@ -106,8 +108,6 @@ public class AdminController {
 	}
 
 
-	
-	
 	@GetMapping("/car/registerCar")
 	public void adminregisterCarGet(Model model) {
 		List<CommonCodeVO> carNamelist = carInfoService.selectCarName();
@@ -115,8 +115,8 @@ public class AdminController {
 	}
 	
 	@GetMapping("/car/ListCar")
-	public void adminListCarGet(Model model) {
-		List<CarInfoVO> carInfoList = carInfoService.selectCarInfo();
+	public void adminListCarGet(Model model, Search search) {
+		List<CarInfoVO> carInfoList = carInfoService.selectCarInfo(search);
 		List<CommonCodeVO> carNamelist = carInfoService.selectCarName();
 		model.addAttribute("carNamelist", carNamelist);
 		model.addAttribute("carInfoList", carInfoList);
