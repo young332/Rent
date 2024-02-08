@@ -41,22 +41,42 @@ $(function(){
 			}
 		}
 		
+		
 		$("#btn-Non-member").click(function(){
 			console.log("클릭");
 			$("#modal-Non-member").modal("show");
 		});
 	
-		
-// 		$("#frmLogin").submit(function(e){
-// 			e.preventDefault();
-// 			console.log("Submit button clicked");
-// 			var inputName = $("#non_name").val();
-// 			var inputTel = $("#non_tel").val();
+		//모달 유효성
+		$("#frmLoginbtn").submit(function(e){
+			e.preventDefault();
+			var name = $("#non_name").val();
+			var tel = $("#non_tel").val();
 			
-// 			if(inputName.trim() == ""){alert("이름을 입력해주세요"); $("#non_name").focus(); return false;}
-// 			if(inputTel.trim() == ""){alert("전화번호를 입력해주세요"); $("#non_tel").focus(); return false;}
-
-// 		});
+			if(name == "" || tel == ""){
+				alert("이름과 전화번호를 모두 입력해주세요");
+				return false;
+			}
+			
+			var telRegex = /^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/;
+			if(tel.length != 11 || !telRegex.test(tel)){
+				alert("전화번호는 숫자, 11자리 입력해주세요");
+				return false;
+			}
+			
+			this.submit();
+		
+		});
+		
+	$(function(){
+		var nonLoginResult = "${nonLoginResult}";
+		if(nonLoginResult == "fail"){
+			alert("이름과 전화번호를 다시 확인해주세요");
+			$("#non_name").focus();
+			
+			}
+	});	
+		
 
 });	
 </script>
@@ -114,18 +134,20 @@ $(function(){
 			</div>
 			<!-- 왼쪽 -->
 			<div class="col-md-6 block-9 mb-md-5">
+			<c:if test="${nonMemberLoginDTO == null}">
 				<form action="#" class="bg-light p-5 contact-form">
 					<div class="form-group">
 						<p style="font-size: 30px; margin-bottom: 20px;">비회원으로 예약하셨나요?</p>
 					</div>
 					<div class="form-group">
-						<p style="margin-bottom: 150px;">발급된 예약번호로 예약내역을 확인해 보세요.</p>
+						<p style="margin-bottom: 150px;">이름과 전화번호로 예약내역을 확인해 보세요.</p>
 						<div class="form-group">
 							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
 						</div>
 						<!-- 예약번호,이름,휴대폰번호 비회원예약확인 -->
 					</div>
 				</form>
+				</c:if>
 			</div>
 			<div class="col-md-12 block-9 mb-md-5">
 				<p>---------------------간편로그인---------------------</p>
