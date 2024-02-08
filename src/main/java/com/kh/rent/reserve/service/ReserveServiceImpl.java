@@ -60,6 +60,12 @@ public class ReserveServiceImpl implements ReserveService{
 		return list;
 	}
 
+	@Override
+	public List<CarInfoVO> getPosCar() {
+		List<CarInfoVO> list = reserveMapper.getPosCar();
+		return list;
+	}
+
 	
 	
 }

@@ -39,8 +39,8 @@ public class ReserveController {
 	
 	@GetMapping("/reserve")
 	public void reserve( CarInfoVO carinfoVO, HttpSession session, Model model) {
-		List<CarInfoVO> carlist = reserveService.getCarInfo();
-		
+		//List<CarInfoVO> carlist = reserveService.getCarInfo();
+		List<CarInfoVO> carlist = reserveService.getPosCar();
 		model.addAttribute("carlist", carlist); 
 		log.info("carlist"+carlist);
 		log.info("reserve...");
@@ -52,6 +52,8 @@ public class ReserveController {
 		ReserveDTO dto = reserveService.findByCindex(car_index);
 		carlist.add(dto);
 		model.addAttribute("carlist", carlist); 
+		
+	
 		log.info("carlist"+carlist);
 		log.info("reserve car_index...");
 		return "reserve/reserve";

@@ -52,7 +52,7 @@ div.left-box {
 .top-search-box h6 {
 	margin-bottom: 10px; /* 텍스트 아래 간격 조절 */
 	font-size: 18px;
-	color: purple;
+	color: #f07039;
 	margin-right: 10px;
 	margin-left: 10px;
 	
@@ -96,8 +96,14 @@ div.left-box {
 .fa-arrow-circle-right{
 	margin-top:15px;
 	margin-left:20px;
-    color: black;
+    color: #f07039;
 }
+ .btn-secondary {
+    background: #f07039 !important;
+    border: 1px solid #f07039 !important;
+    color: #fff !important;
+} 
+   
 
 </style>
 
@@ -118,11 +124,11 @@ div.left-box {
 			<div class="container">
 				<div class="row">
 					<div class="top-search-box" style="height: 65px;">
-							<h6 style="border-top-width: 20px;padding-top: 20px; font-weight: bold;">렌트카001 빠른 검색</h6>
+							<h6 style="border-top-width: 20px;padding-top: 20px; font-weight: bold;">HAKA 빠른 검색</h6>
 							<input type="datetime-local" class="form-control" id="top_book_pick_date" placeholder="대여 날짜" style="margin-top: 5px;"> 
 							<input type="datetime-local" class="form-control" id="top_book_off_date" placeholder="반납 날짜" style="margin-top: 5px;">
 							
-							<button type="button" class="btntop btn-secondary" name="btnSearch" id="btnSearch" style="height: 50.2px; margin-top: 5px;">검색하기</button>
+							<button type="button" class="btntop btn-secondary" name="btnSearch" id="btnSearch" style="height: 50.2px; margin-top: 5px; ">검색하기</button>
 							
 						</div>
 			<div class="container-fluid">
@@ -143,9 +149,9 @@ div.left-box {
 			<div id="details-box" class="jumbotron card card-block" style="background-color:white;">
 		   			<section>
 		   				
+		   				
 						<div class="left-box">
 							<h6>상세검색&nbsp;&nbsp;&nbsp;<button type="button" class="reset_btn btn-secondary" id="btnreset">검색초기화</button></h6>
-							
 							<hr>
 							<div class="form-group">
 								<label for="" class="label-cartype" >차종<br>
@@ -184,8 +190,8 @@ div.left-box {
 								
 							</div>
 							<hr>
-							
 						</div>
+						
 						</section>
 					
 		   			</div>
@@ -194,52 +200,42 @@ div.left-box {
 	    				<div class="right-box">
 								<div class="row">
 				    			<div class="col-md-12">
-				    			<c:forEach items="${carlist}" var="reserveDTO">
-				    			
-				    					<div class="item">
-				    						<div class="car-wrap rounded ftco-animate">
-						    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${reserveDTO.unique_file_nm});">
-						    					</div>
-						    					<div class="text">
-						    						<h2 class="mb-0"  style="font-weight: bold; font-size: 30px;">${reserveDTO.car_name}</h2>
-						    						<div class="d-flex mb-3">
-						    							<input type="text" class="cat car_index" value="${reserveDTO.car_index}" style="display: none;">
-							    						<span class="cat" style="color: black;">${reserveDTO.car_company}</span>|
-							    						<span class="cat" style="color: black;">${reserveDTO.car_size}</span>|
-							    						<span class="cat" style="color: black;">${reserveDTO.car_fuel}</span>|
-							    						<c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
-													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">
-													        <span class="cat" style="color: black;">카시트</span>
-													    </c:if>
-													    <c:if test="${reserveDTO.op_navi eq 'Y'}">|
-													        <span class="cat" style="color: black;">내비게이션</span>
-													    </c:if>
-													    <c:if test="${reserveDTO.op_bt eq 'Y'}">|
-													        <span class="cat" style="color: black;">블루투스</span>
-													    </c:if>
-													    <c:if test="${reserveDTO.op_cam eq 'Y'}">|
-													        <span class="cat" style="color: black;">후방 카메라</span>
-													    </c:if>
-													</c:if>
-
-							    						<p class="price ml-auto"><span class="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
-							    						<p class="price ml-auto">총요금<span class="totalPay" style="color: red; font-weight: bold; font-size: 20px;"></span>원</p>
-
-						    						</div>
-						    						<p class="d-flex mb-0 d-block" >
-						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1 btn_reserve" >예약하기</button>
-						    						</p>
-						    					</div>
-						    				</div>
-				    					</div>
-				    					</c:forEach>
-				    				</div>
-				    				
-				    			</div>
-				    		</div>
-						</div>
-						</div>
+				    			 <c:forEach items="${carlist}" var="reserveDTO">
+				                    <div class="item">
+				                        <div class="car-wrap rounded ftco-animate">
+				                            <div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${reserveDTO.unique_file_nm});"></div>
+				                            <div class="text">
+				                                <h2 class="mb-0" style="font-weight: bold; font-size: 30px;">${reserveDTO.car_name}</h2>
+				                                <div class="d-flex mb-3">
+				                                    <input type="text" class="cat car_index" value="${reserveDTO.car_index}" style="display: none;">
+				                                    <span class="cat" style="color: black;">${reserveDTO.car_company}</span>&nbsp;|&nbsp;
+				                                    <span class="cat" style="color: black;">${reserveDTO.car_size}</span>&nbsp;|&nbsp;
+				                                    <span class="cat" style="color: black;">${reserveDTO.car_fuel}</span>
+				                                    <c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
+				                                        <c:if test="${reserveDTO.op_carseat eq 'Y'}">
+				                                            &nbsp;|&nbsp; <span class="cat" style="color: black;">카시트</span>
+				                                        </c:if>
+				                                        <c:if test="${reserveDTO.op_navi eq 'Y'}">&nbsp;|&nbsp; <span class="cat" style="color: black;">내비게이션</span></c:if>
+				                                        <c:if test="${reserveDTO.op_bt eq 'Y'}">&nbsp;|&nbsp; <span class="cat" style="color: black;">블루투스</span></c:if>
+				                                        <c:if test="${reserveDTO.op_cam eq 'Y'}"> &nbsp;|&nbsp; <span class="cat" style="color: black;">후방 카메라</span></c:if>
+				                                    </c:if>
+				                                    <p class="price ml-auto"><span class="hourPay" style="display: none;">${reserveDTO.car_cost}</span></p>
+				                                    <p class="price ml-auto">총요금<span class="totalPay" style="color: #f07039; font-weight: bold; font-size: 20px;"></span>원</p>
+				                                </div>
+				                                <p class="d-flex mb-0 d-block">
+				                                    <button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1 btn_reserve" >예약하기</button>
+				                                </p>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </c:forEach>
+			    				</div>
+			    				
+			    			</div>
+			    		</div>
 					</div>
+					</div>
+				</div>
     		
 			</form>
 		</section>
@@ -597,6 +593,9 @@ $(document).ready(function() {
         }
        
     });
+	
+	
+
 	
 	
 	 

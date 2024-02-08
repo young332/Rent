@@ -20,7 +20,8 @@ public class MainController {
     
     @GetMapping("/main")
     public String index(Model model) {
-        List<CarInfoVO> carinfolist = reserveService.getCarInfo();
+        //List<CarInfoVO> carinfolist = reserveService.getCarInfo();
+    	List<CarInfoVO> carinfolist = reserveService.getPosCar();
         model.addAttribute("carinfolist", carinfolist);
         log.info("Maincarinfolist" + carinfolist);
         log.info("MainController...");

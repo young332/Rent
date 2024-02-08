@@ -16,4 +16,5 @@ public interface ReserveService {
 	public List<ReserveDTO> selectCheck(ReserveDTO reserveDTO);
 	public List<MemberVO> getMemberInfo();
 	public ReserveDTO findByCindex(int car_index);
+	public List<CarInfoVO> getPosCar();
 }

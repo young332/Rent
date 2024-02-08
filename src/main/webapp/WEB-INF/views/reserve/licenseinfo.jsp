@@ -10,6 +10,11 @@
 .txt_birth{
 	font-size:13px;
 }
+/* #btnNonMemPay, #btnMemPay { */
+/*   background: #f07039 !important; */
+/*     border: 1px solid #f07039 !important; */
+/*     color: #fff !important; */
+/*     } */
 </style>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	style="background-image: url('/resources/carbook-master/images/bg_3.jpg');"

@@ -73,4 +73,10 @@ public class ReserveMapperTests {
 		log.info("rserveDto:"+rserveDto);
 	}
 	
+	@Test
+	public void testGetPosCar() {
+		List<CarInfoVO> list = reserveMapper.getPosCar();
+		log.info("carpos:"+list);
+	}
+	
 }

@@ -4,7 +4,7 @@
 <div class="right-box">
 	<div class="row">
 		<div class="col-md-12">
-		<c:forEach var="vo" items="${checkcarlist}">
+		<c:forEach var="vo" items="${carlist}">
 			<div class="item">
 				<div class="car-wrap rounded ftco-animate fadeInUp ftco-animated">
 					<div class="img rounded d-flex align-items-end"

@@ -108,22 +108,23 @@
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
     				<c:forEach items="${carinfolist}" var="vo">
-    					<div class="item">
-    						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${vo.unique_file_nm});">
-		    					</div>
-		    					<div class="text">
-		    						<h2 class="mb-0" ><a href="#" class="car-select" data-car-index="${vo.car_index}">${vo.car_name }</a></h2>
-		    						<div class="d-flex mb-3">
-		    						<input type="text" class="cat car_index" value="${vo.car_index}" style="display: none;">
-			    						<span class="cat">${vo.car_company}</span>
-			    						<p class="price ml-auto"> <span></span></p>
-		    						</div>
-<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
-		    					</div>
-		    				</div>
+    					<div class="item car-select" data-car-index="${vo.car_index}" style="cursor: pointer;">
+	    					<div class="item">
+	    						<div class="car-wrap rounded ftco-animate">
+			    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${vo.unique_file_nm});">
+			    					</div>
+			    					<div class="text">
+			    						<h2 class="mb-0" ><a href="#" >${vo.car_name }</a></h2>
+			    						<div class="d-flex mb-3">
+			    						<input type="text" class="cat car_index" value="${vo.car_index}" style="display: none;">
+				    						<span class="cat">${vo.car_company}</span>
+				    						<p class="price ml-auto"> <span></span></p>
+			    						</div>
+	<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+			    					</div>
+			    				</div>
+	    					</div>
     					</div>
-    					
     					</c:forEach>
     				</div>
     			</div>

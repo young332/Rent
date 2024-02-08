@@ -30,16 +30,29 @@
      <select id="getCarInfo" resultType="com.kh.rent.reserve.domain.ReserveDTO">
             <!-- select * from TBL_CAR_INFO  -->
            SELECT 
-            A.*, 
-            B.orignl_file_nm, B.unique_file_nm
-         FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
-         ON A.file_id = B.file_id 
-         WHERE
-          A.use_yn='Y'
+	            A.*, 
+	            B.orignl_file_nm, B.unique_file_nm
+	         FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
+	         ON A.file_id = B.file_id 
+	         WHERE
+	          A.use_yn='Y'
      </select>
      
+     <!-- 예약가능한 차 조회 -->
+     <select id="getPosCar" resultType="com.kh.rent.admin.domain.CarInfoVO" >
+     SELECT *
+		FROM TBL_CAR_INFO
+		WHERE CAR_INDEX NOT IN (
+		    SELECT RES_CAR_ID
+		    FROM TBL_RESERVE
+		    WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
+		    UNION ALL
+		    SELECT NON_CAR_ID
+		    FROM TBL_NONMEMBER
+		    WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
+		)
+     </select>
    
-     
   <!-- 회원정보 리스트 -->
 	  <select id="getMemberInfo" resultType="com.kh.rent.login.domain.MemberVO">
 	  		select * from TBL_MEMBER
