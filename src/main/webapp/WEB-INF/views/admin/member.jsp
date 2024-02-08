@@ -184,10 +184,10 @@ $(function() {
             <li class="breadcrumb-item active">회원목록</li>
         </ol>
     </div>
-    
-    <div class="card-body">
-    
-    <form method="get" id="frmSearch" name="frm">
+
+	<div class="card-body">
+
+		<form method="get" id="frmSearch" name="frm">
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group col-sm-12">
 					<div class="input-group col-sm">
@@ -198,108 +198,110 @@ $(function() {
 						</select>
 					</div>
 					<div class="input-group col-sm app-search">
-						<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}">
-						<span class="search-icon"></span>
+						<input type="text" class="form-control" placeholder="검색어 입력"
+							name="keyword" value="${param.keyword}"> <span
+							class="search-icon"></span>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit" >검색</button>
+							<button class="btn btn-primary" type="submit">검색</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form> 
+		</form>
 
 		<div class="dt-buttons col-sm-12 mb-3">
-                <button class="btn btn-secondary flaot-left" type="button" onclick="javascript:fn_excel('member','');"><span>엑셀 다운로드</span></button>
-                <div class="float-right" style="vertical-align: bottom;"></div>
-        </div>
-              <div data-simplebar="init" class="table-responsive"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
-                <table class="table mb-0 table-hover table-responsive-xl">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input checkall" id="checkall">
-                          <label class="custom-control-label" for="checkall"></label>
-                        </div>
-                      </th>
-                      <th scope="col">아이디</th>
-                      <th scope="col">이름</th>
-                      <th scope="col">회원구분</th>
-                      <th scope="col">생년월일</th>
-                      <th scope="col">메일</th>
-                      <th scope="col">연락처</th>
-                      <th scope="col">주소</th>
-                      <th scope="col">포인트</th>
-                      <th scope="col">가입일</th>
+			<button class="btn btn-secondary flaot-left" type="button"
+				onclick="javascript:fn_excel('member','');">
+				<span>엑셀 다운로드</span>
+			</button>
+			<div class="float-right" style="vertical-align: bottom;"></div>
+		</div>
+		<div data-simplebar="init" class="table-responsive">
+			<div class="simplebar-wrapper" style="margin: 0px;">
+				<div class="simplebar-height-auto-observer-wrapper">
+					<div class="simplebar-height-auto-observer"></div>
+				</div>
+				<div class="simplebar-mask">
+					<div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+						<div class="simplebar-content-wrapper"
+							style="height: auto; overflow: hidden;">
+							<div class="simplebar-content" style="padding: 0px;">
+								<table class="table mb-0 table-hover table-responsive-xl">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox"
+														class="custom-control-input checkall" id="checkall">
+													<label class="custom-control-label" for="checkall"></label>
+												</div>
+											</th>
+											<th scope="col">아이디</th>
+											<th scope="col">이름</th>
+											<th scope="col">회원구분</th>
+											<th scope="col">생년월일</th>
+											<th scope="col">메일</th>
+											<th scope="col">연락처</th>
+											<th scope="col">주소</th>
+											<th scope="col">포인트</th>
+											<th scope="col">가입일</th>
 
-                    </tr>
-                  </thead>
-                  <tbody>
-					<c:forEach var="memberVO" items="${MemberList}">
-					<tr>
-						<td>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input chk"
-									id="chk0" emplyrid="jml8758" membertype="general">
-								<label class="custom-control-label" for="chk0"></label>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="memberVO" items="${MemberList}">
+											<tr>
+												<td>
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input chk"
+															id="chk0" emplyrid="jml8758" membertype="general">
+														<label class="custom-control-label" for="chk0"></label>
+													</div>
+												</td>
+
+												<td>${memberVO.mem_id}</td>
+												<td><a href="javascript:void(0);"
+													onclick="javascript:fn_memberModify('${memberVO.mem_id}');">${memberVO.mem_name}</a>
+												</td>
+												<td>
+													<div class="badge badge-outline-primary">
+														<c:choose>
+															<c:when test="${memberVO.mem_adminck == 0}">일반회원</c:when>
+															<c:when test="${memberVO.mem_adminck == 1}">관리자</c:when>
+															<c:when test="${memberVO.mem_adminck == 2}">비회원</c:when>
+															<c:otherwise>알 수 없는 상태</c:otherwise>
+														</c:choose>
+													</div>
+												</td>
+												<td>${memberVO.mem_birth}</td>
+												<td>${memberVO.mem_email}</td>
+												<td>${memberVO.mem_phone}</td>
+												<td>${memberVO.mem_addr}</td>
+												<td>${memberVO.mem_point}</td>
+												<td>${memberVO.mem_cdate}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
-						</td>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="simplebar-placeholder" style="width: auto; height: 680px;"></div> -->
+			</div>
+			<div class="simplebar-track simplebar-horizontal"
+				style="visibility: hidden;">
+				<div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+			</div>
+			<div class="simplebar-track simplebar-vertical"
+				style="visibility: hidden;">
+				<div class="simplebar-scrollbar" style="height: 0px; display: none;"></div>
+			</div>
+		</div>
+		<!-- end table-responsive -->
 
-						<td>${memberVO.mem_id}</td>
-						<td><a href="javascript:void(0);"
-						onclick="javascript:fn_memberModify('${memberVO.mem_id}');">${memberVO.mem_name}</a>
-						</td>
-						<td>
-						    <div class="badge badge-outline-primary">
-						    <c:choose>
-	            				<c:when test="${memberVO.mem_adminck == 0}">일반회원</c:when>
-	            				<c:when test="${memberVO.mem_adminck == 1}">관리자</c:when>
-	            				<c:when test="${memberVO.mem_adminck == 2}">비회원</c:when>
-	            				<c:otherwise>알 수 없는 상태</c:otherwise>
-	            			</c:choose>
-	            			</div>
-						</td>
-						<td>${memberVO.mem_birth}</td>
-						<td>${memberVO.mem_email}</td>
-						<td>${memberVO.mem_phone}</td>
-						<td>${memberVO.mem_addr}</td>
-						<td>${memberVO.mem_point}</td>
-						<td>${memberVO.mem_cdate}</td>
-					</tr>
-				</c:forEach>
+	</div>
 
-
-
-
-			     </tbody>
-                </table>
-              </div></div></div></div>
-              <!-- <div class="simplebar-placeholder" style="width: auto; height: 680px;"></div> -->
-              </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div></div> <!-- end table-responsive -->
-              <!-- <div class="row mt-4">
-                <div class="col-sm-12 col-md-5">
-                  <div class="dataTables_length"><label>목록개수
-                      <select class="custom-select mb-3" id="recordCountPerPage" onchange="javascript:fn_recordCountPerPage();">
-                        <option value="10" selected="">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                      </select></label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                  <div class="dataTables_paginate paging_simple_numbers">
-                    <ul class="pagination pagination-rounded">
-                    	<li><a href="?pageIndex=1" class="page-link" onclick="fn_memberList(1);return false; "><i class="fal fa-angle-double-left"></i></a></li><li class="paginate_button page-item previous"><a href="?pageIndex=1" class="page-link" onclick="fn_memberList(1);return false; "><i class="fal fa-angle-left"></i></a></li><li class="paginate_button page-item active"><a href="#" class="page-link">1</a></li><li class="paginate_button page-item"><a href="?pageIndex=2" class="page-link" onclick="fn_memberList(2);return false; ">2</a></li><li class="paginate_button page-item"><a href="?pageIndex=3" class="page-link" onclick="fn_memberList(3);return false; ">3</a></li><li class="paginate_button page-item"><a href="?pageIndex=4" class="page-link" onclick="fn_memberList(4);return false; ">4</a></li><li class="paginate_button page-item"><a href="?pageIndex=5" class="page-link" onclick="fn_memberList(5);return false; ">5</a></li><li class="paginate_button page-item"><a href="?pageIndex=6" class="page-link" onclick="fn_memberList(6);return false; ">6</a></li><li class="paginate_button page-item"><a href="?pageIndex=7" class="page-link" onclick="fn_memberList(7);return false; ">7</a></li><li class="paginate_button page-item"><a href="?pageIndex=8" class="page-link" onclick="fn_memberList(8);return false; ">8</a></li><li class="paginate_button page-item"><a href="?pageIndex=9" class="page-link" onclick="fn_memberList(9);return false; ">9</a></li><li class="paginate_button page-item"><a href="?pageIndex=10" class="page-link" onclick="fn_memberList(10);return false; ">10</a></li><li class="paginate_button page-item next"><a href="?pageIndex=11" class="page-link" onclick="fn_memberList(11);return false; "><i class="fal fa-angle-right"></i></a></li><li><a href="?pageIndex=218" class="page-link" onclick="fn_memberList(218);return false; "><i class="fal fa-angle-double-right"></i></a></li>
-
-                    </ul>
-                  </div>
-                </div>
-              </div> -->
-      </div>
-            
 </div>
 <!-- [ content ] End -->
 <!-- 회원정보 수정 -->
