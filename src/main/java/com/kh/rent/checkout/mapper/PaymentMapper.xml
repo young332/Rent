@@ -6,7 +6,7 @@
 		
 	<!-- 결제 내역 기록-->
 	<insert id="addPaymentRecord">
-		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type, pay_status)
+		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type, pay_status, )
 		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type}, '결제완료')
 	</insert>
 	

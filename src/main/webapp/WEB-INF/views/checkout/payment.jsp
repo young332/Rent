@@ -574,12 +574,12 @@ int min = 5000;
 	            // 서버에서의 처리 결과 확인
 	            if (response.status === "success") {
 	                // 결제가 성공한 경우
-	                alert("결제를 하시겠습니까?"); // 결제 완료 메시지 표시
+	                alert("결제 완료"); // 결제 완료 메시지 표시
 	                // 페이지 이동
 	                window.location.href = "/myPage/reservationList";
 	            } else {
 	                // 결제가 실패한 경우
-	                alert("결제 실패 했습니다."); // 결제 실패 메시지 표시
+	                alert("결제 실패"); // 결제 실패 메시지 표시
 	            }
 	        },
 	        error: function(xhr, status, error) {
@@ -587,9 +587,6 @@ int min = 5000;
 	            console.error("AJAX 요청 실패:", error);
 	        }
 	    });
-
-	    // 결제 완료를 알리는 알림창
-	    alert("결제가 완료되었습니다.");
 	});
 
 		
