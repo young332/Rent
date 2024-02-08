@@ -15,9 +15,6 @@ public interface MemberMapper {
 		//로그인
 		public MemberVO login(LoginDTO loginDTO);
 		
-		//비회원 로그인
-//		public NonMemberLoginDTO NonMembersLogin(NonMemberLoginDTO membersDTO);
-		
 		//비회원 정보 체크
 		public int checkNoMemberInfo(NonMemberLoginDTO nonMemberLoginDTO);
 		
