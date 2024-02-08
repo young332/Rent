@@ -34,6 +34,8 @@
             B.orignl_file_nm, B.unique_file_nm
          FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
          ON A.file_id = B.file_id 
+         WHERE
+          A.use_yn='Y'
      </select>
      
   <!-- 회원정보 리스트 -->
