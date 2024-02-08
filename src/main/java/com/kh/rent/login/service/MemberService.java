@@ -12,7 +12,7 @@ public interface MemberService {
 		public MemberVO login(LoginDTO loginDTO);
 		
 		//비회원로그인
-		public NonMemberVO NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO);
+		public int NonMemberLogin(NonMemberLoginDTO nonMemberLoginDTO);
 		
 		//회원가입
 		public boolean registerPost(MemberVO memberVO);

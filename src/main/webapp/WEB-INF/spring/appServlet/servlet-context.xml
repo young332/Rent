@@ -64,7 +64,7 @@
 		</interceptor>
     
 		<interceptor>
-			<mapping path="/myPage/myPage" />
+<!-- 			<mapping path="/myPage/myPage" /> -->
 			<mapping path="/myPage/reservationList"/>
       		<mapping path="/checkout/**/*"/>
       		<exclude-mapping path="/myPage/reservationList_guest"/>
