@@ -91,21 +91,13 @@
 		pay_status = '결제취소'
 		where pay_pid = #{pay_pid}
     </update>
-    
-    <!-- 예약 상태 변경(결제취소 -> 예약취소) -->
-    <update id="pay_reserve_cancel">
-    	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
-		res_status = '예약취소'
-		where res_rid = #{pay_res_rid}
-		and pay_status = '결제취소'
-    </update>
-    
+      
     <!-- 예약 상태 변경(예약취소) -->
     <update id="reserveCancel">
     	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
 		res_status = '예약취소'
 		where res_rid = #{pay_res_rid}
-		and pay_status = '결제완료'
+		and pay_status = '결제취소'
     </update>
     
 	<!-- 포인트 증가 (환불) -->

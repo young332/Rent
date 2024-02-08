@@ -127,8 +127,7 @@
   </head>
   
 <body>
-
-${reserveList}	
+	
 res_rid: ${res_rid}
 
 <div class="container">
@@ -151,7 +150,8 @@ res_rid: ${res_rid}
               <c:if test="${not empty reserveList}">
 				<c:set var="firstReservation" value="${reserveList[0]}" />
               	<h6 class="my-0">울산지점</h6><br>
-              	<h6>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</h6>
+              	<h7>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</h7>
+			  	<h7>(총시간 : ${hours}시간 ${minutes})</h7>
 			  </c:if>
             </div>
           </li>
@@ -423,6 +423,23 @@ int min = 5000;
       
    var res_totalpay = '${totalPay}';
    
+   var rentalDateStr = "${firstReservation.res_rental_date}";
+   var returnDateStr = "${firstReservation.res_return_date}";
+
+   // 날짜를 파싱하여 Date 객체로 변환
+   var rentalDate = new Date(rentalDateStr);
+   var returnDate = new Date(returnDateStr);
+
+   // 날짜 간의 차이를 밀리초로 계산
+   var diffInMillies = returnDate - rentalDate;
+
+   // 밀리초를 시간과 분으로 변환
+   var hours = Math.floor(diffInMillies / (1000 * 60 * 60));
+   var minutes = Math.floor((diffInMillies / (1000 * 60)) % 60);
+
+   // 계산된 시간과 분을 화면에 표시하거나 필요한 작업을 수행
+   console.log("총 시간: " + hours + " 시간 " + minutes + " 분");
+
    function updateViewUsePnt(res_totalpay, point, min) {
 	   var usePntInput = document.getElementById("point_cost");
 	   var viewUsePnt = document.getElementById("view_point_cost");
@@ -525,7 +542,7 @@ int min = 5000;
 		if ($(this).prop("checked")) {
 			$("#btn_pay").show();
 		} else {
-			$("#btn_pay").hide();
+			
 		}
 		
 		updateViewUsePnt(totalpay, point, min);
