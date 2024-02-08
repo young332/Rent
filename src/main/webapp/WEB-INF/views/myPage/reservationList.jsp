@@ -20,6 +20,8 @@ function pay(reservationId) {
 
 // 결제취소 버튼 - 결제취소처리
 function pay_cancel(paymentId) {
+	var totalPay = $("#totalpay").val();
+	console.log("totalPay:" + totalPay);
     var confirmflag = confirm("결제취소 하시겠습니까?");
     if(confirmflag){
 		console.log("결제취소:" + confirmflag);
@@ -91,7 +93,6 @@ $(document).ready(function() {
     </section>
 <%-- ${reserveList} --%>
 <%-- ${carNames} --%>
-<%-- ${reserveList} --%>
     <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
@@ -122,6 +123,7 @@ $(document).ready(function() {
 							    <th colspan="2">대여기간</th>
 							    <th rowspan="2">차종</th>
 							    <th rowspan="2">결제금액</th>
+							    <th rowspan="2">결제상태</th>
 							    <th rowspan="2">예약상태</th>
 							    <th rowspan="2">취소</th>
 							  </tr>
@@ -139,24 +141,28 @@ $(document).ready(function() {
 				                    <td class="res_return_date">${reservation.res_return_date}</td>
 				                    <td class="carName"></td>
 				                    <td class="totalpay">${reservation.res_totalpay}</td>
+				                    <td>
 			                    	<c:choose>
-										<c:when test="${reservation.pay_status eq '결제완료'}">
-					                    	<td>${reservation.pay_status}</td>
+										<c:when test="${not empty reservation.pay_status}">
+					                    	${reservation.pay_status}
 										</c:when>
 										<c:otherwise>
-											<td>${reservation.res_status}
-												<c:if test="${reservation.res_status eq '예약중'}">
-													<button onclick="pay(${reservation.res_rid})">결제</button>
-												</c:if>
-											</td>
+											<c:if test="${reservation.res_status eq '예약중'}">
+												<button class="btn btn-sm btn-primary" 
+													onclick="pay(${reservation.res_rid})">결제</button>
+											</c:if>
 										</c:otherwise>
 									</c:choose>
+									</td>
+									<td>${reservation.res_status}</td>
 									<td>
 					                    <c:if test="${reservation.res_status eq '예약중'}">
-									    <button onclick="res_cancel(${reservation.res_rid})">예약취소</button>
+									    	<button class="btn btn-sm btn-warning" 
+									    		onclick="res_cancel(${reservation.res_rid})">예약취소</button>
 										</c:if>
 					                    <c:if test="${reservation.pay_status eq '결제완료'}">
-									    <button onclick="pay_cancel(${reservation.pay_pid})">결제취소</button>
+									    	<button class="btn btn-sm btn-danger" 
+									    		onclick="pay_cancel(${reservation.pay_pid})">결제취소</button>
 										</c:if>
 				                    </td>
 				                  </tr>

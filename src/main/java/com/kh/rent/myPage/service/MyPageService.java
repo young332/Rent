@@ -38,6 +38,15 @@ public interface MyPageService {
 	// 예약취소
 	public int cancelReservation(int res_rid);
 	
+	// 예약정보 현재시각기준 업데이트(비회원)
+	public void updateNonMember(NonMemberLoginDTO nonMemberLoginDTO);
+	
 	// 예약정보 조회하기(비회원)
-	public List<NonMemberVO> getNonMemberList(NonMemberLoginDTO nonMemberLoginDTO);
+	public List<NonMemberVO> getMemberList_non(NonMemberLoginDTO nonMemberLoginDTO);
+	
+	// 예약번호로 차종 조회하기(비회원)
+	public String getCarName_non(GetCarNameDTO getCarNameDTO);
+	
+	// 예약취소(비회원)
+	public int cancelReservation_non(int non_rid);
 }
