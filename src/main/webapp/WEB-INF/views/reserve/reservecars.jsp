@@ -120,7 +120,7 @@
 	    	//sendDataToServer();
 	    	//return false;
 	    });
-	//메인페이지에서 선택한 차 만 보이게 하기
+
 
 </script>
 

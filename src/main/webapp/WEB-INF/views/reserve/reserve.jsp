@@ -474,41 +474,6 @@ $(document).ready(function() {
 	    $("input[name='top_book_off_date']").val(formattedOffDate);
 	});
 
-		
-	
-	
-	//달력 상단입력값 받음
-	
-    
-    
-	
-    // --- function
-	
-	 
-    
-
-    
-
-		    
-    
-
-		    
-		    
-    
-		    
-		    
-		
-	 //메인페이지에서 선택한 차 만 보이게 하기
-
-	
-	    
-    
-
-    
-    
-	
-
-	 
     
 
     // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
@@ -523,8 +488,6 @@ $(document).ready(function() {
 		
 
 	 //차들 총가격
-	
-    
 	
     $("#top_book_pick_date, #top_book_off_date").change(function () {
         calculateTotalCost();
@@ -558,25 +521,19 @@ $(document).ready(function() {
     });
 
     
-    $(".btn_reserve").click(function() {
+    
+    $(".btn_reserve").click(function(e) {
+        e.preventDefault();
+
         $(":checkbox").prop("checked", false);
        
         updateData();
        
     });
-	
 	  
 	
-
-
-
-	
-	
-	
-	
-	
-
     $(".btn_reserve").click(function() {
+    	
     	console.log("reserver button");
     	var url = $(this).attr("data-url");
     	
@@ -609,6 +566,7 @@ $(document).ready(function() {
     	//sendDataToServer();
     	//return false;
     });
+    
 	$("input[type='datetime-local']").change(function() {
     	
         var selectedDateTime = $(this).val();
@@ -639,6 +597,7 @@ $(document).ready(function() {
         }
        
     });
+	
 	
 	 
 });
