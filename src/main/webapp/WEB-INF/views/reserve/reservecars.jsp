@@ -74,9 +74,8 @@
 	
 	            $(this).find(".totalPay").text(formattedTotalCost);
 	        });
+	        
 	
-	        // Asynchronous update
-	        updateTotalCostOnServer();
 	    }
 	
 	    $("#top_book_pick_date, #top_book_off_date").change(function () {
@@ -84,10 +83,13 @@
 	    });
 	
 	    calculateTotalCost();
+	    
+	    
 	});
 	
-	  $(".btn_reserve").click(function() {
-	    	console.log("reserver button");
+	  $(".btn_reserve").click(function(e) {
+		  e.preventDefault();
+	    	console.log("reservecars button");
 	    	var url = $(this).attr("data-url");
 	    	
 	    	var topBookPickDate = $("#top_book_pick_date").val();
@@ -120,7 +122,7 @@
 	    	//sendDataToServer();
 	    	//return false;
 	    });
-
+	
 
 </script>
 

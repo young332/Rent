@@ -522,18 +522,18 @@ $(document).ready(function() {
 
     
     
-    $(".btn_reserve").click(function(e) {
-        e.preventDefault();
+//     $(".btn_reserve").click(function(e) {
+//         e.preventDefault();
 
-        $(":checkbox").prop("checked", false);
+//         $(":checkbox").prop("checked", false);
        
-        updateData();
+//         updateData();
        
-    });
+//     });
 	  
 	
-    $(".btn_reserve").click(function() {
-    	
+    $(".btn_reserve").click(function(e) {
+    	 e.preventDefault();
     	console.log("reserver button");
     	var url = $(this).attr("data-url");
     	
