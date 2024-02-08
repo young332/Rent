@@ -120,7 +120,6 @@ $(function() {
         $("#birthdate").prop('disabled', true);
     }
 
-    // Check if the user is logged in and disable input fields accordingly
     if (isLoggedIn) {
         disableInputFields();
     }
@@ -174,11 +173,11 @@ $(function() {
 	        alert("입력값을 모두 입력하세요.");
 	        return; // 함수 종료
 	    }
-	    // 유효성 검사
+	    // 면허 번호 유효성 검사
         var validationResult = validateLicenseNumber(non_license_num);
         if (validationResult !== true) {
             alert(validationResult);
-            return; // 함수 종료
+            return; 
         }
 
 	    var formData = {

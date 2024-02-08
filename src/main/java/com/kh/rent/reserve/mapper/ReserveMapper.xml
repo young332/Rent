@@ -38,6 +38,8 @@
           A.use_yn='Y'
      </select>
      
+   
+     
   <!-- 회원정보 리스트 -->
 	  <select id="getMemberInfo" resultType="com.kh.rent.login.domain.MemberVO">
 	  		select * from TBL_MEMBER
