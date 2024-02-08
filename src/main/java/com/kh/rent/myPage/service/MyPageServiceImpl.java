@@ -92,9 +92,29 @@ public class MyPageServiceImpl implements MyPageService{
 
 	// 예약정보 조회하기(비회원)
 	@Override
-	public List<NonMemberVO> getNonMemberList(NonMemberLoginDTO nonMemberLoginDTO) {
-		List<NonMemberVO> list = myPageMapper.getNonMemberList(nonMemberLoginDTO);
+	public List<NonMemberVO> getMemberList_non(NonMemberLoginDTO nonMemberLoginDTO) {
+		List<NonMemberVO> list = myPageMapper.getMemberList_non(nonMemberLoginDTO);
 		return list;
+	}
+
+	// 예약번호로 차종 조회하기(비회원)
+	@Override
+	public String getCarName_non(GetCarNameDTO getCarNameDTO) {
+		String carName = myPageMapper.getCarName_non(getCarNameDTO);
+		return carName;
+	}
+
+	// 예약취소(비회원)
+	@Override
+	public int cancelReservation_non(int non_rid) {
+		int result = myPageMapper.cancelReservation_non(non_rid);
+		return result;
+	}
+
+	// 예약정보 현재시각기준 업데이트(비회원)
+	@Override
+	public void updateNonMember(NonMemberLoginDTO nonMemberLoginDTO) {
+		myPageMapper.updateNonMember(nonMemberLoginDTO);
 	}
 
 }
