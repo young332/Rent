@@ -15,8 +15,6 @@ public class Search {
 	private String type; //검색조건 (이름, 아이디)
 	private String keyword; //검색어(사용자 입력)
 	
-	public String[] getTypeArr() {
-		return type == null ? new String[] {} : type.split("");
-	}
+
 
 }

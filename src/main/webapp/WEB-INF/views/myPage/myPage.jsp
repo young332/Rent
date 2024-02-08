@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
 <script>
-// 금액 자릿수 표시하기(콤마)
+//금액 자릿수 표시하기(콤마)
 function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -17,9 +17,9 @@ $(document).ready(function() {
 	}
 	
 });
-	
-	
+
 </script>
+
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -53,7 +53,7 @@ $(document).ready(function() {
 						내 포인트
 					</p>
 					<h2>
-						<a href="/checkout/point" id="myPoint">${loginInfo.mem_point}</a>
+						<a href="/point/point" id="myPoint">${loginInfo.mem_point}</a>
 						P
 					</h2>
 				</div>
@@ -62,9 +62,14 @@ $(document).ready(function() {
 		<hr>
 		<div class="row">
 			<div class="col-md-12">
-				<h3>
-					최근 예약내역
-				</h3>
+				<div style="display: flex; justify-content: space-between;">
+					<h3>
+						최근 예약내역
+					</h3>
+					<a href="/myPage/reservationList">예약내역 상세보기
+					<i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
 <!-- 				<div class="jumbotron card card-block"> -->
 					<div class="card">
 						<h6 class="card-header">
@@ -76,7 +81,7 @@ $(document).ready(function() {
 							</p>
 						</div>
 						<div class="card-footer">
-							<a href="/myPage/reservationList">예약내역 상세보기</a>
+							
 						</div>
 					</div>
 <!-- 				</div> -->
@@ -85,16 +90,11 @@ $(document).ready(function() {
 		<hr>
 		<div class="row">
 			<div class="col-md-12">
-				<h3>
-					나의 문의사항
-				</h3>
-				<div class="jumbotron card card-block">
-					<p>
-						1:1 문의내역
-					</p>
-					<p>
-						<a class="btn btn-primary btn-large" href="#">Learn more</a>
-					</p>
+				<div>
+					<h3>
+						1:1 문의사항 
+					</h3>
+					<a class="btn btn-primary btn-large" href="/myPage/inquery">문의내역 바로가기</a>
 				</div>
 			</div>
 			</div>
