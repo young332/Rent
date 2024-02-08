@@ -78,6 +78,7 @@
 			<exclude-mapping path="/admin/menu/submenus/**/*"/>
 			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
 			<exclude-mapping path="/admin/member/getMemberInfo"/>
+			<exclude-mapping path="/admin/member/search"/>
 			<exclude-mapping path="/admin/car/getCarInfo"/>
 
 			<beans:ref bean="menuInterceptor" />

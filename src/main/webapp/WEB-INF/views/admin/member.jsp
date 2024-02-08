@@ -21,44 +21,7 @@
 <script>
 
 //검색폼 전송
-
-/* $("#frmSearch").submit(function(event) {
-    event.preventDefault(); // 기본 제출 동작을 막음
-    
-    var type = $(this).find("[name=type]").val();
-    var keyword = $(this).find("[name=keyword]").val();
-
-    if(type === ""){
-        alert("검색조건을 선택해주세요.");
-        $("[name=type]").focus();
-        return false;
-    }
-
-    if(keyword.trim() === ""){
-        alert("검색어를 입력해주세요.");
-        $("[name=keyword]").focus();
-        return false;
-    }
-
-    // AJAX를 통한 검색 요청
-    $.ajax({
-        type: "GET",
-        url: "/admin/member/search", // 검색을 처리하는 서버의 URL
-        data: { type: type, keyword: keyword }, // 검색 조건을 데이터로 전송
-        success: function(response) {
-            // 검색 결과를 처리하는 코드
-            console.log("검색 결과:", response);
-            // 여기서 검색 결과를 사용하여 UI를 업데이트하거나 표시할 수 있습니다.
-        },
-        error: function(xhr, status, error) {
-            // 오류 처리 코드
-            console.error("검색 오류:", error);
-        }
-    });
-}); */
-
-
-$("#frmSearch").submit(function(){
+/* $("#frmSearch").submit(function(){
 	var type = $(this).find("[name=type]").val();
 	console.log("type:", type);
 	if(type==""){
@@ -73,9 +36,52 @@ $("#frmSearch").submit(function(){
 		return false;
 	}
 	
-});
+}); */
 
 $(function() {
+	
+	
+	$("#frmSearch").submit(function(event) {
+	    event.preventDefault(); // 기본 제출 동작을 막음
+	    
+	    var type = $(this).find("[name=type]").val();
+	    var keyword = $(this).find("[name=keyword]").val();
+	    console.log("type",type );
+	    console.log("keyword", keyword);
+
+	    if(type === ""){
+	        alert("검색조건을 선택해주세요.");
+	        $("[name=type]").focus();
+	        return false;
+	    }
+
+	    if(keyword.trim() === ""){
+	        alert("검색어를 입력해주세요.");
+	        $("[name=keyword]").focus();
+	        return false;
+	    }
+
+	    // AJAX를 통한 검색 요청
+	    $.ajax({
+	        type: "GET",
+	        url: "/admin/member/search", 
+	        data: { type: type, 
+	        	    keyword: keyword },
+	        success: function(response) {
+	            console.log("검색 결과:", response);
+	        },
+	        error: function(xhr, status, error) {
+	            
+	            console.error("검색 오류:", error);
+	        }
+	    });
+	}); 
+	
+	
+	
+	
+	
+	
 	// 비밀번호변경 모달열기
 	$("#pwdChange").click(function() {
 		var password1 = $("#mem_pw").val();
@@ -135,29 +141,6 @@ function fn_memberModify(mem_id) {
 	  }); 
 	}
 
-// 회원검색
-function fn_searchMember() {
-    var searchCnd = $("#searchCnd").val();
-    var searchWrd = $("#searchWrd").val();
-
-    $.ajax({
-        type: 'GET',
-        url: '/admin/member/searchMember', 
-        data: { searchCnd: searchCnd, searchWrd: searchWrd },
-        success: function (data) {
-            console.log('Search Result:', data);
-
-            // TODO: 검색 결과를 화면에 업데이트
-
-        },
-        error: function (error) {
-            console.error('Error:', error);
-        }
-    });
-}
-
-
-
 //주소 검색
 function openZipSearch() {
     new daum.Postcode({
@@ -195,7 +178,7 @@ function openZipSearch() {
 
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group">
-				  <form id="frmSearch" action="/admin/member" method="get" class="form-inline">		
+				  <form id="frmSearch" method="get" class="form-inline">		
 					<div class="input-group form-group col">
 						<select class="custom-select" name="type">
 							<option value="">-------</option>
