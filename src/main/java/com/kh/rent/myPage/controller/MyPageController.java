@@ -41,6 +41,8 @@ public class MyPageController {
 	// 예약확인 페이지
 	@GetMapping("/reservationList")
 	public void reservation(HttpSession session, Model model) {
+		log.info("reservationListGet..");
+		
 		// 예약내역
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
@@ -64,7 +66,7 @@ public class MyPageController {
 		// 결제상태
 		model.addAttribute("reserveList", reserveList);
 		model.addAttribute("carNames", carNamesToString);
-		log.info("reservationListGet..");
+		
 //		log.info("reserveList" + reserveList);
 //		log.info("carNamesToString" + carNamesToString);
 	}
@@ -162,11 +164,42 @@ public class MyPageController {
 	@GetMapping("/reservationList_guest")
 	public void reservation_guest(HttpSession session, Model model) {
 		log.info("reservation_guest...");
+		
 		NonMemberLoginDTO nonMemberLoginDTO = (NonMemberLoginDTO)session.getAttribute("nonMemberLoginDTO");
-		List<NonMemberVO> nonMember = myPageService.getNonMemberList(nonMemberLoginDTO);
+		myPageService.updateNonMember(nonMemberLoginDTO);
+		List<NonMemberVO> nonMember = myPageService.getMemberList_non(nonMemberLoginDTO);
 		log.info("nonMember:" + nonMember);
 		
+		// 차종
+		String[] carNames = new String[nonMember.size()];
+		for (int i = 0; i < nonMember.size(); i++) {
+			int rid = nonMember.get(i).getNon_rid();
+			String car_id = nonMember.get(i).getNon_car_id();
+			GetCarNameDTO getCarNameDTO = GetCarNameDTO.builder()
+					.res_rid(rid)
+					.res_car_id(car_id)
+					.build();
+			String car_name = myPageService.getCarName_non(getCarNameDTO);
+			carNames[i] = car_name.toString();
+		} 
+		String carNamesToString = Arrays.toString(carNames);
+		
 		model.addAttribute("nonMember", nonMember);
+		model.addAttribute("carNames", carNamesToString);
+	}
+	
+	// 예약취소(비회원)
+	@DeleteMapping("/res_cancel_non/{non_rid}")
+	@ResponseBody
+	@Transactional
+	public String cancelReservation_non(@PathVariable("non_rid") int non_rid) {
+		log.info("cancelReservation_non...");
+		int count = myPageService.cancelReservation_non(non_rid);
+		if (count == 1) {
+			return "success";
+		} else {
+			return "fail";
+		}
 	}
 	
 	

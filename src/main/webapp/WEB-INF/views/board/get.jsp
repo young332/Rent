@@ -68,10 +68,10 @@ $(function(){
 				<thead>
 					 <tbody>
                         <tr>
-                            <th>${boardVO.board_title}</th>
+                            <th><h2>${boardVO.board_title}</h2></th>
                         </tr>
                         <tr>
-                            <th><fmt:formatDate value="${boardVO.board_cdate}" pattern="yyyy-MM-dd"/></th>
+                            <th><p>${dateTime}</p></th>
                         </tr>
                         <tr>
                             <th>${boardVO.board_content}</th>

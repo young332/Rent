@@ -92,7 +92,7 @@ public class CarInfoController {
         
         int count = carInfoService.addCar(carInfoVO);
         if (count == 1) {
-            rttr.addFlashAttribute("AddMenuName", carInfoVO.getCar_number());
+            rttr.addFlashAttribute("AddCar", "success");
         }
         
         return "redirect:/admin/car/ListCar";
@@ -110,9 +110,10 @@ public class CarInfoController {
     
     @PostMapping("/CarInfoModify")
     public String CarInfoModify(CarInfoVO carInfoVO, RedirectAttributes rttr) {
+    	log.info("carInfoVO: "+carInfoVO);
     	int count = carInfoService.updateCarInfo(carInfoVO);
     	if (count == 1) {
-            rttr.addFlashAttribute("ModifyCarName", carInfoVO.getCar_number());
+            rttr.addFlashAttribute("ModifyCar", "success");
         }
     	
     	return "redirect:/admin/car/ListCar";

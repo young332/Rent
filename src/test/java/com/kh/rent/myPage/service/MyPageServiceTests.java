@@ -119,6 +119,16 @@ public class MyPageServiceTests {
 		log.info("cancleResult:" + result);
 	}
 	
+	// 예약정보 현재시각기준 업데이트(비회원)
+	@Test
+	public void testUpdateNonMember() {
+		NonMemberLoginDTO nonDTO = NonMemberLoginDTO.builder()
+				.non_name("jo")
+				.non_tel("01046648755")
+				.build();
+		myPageService.updateNonMember(nonDTO);
+	}
+	
 	// 예약정보 조회하기(비회원)
 	@Test
 	public void testGetNonMemberList() {
@@ -126,8 +136,28 @@ public class MyPageServiceTests {
 				.non_name("jo")
 				.non_tel("01046648755")
 				.build();
-		List<NonMemberVO> list = myPageService.getNonMemberList(nonDTO);
+		List<NonMemberVO> list = myPageService.getMemberList_non(nonDTO);
 		log.info("non_Reservelist:" + list);
+	}
+	
+	
+	// 예약번호로 차종 조회하기(비회원)
+	@Test
+	public void testGetCarName_non() {
+		GetCarNameDTO getCarNameDTO = GetCarNameDTO.builder()
+				.res_rid(7)
+				.res_car_id("3")
+				.build();
+		String car_name = myPageService.getCarName_non(getCarNameDTO);
+		log.info("car_name:" + car_name);
+	}
+	
+	// 예약취소(비회원)
+	@Test
+	public void testCancleReservation_non() {
+		int non_rid = 6;
+		int result = myPageService.cancelReservation_non(non_rid);
+		log.info("cancleResult:" + result);
 	}
 	
 }

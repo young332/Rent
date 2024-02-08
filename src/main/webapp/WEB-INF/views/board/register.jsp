@@ -8,6 +8,13 @@
 <script>
 $(function(){
 	
+	$("#board_content").on('keyup', function() {
+		
+		var text = $(this).val();
+        text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        $(this).val(text);
+    });
+	
 });
 </script>   
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -33,7 +40,7 @@ $(function(){
 		<div class="col-md-2">
 			</div>
 			<div class="col-md-8">
-				<form role="form" action="/board/register" method="post">
+				<form role="formRegister" action="/board/register" method="post">
 				<div class="form-group">
 					<label for="board_title">
 						제목
@@ -45,15 +52,7 @@ $(function(){
 					<label for="board_content">
 						내용
 					</label>
-					<textarea class="form-control" id="board_content" name="board_content"
-					required>${BoardVO.board_content}</textarea>
-				</div>
-				<div class="form-group">
-				<label for="board_content">
-						조회수
-					</label>
-					<input type="text" class="form-control" id="readcount" name="readcount"
-					value="${BoardVO.readcount}"	required/>
+					<textarea rows="10" class="form-control textarea" id="board_content" name="board_content" required style="white-space: pre-wrap;">${BoardVO.board_content}</textarea>
 				</div>
 				<button type="submit" class="btn btn-primary">
 					완료
