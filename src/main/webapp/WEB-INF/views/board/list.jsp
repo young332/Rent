@@ -81,6 +81,7 @@ $(function(){
 							<tr class="board-row" data-board-no="${boardVO.board_no}">
 								<td style="text-align: center;">${boardVO.board_no}</td>
 								<td style="text-align: left;">${boardVO.board_title}</td>
+								<td style="text-align: center;">${boardVO.board_title}</td>
 								<td style="text-align: center;"><p>${dateTime}</p></td>
 								<td style="text-align: center;">${boardVO.readcount}</td>
 							</tr>
