@@ -4,8 +4,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>   
- 
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<script>
+$(function(){
+	
+	$("#board_content").on('keyup', function() {
+		
+		var text = $(this).val();
+        text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        $(this).val(text);
+    });
+	
+});
+</script> 
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
@@ -15,8 +26,8 @@
           </div>
         </div>
       </div>
-    </section>
-   <section class="ftco-section contact-section">
+</section>
+<section class="ftco-section contact-section">
       <div class="container-fluid">
       <div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -29,6 +40,7 @@
 			<div class="col-md-8">
 				<form id="frmModify" role="form" action="/board/modify" method="post">
 				<div class="form-group">
+				<input type="hidden" name="board_no" value="${boardVO.board_no}">
 					<label for="board_title">
 						제목
 					</label>
@@ -38,7 +50,7 @@
 					<label for="board_content">
 						내용
 					</label>
-					<textarea class="form-control" id="board_content" name="board_content" required>${boardVO.board_content}</textarea>
+					<textarea rows="10" class="form-control" id="board_content" name="board_content" required>${boardVO.board_content}</textarea>
 				</div>
 				<button type="submit" class="btn btn-primary">
 					완료
