@@ -31,7 +31,7 @@
 								<div class="form-group">
 									<label for="" class="label">대여&amp;반납 장소</label> 
 									<input type="text"
-										class="form-control" placeholder="울산역" disabled>
+										class="form-control" placeholder="울산지점" disabled>
 								</div>
 								
 								<div class="d-flex">
@@ -149,7 +149,7 @@ $(function() {
         var offDate = $("#book_off_date").val();
         
         if (!pickDate || !offDate) {
-            alert("대여일과 반납일을 모두 선택해주세요.");
+            alert("대여일과 반납일을 모두 입력해주세요.");
             return; 
         }
 
@@ -168,7 +168,7 @@ $(function() {
 
 	        // 새벽 시간인 경우 알림 띄우기
 	        if (isDawnTime) {
-	            alert("새벽 시간은 선택할 수 없습니다.");
+	            alert("새벽 시간은 이용할 수 없습니다.");
 	            $(this).val("");
 	        }
 	        var today = new Date();
@@ -200,9 +200,9 @@ $(function() {
      $(".car-select").click(function(e) {
          e.preventDefault(); 
          var carIndex = $(this).data("car-index");
-         window.location.href = "/reserve/reserve?car_index=" + carIndex; 
+         window.location.href = "/reserve/reserve/" + carIndex; 
      });
-   
+    
 	    
 });
 </script> 

@@ -133,7 +133,10 @@ $(function() {
 	            return; // 함수 종료
 	        }
 		$("#frmLicense").submit();
-		//alert("예약이 완료되었습니다.");
+		
+		alert("예약이 완료되었습니다.");
+		
+
 		
 	});
 	

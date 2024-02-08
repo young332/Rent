@@ -99,7 +99,6 @@ div.left-box {
     color: black;
 }
 
-
 </style>
 
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -114,8 +113,7 @@ div.left-box {
       </div>
     </section>
 	
-	
-<section class="ftco-section ftco-cart">
+	<section class="ftco-section ftco-cart">
 	<form method="get" action="/reserve/licenseinfo">
 			<div class="container">
 				<div class="row">
@@ -229,7 +227,7 @@ div.left-box {
 
 						    						</div>
 						    						<p class="d-flex mb-0 d-block" >
-						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1 btn_reserve">예약하기</button>
+						    							<button type="button" data-url="/reserve/licenseinfo" class="btn btn-primary py-2 mr-1 btn_reserve" >예약하기</button>
 						    						</p>
 						    					</div>
 						    				</div>
@@ -259,7 +257,203 @@ div.left-box {
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
 <script>
-$(function() {
+
+function formatDateTime(dateTimeString) {
+    var options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    };
+    return new Date(dateTimeString).toLocaleString('ko-KR', options);
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function formatDateTime(dateTimeString) {
+    var options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    };
+    return new Date(dateTimeString).toLocaleString('ko-KR', options);
+}
+
+function calculateTotalTime() {
+    var pickDate = new Date($("#top_book_pick_date").val());
+    var offDate = new Date($("#top_book_off_date").val());
+
+    // 대여일 및 반납일의 차이 계산
+    var timeDiff = offDate - pickDate;
+
+    // 차이를 시간과 분으로 분리
+    var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+    var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+ 	
+    // NaN일 경우 0으로 설정
+    hours = isNaN(hours) ? 0 : hours;
+    minutes = isNaN(minutes) ? 0 : minutes;
+    
+    // 결과를 화면에 표시
+    $("span[id='totalTimeSpan']").text(hours + "시간 " + minutes + "분");
+    
+}
+
+function calculateTotalCost() {
+    $(".item").each(function () {
+        var hourlyRate = parseFloat($(this).find(".hourPay").text());
+        var pickDate = new Date($("#top_book_pick_date").val());
+        var offDate = new Date($("#top_book_off_date").val());
+        var timeDiff = offDate - pickDate;
+		
+        //반납일이 대여일보다 이전 날짜 선택시 알람
+        if (offDate < pickDate) {
+            alert("반납일을 다시 입력해주세요.");
+            $("#top_book_off_date").val(""); 
+            return; 
+        }
+        
+        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+		
+     // NaN 체크하여 0으로 대체
+        hours = isNaN(hours) ? 0 : hours;
+        minutes = isNaN(minutes) ? 0 : minutes;
+        
+        var totalCost = hours * hourlyRate + (minutes / 60) * hourlyRate;
+
+        var roundedTotalCost = Math.round(totalCost);
+        var formattedTotalCost = roundedTotalCost.toLocaleString('en-US', { minimumFractionDigits: 0 });
+
+        $(this).find(".totalPay").text(formattedTotalCost);
+    }); // each function
+
+  
+}
+
+function updateData() {
+    var checkedValues = "";
+    var carSizeValues = "";
+    var carFuelValues = "";
+    var carCompanyValues = "";
+
+    $("input[name='car_size']:checked").each(function() {
+        carSizeValues = $(this).val();
+    });
+
+    $("input[name='car_fuel']:checked").each(function() {
+        carFuelValues = $(this).val();
+    });
+
+    $("input[name='car_company']:checked").each(function() {
+        carCompanyValues = $(this).val();
+    });
+
+    $("input[name='otheroptions']:checked").each(function() {
+        checkedValues += $(this).val() + ",";
+    });
+
+    carSizeValues = carSizeValues.replace(/,$/, "");
+    carFuelValues = carFuelValues.replace(/,$/, "");
+    carCompanyValues = carCompanyValues.replace(/,$/, "");
+    checkedValues = checkedValues.replace(/,$/, "");
+
+    var sendData = {
+        "car_size": carSizeValues,
+        "car_fuel": carFuelValues,
+        "car_company": carCompanyValues,
+        "op_cam": $("input[name='otheroptions'][value='후방카메라']").is(":checked") ? "Y" : "",
+        "op_bt": $("input[name='otheroptions'][value='블루투스']").is(":checked") ? "Y" : "",
+        "op_navi": $("input[name='otheroptions'][value='내비게이션']").is(":checked") ? "Y" : "",
+        "op_carseat": $("input[name='otheroptions'][value='카시트']").is(":checked") ? "Y" : ""
+    };
+
+    console.log('var sendData =', sendData);
+
+    $.ajax({
+        url: '/reserve/reservecars',
+        type: 'GET',
+        contentType: "application/json",
+        data: sendData,
+        success: function(rData) {
+            $("#cars-box").html(rData);
+         // console.log(rData);
+            setFooterTop();
+            
+            
+        },
+    });
+}
+
+function setFooterTop() {
+	$("footer").css("position", "absolute");
+	$("footer").css("width", "100%");
+	var item = $(".right-box .item");
+	var y = parseInt(item.css("height"));
+    var top = ((y + 25) * (item.length)) + 1000;
+	if (top < 1600) {
+		top = 1600;
+	}
+    $("footer").css("top", top + "px");
+    
+   	
+
+    
+}
+
+$(document).ready(function() {
+	
+    
+//     var carIndex = "${param.car_index}";
+    
+	var bookPickDate = getParameterByName('book_pick_date');
+    var bookOffDate = getParameterByName('book_off_date');
+    
+    $("#top_book_pick_date").val(bookPickDate);
+    $("#top_book_off_date").val(bookOffDate);
+    
+    $("input[name='top_book_pick_date']").val(formatDateTime(bookPickDate));
+    $("input[name='top_book_off_date']").val(formatDateTime(bookOffDate));
+    
+    var carIndexParam = "${param.car_index}";
+    
+	
+	
+	
+	// 초기 로딩 시에도 계산 함수 호출
+    calculateTotalTime();
+	
+    calculateTotalCost();
+    
+    setFooterTop();
+    
+    
+	
+    
+	
 	 $("#btnreset").click(function(){
 		 $(":checkbox").prop("checked",false);
 	        var CheckReset = $("#btnreset").val();
@@ -268,341 +462,183 @@ $(function() {
 	    });
 	 $("#btnSearch").click(function() {
 		    
-		    var selectedPickDate = $("#top_book_pick_date").val();
-		    var selectedOffDate = $("#top_book_off_date").val();
+	    var selectedPickDate = $("#top_book_pick_date").val();
+	    var selectedOffDate = $("#top_book_off_date").val();
+
+	
+	    var formattedPickDate = formatDateTime(selectedPickDate);
+	    var formattedOffDate = formatDateTime(selectedOffDate);
+
+	   
+	    $("input[name='top_book_pick_date']").val(formattedPickDate);
+	    $("input[name='top_book_off_date']").val(formattedOffDate);
+	});
 
 		
-		    var formattedPickDate = formatDateTime(selectedPickDate);
-		    var formattedOffDate = formatDateTime(selectedOffDate);
-
-		   
-		    $("input[name='top_book_pick_date']").val(formattedPickDate);
-		    $("input[name='top_book_off_date']").val(formattedOffDate);
-		});
-
-		
-		function formatDateTime(dateTimeString) {
-		    var options = {
-		        year: 'numeric',
-		        month: 'numeric',
-		        day: 'numeric',
-		        hour: 'numeric',
-		        minute: 'numeric',
-		        hour12: true,
-		    };
-		    return new Date(dateTimeString).toLocaleString('ko-KR', options);
-		}
+	
 	
 	//달력 상단입력값 받음
-	 $(document).ready(function() {
-		    function getParameterByName(name, url) {
-		        if (!url) url = window.location.href;
-		        name = name.replace(/[\[\]]/g, "\\$&");
-		        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-		            results = regex.exec(url);
-		        if (!results) return null;
-		        if (!results[2]) return '';
-		        return decodeURIComponent(results[2].replace(/\+/g, " "));
-		    }
-		    var bookPickDate = getParameterByName('book_pick_date');
-		    var bookOffDate = getParameterByName('book_off_date');
-		    
-		    $("#top_book_pick_date").val(bookPickDate);
-		    $("#top_book_off_date").val(bookOffDate);
-		});
 	
-	 $(document).ready(function() {
-		    function getParameterByName(name, url) {
-		        if (!url) url = window.location.href;
-		        name = name.replace(/[\[\]]/g, "\\$&");
-		        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-		            results = regex.exec(url);
-		        if (!results) return null;
-		        if (!results[2]) return '';
-		        return decodeURIComponent(results[2].replace(/\+/g, " "));
-		    }
+    
+    
+	
+    // --- function
+	
+	 
+    
 
-		    var bookPickDate = getParameterByName('book_pick_date');
-		    var bookOffDate = getParameterByName('book_off_date');
+    
 
 		    
-		    function formatDateTime(dateTimeString) {
-		        var options = {
-		            year: 'numeric',
-		            month: 'numeric',
-		            day: 'numeric',
-		            hour: 'numeric',
-		            minute: 'numeric',
-		            hour12: true,
-		        };
-		        return new Date(dateTimeString).toLocaleString('ko-KR', options);
-		    }
+    
 
 		    
 		    
-		    $("input[name='top_book_pick_date']").val(formatDateTime(bookPickDate));
-		    $("input[name='top_book_off_date']").val(formatDateTime(bookOffDate));
+    
 		    
 		    
-		});
+		
 	 //메인페이지에서 선택한 차 만 보이게 하기
-	 $(document).ready(function() {
-		    var carIndexParam = "${param.car_index}";
-		
-		    if (carIndexParam) {
-		        $(".item").each(function() {
-		            var carIndex = $(this).find(".car_index").val();
-		
-		            if (carIndex !== carIndexParam) {
-		                $(this).detach();
-		            }
-		        });
-		    }
-		});
 
+	
+	    
+    
 
-	 $(document).ready(function() {
-		    function calculateTotalTime() {
-		        var pickDate = new Date($("#top_book_pick_date").val());
-		        var offDate = new Date($("#top_book_off_date").val());
+    
+    
+	
 
-		        // 대여일 및 반납일의 차이 계산
-		        var timeDiff = offDate - pickDate;
+	 
+    
 
-		        // 차이를 시간과 분으로 분리
-		        var hours = Math.floor(timeDiff / (1000 * 60 * 60));
-		        var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-		     	
-		        // NaN일 경우 0으로 설정
-		        hours = isNaN(hours) ? 0 : hours;
-		        minutes = isNaN(minutes) ? 0 : minutes;
-		        
-		        // 결과를 화면에 표시
-		        $("span[id='totalTimeSpan']").text(hours + "시간 " + minutes + "분");
-		        
-		    }
+    // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
+    $("#top_book_pick_date, #top_book_off_date").change(function() {
+        calculateTotalTime();
+      
+        
+    });
 
-		    // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
-		    $("#top_book_pick_date, #top_book_off_date").change(function() {
-		        calculateTotalTime();
-		      
-		        
-		    });
-
-		    // 초기 로딩 시에도 계산 함수 호출
-		    calculateTotalTime();
+    
 		    
-		});
+		
 
 	 //차들 총가격
-	$(document).ready(function () {
-	    function calculateTotalCost() {
-	        $(".item").each(function () {
-	            var hourlyRate = parseFloat($(this).find(".hourPay").text());
-	            var pickDate = new Date($("#top_book_pick_date").val());
-	            var offDate = new Date($("#top_book_off_date").val());
-	            var timeDiff = offDate - pickDate;
-				
-	            //반납일이 대여일보다 이전 날짜 선택시 알람
-	            if (offDate < pickDate) {
-	                alert("반납일을 다시 입력해주세요.");
-	                $("#top_book_off_date").val(""); 
-	                return; 
-	            }
-	            
-	            var hours = Math.floor(timeDiff / (1000 * 60 * 60));
-	            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-				
-	         // NaN 체크하여 0으로 대체
-	            hours = isNaN(hours) ? 0 : hours;
-	            minutes = isNaN(minutes) ? 0 : minutes;
-	            
-	            var totalCost = hours * hourlyRate + (minutes / 60) * hourlyRate;
 	
-	            var roundedTotalCost = Math.round(totalCost);
-	            var formattedTotalCost = roundedTotalCost.toLocaleString('en-US', { minimumFractionDigits: 0 });
+    
 	
-	            $(this).find(".totalPay").text(formattedTotalCost);
-	        });
+    $("#top_book_pick_date, #top_book_off_date").change(function () {
+        calculateTotalCost();
+    });
+
+    
 	
-	      
-	    }
-	
-	    $("#top_book_pick_date, #top_book_off_date").change(function () {
-	        calculateTotalCost();
-	    });
-	
-	    calculateTotalCost();
-	});
 
 
 
 	 
 	 //체크박스 3개 하나씩 선택되게함
-	 $(document).ready(function() {
-		    $("input[name='car_size'], input[name='car_fuel'], input[name='car_company']").change(function() {
-		        var groupName = $(this).attr('name');
+	 
+    $("input[name='car_size'], input[name='car_fuel'], input[name='car_company']").change(function() {
+        var groupName = $(this).attr('name');
 
-		        
-		        $("input[name='" + groupName + "']").not(this).prop('checked', false);
-		        
-		    });
-		});
+        
+        $("input[name='" + groupName + "']").not(this).prop('checked', false);
+        
+    });
+	
 	 
 	 //비동기방식으로 체크박스 값보내서 체크된거만 화면에 보이게 하기
-	 $(function() {
-	    function updateData() {
-	        var checkedValues = "";
-	        var carSizeValues = "";
-	        var carFuelValues = "";
-	        var carCompanyValues = "";
-	
-	        $("input[name='car_size']:checked").each(function() {
-	            carSizeValues = $(this).val();
-	        });
-	
-	        $("input[name='car_fuel']:checked").each(function() {
-	            carFuelValues = $(this).val();
-	        });
-	
-	        $("input[name='car_company']:checked").each(function() {
-	            carCompanyValues = $(this).val();
-	        });
-	
-	        $("input[name='otheroptions']:checked").each(function() {
-	            checkedValues += $(this).val() + ",";
-	        });
-	
-	        carSizeValues = carSizeValues.replace(/,$/, "");
-	        carFuelValues = carFuelValues.replace(/,$/, "");
-	        carCompanyValues = carCompanyValues.replace(/,$/, "");
-	        checkedValues = checkedValues.replace(/,$/, "");
-	
-	        var sendData = {
-	            "car_size": carSizeValues,
-	            "car_fuel": carFuelValues,
-	            "car_company": carCompanyValues,
-	            "op_cam": $("input[name='otheroptions'][value='후방카메라']").is(":checked") ? "Y" : "",
-	            "op_bt": $("input[name='otheroptions'][value='블루투스']").is(":checked") ? "Y" : "",
-	            "op_navi": $("input[name='otheroptions'][value='내비게이션']").is(":checked") ? "Y" : "",
-	            "op_carseat": $("input[name='otheroptions'][value='카시트']").is(":checked") ? "Y" : ""
-	        };
-	
-	        console.log('var sendData =', sendData);
-	
-	        $.ajax({
-	            url: '/reserve/reservecars',
-	            type: 'GET',
-	            contentType: "application/json",
-	            data: sendData,
-	            success: function(rData) {
-	                $("#cars-box").html(rData);
-	             // console.log(rData);
-	                setFooterTop();
-	                
-	                
-	            },
-	        });
-	    }
-	
-	    
-	    $("input[type='checkbox']").change(function() {
-	        updateData();
-	       
-	    });
-	
-	    
-	    $(".btn_reserve").click(function() {
-	        $(":checkbox").prop("checked", false);
-	       
-	        updateData();
-	       
-	    });
+	 
+    
+
+    
+    $("input[type='checkbox']").change(function() {
+        updateData();
+       
+    });
+
+    
+    $(".btn_reserve").click(function() {
+        $(":checkbox").prop("checked", false);
+       
+        updateData();
+       
+    });
 	
 	  
-	});
-
-
-
-	function setFooterTop() {
-		$("footer").css("position", "absolute");
-		$("footer").css("width", "100%");
-		var item = $(".right-box .item");
-		var y = parseInt(item.css("height"));
-        var top = ((y + 25) * (item.length)) + 1000;
-		if (top < 1600) {
-			top = 1600;
-		}
-        $("footer").css("top", top + "px");
-	}
 	
-	setFooterTop();
+
+
+
+	
+	
+	
 	
 	
 
-	    $(".btn_reserve").click(function() {
-	    	console.log("reserver button");
-	    	var url = $(this).attr("data-url");
-	    	
-	    	var topBookPickDate = $("#top_book_pick_date").val();
-			var topBookOffDate = $("#top_book_off_date").val();
-			
-			 // 대여일 및 반납일 값이 비어 있는지 확인
-	        if (topBookPickDate == '' || topBookOffDate == '') {
-	            alert("날짜를 입력하세요.");
-	            return;
-	        }
-			
-			var carIndex = $(this).parent().prev().find(".car_index").val();
-			var totalPay = $(this).parent().prev().find(".totalPay").text(); 
-			
-	    	
-			console.log("topBookPickDate:",topBookPickDate);
-			console.log("topBookOffDate:",topBookOffDate);
-			console.log("carIndex:",carIndex);
-			console.log("totalPay:",totalPay);
-			
-			var frmReserve = $("#frmReserve");
-			frmReserve.find("input[name=top_book_pick_date]").val(topBookPickDate.replace('T', ' '));
-			frmReserve.find("input[name=top_book_off_date]").val(topBookOffDate.replace('T', ' '));
-			frmReserve.find("input[name=car_index]").val(carIndex);
-			frmReserve.find("input[name=totalPay]").val(totalPay);
-			
-			
-			frmReserve.submit();
-	    	//sendDataToServer();
-	    	//return false;
-	    });
-		$("input[type='datetime-local']").change(function() {
-	    	
-	        var selectedDateTime = $(this).val();
+    $(".btn_reserve").click(function() {
+    	console.log("reserver button");
+    	var url = $(this).attr("data-url");
+    	
+    	var topBookPickDate = $("#top_book_pick_date").val();
+		var topBookOffDate = $("#top_book_off_date").val();
+		
+		 // 대여일 및 반납일 값이 비어 있는지 확인
+        if (topBookPickDate == '' || topBookOffDate == '') {
+            alert("날짜를 입력하세요.");
+            return;
+        }
+		
+		var carIndex = $(this).parent().prev().find(".car_index").val();
+		var totalPay = $(this).parent().prev().find(".totalPay").text(); 
+		
+    	
+		console.log("topBookPickDate:",topBookPickDate);
+		console.log("topBookOffDate:",topBookOffDate);
+		console.log("carIndex:",carIndex);
+		console.log("totalPay:",totalPay);
+		
+		var frmReserve = $("#frmReserve");
+		frmReserve.find("input[name=top_book_pick_date]").val(topBookPickDate.replace('T', ' '));
+		frmReserve.find("input[name=top_book_off_date]").val(topBookOffDate.replace('T', ' '));
+		frmReserve.find("input[name=car_index]").val(carIndex);
+		frmReserve.find("input[name=totalPay]").val(totalPay);
+		
+		
+		frmReserve.submit();
+    	//sendDataToServer();
+    	//return false;
+    });
+	$("input[type='datetime-local']").change(function() {
+    	
+        var selectedDateTime = $(this).val();
 
-	        var selectedDate = new Date(selectedDateTime);
-			
-	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
-	        var isDawnTime = selectedDate.getHours() < 6;
+        var selectedDate = new Date(selectedDateTime);
+		
+        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
+        var isDawnTime = selectedDate.getHours() < 6;
 
-	        // 새벽 시간인 경우 알림 띄우기
-	        if (isDawnTime) {
-	            alert("새벽 시간은 선택할 수 없습니다.");
-	            $(this).val("");
-	        }
-	        var today = new Date();
-	        today.setHours(0, 0, 0, 0); 
+        // 새벽 시간인 경우 알림 띄우기
+        if (isDawnTime) {
+            alert("새벽 시간은 이용할 수 없습니다.");
+            $(this).val("");
+        }
+        var today = new Date();
+        today.setHours(0, 0, 0, 0); 
 
-	        var selectedDateTime = $(this).val();
+        var selectedDateTime = $(this).val();
 
-	        var selectedDate = new Date(selectedDateTime);
+        var selectedDate = new Date(selectedDateTime);
 
-	        var isBeforeToday = selectedDate < today;
+        var isBeforeToday = selectedDate < today;
 
-	        // 오늘 이전인 경우 알림 띄우기
-	        if (isBeforeToday) {
-	            alert("날짜를 다시 입력해주세요.");
-	            $(this).val("");
-	        }
-	       
-	    });
+        // 오늘 이전인 경우 알림 띄우기
+        if (isBeforeToday) {
+            alert("날짜를 다시 입력해주세요.");
+            $(this).val("");
+        }
+       
+    });
 	
 	 
 });

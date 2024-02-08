@@ -121,22 +121,6 @@
 	    	//return false;
 	    });
 	//메인페이지에서 선택한 차 만 보이게 하기
-		 $(document).ready(function() {
-			    var carIndexParam = "${param.car_index}";
-
-			    if (carIndexParam) {
-			        $(".item").each(function() {
-			            var carIndex = $(this).find(".car_index").val();
-
-			            if (carIndex === carIndexParam) {
-			                $(this).show(); 
-			            } else {
-			                $(this).hide(); 
-			            }
-			        });
-			    }
-			});
-
 
 </script>
 
