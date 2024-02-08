@@ -38,7 +38,7 @@
 	          A.use_yn='Y'
      </select>
      
-     <!-- 예약가능한 차 조회 -->
+     <!-- 예약 가능한 차 조회 -->
      <select id="getPosCar" resultType="com.kh.rent.admin.domain.CarInfoVO" >
      SELECT *
 		FROM TBL_CAR_INFO
@@ -65,10 +65,18 @@
 	 </select>
   	
   	<!-- 체크박스선택시 값 불러오기 -->
-  	<select id="selectCheck" resultType="com.kh.rent.reserve.domain.ReserveDTO" parameterType="map">
-	    SELECT *
+  	<select id="selectCheck" resultType="com.kh.rent.admin.domain.CarInfoVO" parameterType="map">    
+  	    SELECT *
 	    FROM TBL_CAR_INFO
-	    WHERE 1=1
+	    WHERE CAR_INDEX NOT IN (
+	        SELECT RES_CAR_ID
+	        FROM TBL_RESERVE
+	        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
+	        UNION ALL
+	        SELECT NON_CAR_ID
+	        FROM TBL_NONMEMBER
+	        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
+	    )
 	    <if test="car_company != null and car_company != ''">
 	        AND car_company = #{car_company}
 	    </if>
