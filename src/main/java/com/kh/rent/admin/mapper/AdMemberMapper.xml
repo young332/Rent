@@ -5,19 +5,17 @@
 <mapper namespace="com.kh.rent.admin.mapper.AdMemberMapper">
 
 <sql id="search">
-		<where>
-			<foreach item="type" collection="typeArr">
-				<choose>
-					<when test="type == 'I'.toString()">
-						mem_id like '%'|| #{keyword} ||'%'
-					</when>
-					<when test="type == 'N'.toString()">
-						or mem_name like '%'|| #{keyword} ||'%'
-					</when>
-				</choose>
-			</foreach>
-		</where>
-	</sql>
+    <where>
+            <choose>
+                <when test="type == 'I'.toString()">
+                    mem_id like concat('%' , #{keyword} , '%')
+                </when>
+                <when test="type == 'N'.toString()">
+                    mem_name like concat('%' , #{keyword} , '%') 
+                </when>
+            </choose>
+    </where>
+</sql>
 
 	<select id="selectAllMember" resultType="com.kh.rent.login.domain.MemberVO">
 	    SELECT mem_id, mem_name, mem_adminck, mem_email, mem_birth, mem_phone, mem_addr, mem_cdate, 

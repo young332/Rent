@@ -20,126 +20,45 @@
 
 <script>
 
-//검색폼 전송
-/* $("#frmSearch").submit(function(){
-	var type = $(this).find("[name=type]").val();
-	console.log("type:", type);
-	if(type==""){
-		alert("검색조건을 선택해주세요.");
-		$("[name=type]").focus();
-		return false;
-	}
-	var keyword = $(this).find("[name=keyword]").val();
-	if(keyword.trim() ==""){
-		alert("검색어을 선택해주세요.");
-		$("[name=keyword]").focus();
-		return false;
-	}
-	
-}); */
-
-$(function() {
-	
-	
-	$("#frmSearch").submit(function(event) {
-	    event.preventDefault(); // 기본 제출 동작을 막음
-	    
-	    var type = $(this).find("[name=type]").val();
-	    var keyword = $(this).find("[name=keyword]").val();
-	    console.log("type",type );
-	    console.log("keyword", keyword);
-
-	    if(type === ""){
-	        alert("검색조건을 선택해주세요.");
-	        $("[name=type]").focus();
-	        return false;
-	    }
-
-	    if(keyword.trim() === ""){
-	        alert("검색어를 입력해주세요.");
-	        $("[name=keyword]").focus();
-	        return false;
-	    }
-
-	    // AJAX를 통한 검색 요청
-	    $.ajax({
-	        type: "GET",
-	        url: "/admin/member/search", 
-	        data: { type: type, 
-	        	    keyword: keyword },
-	        success: function(response) {
-	            console.log("검색 결과:", response);
-	        },
-	        error: function(xhr, status, error) {
-	            
-	            console.error("검색 오류:", error);
-	        }
-	    });
-	}); 
-	
-	
-	
-	
-	
-	
-	// 비밀번호변경 모달열기
-	$("#pwdChange").click(function() {
-		var password1 = $("#mem_pw").val();
-		console.log(password1);
-		$("#password1").val(password1);
-		$("#newPassword").val("");
-		$("#confirmPassword").val("");
-		$("#invalid-message1").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.");
-		$("#invalid-message2").hide();
-		$("#modal-pwdChangeForm").modal("show");
-	});
-	
-	// 비밀번호변경 처리
-	$("#btn-pwdChange-save").click(function() {
-	    validatePasswordChangeForm();
-	});
-
-});
-
 //회원정보수정하기
 function fn_memberModify(mem_id) {
-		
-	   $.ajax({
-	    type: 'GET',
-	    url: '/admin/member/getMemberInfo',  
-	    data: { mem_id: mem_id },
-	    success: function (data) {
-	      console.log('Success:', data);
+	
+   $.ajax({
+    type: 'GET',
+    url: '/admin/member/getMemberInfo',  
+    data: { mem_id: mem_id },
+    success: function (data) {
+      console.log('Success:', data);
 
-	      
-	        $("#mem_id").val(data['mem_id']);
-		    $("#mem_name").val(data['mem_name']);
-		    $("#mem_pw").val(data['mem_pw']);
-		    $("#mem_adminck").val(data['mem_adminck']);
-		    var mem_adminck = data['mem_adminck'];
-		    if (mem_adminck == 0) {
-	        	$("#mem_adminck").val("0").prop("selected", true);
-	        } 
-	        if (mem_adminck == 1) {
-	        	$("#mem_adminck").val("1").prop("selected", true);
-	        }
-	        if (mem_adminck == 2) {
-	        	$("#mem_adminck").val("2").prop("selected", true);
-	        }
-		    	    
-		    $("#mem_birth").val(data['mem_birth']);
-		    $("#mem_phone").val(data['mem_phone']);
-		    $("#mem_email").val(data['mem_email']);
-		    $("#mem_zip_code").val(data['mem_zip_code']);
-		    $("#mem_addr").val(data['mem_addr']);
+      
+        $("#mem_id").val(data['mem_id']);
+	    $("#mem_name").val(data['mem_name']);
+	    $("#mem_pw").val(data['mem_pw']);
+	    $("#mem_adminck").val(data['mem_adminck']);
+	    var mem_adminck = data['mem_adminck'];
+	    if (mem_adminck == 0) {
+        	$("#mem_adminck").val("0").prop("selected", true);
+        } 
+        if (mem_adminck == 1) {
+        	$("#mem_adminck").val("1").prop("selected", true);
+        }
+        if (mem_adminck == 2) {
+        	$("#mem_adminck").val("2").prop("selected", true);
+        }
+	    	    
+	    $("#mem_birth").val(data['mem_birth']);
+	    $("#mem_phone").val(data['mem_phone']);
+	    $("#mem_email").val(data['mem_email']);
+	    $("#mem_zip_code").val(data['mem_zip_code']);
+	    $("#mem_addr").val(data['mem_addr']);
 
-	      // 모달 창 열기
-	      $("#MembermodifyModal").modal("show");
-	    
-	    }
-	    
-	  }); 
-	}
+      // 모달 창 열기
+      $("#MembermodifyModal").modal("show");
+    
+    }
+    
+  }); 
+}
 
 //주소 검색
 function openZipSearch() {
@@ -159,6 +78,99 @@ function openZipSearch() {
     }).open();
 }
 
+$(function() {
+
+	//검색
+	$("#frmSearch").submit(function(event) {
+	    event.preventDefault(); // 기본 제출 동작을 막음
+	    
+	    var type = $(this).find("[name=type]").val();
+	    var keyword = $(this).find("[name=keyword]").val();
+	    console.log("type",type );
+	    console.log("keyword", keyword);
+
+	    if(type == ""){
+	        alert("검색조건을 선택해주세요.");
+	        $("[name=type]").focus();
+	        return false;
+	    }
+
+	    if(keyword.trim() == ""){
+	        alert("검색어를 입력해주세요.");
+	        $("[name=keyword]").focus();
+	        return false;
+	    }
+
+	    
+	    $.ajax({
+	        type: "GET",
+	        url: "/admin/member/search", 
+	        data: { type: type, 
+	        	    keyword: keyword },
+	        success: function(response) {
+	            console.log("검색 결과:", response);
+	            
+	            var tbody = $(".table tbody");
+	            tbody.empty();
+
+	            // JSON 데이터를 반복하여 행을 추가
+	            $.each(response, function(index, member) {
+	                
+	                var row = $("<tr>");
+
+	                // 체크박스 열 추가
+	                var checkboxCell = $("<td>");
+	                var checkboxDiv = $("<div class='custom-control custom-checkbox'>");
+	                var checkboxInput = $("<input type='checkbox' class='custom-control-input chk'>")
+	                    .attr("id", "chk" + index) // 인덱스를 기반으로 유일한 ID 생성
+	                    .attr("emplyrid", member.mem_id)
+	                    .attr("membertype", member.mem_type);
+	                var checkboxLabel = $("<label class='custom-control-label'>").attr("for", "chk" + index);
+	                checkboxDiv.append(checkboxInput).append(checkboxLabel);
+	                checkboxCell.append(checkboxDiv);
+	                row.append(checkboxCell);
+
+	                // 각 데이터에 해당하는 열 추가
+	                row.append($("<td>").text(member.mem_id));
+	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberModify('" + member.mem_id + "');\">" + member.mem_name + "</a>"));
+	                var memberTypeText = member.mem_type == 1 ? "관리자" : "일반회원"; 
+	                row.append($("<td>").html("<div class='badge badge-outline-primary'>" + memberTypeText + "</div>"));
+	                row.append($("<td>").text(member.mem_birth));
+	                row.append($("<td>").text(member.mem_email));
+	                row.append($("<td>").text(member.mem_phone));
+	                row.append($("<td>").text(member.mem_addr));
+	                row.append($("<td>").text(member.mem_point));
+	                row.append($("<td>").text(member.mem_cdate));
+
+	                tbody.append(row);
+	            });
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("검색 오류:", error);
+	        }
+	    });
+
+	});
+
+	// 비밀번호변경 모달열기
+	$("#pwdChange").click(function() {
+		var password1 = $("#mem_pw").val();
+		console.log(password1);
+		$("#password1").val(password1);
+		$("#newPassword").val("");
+		$("#confirmPassword").val("");
+		$("#invalid-message1").text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다.");
+		$("#invalid-message2").hide();
+		$("#modal-pwdChangeForm").modal("show");
+	});
+	
+	// 비밀번호변경 처리
+	$("#btn-pwdChange-save").click(function() {
+	    validatePasswordChangeForm();
+	});
+
+
+});
 </script>
 
 
@@ -174,29 +186,27 @@ function openZipSearch() {
     </div>
     
     <div class="card-body">
-
-
+    
+    <form method="get" id="frmSearch" name="frm">
 			<div class="alert alert-light bg-light text-dark sch_wrap">
-				<div class="input-group">
-				  <form id="frmSearch" method="get" class="form-inline">		
-					<div class="input-group form-group col">
+				<div class="input-group col-sm-12">
+					<div class="input-group col-sm">
 						<select class="custom-select" name="type">
-							<option value="">-------</option>
+							<option value="">전체</option>
 							<option value="I" ${param.type=='I' ? 'selected' : ''}>아이디</option>
 							<option value="N" ${param.type=='N' ? 'selected' : ''}>이름</option>
 						</select>
 					</div>
-					<div class="input-group form-group col app-search">
-						<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}"> 
+					<div class="input-group col-sm app-search">
+						<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}">
 						<span class="search-icon"></span>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit">검색</button>
+							<button class="btn btn-primary" type="submit" >검색</button>
 						</div>
 					</div>
-				  </form>
 				</div>
 			</div>
-
+		</form> 
 
 		<div class="dt-buttons col-sm-12 mb-3">
                 <button class="btn btn-secondary flaot-left" type="button" onclick="javascript:fn_excel('member','');"><span>엑셀 다운로드</span></button>
@@ -365,7 +375,6 @@ function openZipSearch() {
 						<button type="submit" class="btn btn-primary">수정완료</button>
 					  </form>
 					</div>
-					
 				</div>
 			</div>
 		</div>
