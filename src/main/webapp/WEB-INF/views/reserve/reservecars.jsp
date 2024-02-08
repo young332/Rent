@@ -14,21 +14,21 @@
 						<h2 class="mb-0" style="font-weight: bold; font-size: 30px;">${vo.car_name}</h2>
 						<div class="d-flex mb-3">
 							<input type="text" class="cat car_index" value="${vo.car_index}" style="display: none;">
-							<span class="cat" style="color: black;">${vo.car_company}</span>|
-							 <span class="cat" style="color: black;">${vo.car_size}</span> |
-							 <span class="cat" style="color: black;">${vo.car_fuel}</span> |
+							<span class="cat" style="color: black;">${vo.car_company}</span>&nbsp;|&nbsp;
+							 <span class="cat" style="color: black;">${vo.car_size}</span> &nbsp;|&nbsp;
+							 <span class="cat" style="color: black;">${vo.car_fuel}</span> 
 							<c:if test="${vo.op_carseat eq 'Y' || vo.op_navi eq 'Y' || vo.op_bt eq 'Y' || vo.op_cam eq 'Y'}">
 						    <c:if test="${vo.op_carseat eq 'Y'}">
-						        <span class="cat" style="color: black;">카시트</span>|
+						        &nbsp;|&nbsp;<span class="cat" style="color: black;">카시트</span>
 						    </c:if>
 						    <c:if test="${vo.op_navi eq 'Y'}">
-						        <span class="cat" style="color: black;">내비게이션</span>|
+						        &nbsp;|&nbsp;<span class="cat" style="color: black;">내비게이션</span>
 						    </c:if>
 						    <c:if test="${vo.op_bt eq 'Y'}">
-						        <span class="cat" style="color: black;">블루투스</span>|
+						        &nbsp;|&nbsp;<span class="cat" style="color: black;">블루투스</span>
 						    </c:if>
 						    <c:if test="${vo.op_cam eq 'Y'}">
-						        <span class="cat" style="color: black;">후방 카메라</span>
+						        &nbsp;|&nbsp;<span class="cat" style="color: black;">후방 카메라</span>
 						    </c:if>
 						</c:if>
 						

@@ -211,20 +211,20 @@ div.left-box {
 						    						<h2 class="mb-0"  style="font-weight: bold; font-size: 30px;">${reserveDTO.car_name}</h2>
 						    						<div class="d-flex mb-3">
 						    							<input type="text" class="cat car_index" value="${reserveDTO.car_index}" style="display: none;">
-							    						<span class="cat" style="color: black;">${reserveDTO.car_company}</span>|
-							    						<span class="cat" style="color: black;">${reserveDTO.car_size}</span>|
-							    						<span class="cat" style="color: black;">${reserveDTO.car_fuel}</span>|
+							    						<span class="cat" style="color: black;">${reserveDTO.car_company}</span>&nbsp;|&nbsp;
+							    						<span class="cat" style="color: black;">${reserveDTO.car_size}</span>&nbsp;|&nbsp;
+							    						<span class="cat" style="color: black;">${reserveDTO.car_fuel}</span>
 							    						<c:if test="${reserveDTO.op_carseat eq 'Y' || reserveDTO.op_navi eq 'Y' || reserveDTO.op_bt eq 'Y' || reserveDTO.op_cam eq 'Y'}">
-													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">
+													    <c:if test="${reserveDTO.op_carseat eq 'Y'}">&nbsp;|&nbsp;
 													        <span class="cat" style="color: black;">카시트</span>
 													    </c:if>
-													    <c:if test="${reserveDTO.op_navi eq 'Y'}">|
+													    <c:if test="${reserveDTO.op_navi eq 'Y'}">&nbsp;|&nbsp;
 													        <span class="cat" style="color: black;">내비게이션</span>
 													    </c:if>
-													    <c:if test="${reserveDTO.op_bt eq 'Y'}">|
+													    <c:if test="${reserveDTO.op_bt eq 'Y'}">&nbsp;|&nbsp;
 													        <span class="cat" style="color: black;">블루투스</span>
 													    </c:if>
-													    <c:if test="${reserveDTO.op_cam eq 'Y'}">|
+													    <c:if test="${reserveDTO.op_cam eq 'Y'}">&nbsp;|&nbsp;
 													        <span class="cat" style="color: black;">후방 카메라</span>
 													    </c:if>
 													</c:if>
@@ -431,6 +431,8 @@ function setFooterTop() {
     
 }
 
+
+
 $(document).ready(function() {
 	
     
@@ -457,16 +459,33 @@ $(document).ready(function() {
     
     setFooterTop();
     
+    function checkCheckbox() {
+        $(".cat").each(function() {
+            var carInfo = $(this).text().trim();
+            
+            $(".left-box input[type='checkbox']").each(function() {
+                if ($(this).val() === carInfo) {
+                    $(this).prop("checked", true);
+                }
+            });
+        });
+    }
     
-	
+    var url = window.location.href;
+    var index = url.substring(url.lastIndexOf('/') + 1);
     
-	
+    // 숫자가 있는지 확인하고 실행
+    //(페이지 로딩할때마다 다 체크되서 인터넷주소에 car_index값 있을때만 체크되게햇삼ㅋㅋ)
+    if (!isNaN(index)) {
+        checkCheckbox();
+    }
 	 $("#btnreset").click(function(){
 		 $(":checkbox").prop("checked",false);
 	        var CheckReset = $("#btnreset").val();
 	        console.log("CheckReset");
 	         
 	    });
+	 
 	 $("#btnSearch").click(function() {
 		    
 	    var selectedPickDate = $("#top_book_pick_date").val();
