@@ -72,8 +72,9 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int getTotalPay(int pay_res_rid) {
-		return paymentMapper.getTotalPay(pay_res_rid);	
+	public int getTotalPay(int pay_pid) {
+		log.info("pay_pid:" + pay_pid);
+		return paymentMapper.getTotalPay(pay_pid);	
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class PaymentServiceImpl implements PaymentService {
 		log.info("result1: " + result1);
 		
 		//예약 상태 변경
-		int result2 = paymentMapper.reserveCancel(paymentVO.getPay_res_rid());
+		int result2 = paymentMapper.reserveCancel(paymentVO.getPay_pid());
 		log.info("result2: " + result2);
 		
         return (result1 + result2) == 2 ? true : false;
@@ -106,7 +107,28 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		int result = paymentMapper.payCancel(pay_pid);
 		
+		log.info("결제상태 변경: " + result);
+		
 		return result;
+	}
+
+	@Transactional
+	@Override
+	public void cancelPayAndReserveAndRefund(PaymentVO paymentVO) {
+		//회원 포인트 증가
+		int i1 =paymentMapper.refundPay(paymentVO);
+		log.info("i1 변경: " + i1);
+		//예약 상태 변경
+		int i2 = paymentMapper.reserveCancel(paymentVO.getPay_pid());
+		log.info("i2 변경: " + i2);
+		// 결제 상태 변경
+		int i3 = paymentMapper.payCancel(paymentVO.getPay_pid());
+		log.info("i3 변경: " + i3);
+	}
+
+	@Override
+	public int getPay(int pay_res_rid) {
+		return paymentMapper.getPay(pay_res_rid);	
 	}
 
 

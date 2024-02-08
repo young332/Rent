@@ -32,6 +32,8 @@ public interface PaymentService {
 	// 비회원 번호 조회
 	public int getPayNonResRid(int pay_res_rid);
 	
+	public int getPay(int pay_res_rid);
+	
 	// 예약 금액
 	public int getTotalPay(int pay_res_rid);
 	
@@ -40,6 +42,8 @@ public interface PaymentService {
 	
 	// 결제취소
 	public int payCancel(int pay_pid);
+	
+	public void cancelPayAndReserveAndRefund(PaymentVO paymentVO);
 	
 		
 }

@@ -71,11 +71,20 @@
     </select>
     
     
-    <!-- res_totalpay 불려오기 -->
-    <select id="getTotalPay" resultType="int">
+     <!-- 결제 시 res_totalpay 불려오기 -->
+    <select id="getPay" resultType="int">
     	select res_totalpay 
 		from TBL_RESERVE
 		where res_rid = #{pay_res_rid}
+    </select>
+    
+    
+    <!-- 결제 취소 시 res_totalpay 불려오기 -->
+    <select id="getTotalPay" resultType="int">
+    	select res_totalpay 
+		from TBL_RESERVE
+		where res_rid = (select pay_res_rid from TBL_PAYMENT
+						 where pay_pid = #{pay_pid})
     </select>
     
     <!-- pay_pid 불려오기 -->
@@ -93,11 +102,19 @@
     </update>
       
     <!-- 예약 상태 변경(예약취소) -->
-    <update id="reserveCancel">
-    	update rent001.TBL_RESERVE, rent001.TBL_PAYMENT set
-		res_status = '예약취소'
-		where res_rid = #{pay_res_rid}
-		and pay_status = '결제취소'
+<!--     <update id="reserveCancel"> -->
+<!--     	update TBL_RESERVE, TBL_PAYMENT set -->
+<!-- 		res_status = '예약취소' -->
+<!-- 		where res_rid = #{pay_res_rid} -->
+<!-- 		and pay_status = '결제취소' -->
+<!--     ) -->
+<!--     </update> -->
+    
+    <!-- 예약 상태 변경(예약취소) : 쌤 -->
+    <update id="reserveCancel" parameterType="int">
+    	update TBL_RESERVE set
+			res_status = '예약취소'
+		where res_rid = (select pay_res_rid from TBL_PAYMENT where pay_pid = #{pay_pid})
     </update>
     
 	<!-- 포인트 증가 (환불) -->

@@ -6,15 +6,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,7 +36,11 @@ public class CheckoutController {
 		
 		log.info("paymentGet");
 
-		int totalPay = paymentService.getTotalPay(res_rid);
+		//int totalPay = paymentService.getTotalPay(res_rid);
+		//log.info("totalPay" + totalPay);
+		
+		int totalPay = paymentService.getPay(res_rid);
+		log.info("totalPay" + totalPay);
 		
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
@@ -62,7 +63,8 @@ public class CheckoutController {
     	String mem_id = loginInfo.getMem_id();
     	log.info("mem_id:" + mem_id);
     	
-    	int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    	//int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
+    	int totalPay = paymentService.getPay(paymentVO.getPay_res_rid());
     	
     	paymentVO.setPay_mem_id(mem_id);
     	paymentVO.setPay_type("PAY_P");
@@ -85,30 +87,41 @@ public class CheckoutController {
     
     @ResponseBody
     @GetMapping("/pay_cancel/{pay_pid}")
-	public String paycancelPost(
-			PaymentVO paymentVO, @PathVariable("pay_pid") int pay_pid, HttpSession session) {
+	public String paycancelPost(@PathVariable("pay_pid") int pay_pid, HttpSession session) {
     	log.info("결제취소");
     	
     	
     	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
     	String mem_id = loginInfo.getMem_id();
+    	int point = loginInfo.getMem_point();
+    	int totalPay = paymentService.getTotalPay(pay_pid);
     	log.info("mem_id:" + mem_id);
+    	log.info("totalPay" + totalPay);
     	
-    	
+
+		PaymentVO paymentVO = PaymentVO.builder()
+				.pay_mem_id(mem_id)
+				.pay_pid(pay_pid)
+				.build();
     	paymentVO.setPay_mem_id(mem_id);
     	paymentVO.setPay_pid(pay_pid);
     
+    	paymentService.cancelPayAndReserveAndRefund(paymentVO);
+    	loginInfo.setMem_point(point + totalPay);
+    	session.setAttribute("loginInfo", loginInfo);
+    	/*
+    	int count = paymentService.payCancel(pay_pid); // 결제 취소
     	
-    	int count = paymentService.payCancel(pay_pid);
     	log.info("count: " + count);
     	if (count == 1) {
     		
-    		boolean result = paymentService.paymentCancel(paymentVO);
+    		boolean result = paymentService.paymentCancel(paymentVO); // 환불, 예약 취소
         	log.info("result: " + result);
         	
         	if (result) {
         		
         		session.setAttribute("result", result);
+        		
         		return "success";
         	}
 
@@ -118,8 +131,9 @@ public class CheckoutController {
     		
     		return "fall";
     	}
-    	
-    
+    	*/
+ 	
+    	return "success";
     }
 
 }
