@@ -71,6 +71,7 @@ $(function(){
 					<tr>
 							<th style="text-align: center;">글번호</th>
 							<th style="text-align: center;">제목</th>
+							<th style="text-align: center;">작성자</th>
 							<th style="text-align: center;">등록일</th>
 							<th style="text-align: center;">조회수</th>
 					</tr>		
@@ -79,7 +80,7 @@ $(function(){
 				<c:forEach items="${boardVO}" var="boardVO">
 							<tr class="board-row" data-board-no="${boardVO.board_no}">
 								<td style="text-align: center;">${boardVO.board_no}</td>
-								<td>${boardVO.board_title}</td>
+								<td style="text-align: left;">${boardVO.board_title}</td>
 								<td style="text-align: center;"><p>${dateTime}</p></td>
 								<td style="text-align: center;">${boardVO.readcount}</td>
 							</tr>
