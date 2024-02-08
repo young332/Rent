@@ -14,8 +14,11 @@ import com.kh.rent.myPage.domain.PWchangeDTO;
 public interface AdMemberService {
 	
 	public List<MemberVO> selectAllMember(Search search);
+	
 	public List<DelMemberVO> selectDelMember();
+	
 	public MemberVO selectMemberByid(String mem_id);
+	
 	public int updateMember(MemberVO updateVO);
 	
 	//로그인

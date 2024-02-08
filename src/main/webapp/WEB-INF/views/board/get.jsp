@@ -68,7 +68,7 @@ $(function(){
 				<thead>
 					 <tbody>
                         <tr>
-                            <th><h2>${boardVO.board_title}</h2></th>
+                            <th><h4>${boardVO.board_title}</h4></th>
                         </tr>
                         <tr>
                             <th><p>${dateTime}</p></th>

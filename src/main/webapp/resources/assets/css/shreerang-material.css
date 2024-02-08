@@ -4484,7 +4484,8 @@ fieldset[disabled] .switcher-input ~ .switcher-label {
 
 .modal-header {
   position: relative;
-  padding: 1.25rem 2.5625rem 0 1.5625rem;
+  background-color: #dddaff;
+  font-weight: bold;
 }
 
 .modal-footer {
@@ -9320,7 +9321,7 @@ a.bg-linux-darker:hover, a.bg-linux-darker:focus {
 .sidenav.bg-dark .sidenav-link,
 .sidenav.bg-dark .sidenav-horizontal-prev,
 .sidenav.bg-dark .sidenav-horizontal-next {
-  color: #9b9ca3;
+  color: #d5d5d5;
 }
 .sidenav.bg-dark .sidenav-link:hover, .sidenav.bg-dark .sidenav-link:focus,
 .sidenav.bg-dark .sidenav-horizontal-prev:hover,
@@ -9328,6 +9329,7 @@ a.bg-linux-darker:hover, a.bg-linux-darker:focus {
 .sidenav.bg-dark .sidenav-horizontal-next:hover,
 .sidenav.bg-dark .sidenav-horizontal-next:focus {
   color: #fff;
+  font-weight: bold;
 }
 .sidenav.bg-dark .sidenav-link.active,
 .sidenav.bg-dark .sidenav-horizontal-prev.active,

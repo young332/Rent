@@ -25,6 +25,7 @@ import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.FileVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.login.domain.MemberVO;
 
@@ -118,6 +119,19 @@ public class CarInfoController {
     	
     	return "redirect:/admin/car/ListCar";
     }
+    
+	 //검색기능
+	 @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+	 @ResponseBody
+	 public List<CarInfoVO> search(@RequestParam String type, @RequestParam String keyword) {
+		 Search search = new Search(type, keyword);
+		 search.setKeyword(keyword);
+		 search.setType(type);
+		 log.info("search:" +search);
+		 List<CarInfoVO> carInfoList = carInfoService.selectCarInfo(search);
+		 log.info("carInfoList:"+carInfoList);
+		 return carInfoList;
+	 }
     
     
 

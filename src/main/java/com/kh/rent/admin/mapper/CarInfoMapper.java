@@ -8,6 +8,7 @@ import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.FileVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.admin.domain.Search;
 
 public interface CarInfoMapper {
 
@@ -17,7 +18,7 @@ public interface CarInfoMapper {
 	
 	public List<CommonCodeVO> selectCarName();
 	
-	public List<CarInfoVO> selectCarInfo();
+	public List<CarInfoVO> selectCarInfo(Search search);
 	
 	public CarInfoVO selectCarInfoByIndex(Integer car_index);
 	

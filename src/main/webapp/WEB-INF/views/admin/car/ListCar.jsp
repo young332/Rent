@@ -2,95 +2,165 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
 <script>
+//알림창 설정
+$(function(){
 	
-	//알림창 설정
-	$(function(){
-		var AddCar = '<c:out value="${AddCar}"/>';
-		var ModifyCar = '<c:out value="${ModifyCar}"/>';
-		var errorMessage = '<c:out value="${errorMessage}"/>';
-		console.log("AddCar: " , AddCar);
-		console.log("ModifyCar: " , ModifyCar);
-		console.log("errorMessage: " , errorMessage);
+	var AddCar = '<c:out value="${AddCar}"/>';
+	var ModifyCar = '<c:out value="${ModifyCar}"/>';
+	var errorMessage = '<c:out value="${errorMessage}"/>';
+	console.log("AddCar: " , AddCar);
+	console.log("ModifyCar: " , ModifyCar);
+	console.log("errorMessage: " , errorMessage);
+	
+	
+	var v = "";
+	if(AddCar == "success"){
+		v = "등록";
+	} else if(ModifyCar == "success"){
+		v = "수정";
+	}  /* else if(deleteMenuName){
+		v = "삭제";
+	}  */
+	
+	if(AddCar == "success" || ModifyCar == "success" /* || deleteMenuName */) {
+		$("#alertModal").find(".modal-body").text(" 차량이 "+ v +" 되었습니다.");
+		$("#alertModal").find(".modal-title").text("차량 "+ v);
 		
+		$("#alertModal").modal("show");
 		
-		var v = "";
-		if(AddCar == "success"){
-			v = "등록";
-		} else if(ModifyCar == "success"){
-			v = "수정";
-		}  /* else if(deleteMenuName){
-			v = "삭제";
-		}  */
-		
-		if(AddCar == "success" || ModifyCar == "success" /* || deleteMenuName */) {
-			$("#alertModal").find(".modal-body").text(" 차량이 "+ v +" 되었습니다.");
-			$("#alertModal").find(".modal-title").text("차량 "+ v);
-			
-			$("#alertModal").modal("show");
-			
-		} else if(errorMessage){
-			$("#alertModal").find(".modal-body").text("해당요청을 수행하지 못했습니다.");
-		}
+	} else if(errorMessage){
+		$("#alertModal").find(".modal-body").text("해당요청을 수행하지 못했습니다.");
+	}
+	
+	
+	//검색
+	$("#frmSearch").submit(function(event) {
+	    event.preventDefault(); // 기본 제출 동작을 막음
+	    
+	    var type = $(this).find("[name=type]").val();
+	    var keyword = $(this).find("[name=keyword]").val();
+	    console.log("type",type );
+	    console.log("keyword", keyword);
+
+	    if(type == ""){
+	        alert("검색조건을 선택해주세요.");
+	        $("[name=type]").focus();
+	        return false;
+	    }
+
+	    if(keyword.trim() == ""){
+	        alert("검색어를 입력해주세요.");
+	        $("[name=keyword]").focus();
+	        return false;
+	    }
+
+	    
+	    $.ajax({
+	        type: "GET",
+	        url: "/admin/car/search", 
+	        data: { type: type, 
+	        	    keyword: keyword },
+	        success: function(response) {
+	        	console.log("검색 결과:", response);
+
+	            var tbody = $(".table tbody");
+
+	            tbody.empty();
+
+	            $.each(response, function(index, carInfo) {
+	                var row = $("<tr>");
+
+	                var checkboxCell = $("<td>");
+	                var checkboxDiv = $("<div class='custom-control custom-checkbox'>");
+	                var checkboxInput = $("<input type='checkbox' class='custom-control-input chk'>")
+	                    .attr("id", "chk" + index) // 인덱스를 기반으로 유일한 ID 생성
+	                    .attr("emplyrid", "jml8758")
+	                    .attr("membertype", "general");
+	                var checkboxLabel = $("<label class='custom-control-label'>").attr("for", "chk" + index);
+	                checkboxDiv.append(checkboxInput).append(checkboxLabel);
+	                checkboxCell.append(checkboxDiv);
+	                row.append(checkboxCell);
+
+	                
+	                row.append($("<td>").html("<img src='" + response[index].unique_file_nm + "' style='width: 50px; height: 50px' alt='Image'>"));
+	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_carInfoModify('" + response[index].car_index + "');\">" + response[index].car_name + "</a>"));
+	                row.append($("<td>").text(response[index].car_number));
+	                row.append($("<td>").text(response[index].car_company));
+	                row.append($("<td>").text(response[index].car_size));
+	                row.append($("<td>").text(response[index].car_cost));
+	                row.append($("<td>").text(response[index].use_yn));
+	                row.append($("<td>").text(response[index].create_user));
+	                row.append($("<td>").text(response[index].create_date));
+
+	                tbody.append(row);
+	            });
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("검색 오류:", error);
+	        }
+	    });
 	});
-	
-	//차량정보수정
-	function fn_carInfoModify(car_index) {
-			
-		   //alert("수정")
-		    $.ajax({
-		    type: 'GET',
-		    url: '/admin/car/getCarInfo',  
-		    data: {car_index : car_index },
-		    success: function (data) {
-		    console.log('Success:', data);
-	
+
+});
+
+//차량정보수정
+function fn_carInfoModify(car_index) {
+		
+	   //alert("수정")
+	    $.ajax({
+	    type: 'GET',
+	    url: '/admin/car/getCarInfo',  
+	    data: {car_index : car_index },
+	    success: function (data) {
+	    console.log('Success:', data);
+
+	    
+	        $("#car_index").val(data['car_index']);
+	        $("#car_name").val(data['car_name']);
+		    $("#car_number").val(data['car_number']);
+		    $("#car_company").val(data['car_company']);
+		    $("#car_size").val(data['car_size']);
+		    $("#car_fuel").val(data['car_fuel']);
+		    $("#car_cost").val(data['car_cost']);
+
+		    var op_carseat = data['op_carseat'];
+		    var op_navi = data['op_navi'];
+		    var op_bt = data['op_bt'];
+		    var op_cam = data['op_cam'];
+		    var use_yn = data['use_yn'];
 		    
-		        $("#car_index").val(data['car_index']);
-		        $("#car_name").val(data['car_name']);
-			    $("#car_number").val(data['car_number']);
-			    $("#car_company").val(data['car_company']);
-			    $("#car_size").val(data['car_size']);
-			    $("#car_fuel").val(data['car_fuel']);
-			    $("#car_cost").val(data['car_cost']);
+		    // op_carseat, op_navi, op_bt, op_cam, use_yn에 대한 처리
+		    var options = ["op_carseat", "op_navi", "op_bt", "op_cam", "use_yn"];
+		    $.each(options, function(index, option) {
+		        if (data[option] == "Y") {
+		            $('input[name="' + option + '"][value="Y"]').prop("checked", true);
+		        } else {
+		            $('input[name="' + option + '"][value="N"]').prop("checked", true);
+		        }
+		    });
 
-			    var op_carseat = data['op_carseat'];
-			    var op_navi = data['op_navi'];
-			    var op_bt = data['op_bt'];
-			    var op_cam = data['op_cam'];
-			    var use_yn = data['use_yn'];
-			    
-			    // op_carseat, op_navi, op_bt, op_cam, use_yn에 대한 처리
-			    var options = ["op_carseat", "op_navi", "op_bt", "op_cam", "use_yn"];
-			    $.each(options, function(index, option) {
-			        if (data[option] == "Y") {
-			            $('input[name="' + option + '"][value="Y"]').prop("checked", true);
-			        } else {
-			            $('input[name="' + option + '"][value="N"]').prop("checked", true);
-			        }
-			    });
-
-			    $("#update_user").val(${loginInfo.mem_name});
-			    $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
-			    
-
-		      // 모달 창 열기
-		      $("#CarmodifyModal").modal("show");
+		    $("#update_user").val(${loginInfo.mem_name});
+		    $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
 		    
-		    } 
-		    
-		  }); 
-		}
-	
-	function updateCarInfo() {
-        var selectedOption = $("#car_name option:selected");
-        var company = selectedOption.data("company");
-        var size = selectedOption.data("size");
 
-        $("#car_company").val(company);
-        $("#car_size").val(size);
-        
-    }
-	
+	      // 모달 창 열기
+	      $("#CarmodifyModal").modal("show");
+	    
+	    } 
+	    
+	  }); 
+	}
+
+function updateCarInfo() {
+       var selectedOption = $("#car_name option:selected");
+       var company = selectedOption.data("company");
+       var size = selectedOption.data("size");
+
+       $("#car_company").val(company);
+       $("#car_size").val(size);
+       
+   }
+
 	
 </script>
     <!-- [ content ] Start -->
@@ -106,32 +176,22 @@
     
     <div class="card-body">
 
-		 <form method="post" id="frm" name="frm">
-			<input type="hidden" name="pageIndex" value="1"> <input
-				type="hidden" name="recordCountPerPage" value="10"> <input
-				type="hidden" name="emplyrId" value=""> <input type="hidden"
-				name="searchType" value=""> <input type="hidden" name="type"
-				value="">
-
+		 <form method="get" id="frmSearch" name="frm">
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group col-sm-12">
-					
 					<div class="input-group col-sm">
-						<select class="custom-select" name="searchCnd">
+						<select class="custom-select" name="type">
 							<option value="all">전체</option>
-							<option value="emplyrId">제조사</option>
-							<option value="userNm">차종</option>
-
+							<option value="C" ${param.type=='C' ? 'selected' : ''}>제조사</option>
+							<option value="T" ${param.type=='T' ? 'selected' : ''}>차종</option>
+							<option value="N" ${param.type=='N' ? 'selected' : ''}>번호</option>
 						</select>
 					</div>
 					<div class="input-group col-sm app-search">
-						<input type="text" class="form-control" placeholder="검색어 입력"
-							name="searchWrd" value=""
-							onkeypress="javascript:fn_searchKeyPressed(event);"> <span
-							class="search-icon"></span>
+						<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}">
+						<span class="search-icon"></span>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="button"
-								onclick="javascript:fn_memberList('1');">Search</button>
+							<button class="btn btn-primary" type="submit" >검색</button>
 						</div>
 					</div>
 				</div>
