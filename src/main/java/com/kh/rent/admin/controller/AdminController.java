@@ -95,8 +95,8 @@ public class AdminController {
 	@GetMapping("/member")
 	public void adminMemberGet(Model model, Search search) {
 		List<MemberVO> MemberList = adMemberService.selectAllMember(search);
-		log.info("search:" +search);
-		log.info("MemberList:"+MemberList);
+		//log.info("search:" +search);
+		//log.info("MemberList:"+MemberList);
 		model.addAttribute("MemberList", MemberList);
 	}
 	
@@ -115,8 +115,8 @@ public class AdminController {
 	}
 	
 	@GetMapping("/car/ListCar")
-	public void adminListCarGet(Model model) {
-		List<CarInfoVO> carInfoList = carInfoService.selectCarInfo();
+	public void adminListCarGet(Model model, Search search) {
+		List<CarInfoVO> carInfoList = carInfoService.selectCarInfo(search);
 		List<CommonCodeVO> carNamelist = carInfoService.selectCarName();
 		model.addAttribute("carNamelist", carNamelist);
 		model.addAttribute("carInfoList", carInfoList);

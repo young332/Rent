@@ -59,7 +59,7 @@
 		                "<td class='align-middle'>" + subCode.use_yn + "</td>" +
 		                "<td class='align-middle'>" + subCode.orderby + "</td>" +
 		                "<td class='align-middle'>" +
-		                "<button type='button' class='btn btn-success btn-subModal btnSubModify' " +
+		                "<button type='button' class='btn btn-info btn-subModal btnSubModify' " +
 		                "data-code_id='" + subCode.code_id + "' " +
 		                "data-code_name='" + subCode.code_name + "' " +
 		                "data-orderby='" + subCode.orderby + "' " +
@@ -287,7 +287,7 @@
 							<div class="card">
 								<div class="card-header font-weight-bold d-flex align-items-center" >
 								    <span class="mr-auto">상위코드</span>
-								    <button type="button" class="btn btn-success ml-3 btnTopMenuAdd btn-modal">추가</button>
+								    <button type="button" class="btn btn-info ml-3 btnTopMenuAdd btn-modal">추가</button>
 								</div>
 								
 								<table class="table card-table table-hover ">
@@ -306,7 +306,7 @@
 											<th class="align-middle parent_code" style="cursor: pointer;">${topCode.code_id}</th>
 											<td class="align-middle">${topCode.code_name}</td>
 											<td class="align-middle">${topCode.orderby}</td>
-											<td class="align-middle"><button type="button" class="btn btn-success btnTopModify btn-modal"
+											<td class="align-middle"><button type="button" class="btn btn-info btnTopModify btn-modal"
 												 data-code_id="${topCode.code_id}"
 												 data-code_name="${topCode.code_name}"
 												 data-orderby="${topCode.orderby}"
@@ -324,7 +324,7 @@
 							<div class="card">
 								<div class="card-header font-weight-bold d-flex align-items-center" >
 								    <span class="mr-auto" id="sub_title">하위코드 (상위코드 아이디를 선택해 주세요.)</span>
-								    <button type="button" class="btn btn-success ml-3 btn-subModal" >추가</button>
+								    <button type="button" class="btn btn-info ml-3 btn-subModal" >추가</button>
 								</div>
 								<table class="table card-table" id="subTable">
 									<thead class="thead-light">

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.FileVO;
+import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.mapper.CarInfoMapper;
 
 @Service
@@ -40,8 +41,8 @@ public class CarInfoServiceImpl implements CarInfoService {
 	}
 	
 	@Override
-	public List<CarInfoVO> selectCarInfo() {
-		List<CarInfoVO> carInfoList =carInfoMapper.selectCarInfo();
+	public List<CarInfoVO> selectCarInfo(Search search) {
+		List<CarInfoVO> carInfoList =carInfoMapper.selectCarInfo(search);
 		return carInfoList;
 	}
 

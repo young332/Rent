@@ -82,8 +82,7 @@ public class AdMemberController {
 	}
 	
 	//검색기능
-	
-	 @GetMapping("/search")
+	 @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	 @ResponseBody
 	 public List<MemberVO> search(@RequestParam String type, @RequestParam String keyword) {
 		 Search search = new Search(type, keyword);

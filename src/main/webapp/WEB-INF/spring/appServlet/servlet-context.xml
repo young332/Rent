@@ -80,22 +80,21 @@
 			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
 			<exclude-mapping path="/admin/member/getMemberInfo"/>
 			<exclude-mapping path="/admin/member/search"/>
+			<exclude-mapping path="/admin/car/search"/>
 			<exclude-mapping path="/admin/car/getCarInfo"/>
 
 			<beans:ref bean="menuInterceptor" />
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/admin/member/" />
-			<mapping path="/admin/menu/" />
-			<mapping path="/admin/car/" />
-			<mapping path="/admin/commonCode/" />
+			<mapping path="/admin/**/*" /> 
 			<exclude-mapping path="/admin/login"/>
+			<exclude-mapping path="/admin/loginPost"/>
 			<beans:ref bean="adauthInterceptor" />
 		</interceptor>
 		
 		<interceptor>
-			<mapping path="/admin/loginPost" />
+			<mapping path="/admin/loginPost" />		
 			<beans:ref bean="adLoginInterceptor" />
 		</interceptor>
     
