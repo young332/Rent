@@ -1,5 +1,7 @@
 package com.kh.rent.admin.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,8 @@ import com.kh.rent.admin.service.AdMemberService;
 import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.admin.service.CodeService;
 import com.kh.rent.admin.service.MenuService;
+import com.kh.rent.board.domain.BoardVO;
+import com.kh.rent.board.service.BoardService;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.service.MemberService;
@@ -49,6 +53,9 @@ public class AdminController {
 	
 	@Autowired
 	private CarInfoService carInfoService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	
 	
@@ -121,6 +128,18 @@ public class AdminController {
 		model.addAttribute("carNamelist", carNamelist);
 		model.addAttribute("carInfoList", carInfoList);
 		log.info(carInfoList);
+	}
+	
+	@GetMapping("/board")
+	public void adminboardGet(Model model) {
+		log.info("list");
+		List<BoardVO> list = boardService.getList();
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formattedDateTime = now.format(formatter);
+		model.addAttribute("dateTime",formattedDateTime);
+		model.addAttribute("boardVO", list);
+		log.info("model:" +  model);
 	}
 	
     // ----------- 로그인 --------------- 	

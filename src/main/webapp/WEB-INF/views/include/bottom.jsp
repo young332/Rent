@@ -6,8 +6,10 @@
         <div class="row mb-5">
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2"><a href="#" class="logo">렌트카<span>001</span></a></h2>
-              <p>개쩌는 포트폴리오가 될 예정인<br> 렌트카001 홈페이지</p>
+              <h2 class="ftco-heading-2"><a href="#" class="logo">
+              <img alt="logo" src="/resources/carbook-master/img/logo.png">
+              </a></h2>
+              <p>개쩌는 포트폴리오가 될 예정인<br> HAKA 홈페이지</p>
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                 <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                 <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
