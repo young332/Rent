@@ -7,9 +7,9 @@
  <!-- 등록 -->
  	<insert id="insert">
     INSERT INTO TBL_BOARD 
-    	(BOARD_TITLE, BOARD_CONTENT)
+    	(BOARD_TITLE, BOARD_CONTENT, BOARD_MEM_ID, BOARD_PRIVATE)
     VALUES 
-    	(#{board_title}, #{board_content})
+    	(#{board_title}, #{board_content}, #{board_mem_id}, #{board_private})
 </insert>
  
  <!-- 글목록 -->

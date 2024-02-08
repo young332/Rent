@@ -48,6 +48,7 @@ public class BoardController {
 	public String list(Model model) {
 		log.info("list");
 		List<BoardVO> list = boardService.getList();
+		log.info(list);
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String formattedDateTime = now.format(formatter);

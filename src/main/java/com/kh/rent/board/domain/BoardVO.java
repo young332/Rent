@@ -21,5 +21,6 @@ public class BoardVO {
 	private Date board_cdate;
 	private Date board_udate;
 	private Integer readcount;
-
+	private String board_mem_id;
+	private Integer board_private;
 }
