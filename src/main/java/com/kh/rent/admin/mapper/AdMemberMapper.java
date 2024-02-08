@@ -3,13 +3,14 @@ package com.kh.rent.admin.mapper;
 import java.util.List;
 
 import com.kh.rent.admin.domain.DelMemberVO;
+import com.kh.rent.admin.domain.Search;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 
 public interface AdMemberMapper {
 
-	public List<MemberVO> selectAllMember();
+	public List<MemberVO> selectAllMember(Search search);
 	
 	public List<DelMemberVO> selectDelMember();
 	

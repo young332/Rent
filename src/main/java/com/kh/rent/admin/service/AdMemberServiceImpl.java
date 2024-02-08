@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.mapper.AdMemberMapper;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
@@ -27,8 +28,8 @@ public class AdMemberServiceImpl implements AdMemberService {
 	private Sha256 sha256;
 
 	@Override
-	public List<MemberVO> selectAllMember() {
-		List<MemberVO> MemberList = adMemberMapper.selectAllMember();
+	public List<MemberVO> selectAllMember(Search search) {
+		List<MemberVO> MemberList = adMemberMapper.selectAllMember(search);
 		return MemberList;
 		
 	}
