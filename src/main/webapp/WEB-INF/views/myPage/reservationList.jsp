@@ -148,7 +148,8 @@ $(document).ready(function() {
 										</c:when>
 										<c:otherwise>
 											<c:if test="${reservation.res_status eq '예약중'}">
-												<button class="btn btn-sm btn-primary" 
+												<button class="btn btn-sm"
+													style="background-color: #f07039;"
 													onclick="pay(${reservation.res_rid})">결제</button>
 											</c:if>
 										</c:otherwise>
