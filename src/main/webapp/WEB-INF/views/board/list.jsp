@@ -3,7 +3,10 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>   
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
+  
+<!-- 테이블 CSS -->
+<%@ include file="/WEB-INF/views/include/boardStyle.jsp" %>
 
 <script>
 $(function(){
@@ -34,71 +37,14 @@ $(function(){
 	
 });
 </script>
-<style>
-	.board-row {
-    cursor: pointer;
-}
-body {
-  color: #666;
-  font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
-}
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-  width: 100%;
-}
-th,td {
-  padding: 6px 15px;
-}
-th {
-  background: #42444e;
-  color: #fff;
-  text-align: left;
-}
-tr:first-child th:first-child {
-  border-top-left-radius: 6px;
-  width: 8%;
-}
-td:nth-child(2) {
-  padding-left: 10px; /* 좌측 여백 추가 */
-}
-
-th:nth-child(3), td:nth-child(3) {
-  width: 13%;
-}
-
-th:nth-child(4), td:nth-child(4) {
-  width: 8%;
-}
-tr:first-child th:last-child {
-  border-top-right-radius: 6px;
-  
-}
-td {
-  border-right: 1px solid #c6c9cc;
-  border-bottom: 1px solid #c6c9cc;
-}
-td:first-child {
-  border-left: 1px solid #c6c9cc;
-}
-tr:nth-child(even) td {
-  background: #eaeaed;
-}
-tr:last-child td:first-child {
-  border-bottom-left-radius: 6px;
-  
-}
-tr:last-child td:last-child {
-  border-bottom-right-radius: 6px;
-}
-</style>   
+   
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>공지사항 <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">공지사항</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>문의사항 <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">문의사항</h1>
           </div>
         </div>
       </div>
@@ -108,7 +54,7 @@ tr:last-child td:last-child {
       <div class="container-fluid">
       <div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-            <h2 class="mb-2">HAKA렌트카 공지사항</h2>
+            <h2 class="mb-2">HAKA렌트카 문의게시판</h2>
           </div>
         </div>
 	<div class="row">
