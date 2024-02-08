@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/point/*")
+@RequestMapping("/checkout/*")
 public class PointController {
 	@GetMapping("/point")
     public void point() {
