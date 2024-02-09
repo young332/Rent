@@ -348,22 +348,21 @@ $(function(){
     				<div class="carousel-car owl-carousel">
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url();">
+		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/point.jpg');">
 		    					</div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">새해맞이 추가할인</a></h2>
+		    						<h2 class="mb-0"><a href="#">포인트 응모 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
+			    						<p class="price ml-auto"><span>최대&nbsp;</span>500,000<span>/포인트</span></p>
 		    						</div>
 		    					</div>
 		    				</div>
     					</div>
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate" id="signupCarWrap">
-		    					<div class="img rounded d-flex align-items-end"></div>
+		    					<div class="img rounded d-flex align-items-end"style="background-image: url('/resources/carbook-master/img/joinpoint.png');"></div>
 		    					<div class="text">
-		    					
-		    						<h2 class="mb-0"><a href="/login/signUp">회원가입 시 포인트 무료충전</a></h2>
+		    						<h2 class="mb-0"><a href="/login/signUp">회원가입 시 포인트 적립</a></h2>
 		    						<div class="d-flex mb-3">
 			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
 		    						</div>
@@ -372,25 +371,29 @@ $(function(){
     					</div>
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/firstpoint.jpg');">
 		    					</div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">2024년 설날 렌트카001와 함께</a></h2>
+		    						<h2 class="mb-0"><a href="#">선착순 포인트 이벤트</a></h2>
+		    						<div class="d-flex mb-3">
+			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
+		    						</div>
 		    					</div>
 		    				</div>
     					</div>
     					<div class="item">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url();">
+		    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/clickpoint.jpg');">
 		    					</div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">포인트 룰렛 이벤트</a></h2>
+		    						<h2 class="mb-0"><a href="#">포인트 줍줍 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto">50,000<span>/포인트</span></p>
+			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
 		    						</div>
 		    					</div>
 		    				</div>
     					</div>
+
     				</div>
     			</div>
     		</div>

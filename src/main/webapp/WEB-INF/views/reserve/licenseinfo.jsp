@@ -136,9 +136,9 @@ $(function() {
             return;
         }
 
-		$("input[name=name]").remove();
-		$("input[name=tel]").remove();
-		$("input[name=birthdate]").remove();
+// 		$("input[name=name]").remove();
+// 		$("input[name=tel]").remove();
+// 		$("input[name=birthdate]").remove();
 		
 		 var non_license_type = $("select[name=res_license_type]").val().trim();
 		    var non_license_num = $("#licensenum").val().trim();
@@ -155,11 +155,12 @@ $(function() {
 	        }
 		$("#frmLicense").submit();
 		
-		alert("예약이 완료되었습니다.");
+ 		alert("예약이 완료되었습니다.");
 		
 
 		
 	});
+	
 	
 	$("#btnNonMemPay").click(function() {
 		// 로그인 여부 확인
