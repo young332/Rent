@@ -55,12 +55,29 @@ $(function(){
 		$("#reservationTitle-hidden, #breakdown-hidden, #insurance-hidden, #gascost-hidden").hide();
 	});
 	
+// 	$("#newyearPoint").click(function(){
+// 		console.log("클릭");
+// 		$("#modal-point-event").modal("show");
+// 	});
+	//포인트 응모 이벤트
 	$("#newyearPoint").click(function(){
-		console.log("클릭");
-		$("#modal-point-event").modal("show");
+	    $("#modal-point-event").find('.modal-title').text('포인트 응모 이벤트');
+	    $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning4.jpg" alt="Point Event Image">');
+	    $("#modal-point-event").modal("show");
 	});
-	
-	
+	// 줍줍 포인트 적립
+	$("#joopPoint").click(function(){
+	    $("#modal-point-event").find('.modal-title').text('줍줍 포인트 적립');
+	    $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning3.png" alt="Point Event Image">');
+	    $("#modal-point-event").modal("show");
+	});
+
+	// 선착순 포인트 적립
+	$("#firstPoint").click(function(){
+	    $("#modal-point-event").find('.modal-title').text('선착순 포인트 적립');
+	    $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning.png" alt="Point Event Image">');
+	    $("#modal-point-event").modal("show");
+	});
 });
 </script>     
     
@@ -346,7 +363,7 @@ $(function(){
     		<div class="row">
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
-    					<div class="item">
+    					<div class="item" id="newyearPoint">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/point.jpg');">
 		    					</div>
@@ -358,20 +375,22 @@ $(function(){
 		    					</div>
 		    				</div>
     					</div>
-    					<div class="item">
-    						<div class="car-wrap rounded ftco-animate" id="signupCarWrap">
-		    					<div class="img rounded d-flex align-items-end"style="background-image: url('/resources/carbook-master/img/joinpoint.png');"></div>
-		    					<div class="text">
-		    						<h2 class="mb-0"><a href="/login/signUp">회원가입 시 포인트 적립</a></h2>
-		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
-		    						</div>
-		    					</div>
-		    				</div>
+    					<div class="item" style="cursor: pointer;">
+    						<a href="/login/signUp">
+	    						<div class="car-wrap rounded ftco-animate" id="signupCarWrap">
+			    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/joinpoint.png');"></div>
+			    					<div class="text">
+			    						<h2 class="mb-0">회원가입 시 포인트 적립</h2>
+			    						<div class="d-flex mb-3">
+				    						<p class="price ml-auto">100,000<span>/포인트</span></p>
+			    						</div>
+			    					</div>
+			    				</div>
+		    				</a>
     					</div>
-    					<div class="item">
+    					<div class="item" id="firstPoint">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/firstpoint.jpg');">
+		    					<div class="img rounded d-flex align-items-end" id="firstPoint" style="background-image: url('/resources/carbook-master/img/firstpoint.jpg');">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">선착순 포인트 이벤트</a></h2>
@@ -381,9 +400,9 @@ $(function(){
 		    					</div>
 		    				</div>
     					</div>
-    					<div class="item">
+    					<div class="item" id="joopPoint">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/clickpoint.jpg');">
+		    					<div class="img rounded d-flex align-items-end" id="joopPoint" style="background-image: url('/resources/carbook-master/img/clickpoint.jpg');">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">포인트 줍줍 이벤트</a></h2>
@@ -406,14 +425,14 @@ $(function(){
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="myModalLabel">
-								새해 맞이 100,000포인트 충전
+								
 							</h5> 
 							<button type="button" class="close" data-dismiss="modal">
 								<span aria-hidden="true">×</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							<input type="radio" name="100,000point" id="100,000point"> 100,000point
+							<input type="radio" name="100,000point" id="100,000point"> 
 						</div>
 						<div class="modal-footer">
 							 

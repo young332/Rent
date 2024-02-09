@@ -179,6 +179,12 @@ $(function() {
 	        alert("입력값을 모두 입력하세요.");
 	        return; // 함수 종료
 	    }
+	    // 전화번호 유효성 검사
+	    var telValidationResult = validatePhoneNumber(non_tel);
+	    if (telValidationResult !== true) {
+	        alert(telValidationResult);
+	        return;
+	    }
 	    // 면허 번호 유효성 검사
         var validationResult = validateLicenseNumber(non_license_num);
         if (validationResult !== true) {
@@ -228,8 +234,18 @@ $(function() {
         if (licenseNumber.length < 12) {
             return "면허번호 12자를 입력해주세요.";
         }
-        return true; // 유효성 검사 통과
+        return true; 
     }
+	// 전화번호 유효성 검사 함수
+	function validatePhoneNumber(phoneNumber) {
+	    if (!/^\d+$/.test(phoneNumber)) {
+	        return "전화번호는 숫자로만 입력해주세요.";
+	    }
+	    if (phoneNumber.length !== 11) {
+	        return "전화번호는 11자를 입력해주세요.";
+	    }
+	    return true;
+	}
 	 
 });
 
