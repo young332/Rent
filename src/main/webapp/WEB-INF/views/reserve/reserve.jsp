@@ -500,8 +500,6 @@ $(document).ready(function() {
 	    $("input[name='top_book_off_date']").val(formattedOffDate);
 	});
 
-    
-
     // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
     $("#top_book_pick_date, #top_book_off_date").change(function() {
         calculateTotalTime();
@@ -509,22 +507,13 @@ $(document).ready(function() {
         
     });
 
-    
-		    
-		
-
-	 //차들 총가격
+     //차들 총가격
 	
     $("#top_book_pick_date, #top_book_off_date").change(function () {
         calculateTotalCost();
     });
 
-    
-	
-
-
-
-	 
+  
 	 //체크박스 3개 하나씩 선택되게함
 	 
     $("input[name='car_size'], input[name='car_fuel'], input[name='car_company']").change(function() {
@@ -546,17 +535,7 @@ $(document).ready(function() {
        
     });
 
-    
-    
-//     $(".btn_reserve").click(function(e) {
-//         e.preventDefault();
-
-//         $(":checkbox").prop("checked", false);
-       
-//         updateData();
-       
-//     });
-	  
+ 
 	
     $(".btn_reserve").click(function(e) {
     	 e.preventDefault();

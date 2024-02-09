@@ -78,6 +78,21 @@ $(function(){
 	    $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning.png" alt="Point Event Image">');
 	    $("#modal-point-event").modal("show");
 	});
+	
+     var isLoggedIn = ${not empty loginInfo};
+	
+	 
+    $("#newyearPoint, #firstPoint, #joopPoint").click(function(){
+        if (!isLoggedIn) {
+            alert("이벤트는 회원 전용입니다. 로그인 후 이용해주세요.");
+            window.location.href = "/login/login";
+            return;
+        }
+
+
+    });
+    
+	
 });
 </script>     
     
