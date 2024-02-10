@@ -225,7 +225,7 @@ div.left-box {
 													        <span class="cat" style="color: black;">블루투스</span>
 													    </c:if>
 													    <c:if test="${reserveDTO.op_cam eq 'Y'}">&nbsp;|&nbsp;
-													        <span class="cat" style="color: black;">후방 카메라</span>
+													        <span class="cat" style="color: black;">후방카메라</span>
 													    </c:if>
 													</c:if>
 
@@ -479,12 +479,7 @@ $(document).ready(function() {
     if (!isNaN(index)) {
         checkCheckbox();
     }
-	 $("#btnreset").click(function(){
-		 $(":checkbox").prop("checked",false);
-	        var CheckReset = $("#btnreset").val();
-	        console.log("CheckReset");
-	         
-	    });
+	 
 	 
 	 $("#btnSearch").click(function() {
 		    
@@ -499,7 +494,13 @@ $(document).ready(function() {
 	    $("input[name='top_book_pick_date']").val(formattedPickDate);
 	    $("input[name='top_book_off_date']").val(formattedOffDate);
 	});
-
+	 
+	 $("#btnreset").click(function(){
+	        $("input[type='checkbox']").prop("checked", false);
+	        updateData();
+	        console.log("btnreset");
+	    });
+	 
     // 대여일 및 반납일이 변경될 때마다 총 대여 시간 계산 함수 호출
     $("#top_book_pick_date, #top_book_off_date").change(function() {
         calculateTotalTime();
@@ -604,8 +605,41 @@ $(document).ready(function() {
     });
 	
 	
+	// Function to handle "전체" checkbox change
+	$("input[name='otheroptions'][value='전체']").change(function() {
+	    var isChecked = $(this).prop("checked");
+	    $("input[name='otheroptions']").prop("checked", isChecked);
+	    if (!isChecked) {
+	        // If "전체" is unchecked, clear the values of all other options
+	        $("input[name='otheroptions']").not("[value='전체']").prop("checked", false);
+	        // Clear the display of selected options
+	        updateData();
+	    } else {
+	        // If "전체" is checked, update data based on the changes
+	        updateData();
+	    }
+	});
 
-	
+	// Function to handle individual other options change
+	$("input[name='otheroptions']").not("[value='전체']").change(function() {
+	    var allChecked = true;
+	    $("input[name='otheroptions']").not("[value='전체']").each(function() {
+	        if (!$(this).prop("checked")) {
+	            allChecked = false;
+	        }
+	    });
+	    $("input[name='otheroptions'][value='전체']").prop("checked", allChecked);
+	    updateData(); // Update data based on the changes
+	});
+
+	// Function to display selected other options
+	function displayOtherOptions() {
+	    var selectedOptions = [];
+	    $("input[name='otheroptions']:checked").not("[value='전체']").each(function() {
+	        selectedOptions.push($(this).val());
+	    });
+	    return selectedOptions.join(", ");
+	}
 	
 	 
 });

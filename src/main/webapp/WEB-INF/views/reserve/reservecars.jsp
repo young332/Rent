@@ -28,7 +28,7 @@
 						        &nbsp;|&nbsp;<span class="cat" style="color: black;">블루투스</span>
 						    </c:if>
 						    <c:if test="${vo.op_cam eq 'Y'}">
-						        &nbsp;|&nbsp;<span class="cat" style="color: black;">후방 카메라</span>
+						        &nbsp;|&nbsp;<span class="cat" style="color: black;">후방카메라</span>
 						    </c:if>
 						</c:if>
 						

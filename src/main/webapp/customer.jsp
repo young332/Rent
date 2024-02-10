@@ -81,7 +81,6 @@ $(function(){
 	
      var isLoggedIn = ${not empty loginInfo};
 	
-	 
     $("#newyearPoint, #firstPoint, #joopPoint").click(function(){
         if (!isLoggedIn) {
             alert("이벤트는 회원 전용입니다. 로그인 후 이용해주세요.");
