@@ -12,6 +12,9 @@ public interface PaymentMapper {
 	// 결제 내역 (insert)
 	public int addPaymentRecord(PaymentVO paymentVO);
 	
+	// 결제 금액 변경
+	public int pay_amount(int pay_res_rid);
+	
 	// 결제 조회
 	public List<PaymentDTO> getPaymentInfo(String pay_mem_id);
 	
@@ -49,7 +52,6 @@ public interface PaymentMapper {
 	
 	// 포인트 증가(환불)
 	public int refundPay(PaymentVO paymentVO);
-	
 	
 
 

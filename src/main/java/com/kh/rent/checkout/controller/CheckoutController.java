@@ -66,6 +66,7 @@ public class CheckoutController {
     	//int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
     	int totalPay = paymentService.getPay(paymentVO.getPay_res_rid());
     	
+    	paymentVO.setPay_amount(totalPay);
     	paymentVO.setPay_mem_id(mem_id);
     	paymentVO.setPay_type("PAY_P");
     	

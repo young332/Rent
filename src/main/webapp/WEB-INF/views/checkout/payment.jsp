@@ -205,7 +205,7 @@ res_rid: ${res_rid}
 		  <tbody>
 		    <tr>
 		      <th>결제금액</th>
-		      <td><span class="bold txt_blue">${totalPay}원</span></td>
+		      <td><span class="bold txt_blue" id="totalPay" name="totalPay" value="${totalPay}">${totalPay}원</span></td>
 		    </tr>
 		    <tr>
 		      <th> 포인트 </th>
@@ -218,7 +218,7 @@ res_rid: ${res_rid}
 		        	<c:otherwise>
 <%-- 		        		<span><input type="checkbox" id="chk_use" onclick="chkPoint(res_totalpay, ${memberVO.mem_point}, min)">포인트 사용</span> --%>
 <%-- 		        <span style="float:right">포인트는 최소 <%=min%>p부터 <%=unit%>p단위로 사용 가능합니다.</span> --%>
-		        	<span> <input type="number" name="point_cost" id="point_cost" min="5000" max="${totalPay}" onchange="updateViewUsePnt()"></span> p <br><br>
+		        	<span> <input type="number" name="point_cost" id="point_cost" min="5000" max="${totalPay}"></span> p <br><br>
 		        	</c:otherwise>
 		        </c:choose>
 		        
@@ -429,7 +429,13 @@ int min = 5000;
       
    var res_totalpay = 0;
    
+   var pay_amount = 0;
+   
    var res_totalpay = '${totalPay}';
+   console.log("res_totalpay 0 : " ,res_totalpay);
+   
+   var pay_amount = '${totalPay}';
+   console.log("pay_amount 1 : " ,pay_amount);
    
    var rentalDateStr = "${firstReservation.res_rental_date}";
    var returnDateStr = "${firstReservation.res_return_date}";
@@ -486,7 +492,7 @@ int min = 5000;
 
 	$(document).ready(function() {
 	    // 페이지 로드 시 최종 결제 금액 초기화
-	    var totalpay = parseInt($("#res_totalpay").val());
+	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
 	    var point = parseInt("${memberVO.mem_point}");
 	    var min = 1; // 최소 사용 가능 포인트
 	    changePoint(totalpay, point, min, 0);
@@ -498,22 +504,6 @@ int min = 5000;
 	    });
 	});
 
-	
-	$("#btn_pay").on("click", function(e) {
-	
- 		var res_rid = $("#res_rid").val(); 
-		var pay_res_rid = $("#pay_res_rid").val();
-		var point_cost = $("#point_cost").val();
- 		console.log("point_cost:", point_cost);
- 		var pay_mem_id = $("#pay_mem_id").val();
-  		console.log("pay_mem_id:", pay_mem_id);
- 		var res_totalpay = $("#res_totalpay").val();
-
-		/* 서버 전송 */
- 		$("#checkout_form").submit();
-
-      
-    });
 	
 	var totalChk = document.getElementById("totalChk");
 	if (totalChk) {
@@ -537,6 +527,22 @@ int min = 5000;
 	
 	$("#btn_pay").on("click", function(e) {
 	    e.preventDefault(); // 폼 전송 막기
+
+	    var res_rid = $("#res_rid").val();
+	    var pay_res_rid = $("#pay_res_rid").val();
+	    var point_cost = $("#point_cost").val();
+	    var pay_mem_id = $("#pay_mem_id").val();
+	    var res_totalpay = $("#res_totalpay").val();
+	    console.log("res_totalpay", res_totalpay);
+	    var pay_amount = $("#pay_amount").val();
+	    console.log("pay_amount 1", pay_amount);
+
+	    /* 서버 전송 */
+	    $("#checkout_form").submit();
+	});
+
+	$("#btn_pay").on("click", function(e) {
+	    e.preventDefault(); // 폼 전송 막기
 	    
 	    // 필수 약관에 대한 checkbox 요소들을 가져옴
 	    var checkboxes = document.querySelectorAll('.agree_list input[type="checkbox"]');
@@ -558,13 +564,14 @@ int min = 5000;
 	    // 결제 포인트가 부족한지 확인
 	    var pointCostInput = document.getElementById("point_cost");
 	    var pointCost = parseInt(pointCostInput.value) || 0;
-	    var remainingPoint = parseInt("${loginInfo.mem_point}");
+	    var remainingPoint = parseInt("${memberVO.mem_point}"); // 남은 포인트
 
 	    if (pointCost > remainingPoint) {
 	        alert("결제 포인트가 부족합니다.");
 	        return;
 	    }
 
+	    // AJAX를 이용한 서버로의 결제 요청
 	    $.ajax({
 	        type: "POST",
 	        url: "/checkout/payment",
