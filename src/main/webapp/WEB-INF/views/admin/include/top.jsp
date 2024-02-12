@@ -59,7 +59,6 @@
     <!-- <script src="/resources/assets/js/demo.js"></script> -->
     <!-- <script src="/resources/assets/js/analytics.js"></script> -->
     <!-- <script src="/resources/assets/js/pages/dashboards_index.js"></script> -->
-    
     <script>
    
     function TopMenuClick(href, obj) {
@@ -218,15 +217,15 @@
                         <!-- Divider -->
                         <hr class="d-lg-none w-100 my-2">
 
-                        <div class="navbar-nav align-items-lg-center">
-                            <!-- Search -->
+                        <!-- <div class="navbar-nav align-items-lg-center">
+                            Search
                             <label class="nav-item navbar-text navbar-search-box p-0 active">
                                 <i class="feather icon-search navbar-icon align-middle"></i>
                                 <span class="navbar-search-input pl-2">
                                     <input type="text" class="form-control navbar-text mx-2" placeholder="Search...">
                                 </span>
                             </label>
-                        </div>
+                        </div> -->
 
                         <div class="navbar-nav align-items-lg-center ml-auto">
                             <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">

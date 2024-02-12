@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.rent.admin.domain.PointDTO;
 import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.AdMemberService;
 import com.kh.rent.login.domain.MemberVO;
@@ -94,8 +95,30 @@ public class AdMemberController {
 		 return MemberList;
 	 }
 	 
+	 //개별 포인트 내역
+	 @GetMapping(value = "/getMemberPoint", produces = MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+	    public List<PointDTO> getMemberPoint(@RequestParam String mem_id) {
+			System.out.println("getMemberPoint mem_id: " + mem_id);
+			List<PointDTO> pointList = adMemberService.selectPointByid(mem_id);
+	        return pointList;
+	    }
 	
-	
+	 //포인트 충전
+		@PostMapping("/pointIn")
+		public String pointIn(HttpSession session, MemberVO memberVO, PointDTO pointDTO, RedirectAttributes rttr) {
+			log.info("memberVO:" + memberVO);
+			log.info("pointDTO:"+pointDTO);
+			int result = adMemberService.addPoint(memberVO);
+			adMemberService.addPointTable(pointDTO);
+			rttr.addFlashAttribute("addResult", result);
+			// 변경 결과에 따라 응답 반환
+		    if (result == 1) {
+		    	return "redirect:/admin/member";
+		    } else {
+		        return "fail";
+		    }
+		}
 	
 	
 }

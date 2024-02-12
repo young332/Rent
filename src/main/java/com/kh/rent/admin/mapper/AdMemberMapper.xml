@@ -71,22 +71,43 @@
 		where mem_id = #{mem_id}
 	</update>
 	
+	<!-- 포인트 현황 -->
+	<select id="selectPointByid" resultType="com.kh.rent.admin.domain.PointDTO">
+	<!-- SELECT point_id, point_user_id, point_code, point_use_date, point_cost
+	        FROM rent001.TBL_POINT_MEMBER where point_user_id = #{mem_id} -->
+	SELECT p.point_id, p.point_user_id, p.point_code, 
+           c.code_name AS point_code_name,
+           p.point_use_date, 
+           p.point_cost
+	FROM 
+	    rent001.TBL_POINT_MEMBER p
+	JOIN 
+	    rent001.TBL_COMMON_CODE c
+	ON 
+	    p.point_code = c.code_id
+	WHERE 
+	    p.point_user_id = #{mem_id}  
+       
+	</select>
 	
-	<!-- 회원정보검색 -->
-	<select id="searchMember" parameterType="com.kh.rent.login.domain.MemberVO" resultType="com.kh.rent.login.domain.MemberVO">
-        SELECT * FROM member
-        WHERE
-        <if test="searchCnd == 'all'">
-            1=1
-        </if>
-        <if test="searchCnd == 'mem_id'">
-            mem_id = #{searchWrd}
-        </if>
-        <if test="searchCnd == 'mem_name'">
-            mem_name LIKE CONCAT('%', #{searchWrd}, '%')
-        </if>
-    </select>
+	<!-- 포인트 충전 -->
+	<update id="addPoint">
+		UPDATE rent001.TBL_MEMBER
+		SET MEM_POINT = mem_point + #{mem_point}
+		WHERE MEM_ID = #{mem_id}	
+	</update>
 	
+	<!-- 충전내역 입력 -->
+	<!-- <insert id="addPointTable">
+	    INSERT INTO TBL_POINT_MEMBER (point_user_id, point_code, point_use_date, point_cost)
+	    VALUES (
+	        #{point_user_id},
+	        #{point_code},
+	        NOW(),
+	        #{point_cost}
+	    )
+	</insert> -->
+
 	
 	
            

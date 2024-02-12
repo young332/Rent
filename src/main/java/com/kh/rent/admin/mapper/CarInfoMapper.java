@@ -23,6 +23,10 @@ public interface CarInfoMapper {
 	public CarInfoVO selectCarInfoByIndex(Integer car_index);
 	
 	public int updateCarInfo(CarInfoVO carInfoVO);
+	
+	public int deleteCarFile(Integer file_id);
+
+	public int updateCarinfoFile(Integer file_id);
 
 
 }
