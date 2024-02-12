@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,9 +41,9 @@ public class CarInfoController {
 	private CarInfoService carInfoService;
 	
 	// 업로드된 파일이 저장될 디렉토리 경로
-    //@Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
+    @Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
 	//@Value("${upload.directory}")
-	@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
+	//@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
     private String uploadDirectory;
 	
 	// 차량 등록 처리
@@ -99,26 +100,100 @@ public class CarInfoController {
         return "redirect:/admin/car/ListCar";
     }
     
-    
-	@GetMapping(value = "/getCarInfo", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-    public CarInfoVO getMemberInfo(@RequestParam Integer car_index) {
-		System.out.println("car_index: " + car_index);
-		CarInfoVO carInfoVO = carInfoService.selectCarInfoByIndex(car_index);
-        return carInfoVO;
-    }
-    
-    
     @PostMapping("/CarInfoModify")
-    public String CarInfoModify(CarInfoVO carInfoVO, RedirectAttributes rttr) {
-    	log.info("carInfoVO: "+carInfoVO);
-    	int count = carInfoService.updateCarInfo(carInfoVO);
+    public String CarInfoModify(CarInfoVO carInfoVO,
+    							@RequestParam("image_path") MultipartFile imagePath,
+    							RedirectAttributes rttr) {
+    	log.info("carInfoUpdateVO: "+carInfoVO);
+    	log.info("uploadDirectory:" +uploadDirectory);
+    	
+    	
+    	   	
+        
+        FileVO fileVO = new FileVO();
+  
+        try {
+            // 업로드할 파일에 대한 정보 설정
+            UUID uuid = UUID.randomUUID();
+            String originalFilename = imagePath.getOriginalFilename();
+            String uniqueFilename = uuid + "_" + originalFilename;
+            
+            //Path destination = Paths.get(uploadPath, uniqueFilename);
+            
+            // 상대경로를 기반으로 Path 객체 생성
+            Path relativeDestination = Paths.get(uploadDirectory, uniqueFilename);
+
+            
+            String fileExtension = StringUtils.getFilenameExtension(originalFilename);
+            
+            long fileSize = imagePath.getSize();
+            
+            // 파일 업로드
+            imagePath.transferTo(relativeDestination.toFile());
+            
+            fileVO.setFile_sn(1);
+            fileVO.setFile_stre_cours(uploadDirectory);
+            fileVO.setOrignl_file_nm(originalFilename);
+            fileVO.setUnique_file_nm(uniqueFilename);
+            fileVO.setFile_extension(fileExtension);
+            fileVO.setFile_size(fileSize);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            // 파일 업로드 중 오류가 발생한 경우 예외 처리
+            rttr.addFlashAttribute("error", "파일 업로드 중 오류가 발생했습니다.");
+            return "redirect:/admin/car/ListCar";
+        }
+        
+        System.out.println("fileID:"+carInfoVO.getFile_id());
+        
+        int file_id = carInfoService.insertFile(fileVO);
+        carInfoVO.setFile_id(file_id);
+        
+//        if(carInfoVO.getFile_id() != 0) {
+//        	
+//        }
+       
+        
+        
+        int count = carInfoService.updateCarInfo(carInfoVO);
     	if (count == 1) {
             rttr.addFlashAttribute("ModifyCar", "success");
         }
+        
+   
+        
+       
+        
+    	
+    	
+    	
     	
     	return "redirect:/admin/car/ListCar";
     }
+    
+	@GetMapping(value = "/getCarInfo", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+    public CarInfoVO getCarInfo(@RequestParam Integer car_index) {
+		System.out.println("car_index: " + car_index);
+		CarInfoVO carInfoVO = carInfoService.selectCarInfoByIndex(car_index);
+		
+        return carInfoVO;
+    }
+	
+	@GetMapping(value = "/deleteCarFile", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+    public String deleteCarFile(@RequestParam Integer file_id) {
+		System.out.println("File_id: " + file_id);
+		int resultDel = carInfoService.deleteCarFile(file_id);
+		int resultUpdate = carInfoService.updateCarinfoFile(file_id);
+		
+		
+		return "redirect:/admin/car/ListCar";
+    }
+    
+    
+ 
     
 	 //검색기능
 	 @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
