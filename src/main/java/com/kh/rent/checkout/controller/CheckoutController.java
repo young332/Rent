@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.rent.admin.domain.CarInfoVO;
+import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.service.PaymentService;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
+import com.kh.rent.reserve.service.ReserveService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -31,6 +35,9 @@ public class CheckoutController {
 	
 	@Autowired
     private PaymentService paymentService;
+	
+	@Autowired
+	private ReserveService reserveService;
 	
 	@GetMapping("/payment")
 	public void paymentGet(@ModelAttribute("res_rid") int res_rid, HttpSession session, Model model) {
@@ -47,7 +54,10 @@ public class CheckoutController {
 		String mem_id = loginInfo.getMem_id();
 		List<ReserveVO> reserveList = paymentService.getReserveList(mem_id);
 		model.addAttribute("reserveList", reserveList);
+		List<CarInfoVO> carlist = reserveService.getCarInfo();
+		model.addAttribute("carlist", carlist);
 		
+		log.info("carlist: " + carlist);
 		log.info("reserveList: " + reserveList);
 		
 		model.addAttribute("totalPay", totalPay);

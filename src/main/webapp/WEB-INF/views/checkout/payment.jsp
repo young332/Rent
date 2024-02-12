@@ -146,19 +146,39 @@
         </h4>
         <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">${loginInfo.mem_name}님의 여정</h6><br>
+              <h6 class="my-0" style="color: black;">${loginInfo.mem_name}님의 여정</h6><br>
               <c:if test="${not empty reserveList}">
 				<c:set var="firstReservation" value="${reserveList[0]}" />
-              	<h6 class="my-0">울산지점</h6><br>
+              	<h6 class="my-0" style="color: black;">울산지점</h6>
               	<h7>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</h7>
-			  	<h7>(총시간 : <span id="hours">${hours}</span>시간 <span id="minutes">${minutes}</span>분)</h7>
-			  </c:if>
+			  	<h7>(총시간 : <span id="hours">${hours}</span>시간 <span id="minutes">${minutes}</span>분)</h7><br>
+			  </c:if><br>
+				    <c:set var="carlist" value="${carlist[0]}"/>
+				  	<h6 style="color:black;">선택옵션</h6>
+				    <!-- 차량이름 -->	
+		  			<span class="option" >${carlist.car_name}</span> /
+		  			<span class="option" >${carlist.car_size}</span>
+		  			<!-- 옵션 -->
+				    <c:if test="${carlist.op_carseat eq 'Y'}">/
+				        <span class="option">카시트</span>
+				    </c:if>
+				    <c:if test="${carlist.op_navi eq 'Y'}">/
+				        <span class="option">내비게이션</span>
+				    </c:if>
+				    <c:if test="${carlist.op_bt eq 'Y'}">/
+				        <span class="option">블루투스</span>
+				    </c:if>
+				    <c:if test="${carlist.op_cam eq 'Y'}">/
+				        <span class="option">후방 카메라</span>
+				    </c:if>
             </div>
           </li>
         <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-		    <h6 class="my-0">운전자</h6>
-		    <small class="text-muted">${loginInfo.mem_name}</small>
+		    <h6 class="my-0" style="color:black;">운전자</h6>
+		    <small class="text-muted">${loginInfo.mem_name}</small><br>
+		    <!-- 면허번호 -->
+		    <small class="text-muted">${firstReservation.res_license_type} ${firstReservation.res_license_num}</small>
 			</div>
           </li>
         <ul class="list-group mb-3" type="none">
@@ -410,12 +430,13 @@
    // 변수 선언 및 초기 값 설정
    var mem_id = '${memberVO.mem_id}';
    
-   var use_point = '${paymentDTO.use_point}';
+//   var use_point = '${paymentDTO.use_point}';
  
    var point = '${memberVO.mem_point}';
    
    console.log("포인트: " + point);
    
+   // 사용 포인트
    var initialPointCost = '${totalPay}'; // 초기 포인트 비용 설정
    
    document.getElementById("use_point").textContent = initialPointCost;
@@ -543,8 +564,8 @@
 
 	    var res_rid = $("#res_rid").val();
 	    var pay_res_rid = $("#pay_res_rid").val();
-	    var use_point = $("#use_point").val();
-	    console.log("use_point", use_point);
+// 	    var use_point = $("#use_point").val();
+// 	    console.log("use_point", use_point);
 	    var pay_mem_id = $("#pay_mem_id").val();
 	    var res_totalpay = $("#res_totalpay").val();
 	    console.log("res_totalpay", res_totalpay);

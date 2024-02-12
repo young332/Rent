@@ -78,15 +78,14 @@
         select * from TBL_RESERVE
  		where res_mem_id = #{mem_id}
     </select>
-           
+               
     <!-- 비회원 예약 번호 불려오기 -->	
 	<select id="getPayNonResRid" parameterType="int" resultType="int">
         SELECT non_rid
         FROM TBL_NONMEMBER
         WHERE non_rid = #{pay_res_rid}
     </select>
-    
-    
+
      <!-- 결제 시 res_totalpay 불려오기 -->
     <select id="getPay" resultType="int">
     	select res_totalpay 
@@ -126,7 +125,7 @@
 <!--     ) -->
 <!--     </update> -->
     
-    <!-- 예약 상태 변경(예약취소) : 쌤 -->
+    <!-- 예약 상태 변경(예약취소) -->
     <update id="reserveCancel" parameterType="int">
     	update TBL_RESERVE set
 			res_status = '예약취소'

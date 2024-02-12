@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
@@ -60,13 +61,13 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 
-	@Override
-	public List<PaymentDTO> getPaymentInfo(String pay_mem_id) {
-		
-		List<PaymentDTO> list = paymentMapper.getPaymentInfo(pay_mem_id);
-		log.info("list:" + list);
-		return list;
-	}
+//	@Override
+//	public List<PaymentDTO> getPaymentInfo(String pay_mem_id) {
+//		
+//		List<PaymentDTO> list = paymentMapper.getPaymentInfo(pay_mem_id);
+//		log.info("list:" + list);
+//		return list;
+//	}
 
 
 	@Override
@@ -135,7 +136,5 @@ public class PaymentServiceImpl implements PaymentService {
 	public int getPay(int pay_res_rid) {
 		return paymentMapper.getPay(pay_res_rid);	
 	}
-
-
 
 }
