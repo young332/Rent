@@ -60,11 +60,6 @@ function fn_memberModify(mem_id) {
   }); 
 }
 
-
-
-
-
-
 //개별 포인트현황
 function fn_memberPoint(mem_id) {
 	
@@ -77,28 +72,37 @@ function fn_memberPoint(mem_id) {
       var tbody = $("#pointTable > tbody");
       tbody.empty();
 
-      // JSON 데이터를 반복하여 행을 추가
-      $.each(data, function(index, point) {
-          
+      //데이터가 없을 경우 처리
+      if (data.length == 0) {
           var row = $("<tr>");
-
-          // 각 데이터에 해당하는 열 추가
-          row.append($("<td>").text(point.mem_id));
-          row.append($("<td>").text(point.point_code));
-          row.append($("<td>").text(point.point_cost));
-          
-          // 사용일 Date형식 변환
-          var date = new Date(point.point_use_date);
-
-          var year = date.getFullYear();
-          var month = (date.getMonth() + 1).toString().padStart(2, "0");
-          var day = date.getDate().toString().padStart(2, "0");
-          var formattedDate = year + "-" + month + "-" + day;
-          row.append($("<td>").text(formattedDate));
+          row.append($("<td colspan='4'>").text("포인트 현황이 없습니다."));
           tbody.append(row);
-      
-      
-      });
+      } else {
+          // 데이터 반복 처리
+          $.each(data, function(index, point) {
+              var row = $("<tr>");
+
+              // 각 데이터에 해당하는 열 추가
+              row.append($("<td>").text(point.point_user_id));
+              row.append($("<td>").text(point.point_code_name));
+              row.append($("<td>").text(point.point_cost));
+              
+              // 사용일 Date형식 변환
+              var date = new Date(point.point_use_date);
+
+              var year = date.getFullYear();
+              var month = (date.getMonth() + 1).toString().padStart(2, "0");
+              var day = date.getDate().toString().padStart(2, "0");
+              var formattedDate = year + "-" + month + "-" + day;
+              row.append($("<td>").text(formattedDate));
+              tbody.append(row);
+              
+           	  // 클릭한 버튼의 mem_id 값을 가져와서 설정
+              $("#point_user_id").val(point.point_user_id);  
+              $("#mem_id").val(point.point_user_id);  
+              
+          });
+      }
       // 모달 창 열기
       $("#PointModal").modal("show");
     
@@ -129,7 +133,7 @@ $(function() {
 
 	//검색
 	$("#frmSearch").submit(function(event) {
-	    event.preventDefault(); // 기본 제출 동작을 막음
+	    event.preventDefault();
 	    
 	    var type = $(this).find("[name=type]").val();
 	    var keyword = $(this).find("[name=keyword]").val();
@@ -185,7 +189,7 @@ $(function() {
 	                row.append($("<td>").text(member.mem_email));
 	                row.append($("<td>").text(member.mem_phone));
 	                row.append($("<td>").text(member.mem_addr));
-	                row.append($("<td>").text(member.mem_point));
+	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberPoint('" + member.mem_id + "');\">" + member.mem_point + "</a>"));
 	                
 	                // 가입일 Date형식 변환
 	                var date = new Date(member.mem_cdate);
@@ -222,6 +226,13 @@ $(function() {
 	// 비밀번호변경 처리
 	$("#btn-pwdChange-save").click(function() {
 	    validatePasswordChangeForm();
+	});
+	
+	// 포인트충전 모달열기
+	$("#btnPoint").click(function() {
+		var mem_id = $("#point_mem_id").val();
+		console.log(mem_id);
+		$("#PointInModal").modal("show");
 	});
 
 
@@ -491,20 +502,58 @@ $(function() {
 				</button>
 			</div>
 			<div class="modal-body">
+				<button type="button" id="btnPoint" class="btn btn-info" style="margin-bottom: 17px;float: right;" >충전</button>
 				<table id="pointTable" class="table mb-0 table-hover table-responsive-xl">
-					<tbody></tbody>
+					<tbody>
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">아이디</th>
+							<th scope="col">이용현황</th>
+							<th scope="col">금액</th>
+							<th scope="col">발생일</th>
+						</tr>
+					</thead>
+					</tbody>
 				</table>
 			</div>
 
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary"
-					id="btn-pwdChange-save">확인</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">
-					닫기</button>
+				<!-- <button type="" class="btn btn-primary" id="btn-pwdChange-save">확인</button> -->
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- // 포인트 모달창 -->
+<!-- 포인트 충전 모달창 -->
+<div class="modal fade" id="PointInModal" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">포인트 충전</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<form action="/admin/member/pointIn" method="post">
+				<input type="hidden" name="point_code" value="POINT_C">
+				<input type="hidden" name="mem_id" id="mem_id" value="">
+				<input type="hidden" name="point_user_id" id="point_user_id" value="">
+				
+				<div class="modal-body" style="display: flex; align-items: center;">
+				    <label style="margin-right: 10px;">충전금액:</label>
+				    <input class="form-control" type="number" name="mem_point" style="width: 65%;">원		    
+				</div>
+	
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" id="btn-point-save">확인</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- // 포인트 충전 모달창 -->
 
 <%@ include file="/WEB-INF/views/admin/include/bottom.jsp" %>                  
