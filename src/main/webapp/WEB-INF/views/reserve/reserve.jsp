@@ -444,8 +444,8 @@ $(document).ready(function() {
     $("#top_book_pick_date").val(bookPickDate);
     $("#top_book_off_date").val(bookOffDate);
     
-    $("input[name='top_book_pick_date']").val(bookPickDate);
-    $("input[name='top_book_off_date']").val(bookOffDate);
+    $("input[name='top_book_pick_date']").val(formatDateTime(bookPickDate));
+    $("input[name='top_book_off_date']").val(formatDateTime(bookOffDate));
     
     var carIndexParam = "${param.car_index}";
     
