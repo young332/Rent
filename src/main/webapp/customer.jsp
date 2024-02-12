@@ -94,7 +94,22 @@ $(function(){
 
 
     });
-    
+    //회원가입 적립이벤트
+    $(function(){
+        $(".item-joinevent").click(function(){
+            var isLoggedIn = ${not empty loginInfo};
+            if (isLoggedIn) {
+                
+                alert("이벤트는 비회원 전용입니다.");
+                return false; 
+            } else {
+                
+                alert("회원가입 시 포인트를 적립받을 수 있습니다.");
+                window.location.href = "/login/signUp"; 
+            }
+        });
+    });
+
 	
 });
 </script>     
@@ -393,7 +408,7 @@ $(function(){
 		    					</div>
 		    				</div>
     					</div>
-    					<div class="item" style="cursor: pointer;">
+    					<div class="item-joinevent" style="cursor: pointer;">
     						<a href="/login/signUp">
 	    						<div class="car-wrap rounded ftco-animate" id="signupCarWrap">
 			    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/joinpoint.png'); cursor: pointer;"></div>

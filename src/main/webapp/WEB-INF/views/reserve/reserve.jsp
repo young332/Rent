@@ -579,12 +579,12 @@ $(document).ready(function() {
 
         var selectedDate = new Date(selectedDateTime);
 		
-        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
-        var isDawnTime = selectedDate.getHours() < 6;
+        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 07:59)
+        var isDawnTime = selectedDate.getHours() < 8;
 
         // 새벽 시간인 경우 알림 띄우기
         if (isDawnTime) {
-            alert("새벽 시간은 이용할 수 없습니다.");
+            alert("오전12:00 ~ 오전08:00 렌트서비스를 이용할 수 없습니다.");
             $(this).val("");
         }
         var today = new Date();
