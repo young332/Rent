@@ -605,22 +605,18 @@ $(document).ready(function() {
     });
 	
 	
-	// Function to handle "전체" checkbox change
+	// 기타옵션 전체 체크박스 설정
 	$("input[name='otheroptions'][value='전체']").change(function() {
 	    var isChecked = $(this).prop("checked");
 	    $("input[name='otheroptions']").prop("checked", isChecked);
 	    if (!isChecked) {
-	        // If "전체" is unchecked, clear the values of all other options
 	        $("input[name='otheroptions']").not("[value='전체']").prop("checked", false);
-	        // Clear the display of selected options
 	        updateData();
 	    } else {
-	        // If "전체" is checked, update data based on the changes
 	        updateData();
 	    }
 	});
 
-	// Function to handle individual other options change
 	$("input[name='otheroptions']").not("[value='전체']").change(function() {
 	    var allChecked = true;
 	    $("input[name='otheroptions']").not("[value='전체']").each(function() {
@@ -629,10 +625,9 @@ $(document).ready(function() {
 	        }
 	    });
 	    $("input[name='otheroptions'][value='전체']").prop("checked", allChecked);
-	    updateData(); // Update data based on the changes
+	    updateData(); 
 	});
 
-	// Function to display selected other options
 	function displayOtherOptions() {
 	    var selectedOptions = [];
 	    $("input[name='otheroptions']:checked").not("[value='전체']").each(function() {
