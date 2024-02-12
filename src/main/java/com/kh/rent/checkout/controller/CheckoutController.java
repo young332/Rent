@@ -50,6 +50,8 @@ public class CheckoutController {
 		int totalPay = paymentService.getPay(res_rid);
 		log.info("totalPay" + totalPay);
 		
+		PaymentVO paymentVO = (PaymentVO)session.getAttribute("paymentVO");
+		model.addAttribute("paymentVO", paymentVO);
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
 		List<ReserveVO> reserveList = paymentService.getReserveList(mem_id);

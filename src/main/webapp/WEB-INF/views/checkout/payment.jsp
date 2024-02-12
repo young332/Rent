@@ -150,7 +150,7 @@
               <c:if test="${not empty reserveList}">
 				<c:set var="firstReservation" value="${reserveList[0]}" />
               	<h6 class="my-0" style="color: black;">울산지점</h6>
-              	<h7>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</h7>
+              	<span>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</span>
 			  	<h7>(총시간 : <span id="hours">${hours}</span>시간 <span id="minutes">${minutes}</span>분)</h7><br>
 			  </c:if><br>
 				    <c:set var="carlist" value="${carlist[0]}"/>
@@ -226,7 +226,7 @@
 		    </tr>
 		    <tr>
 		      <th> 사용가능 포인트  </th>
-		      <td><span name="left_pnt">${loginInfo.mem_point}</span>p</span></td>
+		      <td><span id="left_pnt" name="left_pnt">${loginInfo.mem_point}</span>p</span></td>
 		    </tr>
 		    <tr>
 		      <th> 사용포인트  </th>
@@ -430,8 +430,6 @@
    // 변수 선언 및 초기 값 설정
    var mem_id = '${memberVO.mem_id}';
    
-//   var use_point = '${paymentDTO.use_point}';
- 
    var point = '${memberVO.mem_point}';
    
    console.log("포인트: " + point);
@@ -447,6 +445,7 @@
    
    var pay_amount = 0;
    
+	var isAjaxing = false;
 
    // 총 결제금액
    var res_totalpay = '${totalPay}';
@@ -564,8 +563,6 @@
 
 	    var res_rid = $("#res_rid").val();
 	    var pay_res_rid = $("#pay_res_rid").val();
-// 	    var use_point = $("#use_point").val();
-// 	    console.log("use_point", use_point);
 	    var pay_mem_id = $("#pay_mem_id").val();
 	    var res_totalpay = $("#res_totalpay").val();
 	    console.log("res_totalpay", res_totalpay);
@@ -578,7 +575,7 @@
 
 	$("#btn_pay").on("click", function(e) {
 	    e.preventDefault(); // 폼 전송 막기
-	    
+    
 	    // 필수 약관에 대한 checkbox 요소들을 가져옴
 	    var checkboxes = document.querySelectorAll('.agree_list input[type="checkbox"]');
 	    var allChecked = true; // 모든 약관에 동의했는지 여부
@@ -612,23 +609,42 @@
 	        history.go(0); // 페이지 이동을 막음
 	    }
 	    
+	    if(isAjaxing) {
+	    	return;
+	    }
+	    
+	    isAjaxing = true;
+	    
+  
 	    // AJAX를 이용한 서버로의 결제 요청
-	    $.ajax({
-	        type: "POST",
-	        url: "/checkout/payment", 
-	        contentType: "application/json",
-	        data: JSON.stringify(paymentData), 
-	        success: function(response) {
-	            // 서버에서의 처리 결과 확인
-	            if (response.status === "success") {
+	    
+// 	    var res_rid = $("#res_rid").val();
+// 		console.log("res_rid:", res_rid);
+		
+	    var msg = confirm("결제 하시겠습니까?");
+	    if(msg){
+	    	    $.ajax({
+	    	    	async: true,
+			        type: "GET",
+			        url: "/checkout/payment", 
+			        contentType: "application/json",
+			        data: res_rid, 
+			        success: function(data) {
+	            if (data === "success") {
+	            	console.log("data", data);
 	                // 결제가 성공한 경우
-	                alert("결제 완료 했습니다."); // 결제 완료 메시지 표시
+		           	alert("결제 완료 했습니다."); // 결제 완료 메시지 표시
 	                // 페이지 이동
 	                window.location.href = "/myPage/reservationList";
+	                //
+	                setTimeout(function() {isAjaxing = false; }, 10000);
 	            } else {
 	                // 결제가 실패한 경우
 	                alert("결제에 실패했습니다. 다시 시도해주세요."); // 결제 실패 메시지 표시
+	                setTimeout(function() {isAjaxing = false; }, 10000);
+	                history.go(0);
 	            }
+
 	        },
 	        error: function(xhr, status, error) {
 	            // AJAX 요청 실패 시 처리
@@ -636,18 +652,16 @@
 	            
 	         	// 결제 실패 메시지 표시
 	            alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
-	        }
-	    });
+	            setTimeout(function() {isAjaxing = false; }, 10000);
+	            history.go(0);
+	        	}
+	        
+	    	});
+	    	    
+	    }
 	    	
 	});	
    </script>
-   
-   <script type="type/javascript">
-	window.history.forward();
-	function noBack() {
-		window.history.forward();
-	}
-	</script>
    
 </body>
 </html>
