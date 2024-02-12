@@ -29,5 +29,11 @@ public interface AdMemberService {
 	public int changePassword(PWchangeDTO pwChangeDTO);
 	
 	//포인트 현황
-	List<PointDTO> selectPointByid(String mem_id);
+	public List<PointDTO> selectPointByid(String mem_id);
+	
+	//포인트 충전
+	public int addPoint(MemberVO memberVO);
+	
+	//포인트충전 추가
+	public int addPointTable(PointDTO pointDTO);
 }

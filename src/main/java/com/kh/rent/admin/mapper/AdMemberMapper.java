@@ -29,9 +29,15 @@ public interface AdMemberMapper {
 	public int changePassword(PWchangeDTO pwChangeDTO);
 	
 	//회원검색
-	List<MemberVO> searchMember(MemberVO searchDTO);
+	public List<MemberVO> searchMember(MemberVO searchDTO);
 	
 	//포인트 현황
-	List<PointDTO> selectPointByid(String mem_id);
+	public List<PointDTO> selectPointByid(String mem_id);
+	
+	//포인트 충전
+	public int addPoint(MemberVO memberVO);
+	
+	//포인트충전 추가
+	public int addPointTable(PointDTO pointDTO);
 	
 }

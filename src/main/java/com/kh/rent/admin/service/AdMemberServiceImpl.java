@@ -89,5 +89,17 @@ public class AdMemberServiceImpl implements AdMemberService {
 		return pointList;
 	}
 
+	@Override
+	public int addPoint(MemberVO memberVO) {
+		int count = adMemberMapper.addPoint(memberVO);
+		return count;
+	}
+
+	@Override
+	public int addPointTable(PointDTO pointDTO) {
+		int count = adMemberMapper.addPointTable(pointDTO);
+		return count;
+	}
+
 
 }
