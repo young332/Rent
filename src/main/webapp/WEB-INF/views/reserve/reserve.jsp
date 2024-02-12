@@ -126,8 +126,8 @@ div.left-box {
 				<div class="row">
 					<div class="top-search-box" style="height: 65px;">
 							<h6 style="border-top-width: 20px;padding-top: 20px; font-weight: bold;">렌트카001 빠른 검색</h6>
-							<input type="datetime-local" class="form-control" id="top_book_pick_date" placeholder="대여 날짜" style="margin-top: 5px;"> 
-							<input type="datetime-local" class="form-control" id="top_book_off_date" placeholder="반납 날짜" style="margin-top: 5px;">
+							<input type="datetime-local" class="form-control" id="top_book_pick_date" placeholder="대여 날짜" style="margin-top: 5px;" value=""> 
+							<input type="datetime-local" class="form-control" id="top_book_off_date" placeholder="반납 날짜" style="margin-top: 5px;" value="">
 							
 							<button type="button" class="btntop btn-secondary" name="btnSearch" id="btnSearch" style="height: 50.2px; margin-top: 5px;">검색하기</button>
 							
@@ -138,7 +138,7 @@ div.left-box {
 						<h6>대여일&nbsp;&nbsp;:</h6>
 						<input type="text" name="top_book_pick_date" readonly >
 						<i class="fa fa-arrow-circle-right"style="height: 16px;"></i>
-						<h6 style="margin-left: 25px;" value="">반납일&nbsp;&nbsp;:</h6>
+						<h6 style="margin-left: 25px;" >반납일&nbsp;&nbsp;:</h6>
 						<input type="text" name="top_book_off_date"  readonly>
 						<h6>총&nbsp;&nbsp;: <span id="totalTimeSpan"></span> </h6>
 
@@ -444,8 +444,8 @@ $(document).ready(function() {
     $("#top_book_pick_date").val(bookPickDate);
     $("#top_book_off_date").val(bookOffDate);
     
-    $("input[name='top_book_pick_date']").val(formatDateTime(bookPickDate));
-    $("input[name='top_book_off_date']").val(formatDateTime(bookOffDate));
+    $("input[name='top_book_pick_date']").val(bookPickDate);
+    $("input[name='top_book_off_date']").val(bookOffDate);
     
     var carIndexParam = "${param.car_index}";
     
