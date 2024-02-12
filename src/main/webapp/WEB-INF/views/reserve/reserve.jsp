@@ -481,19 +481,22 @@ $(document).ready(function() {
     }
 	 
 	 
-	 $("#btnSearch").click(function() {
-		    
-	    var selectedPickDate = $("#top_book_pick_date").val();
-	    var selectedOffDate = $("#top_book_off_date").val();
+    $("#btnSearch").click(function() {
+        var selectedPickDate = $("#top_book_pick_date").val();
+        var selectedOffDate = $("#top_book_off_date").val();
 
-	
-	    var formattedPickDate = formatDateTime(selectedPickDate);
-	    var formattedOffDate = formatDateTime(selectedOffDate);
+        if (selectedPickDate == '' || selectedOffDate == '') {
+            alert("날짜를 입력해주세요."); 
+            return;
+        }
 
-	   
-	    $("input[name='top_book_pick_date']").val(formattedPickDate);
-	    $("input[name='top_book_off_date']").val(formattedOffDate);
-	});
+        var formattedPickDate = formatDateTime(selectedPickDate);
+        var formattedOffDate = formatDateTime(selectedOffDate);
+
+        $("input[name='top_book_pick_date']").val(formattedPickDate);
+        $("input[name='top_book_off_date']").val(formattedOffDate);
+    });
+
 	 
 	 $("#btnreset").click(function(){
 	        $("input[type='checkbox']").prop("checked", false);
