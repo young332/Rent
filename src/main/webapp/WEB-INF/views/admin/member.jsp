@@ -60,6 +60,53 @@ function fn_memberModify(mem_id) {
   }); 
 }
 
+
+
+
+
+
+//개별 포인트현황
+function fn_memberPoint(mem_id) {
+	
+   $.ajax({
+    type: 'GET',
+    url: '/admin/member/getMemberPoint',  
+    data: { mem_id: mem_id },
+    success: function (data) {
+      console.log('Success:', data);
+      var tbody = $("#pointTable > tbody");
+      tbody.empty();
+
+      // JSON 데이터를 반복하여 행을 추가
+      $.each(data, function(index, point) {
+          
+          var row = $("<tr>");
+
+          // 각 데이터에 해당하는 열 추가
+          row.append($("<td>").text(point.mem_id));
+          row.append($("<td>").text(point.point_code));
+          row.append($("<td>").text(point.point_cost));
+          
+          // 사용일 Date형식 변환
+          var date = new Date(point.point_use_date);
+
+          var year = date.getFullYear();
+          var month = (date.getMonth() + 1).toString().padStart(2, "0");
+          var day = date.getDate().toString().padStart(2, "0");
+          var formattedDate = year + "-" + month + "-" + day;
+          row.append($("<td>").text(formattedDate));
+          tbody.append(row);
+      
+      
+      });
+      // 모달 창 열기
+      $("#PointModal").modal("show");
+    
+    }
+    
+  }); 
+}
+
 //주소 검색
 function openZipSearch() {
     new daum.Postcode({
@@ -109,7 +156,6 @@ $(function() {
 	        	    keyword: keyword },
 	        success: function(response) {
 	            console.log("검색 결과:", response);
-	            
 	            var tbody = $(".table tbody");
 	            tbody.empty();
 
@@ -135,15 +181,24 @@ $(function() {
 	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberModify('" + member.mem_id + "');\">" + member.mem_name + "</a>"));
 	                var memberTypeText = member.mem_type == 1 ? "관리자" : "일반회원"; 
 	                row.append($("<td>").html("<div class='badge badge-outline-primary'>" + memberTypeText + "</div>"));
-	                row.append($("<td>").text(member.mem_birth));
+	                /* row.append($("<td>").text(member.mem_birth)); */
 	                row.append($("<td>").text(member.mem_email));
 	                row.append($("<td>").text(member.mem_phone));
 	                row.append($("<td>").text(member.mem_addr));
 	                row.append($("<td>").text(member.mem_point));
-	                row.append($("<td>").text(member.mem_cdate));
+	                
+	                // 가입일 Date형식 변환
+	                var date = new Date(member.mem_cdate);
 
+	                var year = date.getFullYear();
+	                var month = (date.getMonth() + 1).toString().padStart(2, "0");
+	                var day = date.getDate().toString().padStart(2, "0");
+	                var formattedDate = year + "-" + month + "-" + day;
+	                row.append($("<td>").text(formattedDate));
 	                tbody.append(row);
+	                
 	            });
+	            
 	        },
 	        error: function(xhr, status, error) {
 	            console.error("검색 오류:", error);
@@ -239,7 +294,7 @@ $(function() {
 											<th scope="col">아이디</th>
 											<th scope="col">이름</th>
 											<th scope="col">회원구분</th>
-											<th scope="col">생년월일</th>
+											<!-- <th scope="col">생년월일</th> -->
 											<th scope="col">메일</th>
 											<th scope="col">연락처</th>
 											<th scope="col">주소</th>
@@ -273,11 +328,13 @@ $(function() {
 														</c:choose>
 													</div>
 												</td>
-												<td>${memberVO.mem_birth}</td>
+												<%-- <td>${memberVO.mem_birth}</td> --%>
 												<td>${memberVO.mem_email}</td>
 												<td>${memberVO.mem_phone}</td>
 												<td>${memberVO.mem_addr}</td>
-												<td>${memberVO.mem_point}</td>
+												<%-- <td>${memberVO.mem_point}</td> --%>
+												<td><a href="javascript:void(0);"
+													onclick="javascript:fn_memberPoint('${memberVO.mem_id}');">${memberVO.mem_point}</a></td>
 												<td>${memberVO.mem_cdate}</td>
 											</tr>
 										</c:forEach>
@@ -383,44 +440,71 @@ $(function() {
 	</div>
 </div>
 <!-- 모달끝 -->
-	<!-- 비밀번호 변경 모달창 -->
-		<div class="modal fade" id="modal-pwdChangeForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="myModalLabel">
-							비밀번호 변경
-						</h5> 
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">×</span>
+<!-- 비밀번호 변경 모달창 -->
+	<div class="modal fade" id="modal-pwdChangeForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel">
+						비밀번호 변경
+					</h5> 
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					</div>
+						<div class="modal-body">
+						<label for="pwd">현재 비밀번호</label>
+						<input type="password" class="form-control" id="password1">
+					</div>
+					<div class="modal-body">
+						<label for="pwd">새 비밀번호</label>
+						<input type="password" class="form-control" id="newPassword">
+						<div id="invalid-message1"></div>
+					</div>
+					<div class="modal-body">
+						<label for="pwd">새 비밀번호 확인</label>
+						<input type="password" class="form-control" id="confirmPassword">
+						<div id="invalid-message2">비밀번호가 일치하지 않습니다.</div>
+          		        <div id="invalid-message3">비밀번호를 입력하세요.</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" id="btn-pwdChange-save">
+							저장
+						</button> 
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							닫기
 						</button>
-						</div>
- 						<div class="modal-body">
-							<label for="pwd">현재 비밀번호</label>
-							<input type="password" class="form-control" id="password1">
-						</div>
-						<div class="modal-body">
-							<label for="pwd">새 비밀번호</label>
-							<input type="password" class="form-control" id="newPassword">
-							<div id="invalid-message1"></div>
-						</div>
-						<div class="modal-body">
-							<label for="pwd">새 비밀번호 확인</label>
-							<input type="password" class="form-control" id="confirmPassword">
-							<div id="invalid-message2">비밀번호가 일치하지 않습니다.</div>
-	          		        <div id="invalid-message3">비밀번호를 입력하세요.</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary" id="btn-pwdChange-save">
-								저장
-							</button> 
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
-								닫기
-							</button>
-						</div>
-				  </div>
+					</div>
+			  </div>
+		</div>
+	</div>
+<!-- // 비밀번호 변경 모달창 -->
+<!-- 포인트 모달창 -->
+<div class="modal fade" id="PointModal" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">포인트 현황</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<table id="pointTable" class="table mb-0 table-hover table-responsive-xl">
+					<tbody></tbody>
+				</table>
+			</div>
+
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary"
+					id="btn-pwdChange-save">확인</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">
+					닫기</button>
 			</div>
 		</div>
-	<!-- // 비밀번호 변경 모달창 -->
+	</div>
+</div>
+<!-- // 포인트 모달창 -->
 
 <%@ include file="/WEB-INF/views/admin/include/bottom.jsp" %>                  

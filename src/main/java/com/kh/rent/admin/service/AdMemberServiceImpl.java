@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
+import com.kh.rent.admin.domain.PointDTO;
 import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.mapper.AdMemberMapper;
 import com.kh.rent.login.domain.LoginDTO;
@@ -81,6 +82,12 @@ public class AdMemberServiceImpl implements AdMemberService {
 //		return memberVO;
 //	}
 
+
+	@Override
+	public List<PointDTO> selectPointByid(String mem_id) {
+		List<PointDTO> pointList = adMemberMapper.selectPointByid(mem_id);
+		return pointList;
+	}
 
 
 }
