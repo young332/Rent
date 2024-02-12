@@ -167,7 +167,7 @@
               <b><h7 class="my-0">결제금액</h7></b>
             </div>
 	            <span class="text-muted">
-	            	<b><span class="bold txt_blue" id="view_point_cost"></span></b>
+	            	<b><span class="bold txt_blue" id="view_use_point"></span></b>
 	            </span>
           </li>
 <!--           <li class="list-group-item d-flex justify-content-between lh-sm"> -->
@@ -211,40 +211,31 @@
 		    <tr>
 		      <th> 사용포인트  </th>
 		      <td>
-		        <c:choose>
-		        	<c:when test="${loginInfo.mem_point < totalPay }">
-		        		<span style="color:red;">결제 포인트가 부족합니다.</span>
-		        	</c:when>
-		        	<c:otherwise>
-		        	<span id="point_cost" min="0" max="${totalPay}">${initialPointCost}</span> p <br>
-		        	</c:otherwise>
-		        </c:choose> 
+<%-- 		        <c:choose> --%>
+<%-- 		        	<c:when test="${loginInfo.mem_point < totalPay }"> --%>
+<!-- 		        		<span style="color:red;">결제 포인트가 부족합니다.</span> -->
+<%-- 		        	</c:when> --%>
+<%-- 		        	<c:otherwise> --%>
+<%-- 		        	<span id="use_point" min="0" max="${totalPay}">${initialPointCost}</span> p <br> --%>
+<%-- 		        	</c:otherwise> --%>
+<%-- 		        </c:choose>  --%>
+		        	<span id="use_point" min="0" max="${totalPay}">${initialPointCost}</span> p <br>
 		      </td>
 		    </tr>
-		    
-<!-- 		    <tr> -->
-<!-- 		      <th>남은포인트</th> -->
-<!-- 		      <td> -->
-<%-- 		      <c:if test="${loginInfo.mem_point >= totalPay}"> --%>
-<%-- 		        <span name="left_pnt" id="left_pnt">${remainingPoint}</span><br> --%>
-<%-- 		      </c:if> --%>
-<!-- 		      </td> -->
-<!-- 		    </tr> -->
 		    
 				<tr>
 				    <th>남은포인트</th>
 				    <td>
-				    	<c:if test="${loginInfo.mem_point >= totalPay}">
-				    	<span id="pay_point_display" name="pay_point_display">${v_point}</span> 
-			            </c:if>
+				    <span id="pay_point_display" name="pay_point_display">${v_point}</span>
+<%-- 				    	<c:if test="${loginInfo.mem_point >= totalPay}"> --%>
+<%-- 				    	<span id="pay_point_display" name="pay_point_display">${v_point}</span>  --%>
+<%-- 			            </c:if> --%>
 				    </td>
 				</tr>
 				
 			  <tr>
 		    	<th>총 결제금액</th>
-<!-- 		      <td></td> -->
 		      <td>
-		      	
 		      	<span class="bold txt_red" id="result_pnt">${totalPay}원</span>
 		      </td>
 		    </tr>
@@ -259,8 +250,7 @@
 <%--             <strong id="result_pnt">${totalPay}</strong> --%>
 <!--           </li> -->
           <li>
-           <button id="btn_pay" class="w-100 btn btn-primary btn-lg" type="button"
-           	style="display:none;">결제 하기</button>
+           <button id="btn_pay" class="w-100 btn btn-primary btn-lg" type="button">결제하기</button>
            </li>
         </ul>
 
@@ -317,16 +307,8 @@
 <!--             </div> -->
 <!--             </div><br> -->
 
-<%
-// int	res_totalpay = 65000;
 
-int unit = 100;
-   
-int min = 5000;
-
-   %>
-    
-         
+            
         <div class="col-md-7 col-lg-12"> 
 <!--        		<div class="ex_txt" style="color:gray;"><p>결제수단 등록은 ‘마이페이지 &gt; 내 정보 관리 &gt; 결제수단관리’에서 가능합니다.</p><br></div> -->
          	 <h4><p class="title_295">이용 약관에 동의해 주세요</p></h4>
@@ -424,10 +406,11 @@ int min = 5000;
 </div>
 
    <script>
-	// 변수 선언 및 값 할당
+   
+   // 변수 선언 및 초기 값 설정
    var mem_id = '${memberVO.mem_id}';
    
-   var point_cost = '${paymentDTO.point_cost}';
+   var use_point = '${paymentDTO.use_point}';
  
    var point = '${memberVO.mem_point}';
    
@@ -435,7 +418,7 @@ int min = 5000;
    
    var initialPointCost = '${totalPay}'; // 초기 포인트 비용 설정
    
-   document.getElementById("point_cost").textContent = initialPointCost;
+   document.getElementById("use_point").textContent = initialPointCost;
    
    console.log("initialPointCost", initialPointCost);
       
@@ -443,14 +426,18 @@ int min = 5000;
    
    var pay_amount = 0;
    
+
+   // 총 결제금액
    var res_totalpay = '${totalPay}';
    console.log("res_totalpay : " ,res_totalpay);
    
+   // 사용금액
    var pay_amount = '${totalPay}';
    console.log("pay_amount : " ,pay_amount);
 
    // 남은 포인트 계산
 	var remainingPoint = '${memberVO.mem_point}' - '${totalPay}';
+	remainingPoint = Math.max(remainingPoint, 0);
 	console.log("remainingPoint", remainingPoint);
 
    // 총 시간 계산
@@ -475,74 +462,62 @@ int min = 5000;
    
    $(document).ready(function() {
 	    // 페이지 로드 시 최종 결제 금액 초기화
-//	    var totalpay = parseInt($("#res_totalpay").val());
 	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
 	    var point = parseInt("${memberVO.mem_point}");
 	    var min = 1; // 최소 사용 가능 포인트
-//	    var pay_amount = parseInt("${totalPay}");
-	    console.log("pay_amount1: ", pay_amount);
 	    changePoint(totalpay, point, min, 0);
 
 	    // 입력 값 변경 이벤트 핸들러
-	    $("#point_cost").on("change", function() {
+	    $("#use_point").on("change", function() {
 	        // 최종 결제 금액 업데이트
 	        chkPoint(totalpay, point, min, pay_amount);
+	        console.log("use_point", use_point);
 	    });
 	});
    
    function changePoint(totalpay, point, min, v_point) {
-	    // 최종 결제 금액 계산
+	    
+	   	// 최종 결제 금액 계산
 	    var v_point = pay_amount;
 	    
-	    var finalPayment = totalpay - v_point;
-	    console.log("finalPayment", finalPayment);
-	   
-	 	
 	    // 화면에 사용할 포인트, 남은 포인트, 최종 결제 금액 표시
-	    document.getElementById("view_point_cost").innerHTML = ${totalPay} + "원";
-	    document.getElementById("pay_point_display").innerText = point - v_point + "p"; // 남은 포인트 표시
+	    document.getElementById("view_use_point").innerHTML = ${totalPay} + "원";
+	    document.getElementById("pay_point_display").innerText = remainingPoint + "p"; // 남은 포인트 표시
 	    
-	    console.log("view_point_cost", view_point_cost);
+	    
+	    console.log("view_use_point", view_use_point);
 	    console.log("pay_point_display", pay_point_display);
 	    console.log("point", point);
 	    console.log("v_point", v_point);
+	    console.log("use_point", use_point);
+
 	    
-	 	// 만약 최종 결제 금액이 음수이면 0으로 설정
-	    finalPayment = Math.max(finalPayment, 0);
 	    document.getElementById("result_pnt").innerHTML = ${totalPay} + " 원";
-
-	    
+  
 	}
 
-   function chkPoint(totalpay, point, min) {
-	    // totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트
+//    function chkPoint(totalpay, point, min) {
+// 	    // totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트
  	   	
-	    var v_point = point - pay_amount;
-	   	v_point = Math.max(v_point, 0);
-	   	console.log("v_point");	    
-	   	
-	     // 사용할 포인트 계산
-	    var pointCostInput = document.getElementById("point_cost");
-	    v_point = parseInt(pointCostInput.value) || 0;
-		   
-	    // 사용할 포인트가 최소 사용 단위 미만일 때 0으로 설정
-	    if (v_point < min) {
-	        v_point = 0;
-	    }
+// 	    // 현재 포인트 - 결제금액
+// 	    var v_point = point - pay_amount;
+	   
+// 	    // 사용할 포인트가 최소 사용 단위 미만일 때 0으로 설정
+// 	    if (point < min) {
+// 	        v_point = 0;
+// 	    }
 
-	    // 사용할 포인트가 남은 포인트를 초과할 때 남은 포인트로 설정
-	    if (v_point > point) {
-	        v_point = point;
-	    }
-
-	    // 최종 결제 금액 업데이트
-	    changePoint(totalpay, point, min, v_point);	    
+// 	    // 사용할 포인트가 남은 포인트를 초과할 때 남은 포인트로 설정
+// 	    if (v_point > point) {
+// 	        v_point = point;
+// 	    }
+ 
+// 	    // 최종 결제 금액 업데이트
+// 	    changePoint(totalpay, point, min, v_point);	    
 	    
-	}
+// 	}
    
-   
-   
-	
+
 	var totalChk = document.getElementById("totalChk");
 	if (totalChk) {
 	    totalChk.addEventListener("click", function() {
@@ -568,7 +543,8 @@ int min = 5000;
 
 	    var res_rid = $("#res_rid").val();
 	    var pay_res_rid = $("#pay_res_rid").val();
-	    var point_cost = $("#point_cost").val();
+	    var use_point = $("#use_point").val();
+	    console.log("use_point", use_point);
 	    var pay_mem_id = $("#pay_mem_id").val();
 	    var res_totalpay = $("#res_totalpay").val();
 	    console.log("res_totalpay", res_totalpay);
@@ -595,42 +571,62 @@ int min = 5000;
 
 	    // 모든 약관에 동의하지 않은 경우
 	    if (!allChecked) {
-	        alert("약관에 동의해주세요.");
-	        return;
+	        // 약관에 동의하도록 안내하는 알림창 표시
+	        alert("약관에 동의해주세요. 결제를 진행하시려면 모든 약관에 동의하셔야 합니다.");
+	        history.go(0);
 	    }
 	    
-	    var pay_res_rid = $("#pay_res_rid");
-	    console.log("pay_res_rid:" , pay_res_rid);
-	    var res_rid = "${res_rid}";
-		console.log("res_rid:" , res_rid);
+	    // 결제금액이 부족하지 않은지 확인
+	    var totalPay = parseInt($("#totalPay").text());
+	    var availablePoint = parseInt($("span[name='left_pnt']").text());
+	    var usedPoint = parseInt($("#use_point").text());
+	    
+	    console.log("최종결제금액", totalPay);
+	    console.log("사용가능 포인트", availablePoint);
+	    console.log("내가 쓴 포인트", usedPoint);
+	    
+	    
+	    if (totalPay > availablePoint) {
+	        alert("결제 포인트가 부족합니다.");
+	        history.go(0); // 페이지 이동을 막음
+	    }
 	    
 	    // AJAX를 이용한 서버로의 결제 요청
 	    $.ajax({
 	        type: "POST",
-	        url: "/checkout/payment" + res_rid, 
+	        url: "/checkout/payment", 
 	        contentType: "application/json",
 	        data: JSON.stringify(paymentData), 
 	        success: function(response) {
 	            // 서버에서의 처리 결과 확인
 	            if (response.status === "success") {
 	                // 결제가 성공한 경우
-	                alert("결제 완료"); // 결제 완료 메시지 표시
+	                alert("결제 완료 했습니다."); // 결제 완료 메시지 표시
 	                // 페이지 이동
 	                window.location.href = "/myPage/reservationList";
 	            } else {
 	                // 결제가 실패한 경우
-	                alert("결제 실패"); // 결제 실패 메시지 표시
+	                alert("결제에 실패했습니다. 다시 시도해주세요."); // 결제 실패 메시지 표시
 	            }
 	        },
 	        error: function(xhr, status, error) {
 	            // AJAX 요청 실패 시 처리
 	            console.error("AJAX 요청 실패:", error);
+	            
+	         	// 결제 실패 메시지 표시
+	            alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
 	        }
 	    });
-	});
-
-		
+	    	
+	});	
    </script>
+   
+   <script type="type/javascript">
+	window.history.forward();
+	function noBack() {
+		window.history.forward();
+	}
+	</script>
    
 </body>
 </html>
