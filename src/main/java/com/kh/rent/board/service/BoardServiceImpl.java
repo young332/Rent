@@ -56,4 +56,10 @@ public class BoardServiceImpl implements BoardService{
 		return count;
 	}
 
+	@Override
+	public List<BoardVO> search(String type, String keyword) {
+		List<BoardVO> list = boardMapper.search(type, keyword);
+		return list;
+	}
+
 }

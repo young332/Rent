@@ -77,4 +77,13 @@ public class BoardServiceTests {
 		log.info("count:" + count);
 	}
 	
+	//검색
+	@Test
+	public void testSearch() {
+		 String type = "TC";
+		 String keyword = "운영";
+		 List<BoardVO> list = boardService.search(type, keyword);
+		 log.info("list:" + list);
+	}
+	
 }

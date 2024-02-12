@@ -7,7 +7,15 @@
   
 <!-- 테이블 CSS -->
 <%@ include file="/WEB-INF/views/include/boardStyle.jsp" %>
-
+<style>
+    .custom-select-8 {
+        width: 130px;
+    }
+    .pagination {
+    display: flex;
+    justify-content: center;
+}
+</style>
 <script>
 $(function(){
 	$(".board-row").click(function() {
@@ -34,7 +42,43 @@ $(function(){
             alert("등록이 완료되었습니다.");
         }
         
-	
+	$("#frmSearch").submit(function(e){
+		e.preventDefault();
+		 var type = $(this).find("[name=type]").val();
+		 var keyword = $(this).find("[name=keyword]").val();
+		 console.log("type:",type );
+		 console.log("keyword:", keyword);
+		 
+		    if(keyword.trim() == ""){
+		        alert("검색어를 입력해주세요.");
+		        $("[name=keyword]").focus();
+		        return false;
+		    }
+		 $.ajax({
+			type :"get",
+			url : "/board/search",
+			data : {type : type,
+					keyword : keyword},
+			success : function(rData){
+				console.log("rData:" , rData);
+				
+				 $("table tbody tr").hide();
+				
+				rData.forEach(function(item) {
+	                var boardNo = item.board_no;
+	                console.log("boardNo:" , boardNo);
+	                $("table tbody tr[data-board-no=" + boardNo + "]").show();
+	            });
+			},
+			error: function(xhr, status, error) {
+	            console.error("Error occurred during search:", error);
+	        }
+			 
+		 });   
+		    
+	});
+        
+        
 });
 </script>
    
@@ -56,6 +100,30 @@ $(function(){
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
             <h2 class="mb-2">HAKA렌트카 문의게시판</h2>
           </div>
+        </div>
+       <div class="row">
+            <div class="col-md-4" style="margin-left: 225px;">
+                <form method="get" id="frmSearch" action="/board/search">
+                    <div class="text-dark sch_wrap">
+                        <div class="input-group col-sm-12">
+                            <div class="input-group col-sm-4">
+                                <select class="custom-select-8" name="type">
+                                    <option value="TC" ${param.type=='TC' ? 'selected' : ''}>전체</option>
+                                    <option value="T" ${param.type=='T' ? 'selected' : ''}>제목</option>
+                                    <option value="C" ${param.type=='C' ? 'selected' : ''}>내용</option>
+                                </select>
+                            </div>
+                            <div class="input-group col-sm-7 app-search" id="search-text">
+                                <input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}">
+                                <span class="search-icon"></span>
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">검색</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 	<div class="row">
 		<div class="col-md-2">

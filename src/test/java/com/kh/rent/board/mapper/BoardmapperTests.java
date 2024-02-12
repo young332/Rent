@@ -83,4 +83,11 @@ public class BoardmapperTests {
 		log.info("boardVO: " + boardVO);
 	}
 	
+	@Test
+	public void testSearch() {
+		String type = "TC";
+		String keyword = "예약";
+		List<BoardVO> list = boardMapper.search(type, keyword);
+		log.info("list:" + list);
+	}
 }

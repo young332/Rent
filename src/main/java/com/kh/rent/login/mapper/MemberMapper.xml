@@ -53,7 +53,7 @@
 		where mem_id = #{mem_id}
 	</select>
 	
-	<!-- 전화번호 중복체크 -->
+	<!-- 전화번호 중복체크 or 카카오로그인 (phone) -->
 	<select id="checkPhone" resultType="int">
 		select count(*) from rent001.TBL_MEMBER
 		where mem_phone = #{mem_phone}
@@ -71,6 +71,12 @@
 	<select id="checkEmail" resultType="int">
 		select count(*) from TBL_MEMBER
 		where mem_email = #{mem_email}
+	</select>
+	
+	<!-- 카카오 로그인 -->
+	<select id="getKakaoInfo" parameterType="com.kh.rent.login.domain.MemberVO" resultType="com.kh.rent.login.domain.MemberVO">
+		select * from TBL_MEMBER
+		where mem_phone = #{mem_phone}
 	</select>
 	
 </mapper>

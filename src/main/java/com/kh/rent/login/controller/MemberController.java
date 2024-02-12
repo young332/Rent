@@ -25,11 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.kh.rent.login.domain.FindIdDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.login.domain.NaverLoginBO;
 import com.kh.rent.login.domain.NonMemberLoginDTO;
 import com.kh.rent.login.service.MemberService;
 import com.kh.rent.login.service.Sha256;
@@ -56,22 +54,14 @@ public class MemberController {
 		log.info("login..");
 	}
 	
-	//naverLoginBO
-	private NaverLoginBO naverLoginBO;
-	private String apiResult = null;
-			
-	@Autowired
-	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
-		this.naverLoginBO = naverLoginBO;
-	}
-	
 	//로그인
 	@PostMapping("/loginPost")
 	public void loginPost(LoginDTO loginDTO,Model model, HttpSession session) {
 		log.info("loginDTO: " + loginDTO);
 		MemberVO memberVO = memberService.login(loginDTO);
 		log.info("memberVO: " + memberVO);
-		session.setAttribute("memberVO", memberVO);
+		session.setAttribute("loginInfo", memberVO);
+		
 		if(memberVO == null) {
 			return;
 		}
@@ -120,13 +110,12 @@ public class MemberController {
 		return "redirect:/login/login";
 	}
 	
-	
-	
 	@GetMapping("/findPw")
 	public String findPw() {
 		log.info("findpw");
 		return "/login/findPw";
 	}
+	
 	//비밀번호 재설정
 	@PostMapping("/resetPassword")
 	public String resetPassword(String mem_id, String mem_email) {
@@ -223,78 +212,21 @@ public class MemberController {
 		return Integer.toString(count);
 	}
 	
-//	//네이버 로그인
-//	@RequestMapping("/naverLogin")
-//	public String naverLogin() {
-//		log.info("naverLogin");
-//		return "/login/login";
-//	}
-		
-	//로그인 첫 화면 요청 메소드
-	@RequestMapping(value = "/naverLoginPost", method = {RequestMethod.GET, RequestMethod.POST})
-	public String naverLogin(Model model, HttpSession session) {
-	
-		log.info("네이버로그인");
-		//네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출
-		String naverAuthUrl = naverLoginBO.getAuthourizationUrl(session);
-		//인증요청문 확인
-		log.info("네이버:" + naverAuthUrl);
-		//객체 바인딩
-		model.addAttribute("urlNaver",naverAuthUrl);
-		log.info("model:" + model);
-			
-		//생성한 인증 url을 view로 전달
-		return "/login/login";
+	//카카오로그인
+	@PostMapping("/kakaLogin")
+	public String kakaLogin(MemberVO memberVO,Model model,HttpSession session) {
+		log.info("kakaLogin");
+		String mem_phoen = memberVO.getMem_phone();
+		int result = memberService.checkPhone(mem_phoen);
+		if(result == 0) {
+			log.info("memberVO: " + memberVO);
+			session.setAttribute("kakaoInfo", memberVO);
+			return "redirect:/myPage/myPage";
+		} else {
+			MemberVO vo = memberService.getKakalInfo(memberVO);
+			session.setAttribute("loginInfo", vo);
+			return "redirect:/";
+		}
 		
 	}
-		
-		//네이버 로그인 성공시 callback호출 메소드
-		@RequestMapping(value = "/callbackNaver", method = {RequestMethod.GET , RequestMethod.POST})
-		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws ParseException , IOException {
-			
-			log.info("로그인 성공 callbackNaver");
-			
-			OAuth2AccessToken oauthToken;
-			oauthToken = naverLoginBO.getAccessToken(session, code, state);
-			
-			//1.로그인 사용자 정보를 읽어온다.
-			apiResult = naverLoginBO.getUserProfile(oauthToken); //String형식의 json데이터
-			
-			/** apiResult json 구조		
-			 * {"resultcode":"00",		
-			 *  "message":"success",	
-			 *  "response":{"id":"네이버아이디","nickname":"닉네임",
-			 *  "email":"이메일","name":"이름"}}		
-			 *  **/		
-			
-			//2. String형식인 apiResult를 json형태로 바꿈		
-			JSONParser parser = new JSONParser();		
-			Object obj = parser.parse(apiResult);
-			JSONObject jsonObj = (JSONObject)obj;
-			
-			//3. 데이터 파싱
-			//top레벨 단게 _response 피싱
-			JSONObject response_obj = (JSONObject)jsonObj.get("response");
-			//response의 nickname값 파싱
-			String name = (String)response_obj.get("name");
-			
-			log.info("name:" + name);
-			
-			/*
-			 * //프로필조회 String email = (String)response_obj.get("email"); String name =
-			 * (String)response_obj.get("name");
-			 */
-			
-			
-			//세션에 사용자 정보등록
-			session.setAttribute("sessionId", name); //세션 생성
-			
-			model.addAttribute("result", apiResult);
-			
-//			session.setAttribute("email", email);
-//			session.setAttribute("name", name);
-			
-			return "/login/login";
-		}
-	
 }

@@ -33,7 +33,7 @@ public interface MemberMapper {
 		//아이디 중복체크
 		public int checkId(String mem_id);
 		
-		//휴대폰번호 중복체크
+		//휴대폰번호 중복체크 or 카카오 로그인
 		public int checkPhone(String mem_phone);
 		
 		//암호화 비밀번호 로그인
@@ -42,6 +42,7 @@ public interface MemberMapper {
 		//이메일 중복체크
 		public int checkEmail(String mem_email);
 		
-
+		//카카오로그인
+		public MemberVO getKakaoInfo(MemberVO memberVO);
 		
 }

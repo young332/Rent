@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.login.util.LocationUtil;
 import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.NonMemberVO;
 import com.kh.rent.reserve.domain.ReserveDTO;
@@ -50,7 +51,8 @@ public class ReserveController {
 	}
 	
 	@GetMapping("/licenseinfo")
-	public String licenseinfo(ReserveInfoDTO reserveInfoDTO,HttpSession session) {
+	public String licenseinfo(HttpServletRequest request, ReserveInfoDTO reserveInfoDTO,HttpSession session) {
+		LocationUtil.saveTargetLocation(request);
 //		String topbookoffdate = reserveInfoDTO.getTop_book_off_date();
 //		String topbookpickdate = reserveInfoDTO.getTop_book_pick_date();
 //		String carindex = reserveInfoDTO.getCar_index();

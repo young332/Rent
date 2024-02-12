@@ -23,4 +23,7 @@ public interface BoardService {
 	
 	//글 삭제
 	public int remove(Long board_no);
+	
+	//검색
+	public List<BoardVO> search(String type, String keyword);
 }

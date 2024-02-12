@@ -45,5 +45,23 @@
  		where board_no = #{board_no}
  	</select>
  	
+ <!-- 검색 -->
+<select id="search" resultType="com.kh.rent.board.domain.BoardVO">
+    select * from TBL_BOARD
+    where
+    <choose>
+        <when test="type == 'T'.toString()">
+            BOARD_TITLE like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'C'.toString()">
+            board_content like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'TC'.toString()">
+            (board_title like CONCAT('%', #{keyword}, '%') 
+            or board_content like CONCAT('%', #{keyword}, '%'))
+        </when>
+    </choose>
+</select>
+ 	
  	
  </mapper>

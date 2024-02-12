@@ -2,6 +2,8 @@ package com.kh.rent.board.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.kh.rent.board.domain.BoardVO;
 
 public interface BoardMapper {
@@ -17,4 +19,7 @@ public interface BoardMapper {
 	public BoardVO selectByNo(Long board_no);
 	
 	public int readCountUpdate(Long board_no);
+	
+	public List<BoardVO> search(@Param("type")String type,
+								@Param("keyword")String keyword);
 }
