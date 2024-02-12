@@ -575,7 +575,7 @@
 
 	$("#btn_pay").on("click", function(e) {
 	    e.preventDefault(); // 폼 전송 막기
-    
+
 	    // 필수 약관에 대한 checkbox 요소들을 가져옴
 	    var checkboxes = document.querySelectorAll('.agree_list input[type="checkbox"]');
 	    var allChecked = true; // 모든 약관에 동의했는지 여부
@@ -623,12 +623,12 @@
 		
 	    var msg = confirm("결제 하시겠습니까?");
 	    if(msg){
-	    	    $.ajax({
+	    	var xhr = $.ajax({
 	    	    	async: true,
 			        type: "GET",
 			        url: "/checkout/payment", 
 			        contentType: "application/json",
-			        data: res_rid, 
+			        data: { res_rid: res_rid }, 
 			        success: function(data) {
 	            if (data === "success") {
 	            	console.log("data", data);
@@ -657,8 +657,14 @@
 	        	}
 	        
 	    	});
+	    	
+	    	xhr.abort();
 	    	    
+		    window.onbeforeunload = function() {
+		        return "만료된 페이지 입니다."; // 사용자에게 표시할 경고 메시지
+		    };
 	    }
+	    
 	    	
 	});	
    </script>
