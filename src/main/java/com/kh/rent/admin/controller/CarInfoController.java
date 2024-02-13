@@ -105,9 +105,14 @@ public class CarInfoController {
     public String CarInfoModify(CarInfoVO carInfoVO,
     							@RequestParam("image_path") MultipartFile imagePath,
     							RedirectAttributes rttr) {
+    	
     	log.info("carInfoUpdateVO: "+carInfoVO);
     	log.info("uploadDirectory:" +uploadDirectory);
-
+    	
+    	int file_id1 = carInfoVO.getFile_id();
+    	System.out.println("file_id1:"+file_id1);
+    	int resultDel = carInfoService.deleteCarFile(file_id1);
+    	
         FileVO fileVO = new FileVO();
   
         try {
@@ -125,7 +130,7 @@ public class CarInfoController {
             
             // 파일 업로드
             imagePath.transferTo(relativeDestination.toFile());
-            
+            fileVO.setFile_id(carInfoVO.getFile_id());
             fileVO.setFile_sn(1);
             fileVO.setFile_stre_cours(uploadDirectory);
             fileVO.setOrignl_file_nm(originalFilename);
@@ -140,15 +145,15 @@ public class CarInfoController {
             return "redirect:/admin/car/ListCar";
         }
         
-        //System.out.println("fileID:"+carInfoVO.getFile_id());
-        
+        System.out.println("fileID:"+ carInfoVO.getFile_id());
+
         int file_id = carInfoService.insertFile(fileVO);
         carInfoVO.setFile_id(file_id);
         
 //        if(carInfoVO.getFile_id() != 0) {
 //        	
 //        }
-
+        
         int count = carInfoService.updateCarInfo(carInfoVO);
     	if (count == 1) {
             rttr.addFlashAttribute("ModifyCar", "success");
@@ -162,10 +167,10 @@ public class CarInfoController {
     public Map<String, String> deleteCarFile(@RequestParam Integer file_id) {
     	Map<String, String> response = new HashMap<>();
 		int resultDel = carInfoService.deleteCarFile(file_id);
-		int resultUpdate = carInfoService.updateCarinfoFile(file_id);
+		//int resultUpdate = carInfoService.updateCarinfoFile(file_id);
 		
 		// 작업에 따른 응답 메시지 설정
-	    if (resultDel > 0 && resultUpdate > 0) {
+	    if (resultDel > 0 ) {
 	        response.put("status", "success");
 	        response.put("message", "파일 삭제 및 차량 정보 업데이트 성공");
 	    } else {

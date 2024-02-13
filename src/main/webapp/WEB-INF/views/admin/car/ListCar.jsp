@@ -49,6 +49,7 @@
                 console.log('Success:', data);
 
                 $("#car_index").val(data['car_index']);
+                $("#file_id").val(data['file_id']);
                 $("#car_name").val(data['car_name']);
                 $("#car_number").val(data['car_number']);
                 $("#car_company").val(data['car_company']);
@@ -59,14 +60,14 @@
                 $("#delete_btn").attr("onclick", "fn_deleteFile('" + data['file_id'] + "')");
 
                 // file이 있을경우 추가파일 등록못하게 설정
-                console.log("test",data['file_id']);
+                /* console.log("test",data['file_id']);
                 if(data['file_id'] != 0){
                     $(".file_add").hide();    
                     $(".file_show").show();    
                 } else{
                     $(".file_add").show();
                     $(".file_show").hide();    
-                }
+                } */
 
                 var op_carseat = data['op_carseat'];
                 var op_navi = data['op_navi'];
@@ -227,6 +228,7 @@
                         <form id="formModify" action="/admin/car/CarInfoModify" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="car_index" id="car_index">
                             <input type="hidden" name="update_user" id="update_user" value="${loginInfo.mem_name}">
+                            <input type="hidden" name="file_id" id="file_id">
                             <!-- 기본 정보 -->
                             <div class="form-row">
                                 <div class="form-group col-md-6 mb-3">
