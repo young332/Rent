@@ -531,9 +531,6 @@ $(document).ready(function() {
 	 
 	 //비동기방식으로 체크박스 값보내서 체크된거만 화면에 보이게 하기
 	 
-    
-
-    
     $("input[type='checkbox']").change(function() {
         updateData();
        

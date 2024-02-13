@@ -67,7 +67,7 @@ $(function(){
         switch(itemId) {
             case 'newyearPoint':
                 $("#modal-point-event").find('.modal-title').text('포인트 응모 이벤트');
-                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning4.jpg" alt="Point Event Image">');
+                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning6.png" alt="Point Event Image">');
                 break;
             case 'firstPoint':
                 $("#modal-point-event").find('.modal-title').text('선착순 포인트 적립');
@@ -398,12 +398,12 @@ $(function(){
     				<div class="carousel-car owl-carousel">
     					<div class="item-eventbox" id="newyearPoint">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/point.jpg'); cursor: pointer;">
+		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/ranpoint.png'); cursor: pointer;">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">포인트 응모 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto"><span>최대&nbsp;</span>500,000<span>/포인트</span></p>
+			    						<p class="price ml-auto"><span>최대&nbsp;</span>100,000<span>/포인트</span></p>
 		    						</div>
 		    					</div>
 		    				</div>
