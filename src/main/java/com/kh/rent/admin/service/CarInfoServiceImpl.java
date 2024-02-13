@@ -11,6 +11,9 @@ import com.kh.rent.admin.domain.FileVO;
 import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.mapper.CarInfoMapper;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Service
 public class CarInfoServiceImpl implements CarInfoService {
 	
@@ -29,7 +32,7 @@ public class CarInfoServiceImpl implements CarInfoService {
 		int count = carInfoMapper.insertFile(fileVO);
 		
 		int file_id = fileVO.getFile_id();
-		
+		log.info("Sfile_id:" + file_id);
 		return file_id;
 	}
 

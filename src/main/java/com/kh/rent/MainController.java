@@ -10,8 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.kh.rent.admin.domain.CarInfoVO;
+
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NonMemberLoginDTO;
+
+import com.kh.rent.admin.service.AdMemberService;
+
 import com.kh.rent.reserve.service.ReserveService;
 
 import lombok.extern.log4j.Log4j;
@@ -21,6 +25,9 @@ import lombok.extern.log4j.Log4j;
 public class MainController {
     @Autowired
     private ReserveService reserveService;
+    
+    @Autowired
+    private AdMemberService adMemberService;
     
     @GetMapping("/main")
     public String index(HttpSession session, Model model) {
@@ -38,6 +45,8 @@ public class MainController {
         log.info("loginInfo:" + loginInfo);
         return "main"; 
     }
+    
+    
     
     
 }

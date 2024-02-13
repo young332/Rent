@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
 <style>
+
 #details-box {
 	width: 25%;
 	height: 700px;
@@ -124,12 +125,12 @@ div.left-box {
 	<form method="get" action="/reserve/licenseinfo">
 			<div class="container">
 				<div class="row">
-					<div class="top-search-box" style="height: 65px;">
+					<div class="top-search-box" style="height: 65px; bottom: 5px;">
 							<h6 style="border-top-width: 20px;padding-top: 20px; font-weight: bold;">렌트카001 빠른 검색</h6>
 							<input type="datetime-local" class="form-control" id="top_book_pick_date" placeholder="대여 날짜" style="margin-top: 5px;" value=""> 
 							<input type="datetime-local" class="form-control" id="top_book_off_date" placeholder="반납 날짜" style="margin-top: 5px;" value="">
 							
-							<button type="button" class="btntop btn-secondary" name="btnSearch" id="btnSearch" style="height: 50.2px; margin-top: 5px;">검색하기</button>
+							<button type="button" class="btntop btn-secondary" name="btnSearch" id="btnSearch" style="height: 50.2px; margin-top: 5px; margin-right: 10px;">검색하기</button>
 							
 						</div>
 			<div class="container-fluid">
