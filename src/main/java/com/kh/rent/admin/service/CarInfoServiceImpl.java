@@ -57,5 +57,17 @@ public class CarInfoServiceImpl implements CarInfoService {
 		CarInfoVO carInfoVO = carInfoMapper.selectCarInfoByIndex(car_index);
 		return carInfoVO;
 	}
+	
+	@Override
+	public int deleteCarFile(Integer file_id) {
+		int fileId = carInfoMapper.deleteCarFile(file_id);
+		return fileId;
+	}
+
+	@Override
+	public int updateCarinfoFile(Integer file_id) {
+		int fileId = carInfoMapper.updateCarinfoFile(file_id);
+		return fileId;
+	}
 
 }
