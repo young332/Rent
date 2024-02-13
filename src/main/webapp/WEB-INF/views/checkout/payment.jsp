@@ -246,7 +246,7 @@
 				<tr>
 				    <th>남은포인트</th>
 				    <td>
-				    <span id="pay_point_display" name="pay_point_display">${v_point}</span>
+				    <span id="pay_point_display" name="pay_point_display">${remainingPoint}</span>
 <%-- 				    	<c:if test="${loginInfo.mem_point >= totalPay}"> --%>
 <%-- 				    	<span id="pay_point_display" name="pay_point_display">${v_point}</span>  --%>
 <%-- 			            </c:if> --%>
@@ -428,9 +428,9 @@
    <script>
    
    // 변수 선언 및 초기 값 설정
-   var mem_id = '${memberVO.mem_id}';
+   var mem_id = '${loginInfo.mem_id}';
    
-   var point = '${memberVO.mem_point}';
+   var point = '${loginInfo.mem_point}';
    
    console.log("포인트: " + point);
    
@@ -445,8 +445,6 @@
    
    var pay_amount = 0;
    
-	var isAjaxing = false;
-
    // 총 결제금액
    var res_totalpay = '${totalPay}';
    console.log("res_totalpay : " ,res_totalpay);
@@ -456,7 +454,7 @@
    console.log("pay_amount : " ,pay_amount);
 
    // 남은 포인트 계산
-	var remainingPoint = '${memberVO.mem_point}' - '${totalPay}';
+	var remainingPoint = '${loginInfo.mem_point}' - '${totalPay}';
 	remainingPoint = Math.max(remainingPoint, 0);
 	console.log("remainingPoint", remainingPoint);
 
@@ -483,7 +481,7 @@
    $(document).ready(function() {
 	    // 페이지 로드 시 최종 결제 금액 초기화
 	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
-	    var point = parseInt("${memberVO.mem_point}");
+	    var point = "${loginInfo.mem_point}";
 	    var min = 1; // 최소 사용 가능 포인트
 	    changePoint(totalpay, point, min, 0);
 
@@ -502,7 +500,7 @@
 	    
 	    // 화면에 사용할 포인트, 남은 포인트, 최종 결제 금액 표시
 	    document.getElementById("view_use_point").innerHTML = ${totalPay} + "원";
-	    document.getElementById("pay_point_display").innerText = remainingPoint + "p"; // 남은 포인트 표시
+	    document.getElementById("pay_point_display").innerText = point - v_point + "p"; // 남은 포인트 표시
 	    
 	    
 	    console.log("view_use_point", view_use_point);
@@ -574,7 +572,8 @@
 	});
 
 	$("#btn_pay").on("click", function(e) {
-	    e.preventDefault(); // 폼 전송 막기
+	    
+		e.preventDefault(); // 폼 전송 막기
 
 	    // 필수 약관에 대한 checkbox 요소들을 가져옴
 	    var checkboxes = document.querySelectorAll('.agree_list input[type="checkbox"]');
@@ -609,62 +608,77 @@
 	        history.go(0); // 페이지 이동을 막음
 	    }
 	    
-	    if(isAjaxing) {
-	    	return;
-	    }
 	    
-	    isAjaxing = true;
-	    
-  
 	    // AJAX를 이용한 서버로의 결제 요청
 	    
 // 	    var res_rid = $("#res_rid").val();
 // 		console.log("res_rid:", res_rid);
 		
-	    var msg = confirm("결제 하시겠습니까?");
-	    if(msg){
-	    	var xhr = $.ajax({
-	    	    	async: true,
-			        type: "GET",
-			        url: "/checkout/payment", 
-			        contentType: "application/json",
-			        data: { res_rid: res_rid }, 
-			        success: function(data) {
-	            if (data === "success") {
-	            	console.log("data", data);
-	                // 결제가 성공한 경우
-		           	alert("결제 완료 했습니다."); // 결제 완료 메시지 표시
-	                // 페이지 이동
-	                window.location.href = "/myPage/reservationList";
-	                //
-	                setTimeout(function() {isAjaxing = false; }, 10000);
-	            } else {
-	                // 결제가 실패한 경우
-	                alert("결제에 실패했습니다. 다시 시도해주세요."); // 결제 실패 메시지 표시
-	                setTimeout(function() {isAjaxing = false; }, 10000);
+	    var cfm = confirm("결제 하시겠습니까?");
+	    if(cfm){
+	        // 결제 요청을 보내기 전에 서버로부터 이미 결제가 완료된 PAY_RES_RID 값이 있는지 확인
+	        $.ajax({
+	            type: "GET",
+	            url: "/checkout/checkPaymentStatus", 
+	            contentType: "application/json",
+	            data: res_rid, 
+	            success: function(data) {
+	                if (data === "already_paid") {
+	                    // 이미 결제가 완료된 경우
+	                    var confirmAgain = confirm("이미 결제가 완료된 예약입니다. 다른 작업을 진행하시겠습니까?");
+	                    if (confirmAgain) {
+	                        // 사용자가 확인을 누른 경우
+	                        window.location.href = "/otherPage"; // 다른 페이지로 이동
+	                    } else {
+	                        // 사용자가 취소를 누른 경우
+	                        // 아무 작업도 하지 않음
+	                    }
+	                } else {
+	                    // 결제 요청을 보냄
+	                    $.ajax({
+	                        async: true,
+	                        type: "GET",
+	                        url: "/checkout/payment", 
+	                        contentType: "application/json",
+	                        data: res_rid, 
+	                        success: function(data) {
+	                            if (data === "success") {
+	                                // 결제가 성공한 경우
+	                                alert("결제완료 했습니다."); // 결제 완료 메시지 표시
+	                                // 페이지 이동
+	                                window.location.replace("/myPage/reservationList");
+	                            } else {
+	                                // 결제가 실패한 경우
+	                                alert("결제에 실패했습니다. 다시 시도해주세요."); // 결제 실패 메시지 표시
+	                                history.go(0);
+	                            }
+	                        },
+	                        error: function(xhr, status, error) {
+	                            // AJAX 요청 실패 시 처리
+	                            console.error("AJAX 요청 실패:", error);
+	                            alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
+	                            history.go(0);
+	                        },
+	                        complete: function() {
+	                            // 결제 진행 중 여부를 false로 설정하여 다시 결제할 수 없게
+	                            isPaymentInProgress = false;
+	                        }
+	                    });
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                // AJAX 요청 실패 시 처리
+	                console.error("AJAX 요청 실패:", error);
+	                alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
 	                history.go(0);
 	            }
-
-	        },
-	        error: function(xhr, status, error) {
-	            // AJAX 요청 실패 시 처리
-	            console.error("AJAX 요청 실패:", error);
-	            
-	         	// 결제 실패 메시지 표시
-	            alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
-	            setTimeout(function() {isAjaxing = false; }, 10000);
-	            history.go(0);
-	        	}
-	        
-	    	});
-	    	
-	    	xhr.abort();
-	    	    
-		    window.onbeforeunload = function() {
-		        return "만료된 페이지 입니다."; // 사용자에게 표시할 경고 메시지
-		    };
+	        });
 	    }
-	    
+   
+// 		    window.onbeforeunload = function() {
+// 		        return "만료된 페이지 입니다."; // 사용자에게 표시할 경고 메시지
+// 		    };
+	
 	    	
 	});	
    </script>
