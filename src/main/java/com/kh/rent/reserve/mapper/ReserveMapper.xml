@@ -40,17 +40,25 @@
      
      <!-- 예약 가능한 차 조회 -->
      <select id="getPosCar" resultType="com.kh.rent.admin.domain.CarInfoVO" >
-     SELECT *
-		FROM TBL_CAR_INFO
-		WHERE CAR_INDEX NOT IN (
-		    SELECT RES_CAR_ID
-		    FROM TBL_RESERVE
-		    WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
-		    UNION ALL
-		    SELECT NON_CAR_ID
-		    FROM TBL_NONMEMBER
-		    WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
-		)
+	    SELECT 
+	    A.*, 
+	    B.orignl_file_nm, 
+	    B.unique_file_nm
+	FROM 
+	    TBL_CAR_INFO A 
+	    LEFT JOIN TBL_FILE B ON A.file_id = B.file_id 
+	WHERE
+	    A.use_yn = 'Y'
+	    AND A.CAR_INDEX NOT IN (
+	        SELECT RES_CAR_ID
+	        FROM TBL_RESERVE
+	        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
+	        UNION ALL
+	        SELECT NON_CAR_ID
+	        FROM TBL_NONMEMBER
+	        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
+	    )
+
      </select>
    
   <!-- 회원정보 리스트 -->
@@ -66,38 +74,32 @@
   	
   	<!-- 체크박스선택시 값 불러오기 -->
   	<select id="selectCheck" resultType="com.kh.rent.admin.domain.CarInfoVO" parameterType="map">    
-  	    SELECT *
-	    FROM TBL_CAR_INFO
-	    WHERE CAR_INDEX NOT IN (
-	        SELECT RES_CAR_ID
-	        FROM TBL_RESERVE
-	        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
-	        UNION ALL
-	        SELECT NON_CAR_ID
-	        FROM TBL_NONMEMBER
-	        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
-	    )
-	    <if test="car_company != null and car_company != ''">
-	        AND car_company = #{car_company}
-	    </if>
-	    <if test="car_size != null and car_size != ''">
-	        AND car_size = #{car_size}
-	    </if>
-	    <if test="car_fuel != null and car_fuel != ''">
-	        AND car_fuel = #{car_fuel}
-	    </if>
-	    <if test="op_carseat != null and op_carseat != ''">
-	        AND op_carseat = #{op_carseat}
-	    </if>
-	    <if test="op_navi != null and op_navi != ''">
-	        AND op_navi = #{op_navi}
-	    </if>
-	    <if test="op_bt != null and op_bt != ''">
-	        AND op_bt = #{op_bt}
-	    </if>
-	    <if test="op_cam != null and op_cam != ''">
-	        AND op_cam = #{op_cam}
-	    </if>
+  	   SELECT 
+		    A.*, 
+		    B.orignl_file_nm, 
+		    B.unique_file_nm
+		FROM 
+		    TBL_CAR_INFO A 
+		    LEFT JOIN TBL_FILE B ON A.file_id = B.file_id 
+		WHERE
+		    A.use_yn = 'Y'
+		    AND A.CAR_INDEX NOT IN (
+		        SELECT RES_CAR_ID
+		        FROM TBL_RESERVE
+		        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
+		        UNION ALL
+		        SELECT NON_CAR_ID
+		        FROM TBL_NONMEMBER
+		        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
+		    )
+		    AND (A.car_company = #{car_company} OR #{car_company} IS NULL OR #{car_company} = '')
+		    AND (A.car_size = #{car_size} OR #{car_size} IS NULL OR #{car_size} = '')
+		    AND (A.car_fuel = #{car_fuel} OR #{car_fuel} IS NULL OR #{car_fuel} = '')
+		    AND (A.op_carseat = #{op_carseat} OR #{op_carseat} IS NULL OR #{op_carseat} = '')
+		    AND (A.op_navi = #{op_navi} OR #{op_navi} IS NULL OR #{op_navi} = '')
+		    AND (A.op_bt = #{op_bt} OR #{op_bt} IS NULL OR #{op_bt} = '')
+		    AND (A.op_cam = #{op_cam} OR #{op_cam} IS NULL OR #{op_cam} = '');
+
 	</select>
   	
   </mapper>
