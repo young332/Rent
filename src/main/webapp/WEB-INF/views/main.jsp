@@ -31,7 +31,7 @@
 								<div class="form-group">
 									<label for="" class="label">대여&amp;반납 장소</label> 
 									<input type="text"
-										class="form-control" placeholder="울산역" disabled>
+										class="form-control" placeholder="울산지점" disabled>
 								</div>
 								
 								<div class="d-flex">
@@ -108,22 +108,23 @@
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
     				<c:forEach items="${carinfolist}" var="vo">
-    					<div class="item">
-    						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${vo.unique_file_nm});">
-		    					</div>
-		    					<div class="text">
-		    						<h2 class="mb-0" ><a href="#" class="car-select" data-car-index="${vo.car_index}">${vo.car_name }</a></h2>
-		    						<div class="d-flex mb-3">
-		    						<input type="text" class="cat car_index" value="${vo.car_index}" style="display: none;">
-			    						<span class="cat">${vo.car_company}</span>
-			    						<p class="price ml-auto"> <span></span></p>
-		    						</div>
-<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
-		    					</div>
-		    				</div>
+    					<div class="item car-select" data-car-index="${vo.car_index}" style="cursor: pointer;">
+	    					<div class="item">
+	    						<div class="car-wrap rounded ftco-animate">
+			    					<div class="img rounded d-flex align-items-end" style="background-image: url(/resources/upload/${vo.unique_file_nm});">
+			    					</div>
+			    					<div class="text">
+			    						<h2 class="mb-0" ><a href="#" >${vo.car_name }</a></h2>
+			    						<div class="d-flex mb-3">
+			    						<input type="text" class="cat car_index" value="${vo.car_index}" style="display: none;">
+				    						<span class="cat">${vo.car_company}</span>
+				    						<p class="price ml-auto"> <span></span></p>
+			    						</div>
+	<!-- 		    						<p class="d-flex mb-0 d-block"><a href="#" class="btn btn-primary py-2 mr-1">예약하기</a> <a href="#" class="btn btn-secondary py-2 ml-1">세부사항</a></p> -->
+			    					</div>
+			    				</div>
+	    					</div>
     					</div>
-    					
     					</c:forEach>
     				</div>
     			</div>
@@ -149,7 +150,7 @@ $(function() {
         var offDate = $("#book_off_date").val();
         
         if (!pickDate || !offDate) {
-            alert("대여일과 반납일을 모두 선택해주세요.");
+            alert("대여일과 반납일을 모두 입력해주세요.");
             return; 
         }
 
@@ -164,11 +165,11 @@ $(function() {
 	        var selectedDate = new Date(selectedDateTime);
 
 	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
-	        var isDawnTime = selectedDate.getHours() < 6;
+	        var isDawnTime = selectedDate.getHours() < 8;
 
-	        // 새벽 시간인 경우 알림 띄우기
+	        // 이용시간 어긴경우인 경우 알림 띄우기
 	        if (isDawnTime) {
-	            alert("새벽 시간은 선택할 수 없습니다.");
+	            alert("오전12:00 ~ 오전08:00 렌트서비스를 이용할 수 없습니다.");
 	            $(this).val("");
 	        }
 	        var today = new Date();
@@ -200,9 +201,9 @@ $(function() {
      $(".car-select").click(function(e) {
          e.preventDefault(); 
          var carIndex = $(this).data("car-index");
-         window.location.href = "/reserve/reserve?car_index=" + carIndex; 
+         window.location.href = "/reserve/reserve/" + carIndex; 
      });
-   
+    
 	    
 });
 </script> 

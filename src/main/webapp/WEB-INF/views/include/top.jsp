@@ -4,7 +4,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>HAKA렌트카</title>
+
+    <title>HAKA</title>
+
     
     <!-- 글리피콘 -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -45,6 +47,7 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="/reserve/reserve" class="nav-link">예약</a></li>
+
 	          <c:choose>
 	          		<c:when test="${not empty nonMemberLoginDTO}">
 	          			  <li class="nav-item"><a href="/myPage/reservationList_guest" class="nav-link">예약확인</a></li>
@@ -53,8 +56,8 @@
 	         			 <li class="nav-item"><a href="/myPage/reservationList" class="nav-link">예약확인</a></li>
 	         		</c:otherwise>
 	          </c:choose>
-	          		<li class="nav-item"><a href="/board/list" class="nav-link">이용안내</a></li>
-	          		<li class="nav-item"><a href="/customer.jsp" class="nav-link">고객센터</a></li>
+	          		<li class="nav-item"><a href="/customer.jsp" class="nav-link">FAQ</a></li>
+	              <li class="nav-item"><a href="/board/list" class="nav-link">고객의소리</a></li>
 			<c:choose>
 				    <c:when test="${not empty nonMemberLoginDTO}">
 				        <!-- 비회원으로 로그인한 경우 -->
@@ -74,7 +77,7 @@
 			        <li class="nav-item"><a href="/login/login" class="nav-link">로그인</a></li>
 			    </c:otherwise>
 			</c:choose>
-	       </ul>
+
 	      </div>
 	    </div>
 	  </nav>

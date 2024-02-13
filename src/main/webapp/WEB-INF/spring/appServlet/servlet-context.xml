@@ -26,13 +26,10 @@
 <!-- 	<context:component-scan base-package="com.kh.rent.MainController" /> -->
 	
 	<context:component-scan base-package="com.kh.rent.admin.controller" />
-
 	<context:component-scan base-package="com.kh.rent.login.controller" />
 	<context:component-scan base-package="com.kh.rent.myPage.controller" />
-	
-
+	<context:component-scan base-package="com.kh.rent.board.controller" />
 	<context:component-scan base-package="com.kh.rent.point.controller" />
-
 	<context:component-scan base-package="com.kh.rent.reserve.controller" />
 
 	
@@ -49,7 +46,7 @@
 	<beans:bean id="menuInterceptor"
 		class="com.kh.rent.admin.interceptor.MenuInterceptor"></beans:bean>
 	<beans:bean id="adLoginInterceptor"
-	class="com.kh.rent.admin.interceptor.AdLoginInterceptor"></beans:bean>
+		class="com.kh.rent.admin.interceptor.AdLoginInterceptor"></beans:bean>
 	<beans:bean id="adauthInterceptor"
 		class="com.kh.rent.admin.interceptor.AdAuthInterceptor"></beans:bean>
 
@@ -76,9 +73,12 @@
 			<exclude-mapping path="/admin/menu/submenus/**/*"/>
 			<exclude-mapping path="/admin/commonCode/subcodes/**/*"/>
 			<exclude-mapping path="/admin/member/getMemberInfo"/>
+			<exclude-mapping path="/admin/member/getMemberPoint"/>
 			<exclude-mapping path="/admin/member/search"/>
+			<exclude-mapping path="/admin/member/pointIn"/>
 			<exclude-mapping path="/admin/car/search"/>
 			<exclude-mapping path="/admin/car/getCarInfo"/>
+			<exclude-mapping path="/admin/car/deleteCarFile"/>
 
 			<beans:ref bean="menuInterceptor" />
 		</interceptor>

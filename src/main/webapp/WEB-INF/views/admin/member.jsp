@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
 <!-- 주소찾기 -->
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
  
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,6 +61,53 @@ function fn_memberModify(mem_id) {
   }); 
 }
 
+//개별 포인트현황
+function fn_memberPoint(mem_id) {
+	
+   $.ajax({
+    type: 'GET',
+    url: '/admin/member/getMemberPoint',  
+    data: { mem_id: mem_id },
+    success: function (data) {
+      console.log('Success:', data);
+      var tbody = $("#pointTable > tbody");
+      tbody.empty();
+
+      //데이터가 없을 경우 처리
+      if (data.length == 0) {
+          var row = $("<tr>");
+          row.append($("<td colspan='4'>").text("포인트 현황이 없습니다."));
+          tbody.append(row);
+      } else {
+          
+          $.each(data, function(index, point) {
+              var row = $("<tr>");
+
+              row.append($("<td>").text(point.point_user_id));
+              row.append($("<td>").text(point.point_code_name));
+              row.append($("<td>").text(point.point_cost));
+              
+              // 사용일 Date형식 변환(상단 라이브러리 추가)
+			  var formattedDate = moment.utc(point.point_use_date).format('YYYY-MM-DD');
+			  //console.log("formattedDate:" ,formattedDate);
+			  var $td = $("<td>").text(formattedDate);
+			  row.append($td);
+			  tbody.append(row);
+			  
+           	  // 클릭한 버튼의 mem_id 값을 가져와서 설정
+              $("#point_user_id").val(point.point_user_id);  
+              $("#point_mem_id").val(point.point_user_id);  
+              
+          });
+      }
+      // 모달 창 열기
+      $("#PointModal").modal("show");
+    
+    }
+    
+  }); 
+}
+
 //주소 검색
 function openZipSearch() {
     new daum.Postcode({
@@ -82,7 +130,7 @@ $(function() {
 
 	//검색
 	$("#frmSearch").submit(function(event) {
-	    event.preventDefault(); // 기본 제출 동작을 막음
+	    event.preventDefault();
 	    
 	    var type = $(this).find("[name=type]").val();
 	    var keyword = $(this).find("[name=keyword]").val();
@@ -109,7 +157,6 @@ $(function() {
 	        	    keyword: keyword },
 	        success: function(response) {
 	            console.log("검색 결과:", response);
-	            
 	            var tbody = $(".table tbody");
 	            tbody.empty();
 
@@ -130,20 +177,27 @@ $(function() {
 	                checkboxCell.append(checkboxDiv);
 	                row.append(checkboxCell);
 
-	                // 각 데이터에 해당하는 열 추가
 	                row.append($("<td>").text(member.mem_id));
 	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberModify('" + member.mem_id + "');\">" + member.mem_name + "</a>"));
 	                var memberTypeText = member.mem_type == 1 ? "관리자" : "일반회원"; 
 	                row.append($("<td>").html("<div class='badge badge-outline-primary'>" + memberTypeText + "</div>"));
-	                row.append($("<td>").text(member.mem_birth));
+	                /* row.append($("<td>").text(member.mem_birth)); */
 	                row.append($("<td>").text(member.mem_email));
 	                row.append($("<td>").text(member.mem_phone));
 	                row.append($("<td>").text(member.mem_addr));
-	                row.append($("<td>").text(member.mem_point));
-	                row.append($("<td>").text(member.mem_cdate));
-
+	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberPoint('" + member.mem_id + "');\">" + member.mem_point + "</a>"));
+	                
+	                // 가입일 Date형식 변환
+	                var date = new Date(member.mem_cdate);
+	                var year = date.getFullYear();
+	                var month = (date.getMonth() + 1).toString().padStart(2, "0");
+	                var day = date.getDate().toString().padStart(2, "0");
+	                var formattedDate = year + "-" + month + "-" + day;
+	                row.append($("<td>").text(formattedDate));
 	                tbody.append(row);
+	                
 	            });
+	            
 	        },
 	        error: function(xhr, status, error) {
 	            console.error("검색 오류:", error);
@@ -168,6 +222,22 @@ $(function() {
 	$("#btn-pwdChange-save").click(function() {
 	    validatePasswordChangeForm();
 	});
+	
+	// 포인트충전 모달열기
+	$("#btnPoint").click(function() {
+		var mem_id = $("#point_mem_id").val();
+		console.log(mem_id);
+		$("#PointInModal").modal("show");
+	});
+	
+	$("#btn-point-save").click(function(){
+        // 입력된 값을 가져와서 mem_point input의 value로 설정
+        var memPointValue = $("#in_point").val();
+        $("#point_cost").val(memPointValue);
+        console.log("memPointValue:",memPointValue);
+
+        $("#FrmpointIn").submit();
+    });
 
 
 });
@@ -184,10 +254,10 @@ $(function() {
             <li class="breadcrumb-item active">회원목록</li>
         </ol>
     </div>
-    
-    <div class="card-body">
-    
-    <form method="get" id="frmSearch" name="frm">
+
+	<div class="card-body">
+
+		<form method="get" id="frmSearch" name="frm">
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group col-sm-12">
 					<div class="input-group col-sm">
@@ -198,108 +268,112 @@ $(function() {
 						</select>
 					</div>
 					<div class="input-group col-sm app-search">
-						<input type="text" class="form-control" placeholder="검색어 입력" name="keyword" value="${param.keyword}">
-						<span class="search-icon"></span>
+						<input type="text" class="form-control" placeholder="검색어 입력"
+							name="keyword" value="${param.keyword}"> <span
+							class="search-icon"></span>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit" >검색</button>
+							<button class="btn btn-primary" type="submit">검색</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form> 
+		</form>
 
 		<div class="dt-buttons col-sm-12 mb-3">
-                <button class="btn btn-secondary flaot-left" type="button" onclick="javascript:fn_excel('member','');"><span>엑셀 다운로드</span></button>
-                <div class="float-right" style="vertical-align: bottom;"></div>
-        </div>
-              <div data-simplebar="init" class="table-responsive"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
-                <table class="table mb-0 table-hover table-responsive-xl">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input checkall" id="checkall">
-                          <label class="custom-control-label" for="checkall"></label>
-                        </div>
-                      </th>
-                      <th scope="col">아이디</th>
-                      <th scope="col">이름</th>
-                      <th scope="col">회원구분</th>
-                      <th scope="col">생년월일</th>
-                      <th scope="col">메일</th>
-                      <th scope="col">연락처</th>
-                      <th scope="col">주소</th>
-                      <th scope="col">포인트</th>
-                      <th scope="col">가입일</th>
+			<button class="btn btn-secondary flaot-left" type="button"
+				onclick="javascript:fn_excel('member','');">
+				<span>엑셀 다운로드</span>
+			</button>
+			<div class="float-right" style="vertical-align: bottom;"></div>
+		</div>
+		<div data-simplebar="init" class="table-responsive">
+			<div class="simplebar-wrapper" style="margin: 0px;">
+				<div class="simplebar-height-auto-observer-wrapper">
+					<div class="simplebar-height-auto-observer"></div>
+				</div>
+				<div class="simplebar-mask">
+					<div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+						<div class="simplebar-content-wrapper"
+							style="height: auto; overflow: hidden;">
+							<div class="simplebar-content" style="padding: 0px;">
+								<table class="table mb-0 table-hover table-responsive-xl">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox"
+														class="custom-control-input checkall" id="checkall">
+													<label class="custom-control-label" for="checkall"></label>
+												</div>
+											</th>
+											<th scope="col">아이디</th>
+											<th scope="col">이름</th>
+											<th scope="col">회원구분</th>
+											<!-- <th scope="col">생년월일</th> -->
+											<th scope="col">메일</th>
+											<th scope="col">연락처</th>
+											<th scope="col">주소</th>
+											<th scope="col">포인트</th>
+											<th scope="col">가입일</th>
 
-                    </tr>
-                  </thead>
-                  <tbody>
-					<c:forEach var="memberVO" items="${MemberList}">
-					<tr>
-						<td>
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input chk"
-									id="chk0" emplyrid="jml8758" membertype="general">
-								<label class="custom-control-label" for="chk0"></label>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="memberVO" items="${MemberList}">
+											<tr>
+												<td>
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input chk"
+															id="chk0" emplyrid="jml8758" membertype="general">
+														<label class="custom-control-label" for="chk0"></label>
+													</div>
+												</td>
+
+												<td>${memberVO.mem_id}</td>
+												<td><a href="javascript:void(0);"
+													onclick="javascript:fn_memberModify('${memberVO.mem_id}');">${memberVO.mem_name}</a>
+												</td>
+												<td>
+													<div class="badge badge-outline-primary">
+														<c:choose>
+															<c:when test="${memberVO.mem_adminck == 0}">일반회원</c:when>
+															<c:when test="${memberVO.mem_adminck == 1}">관리자</c:when>
+															<c:when test="${memberVO.mem_adminck == 2}">비회원</c:when>
+															<c:otherwise>알 수 없는 상태</c:otherwise>
+														</c:choose>
+													</div>
+												</td>
+												<%-- <td>${memberVO.mem_birth}</td> --%>
+												<td>${memberVO.mem_email}</td>
+												<td>${memberVO.mem_phone}</td>
+												<td>${memberVO.mem_addr}</td>
+												<%-- <td>${memberVO.mem_point}</td> --%>
+												<td><a href="javascript:void(0);"
+													onclick="javascript:fn_memberPoint('${memberVO.mem_id}');">${memberVO.mem_point}</a></td>
+												<td>${memberVO.mem_cdate}</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
 							</div>
-						</td>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="simplebar-placeholder" style="width: auto; height: 680px;"></div> -->
+			</div>
+			<div class="simplebar-track simplebar-horizontal"
+				style="visibility: hidden;">
+				<div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+			</div>
+			<div class="simplebar-track simplebar-vertical"
+				style="visibility: hidden;">
+				<div class="simplebar-scrollbar" style="height: 0px; display: none;"></div>
+			</div>
+		</div>
+		<!-- end table-responsive -->
 
-						<td>${memberVO.mem_id}</td>
-						<td><a href="javascript:void(0);"
-						onclick="javascript:fn_memberModify('${memberVO.mem_id}');">${memberVO.mem_name}</a>
-						</td>
-						<td>
-						    <div class="badge badge-outline-primary">
-						    <c:choose>
-	            				<c:when test="${memberVO.mem_adminck == 0}">일반회원</c:when>
-	            				<c:when test="${memberVO.mem_adminck == 1}">관리자</c:when>
-	            				<c:when test="${memberVO.mem_adminck == 2}">비회원</c:when>
-	            				<c:otherwise>알 수 없는 상태</c:otherwise>
-	            			</c:choose>
-	            			</div>
-						</td>
-						<td>${memberVO.mem_birth}</td>
-						<td>${memberVO.mem_email}</td>
-						<td>${memberVO.mem_phone}</td>
-						<td>${memberVO.mem_addr}</td>
-						<td>${memberVO.mem_point}</td>
-						<td>${memberVO.mem_cdate}</td>
-					</tr>
-				</c:forEach>
+	</div>
 
-
-
-
-			     </tbody>
-                </table>
-              </div></div></div></div>
-              <!-- <div class="simplebar-placeholder" style="width: auto; height: 680px;"></div> -->
-              </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div></div> <!-- end table-responsive -->
-              <!-- <div class="row mt-4">
-                <div class="col-sm-12 col-md-5">
-                  <div class="dataTables_length"><label>목록개수
-                      <select class="custom-select mb-3" id="recordCountPerPage" onchange="javascript:fn_recordCountPerPage();">
-                        <option value="10" selected="">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                      </select></label></div>
-                </div>
-                <div class="col-sm-12 col-md-7">
-                  <div class="dataTables_paginate paging_simple_numbers">
-                    <ul class="pagination pagination-rounded">
-                    	<li><a href="?pageIndex=1" class="page-link" onclick="fn_memberList(1);return false; "><i class="fal fa-angle-double-left"></i></a></li><li class="paginate_button page-item previous"><a href="?pageIndex=1" class="page-link" onclick="fn_memberList(1);return false; "><i class="fal fa-angle-left"></i></a></li><li class="paginate_button page-item active"><a href="#" class="page-link">1</a></li><li class="paginate_button page-item"><a href="?pageIndex=2" class="page-link" onclick="fn_memberList(2);return false; ">2</a></li><li class="paginate_button page-item"><a href="?pageIndex=3" class="page-link" onclick="fn_memberList(3);return false; ">3</a></li><li class="paginate_button page-item"><a href="?pageIndex=4" class="page-link" onclick="fn_memberList(4);return false; ">4</a></li><li class="paginate_button page-item"><a href="?pageIndex=5" class="page-link" onclick="fn_memberList(5);return false; ">5</a></li><li class="paginate_button page-item"><a href="?pageIndex=6" class="page-link" onclick="fn_memberList(6);return false; ">6</a></li><li class="paginate_button page-item"><a href="?pageIndex=7" class="page-link" onclick="fn_memberList(7);return false; ">7</a></li><li class="paginate_button page-item"><a href="?pageIndex=8" class="page-link" onclick="fn_memberList(8);return false; ">8</a></li><li class="paginate_button page-item"><a href="?pageIndex=9" class="page-link" onclick="fn_memberList(9);return false; ">9</a></li><li class="paginate_button page-item"><a href="?pageIndex=10" class="page-link" onclick="fn_memberList(10);return false; ">10</a></li><li class="paginate_button page-item next"><a href="?pageIndex=11" class="page-link" onclick="fn_memberList(11);return false; "><i class="fal fa-angle-right"></i></a></li><li><a href="?pageIndex=218" class="page-link" onclick="fn_memberList(218);return false; "><i class="fal fa-angle-double-right"></i></a></li>
-
-                    </ul>
-                  </div>
-                </div>
-              </div> -->
-      </div>
-            
 </div>
 <!-- [ content ] End -->
 <!-- 회원정보 수정 -->
@@ -381,44 +455,110 @@ $(function() {
 	</div>
 </div>
 <!-- 모달끝 -->
-	<!-- 비밀번호 변경 모달창 -->
-		<div class="modal fade" id="modal-pwdChangeForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="myModalLabel">
-							비밀번호 변경
-						</h5> 
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">×</span>
+<!-- 비밀번호 변경 모달창 -->
+	<div class="modal fade" id="modal-pwdChangeForm" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel">
+						비밀번호 변경
+					</h5> 
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					</div>
+						<div class="modal-body">
+						<label for="pwd">현재 비밀번호</label>
+						<input type="password" class="form-control" id="password1">
+					</div>
+					<div class="modal-body">
+						<label for="pwd">새 비밀번호</label>
+						<input type="password" class="form-control" id="newPassword">
+						<div id="invalid-message1"></div>
+					</div>
+					<div class="modal-body">
+						<label for="pwd">새 비밀번호 확인</label>
+						<input type="password" class="form-control" id="confirmPassword">
+						<div id="invalid-message2">비밀번호가 일치하지 않습니다.</div>
+          		        <div id="invalid-message3">비밀번호를 입력하세요.</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" id="btn-pwdChange-save">
+							저장
+						</button> 
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							닫기
 						</button>
-						</div>
- 						<div class="modal-body">
-							<label for="pwd">현재 비밀번호</label>
-							<input type="password" class="form-control" id="password1">
-						</div>
-						<div class="modal-body">
-							<label for="pwd">새 비밀번호</label>
-							<input type="password" class="form-control" id="newPassword">
-							<div id="invalid-message1"></div>
-						</div>
-						<div class="modal-body">
-							<label for="pwd">새 비밀번호 확인</label>
-							<input type="password" class="form-control" id="confirmPassword">
-							<div id="invalid-message2">비밀번호가 일치하지 않습니다.</div>
-	          		        <div id="invalid-message3">비밀번호를 입력하세요.</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-primary" id="btn-pwdChange-save">
-								저장
-							</button> 
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
-								닫기
-							</button>
-						</div>
-				  </div>
+					</div>
+			  </div>
+		</div>
+	</div>
+<!-- // 비밀번호 변경 모달창 -->
+<!-- 포인트 모달창 -->
+<div class="modal fade" id="PointModal" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">포인트 현황</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<button type="button" id="btnPoint" class="btn btn-info" style="margin-bottom: 17px;float: right;" >충전</button>
+				<table id="pointTable" class="table mb-0 table-hover table-responsive-xl">
+					<tbody>
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">아이디</th>
+							<th scope="col">이용현황</th>
+							<th scope="col">금액</th>
+							<th scope="col">발생일</th>
+						</tr>
+					</thead>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="modal-footer">
+				<!-- <button type="" class="btn btn-primary" id="btn-pwdChange-save">확인</button> -->
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
 			</div>
 		</div>
-	<!-- // 비밀번호 변경 모달창 -->
+	</div>
+</div>
+<!-- // 포인트 모달창 -->
+<!-- 포인트 충전 모달창 -->
+<div class="modal fade" id="PointInModal" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">포인트 충전</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<form action="/admin/member/pointIn" method="post" id="FrmpointIn">
+				<input type="hidden" name="point_code" value="POINT_C">
+				<input type="hidden" name="mem_id" id="point_mem_id" value="">
+				<input type="hidden" name="point_user_id" id="point_user_id" value="">
+				<input type="hidden" name="point_cost" id="point_cost" value="">
+				
+				<div class="modal-body" style="display: flex; align-items: center;">
+				    <label style="margin-right: 10px;">충전금액:</label>
+				    <input class="form-control" type="number" name="mem_point" id="in_point" style="width: 65%;">원		    
+				</div>
+	
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="btn-point-save">확인</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- // 포인트 충전 모달창 -->
 
 <%@ include file="/WEB-INF/views/admin/include/bottom.jsp" %>                  

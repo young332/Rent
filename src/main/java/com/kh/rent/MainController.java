@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.reserve.service.ReserveService;
@@ -21,7 +20,8 @@ public class MainController {
     
     @GetMapping("/main")
     public String index(Model model) {
-        List<CarInfoVO> carinfolist = reserveService.getCarInfo();
+        //List<CarInfoVO> carinfolist = reserveService.getCarInfo();
+    	List<CarInfoVO> carinfolist = reserveService.getPosCar();
         model.addAttribute("carinfolist", carinfolist);
         log.info("Maincarinfolist" + carinfolist);
         log.info("MainController...");

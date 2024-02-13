@@ -30,7 +30,7 @@
 		<!-- mysql 서버 디비 돌릴때 -->
 		<!-- <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/> -->
 		<property name="jdbcUrl"
-			value="jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true" />
+			value="jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowPublicKeyRetrieval=true" />
 <!-- 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true" /> -->
 		<property name="username" value="rent001" />
@@ -67,7 +67,7 @@
 		base-package="com.kh.rent.reserve.mapper" />
 	<mybatis-spring:scan
 		base-package="com.kh.rent.myPage.mapper" />
-		<mybatis-spring:scan
+	<mybatis-spring:scan
 		base-package="com.kh.rent.board.mapper" />
 
 
@@ -83,7 +83,9 @@
 	<context:component-scan
 		base-package="com.kh.rent.myPage.service" />
 	<context:component-scan
-	base-package="com.kh.rent.checkout.service" />	
+		base-package="com.kh.rent.checkout.service" />	
+	<context:component-scan
+		base-package="com.kh.rent.board.service" />	
 
 
 	<!-- @Transactional 사용 가능하게 -->

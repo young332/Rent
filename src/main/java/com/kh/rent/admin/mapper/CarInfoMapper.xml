@@ -57,9 +57,10 @@
 	</select>
 	
 	<select id="selectCarInfoByIndex" resultType="com.kh.rent.admin.domain.CarInfoVO">
-		SELECT A.*, B.orignl_file_nm, B.unique_file_nm
+		SELECT A.*, B.*
 		        FROM TBL_CAR_INFO A LEFT JOIN TBL_FILE B
-		ON A.file_id = B.file_id where car_index = #{car_index}
+		ON A.file_id = B.file_id 
+		where car_index = #{car_index}
 	</select>
 	
 	<update id="updateCarInfo">
@@ -75,11 +76,33 @@
 			op_bt = #{op_bt},
 			update_user = #{update_user},
 			update_date = now(),
-<!-- 			file_id = #{file_id},-->
+ 			file_id = #{file_id},
 			use_yn = #{use_yn} 
 		where car_index = #{car_index}
 	
 	</update>
+	
+	<!-- <delete id="deleteCarFile">
+		delete  from TBL_FILE
+		where file_id = #{file_id}
+	</delete> -->
+
+	<update id="deleteCarFile" >
+			UPDATE TBL_FILE SET file_sn = NULL, 
+                                file_stre_cours = NULL,
+                                orignl_file_nm = NULL, 
+                                unique_file_nm = NULL, 
+                                file_extension = NULL, 
+                                file_size = NULL
+			WHERE file_id = #{file_id}
+	</update>
+	
+	<update id="updateCarinfoFile" >
+		update TBL_CAR_INFO set file_id = null
+		where file_id = #{file_id}
+	</update>
+	
+	
 	
 	<!-- 파일 수정  -->
 <!-- 	<insert id="updateFile" useGeneratedKeys="true" keyProperty="file_id" parameterType="com.kh.rent.admin.domain.FileVO">

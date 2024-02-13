@@ -1,14 +1,12 @@
 package com.kh.rent.board.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,12 +28,26 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-
+	// 글 목록 가져오기
+	@GetMapping("/list")
+	public void list(HttpSession session, Model model) {
+		log.info("list");
+		
+		List<BoardVO> noticeList = boardService.getNotice();
+		List<BoardVO> boardList = boardService.getList();
+		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("boardList", boardList);
+		
+	}
+	
+	// 글 등록 페이지
 	@GetMapping("/register")
 	public void register() {
 		log.info("register");
 	}
 	
+	// 글 등록하기
 	@PostMapping("/register")
 	public String registerPost(BoardVO boardVO,RedirectAttributes rttr) {
 		log.info("registerPost");
@@ -45,33 +57,19 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
-
-	@GetMapping("/list")
-	public String list(Model model) {
-		log.info("list");
-		List<BoardVO> list = boardService.getList();
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String formattedDateTime = now.format(formatter);
-		model.addAttribute("dateTime",formattedDateTime);
-		model.addAttribute("boardVO", list);
-		log.info("model:" +  model);
-		
-		return "/board/list";
-	}
 	
+	// 글 하나 가져오기
 	@GetMapping("/get")
-	public void get(Long board_no,Model model) {
-		log.info("modify");
+	public void get(Long board_no, Model model) {
+		log.info("boardGet...");
+		
 		BoardVO boardVO = boardService.get(board_no);
-		LocalDateTime now = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String formattedDateTime = now.format(formatter);
-		model.addAttribute("dateTime",formattedDateTime);
+		
 		model.addAttribute("boardVO",boardVO);
 		log.info("boardVO:" + boardVO);
 	}
 	
+	// 조회수 업데이트
 	@GetMapping("/readCount")
 	public String readCount(@RequestParam Long board_no) {
 		log.info("readCount");
@@ -79,6 +77,7 @@ public class BoardController {
 		return "조회수 증가";
 	}
 	
+	// 글 수정 페이지
 	@GetMapping("/modify")
 	public String showModifyForm(Long board_no, Model model) {
 	    log.info("showModifyForm");
@@ -88,18 +87,23 @@ public class BoardController {
 	    return "/board/modify"; // 수정 폼 페이지 경로 반환
 	}
 	
-	
+	// 글 수정하기
 	@PostMapping("/modify")
 	public String modify(BoardVO boardVO,RedirectAttributes rttr) {
 		log.info("modifypost");
 		log.info("updateboardVO :" + boardVO);
 		int result = boardService.modify(boardVO);
 		log.info("result : " + result);
-		rttr.addFlashAttribute("modifyResult",result);
-		
-		return "redirect:/board/list";
+		if (result == 1) {
+			rttr.addFlashAttribute("modifyResult",result);
+			rttr.addAttribute("board_no", boardVO.getBoard_no());
+	    	return "redirect:/board/get";
+	    } else {
+	        return "fail";
+	    }
 	}
 	
+	// 글 삭제하기
 	@PostMapping("/remove")
 	public String remove(Long board_no, RedirectAttributes rttr) {
 		log.info("remove");
@@ -108,6 +112,18 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+
+	// 답글페이지
+	@GetMapping("/answer")
+	public String answer(Long board_no, Model model) {
+	    log.info("showModifyForm");
+	    BoardVO boardVO = boardService.get(board_no);
+	    model.addAttribute("boardVO", boardVO);
+	    log.info("boardVOget: " + boardVO);
+	    return "/board/answer"; // 수정 폼 페이지 경로 반환
+	}
+	
+
 	//검색기능
 	@GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

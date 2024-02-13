@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
+import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -102,18 +103,18 @@ public class PaymentServiceTests {
 //	
 //	
 //	
-//	@Test
-//	public void testpaymentStatus() {
-//
-//		PaymentVO paymentVO = PaymentVO.builder()
-//				.pay_res_rid(12)
-//				.pay_status("결제취소")
-//				.build();
-//		int pay_res_rid = 12;
-//		paymentService.paymentCancle(pay_res_rid);
-//		log.info("paymentVO:" + paymentVO);
-//	
-//	}
+	@Test
+	public void testpaymentStatus() {
+
+		PaymentVO paymentVO = PaymentVO.builder()
+				.pay_pid(46)
+				.pay_status("결제취소")
+				.build();
+		int pay_pid = 46;
+		paymentService.payCancel(pay_pid);
+		log.info("paymentVO:" + paymentVO);
+	
+	}
 	
 }
 

@@ -22,10 +22,9 @@ public class BoardServiceTests {
 	@Autowired
 	private BoardService boardService;
 	
-	//등록
+	// 글 등록
 	@Test
 	public void testInsert() {
-		
 		BoardVO boardVO = BoardVO.builder()
 				.board_title("서비스테스트")
 				.board_content("테스트")
@@ -33,30 +32,22 @@ public class BoardServiceTests {
 				.build();
 		 boardService.register(boardVO);
 	}
-	//목록
+	
+	// 공지사항 목록
 	@Test
-	public void testList() {
+	public void testGetNotice() {
+		List<BoardVO> noticeList = boardService.getNotice();
+		log.info("noticeList:" + noticeList);
+	}
+	
+	// 글 목록
+	@Test
+	public void testGetList() {
 		List<BoardVO> list = boardService.getList();
 		log.info(list);
 	}
 	
-	//조회수 업데이트
-	@Test
-	public void testReadCount() {
-		Long board_no = 1L;
-		int count = boardService.readCount(board_no);
-		log.info("count : " + count);
-	}
-	
-	//하나 가져오기
-	@Test
-	public void testSelectByNo() {
-		Long board_no = 11L;
-		BoardVO boardVO = boardService.get(board_no);
-		log.info("boardVO:" + boardVO);
-	}
-	
-	//수정
+	// 글 수정
 	@Test
 	public void testModify() {
 		BoardVO boardVO = BoardVO.builder()
@@ -66,10 +57,9 @@ public class BoardServiceTests {
 				.build();
 		int count = boardService.modify(boardVO);
 		log.info("count : "+ count);
-		
 	}
 	
-	//삭제
+	// 글 삭제
 	@Test
 	public void testdelete() {
 		Long board_no = 14L;
@@ -77,6 +67,7 @@ public class BoardServiceTests {
 		log.info("count:" + count);
 	}
 	
+
 	//검색
 	@Test
 	public void testSearch() {
@@ -84,6 +75,22 @@ public class BoardServiceTests {
 		 String keyword = "운영";
 		 List<BoardVO> list = boardService.search(type, keyword);
 		 log.info("list:" + list);
+
+	// 글 하나 가져오기
+	@Test
+	public void testSelectByNo() {
+		Long board_no = 11L;
+		BoardVO boardVO = boardService.get(board_no);
+		log.info("boardVO:" + boardVO);
+	}
+	
+	// 조회수 업데이트
+	@Test
+	public void testReadCount() {
+		Long board_no = 1L;
+		int count = boardService.readCount(board_no);
+		log.info("count : " + count);
+
 	}
 	
 }

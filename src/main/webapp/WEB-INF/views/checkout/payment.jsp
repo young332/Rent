@@ -127,8 +127,7 @@
   </head>
   
 <body>
-
-${reserveList}	
+	
 res_rid: ${res_rid}
 
 <div class="container">
@@ -151,7 +150,8 @@ res_rid: ${res_rid}
               <c:if test="${not empty reserveList}">
 				<c:set var="firstReservation" value="${reserveList[0]}" />
               	<h6 class="my-0">울산지점</h6><br>
-              	<h6>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</h6>
+              	<h7>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</h7>
+			  	<h7>(총시간 : <span id="hours">${hours}</span>시간 <span id="minutes">${minutes}</span>분)</h7>
 			  </c:if>
             </div>
           </li>
@@ -192,13 +192,66 @@ res_rid: ${res_rid}
           <li class="list-group-item d-flex justify-content-between bg-light">
             <div class="text-success">
               <h6 class="my-0">포인트</h6>
-              <small id="view_point_cost">0</small>
-            </div>
+              <small id="view_point_cost">0</small><br>
+            </div><br>
+          </li>  
+          <li class="list-group-item d-flex justify-content-between bg-light">  
+          <div class="point_class">
+            <table class="tbl_edit01">
+		  <colgroup>
+		    <col width="90px"/>
+		    <col width="*"   />
+		  </colgroup>
+		  <tbody>
+		    <tr>
+		      <th>결제금액</th>
+		      <td><span class="bold txt_blue">${totalPay}원</span></td>
+		    </tr>
+		    <tr>
+		      <th> 포인트 </th>
+		      <td>
+		        사용가능 포인트 : <span name="left_pnt">${loginInfo.mem_point}</span>p <br><br> 
+		        <c:choose>
+		        	<c:when test="${loginInfo.mem_point < totalPay }">
+		        		<span style="color:red;">결제 포인트가 부족합니다.</span>
+		        	</c:when>
+		        	<c:otherwise>
+<%-- 		        		<span><input type="checkbox" id="chk_use" onclick="chkPoint(res_totalpay, ${memberVO.mem_point}, min)">포인트 사용</span> --%>
+<%-- 		        <span style="float:right">포인트는 최소 <%=min%>p부터 <%=unit%>p단위로 사용 가능합니다.</span> --%>
+		        	<span> <input type="number" name="point_cost" id="point_cost" min="5000" max="${totalPay}" onchange="updateViewUsePnt()"></span> p <br><br>
+		        	</c:otherwise>
+		        </c:choose>
+		        
+		        
+		      </td>
+		    </tr>
+		    
+		    <tr>
+		      <th>남은포인트</th>
+<!-- 		      <td></td> -->
+		      <td>
+		      <c:if test="${loginInfo.mem_point > totalPay}">
+		        
+		        <span name="left_pnt" id="left_pnt">${memberVO.mem_point}</span><br>
+		      </c:if>
+		      </td>
+		    </tr>
+		    <tr>
+		    	<th>총 결제금액</th><br>
+<!-- 		      <td></td> -->
+		      <td>
+		      	<p class="bold txt_red"><span class="bold txt_red" id="result_pnt"></span></p>
+		      </td>
+		    </tr>
+		  </tbody>
+			</table>
+			</div>
             <span class="text-success"></span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
-            <span>총 결제내역</span>
-            <strong id="result_pnt">${result_pnt}</strong>
+<!--             <span>최종 결제 금액</span> -->
+            	<p class="bold txt_red"><span class="bold txt_red" id="result_pnt"></span></p>
+<%--             <strong id="result_pnt">${totalPay}</strong> --%>
           </li>
           <li>
            <button id="btn_pay" class="w-100 btn btn-primary btn-lg" type="button"
@@ -243,9 +296,9 @@ res_rid: ${res_rid}
               </div><br>
             </div>
 
-		<div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">Payment</h4>
-          </div>
+<!-- 		<div class="col-md-7 col-lg-8"> -->
+<!--           <h4 class="mb-3">Payment</h4> -->
+<!--           </div> -->
 
 <!--           <div class="col-md-7 col-lg-8"> -->
 <!--             <div class="form-check"> -->
@@ -266,57 +319,10 @@ int unit = 100;
 int min = 5000;
 
    %>
-        <div class="col-md-7 col-lg-8">
-
-		<table class="tbl_edit01">
-		  <colgroup>
-		    <col width="90px"/>
-		    <col width="*"   />
-		  </colgroup>
-		  <tbody>
-		    <tr>
-		      <th>결제금액</th>
-		      <td><span class="bold txt_blue">${totalPay}원</span></td>
-		    </tr>
-		    <tr>
-		      <th> 포인트 </th>
-		      <td>
-		        사용가능 포인트 : <span name="left_pnt">${loginInfo.mem_point}</span>p <br> 
-		        <c:choose>
-		        	<c:when test="${loginInfo.mem_point < totalPay }">
-		        		<span style="color:red;">결제 포인트가 부족합니다.</span>
-		        	</c:when>
-		        	<c:otherwise>
-		        		<span><input type="checkbox" id="chk_use" onclick="chkPoint(res_totalpay, ${memberVO.mem_point}, min)">포인트 사용</span>
-<%-- 		        <span style="float:right">포인트는 최소 <%=min%>p부터 <%=unit%>p단위로 사용 가능합니다.</span> --%>
-		        	</c:otherwise>
-		        </c:choose>
-		        
-		        
-		      </td>
-		    </tr>
-		    
-		    <tr>
-		      <td></td>
-		      <td>
-		      <c:if test="${loginInfo.mem_point > totalPay}">
-		        <span> <input type="number" name="point_cost" id="point_cost" min="5000" max="${totalPay}" onchange="updateViewUsePnt()"></span> p 
-		        <span> (남은포인트 : </span><span name="left_pnt" id="left_pnt">${memberVO.mem_point}</span>p )
-		      </c:if>
-		      </td>
-		    </tr>
-		    <tr>
-		      <td></td>
-		      <td>
-		      	<p class="bold txt_red"> 최종 결제 금액 : <span class="bold txt_red" id="result_pnt">0</span> 원</p>
-		      </td>
-		    </tr>
-		  </tbody>
-			</table>
-	</div>
+    
          
         <div class="col-md-7 col-lg-12"> 
-       		<div class="ex_txt" style="color:gray;"><p>결제수단 등록은 ‘마이페이지 &gt; 내 정보 관리 &gt; 결제수단관리’에서 가능합니다.</p><br></div>
+<!--        		<div class="ex_txt" style="color:gray;"><p>결제수단 등록은 ‘마이페이지 &gt; 내 정보 관리 &gt; 결제수단관리’에서 가능합니다.</p><br></div> -->
          	 <h4><p class="title_295">이용 약관에 동의해 주세요</p></h4>
        	</div>
           	<div class="col-md-7 col-lg-12"> 
@@ -339,12 +345,12 @@ int min = 5000;
           				</span></li>
           				<li>
           				<span class="chk_box">
-          				<input type="checkbox" id="agree02" name="agree02" readonly="">
+          				<input type="checkbox" id="agree02" name="agree02" readonly>
           				<label for="agree02">대여자격 확인 동의(필수)
           				</label></span><span class="view">
           				<a id="agree02" name="1">보기</a>
           				</span></li><li><span class="chk_box">
-          				<input type="checkbox" id="agree03" name="agree03" readonly="">
+          				<input type="checkbox" id="agree03" name="agree03" readonly>
           				<label for="agree03">개인정보 수집 및 이용 동의(필수)</label>
           				</span><span class="view"><a id="agree03" name="2">보기</a>
           				</span>
@@ -421,87 +427,75 @@ int min = 5000;
    
    console.log("포인트: " + point);
       
+   var res_totalpay = 0;
+   
    var res_totalpay = '${totalPay}';
    
-   function updateViewUsePnt(res_totalpay, point, min) {
-	   var usePntInput = document.getElementById("point_cost");
-	   var viewUsePnt = document.getElementById("view_point_cost");
-	   
-	   viewUsePnt.innerText = usePntInput.value;
-   }
+   var rentalDateStr = "${firstReservation.res_rental_date}";
+   var returnDateStr = "${firstReservation.res_return_date}";
 
-	function chkPoint(totalpay, point, min) {
-		//totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
-		var v_point = 0; //사용할 포인트 (input 입력값)
-	
-		if (document.getElementById("chk_use").checked)  
-		{
-			if (point < min)  //최소 사용 단위보다 작을 때
-			{
-				v_point = 0; 
-				
-			}
+   // 날짜를 파싱하여 Date 객체로 변환
+   var rentalDate = new Date(rentalDateStr);
+   var returnDate = new Date(returnDateStr);
 
-			if(point >= min && point > totalpay ){ //결제금액보다 포인트가 더 클 때
-				v_point = totalpay; //사용할 포인트는 결제금액과 동일하게 설정
-			}
-			
-		}
-		document.getElementById("point_cost").value = v_point; //input 값 설정
+   // 날짜 간의 차이를 밀리초로 계산
+   var diffInMillies = returnDate - rentalDate;
 
-		changePoint(totalpay,point,min);
-	}
-	
-	function changePoint(totalpay,point,min){
-		//input값을 가져옴 > left_pnt 변경 > 최종결제금액 변경
-		//res_totalpay : 결제 금액 / pnt : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트 / unit : 사용단위
-		var v_point = parseInt(document.getElementById("point_cost").value); //사용할 포인트 (input 입력값)
-		if (v_point > point) //입력값이 사용가능 포인트보다 클때
-		{
-			v_point = point;
-			document.getElementById("point_cost").value = v_point; //input 값 재설정
-		}
+   // 밀리초를 시간과 분으로 변환
+   var hours = Math.floor(diffInMillies / (1000 * 60 * 60));
+   var minutes = Math.floor((diffInMillies / (1000 * 60)) % 60);
 
-		if(v_point > totalpay ){ //결제금액보다 포인트가 더 클 때
-			v_point = totalpay; //사용할 포인트는 결제금액과 동일하게 설정
-			document.getElementById("point_cost").value = v_point; //input 값 재설정
-		}
+   // 계산된 시간과 분을 화면에 표시하거나 필요한 작업을 수행
+   console.log("총 시간: " + hours + " 시간 " + minutes + " 분");
+   $("#hours").text(hours);
+   $("#minutes").text(minutes);
 
-		if (v_point < min)  //최소 사용 단위보다 작을 때
-		{
-			v_point = 0; 
-			document.getElementById("point_cost").value = v_point; //input 값 재설정
-		} else {
-			// v_point = v_point - v_point%unit; //사용할 포인트 = 사용할 포인트 중 최소단위 이하 포인트를 뺀 포인트
-		}
+   function chkPoint(totalpay, point, min) {
+	    // totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트
+	    var v_point = 0; // 사용할 포인트 (input 입력값)
 
-		var v_left = document.getElementsByName("left_pnt"); //사용가능 포인트, 남은 포인트 값 설정
-		for (var i = 0; i < v_left.length; i++) {
+	    // 사용할 포인트 계산
+	    var pointCostInput = document.getElementById("point_cost");
+	    v_point = parseInt(pointCostInput.value) || 0;
 
-			v_left[i].innerHTML = point - v_point; //= 전체 포인트 중에 사용할 포인트빼고 남은 포인트
-
-		}
-		
-		var viewUsePnt = document.getElementById("view_point_cost")
-		if (viewUsePnt) {
-			viewUsePnt.innerText = v_point;
-		}
-		
-		document.getElementById("result_pnt").innerHTML = totalpay - v_point; //최종 결제금액 = 결제금액 - 사용할 포인트
-	}
-	
-	// totalChk checkbox 요소 가져오기
-	var totalChk = document.getElementById("totalChk");
-
-	// totalChk checkbox 요소에 클릭 이벤트 핸들러 추가
-	totalChk.addEventListener("click", function() {
-	    // 모든 필수/선택 약관에 대한 checkbox 요소들 가져오기
-	    var checkboxes = document.querySelectorAll('.agree_chk_wrap input[type="checkbox"]');
-	    
-	    // totalChk checkbox의 상태에 따라 모든 필수/선택 약관 checkbox의 상태 변경
-	    for (var i = 0; i < checkboxes.length; i++) {
-	        checkboxes[i].checked = totalChk.checked;
+	    // 사용할 포인트가 최소 사용 단위 미만일 때 0으로 설정
+	    if (v_point < min) {
+	        v_point = 0;
 	    }
+
+	    // 사용할 포인트가 남은 포인트를 초과할 때 남은 포인트로 설정
+	    if (v_point > point) {
+	        v_point = point;
+	    }
+
+	    // 최종 결제 금액 업데이트
+	    changePoint(totalpay, point, min, v_point);
+	}
+
+	function changePoint(totalpay, point, min, v_point) {
+	    // 최종 결제 금액 계산
+	    var finalPayment = totalpay - v_point;
+
+	    // 화면에 사용할 포인트, 남은 포인트, 최종 결제 금액 표시
+	    document.getElementById("view_point_cost").innerText = v_point;
+	    document.getElementById("left_pnt").innerHTML = point - v_point + "p";
+	 // 만약 최종 결제 금액이 음수이면 0으로 설정
+	    finalPayment = Math.max(finalPayment, 0);
+	    document.getElementById("result_pnt").innerHTML = ${totalPay} + " 원";
+	}
+
+	$(document).ready(function() {
+	    // 페이지 로드 시 최종 결제 금액 초기화
+	    var totalpay = parseInt($("#res_totalpay").val());
+	    var point = parseInt("${memberVO.mem_point}");
+	    var min = 1; // 최소 사용 가능 포인트
+	    changePoint(totalpay, point, min, 0);
+
+	    // 입력 값 변경 이벤트 핸들러
+	    $("#point_cost").on("change", function() {
+	        // 최종 결제 금액 업데이트
+	        chkPoint(totalpay, point, min);
+	    });
 	});
 
 	
@@ -521,14 +515,81 @@ int min = 5000;
       
     });
 	
-	$("#chk_use").change(function() {
-		if ($(this).prop("checked")) {
-			$("#btn_pay").show();
-		} else {
-			$("#btn_pay").hide();
-		}
-		
-		updateViewUsePnt(totalpay, point, min);
+	var totalChk = document.getElementById("totalChk");
+	if (totalChk) {
+	    totalChk.addEventListener("click", function() {
+	        // 모든 필수/선택 약관에 대한 checkbox 요소들 가져오기
+	        var checkboxes = document.querySelectorAll('.agree_chk_wrap input[type="checkbox"]');
+	        
+	        // totalChk checkbox의 상태에 따라 모든 필수/선택 약관 checkbox의 상태 변경
+	        for (var i = 0; i < checkboxes.length; i++) {
+	            checkboxes[i].checked = totalChk.checked;
+	        }
+	    });
+	}
+	
+	$(document).ready(function() {
+	    // 페이지 로드 시 항상 #btn_pay 버튼을 표시
+	    $("#btn_pay").show();
+	});
+
+	
+	
+	$("#btn_pay").on("click", function(e) {
+	    e.preventDefault(); // 폼 전송 막기
+	    
+	    // 필수 약관에 대한 checkbox 요소들을 가져옴
+	    var checkboxes = document.querySelectorAll('.agree_list input[type="checkbox"]');
+	    var allChecked = true; // 모든 약관에 동의했는지 여부
+
+	    // 모든 약관에 대해 동의했는지 확인
+	    checkboxes.forEach(function(checkbox) {
+	        if (!checkbox.checked) {
+	            allChecked = false;
+	        }
+	    });
+
+	    // 모든 약관에 동의하지 않은 경우
+	    if (!allChecked) {
+	        alert("약관에 동의해주세요.");
+	        return;
+	    }
+
+	    // 결제 포인트가 부족한지 확인
+	    var pointCostInput = document.getElementById("point_cost");
+	    var pointCost = parseInt(pointCostInput.value) || 0;
+	    var remainingPoint = parseInt("${loginInfo.mem_point}");
+
+	    if (pointCost > remainingPoint) {
+	        alert("결제 포인트가 부족합니다.");
+	        return;
+	    }
+
+	    $.ajax({
+	        type: "POST",
+	        url: "/checkout/payment",
+	        contentType: "application/json",
+	        data: JSON.stringify(paymentData), // 결제 데이터를 JSON 문자열로 변환하여 전송
+	        success: function(response) {
+	            // 서버에서의 처리 결과 확인
+	            if (response.status === "success") {
+	                // 결제가 성공한 경우
+	                alert("결제를 하시겠습니까?"); // 결제 완료 메시지 표시
+	                // 페이지 이동
+	                window.location.href = "/myPage/reservationList";
+	            } else {
+	                // 결제가 실패한 경우
+	                alert("결제 실패 했습니다."); // 결제 실패 메시지 표시
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            // AJAX 요청 실패 시 처리
+	            console.error("AJAX 요청 실패:", error);
+	        }
+	    });
+
+	    // 결제 완료를 알리는 알림창
+	    alert("결제가 완료되었습니다.");
 	});
 
 		

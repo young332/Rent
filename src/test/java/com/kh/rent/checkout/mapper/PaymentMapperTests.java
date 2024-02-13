@@ -12,6 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
+import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -52,6 +53,19 @@ public class PaymentMapperTests {
 		 * paymentMapper.deductPayment(paymentDTO); log.info("paymentDTO"+paymentDTO);
 		 */
 		
+	}
+	
+	@Test
+	public void testpayreserveCancel() {
+		
+		PaymentVO paymentVO = PaymentVO.builder()
+				.pay_status("결제취소")
+				.pay_res_rid(34)
+				.build();
+		int res_rid = 34;
+		
+		paymentMapper.reserveCancel(res_rid);	
+		log.info("paymentVO" + paymentVO);
 	}
 	
 }
