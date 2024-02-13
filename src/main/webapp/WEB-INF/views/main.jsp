@@ -5,6 +5,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
+<style>
+	#bntSearch{
+		background: #f07039 !important;
+	    border: 1px solid #f07039 !important;
+	    color: #fff !important;
+	}
+</style>
 <section>
     <div class="hero-wrap ftco-degree-bg" style="background-image: url('/resources/carbook-master/img/banner.png');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>

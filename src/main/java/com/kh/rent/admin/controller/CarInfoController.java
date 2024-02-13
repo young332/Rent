@@ -1,21 +1,17 @@
 package com.kh.rent.admin.controller;
 
-import java.io.File;
+
 import java.io.IOException;
 import org.springframework.util.StringUtils;
-
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.kh.rent.admin.domain.CarInfoVO;
-import com.kh.rent.admin.domain.CommonCodeVO;
 import com.kh.rent.admin.domain.FileVO;
-import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.CarInfoService;
-import com.kh.rent.login.domain.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 

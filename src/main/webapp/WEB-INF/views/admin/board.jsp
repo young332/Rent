@@ -14,32 +14,57 @@ p {
 }
 </style>
 <script>
-	$(function() {
-		$(".board-row").click(function() {
-			console.log("클릭");
-			var boardNo = $(this).data("board-no");
-			console.log("boardNo:", boardNo);
-			window.location.href = "get?board_no=" + boardNo;
 
-			$.ajax({
-				type : "GET",
-				url : "/board/readCount?board_no=" + boardNo,
-				success : function(rData) {
-					console.log("rData:", rData);
-				},
-				error : function() {
-					console.log("error");
-				}
-			});
 
-		});
 
-		var registerResult = "${registerResult}";
-		if (registerResult !== "") {
-			alert("등록이 완료되었습니다.");
-		}
 
-	});
+$(document).ready(function() {
+    // 전체 선택 체크박스 클릭 시 모든 체크박스 선택/해제
+    $("#selectAllCheckbox").click(function() {
+        $(".board-checkbox").prop("checked", $(this).prop("checked"));
+    });
+
+    // 각 체크박스가 클릭될 때 전체 선택 체크박스 상태 업데이트
+    $(".board-checkbox").click(function() {
+        if ($(".board-checkbox:checked").length == $(".board-checkbox").length) {
+            $("#selectAllCheckbox").prop("checked", true);
+        } else {
+            $("#selectAllCheckbox").prop("checked", false);
+        }
+    });
+
+    function getCheckedBoardNumbers() {
+        var checkedBoardNumbers = [];
+        $('.board-checkbox:checked').each(function() {
+            checkedBoardNumbers.push($(this).closest('tr').data('board-no'));
+        });
+        console.log("checkedBoardNumbers:",checkedBoardNumbers);
+        return checkedBoardNumbers;
+    }
+    
+    $('#btnDelete').click(function() {
+        var checkedBoardNumbers = getCheckedBoardNumbers();
+        $.ajax({
+            url: 'admin/board/deleteCheckedBoard',
+            type: 'POST',
+            data: { boardNumbers: checkedBoardNumbers },
+            success: function(response) {
+                alert(response.message);
+                // 삭제 후에 필요한 작업 수행 (예: 화면 갱신)
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+
+    
+    
+});
+
+
+
+
 </script>
 
     <!-- [ content ] Start -->
@@ -55,7 +80,7 @@ p {
         
         <div class="card-body">
 
-		<form method="get" id="frmSearch" name="frm">
+		<%-- <form method="get" id="frmSearch" name="frm">
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group col-sm-12">
 					<div class="input-group col-sm">
@@ -75,10 +100,11 @@ p {
 					</div>
 				</div>
 			</div>
-		</form>
+		</form> --%>
 		<div class="dt-buttons col-sm-12 mb-3">
 			<div class="flaot-left " style="vertical-align: bottom;"></div>
-			<button class="btn btn-secondary float-right" type="button" onclick="location.href='/board/register'"
+			<button class="btn btn-danger" type="button" id="btnDelete" >삭제</button>
+			<button class="btn btn-secondary float-right" type="button" onclick="window.open('/board/list', '_blank')"
 			style="margin-bottom: 15px;"><span>공지등록</span>
 			</button>
 			
@@ -94,24 +120,28 @@ p {
 							style="height: auto; overflow: hidden;">
 							<div class="simplebar-content" style="padding: 0px;">
 								<table class="table mb-0 table-hover table-responsive-xl">
-									<thead class="thead-dark">
-										<tr style="text-align: center;">
-											<th scope="col">글번호</th>
-											<th scope="col">제목</th>
-											<th scope="col">등록일</th>
-											<th scope="col">조회수</th>     
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${boardVO}" var="boardVO">
-													<tr class="board-row" data-board-no="${boardVO.board_no}">
-														<td style="text-align: center;">${boardVO.board_no}</td>
-														<td>${boardVO.board_title}</td>
-														<td style="text-align: center;"><p>${dateTime}</p></td>
-														<td style="text-align: center;">${boardVO.readcount}</td>
-													</tr>
-												</c:forEach>
-										</tbody>
+								    <thead class="thead-dark">
+								        <tr style="text-align: center;">
+								            <th scope="col"><input type="checkbox" id="selectAllCheckbox"></th>
+								            <th scope="col">글번호</th>
+								            <th scope="col">제목</th>
+								            <th scope="col">등록일</th>
+								            <th scope="col">조회수</th>     
+								        </tr>
+								    </thead>
+								    <tbody>
+								        <c:forEach items="${boardVO}" var="boardVO">
+								            <tr class="board-row" data-board-no="${boardVO.board_no}">
+								                <td style="text-align: center;">
+								                    <input type="checkbox" class="board-checkbox">
+								                </td>
+								                <td style="text-align: center;">${boardVO.board_no}</td>
+								                <td>${boardVO.board_title}</td>
+								                <td style="text-align: center;"><p>${dateTime}</p></td>
+								                <td style="text-align: center;">${boardVO.readcount}</td>
+								            </tr>
+								        </c:forEach>
+								    </tbody>
 								</table>
 							</div>
 						</div>

@@ -104,11 +104,12 @@
             <!-- [ Layout sidenav ] Start -->
             <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
                 <!-- Brand demo (see assets/css/demo/demo.css) -->
-                <div class="app-brand demo">
+                <div class="app-brand demo" style="height: 95px;">
                     <span class="app-brand-logo demo">
                         <img src="/resources/adimg/logoY.png" alt="Brand Logo" class="" style=" width: 65px;">
                     </span>
-                    <a href="/admin/" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
+                    <a href="/admin/" class="app-brand-text demo sidenav-text font-weight-normal ml-2" 
+                    style="font-weight: bold !important; font-size: large;">관리자페이지</a>
 
                 </div>
                 <div class="sidenav-divider mt-0"></div>

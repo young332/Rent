@@ -65,7 +65,7 @@
                 <div class="form-group">
                     <label class="form-label d-flex justify-content-between align-items-end">
                         <span>패스워드</span>
-                        <a href="pages_authentication_password-reset.html" class="d-block small">비밀번호 찾기</a>
+                        <!-- <a href="pages_authentication_password-reset.html" class="d-block small">비밀번호 찾기</a> -->
                     </label>
                     <input type="password" class="form-control" name="mem_pw" id="mem_pw">
                     <div class="clearfix"></div>
@@ -73,7 +73,7 @@
                 <div class="d-flex justify-content-between align-items-center m-0">
                     <label class="custom-control custom-checkbox m-0">
                         <input type="checkbox" class="custom-control-input">
-                        <span class="custom-control-label">아이디 기억하기</span>
+                        <!-- <span class="custom-control-label">아이디 기억하기</span> -->
                     </label>
                     <button type="submit" class="btn btn-primary">로그인</button>
                 </div>
