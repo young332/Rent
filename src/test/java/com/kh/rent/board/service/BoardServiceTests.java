@@ -67,6 +67,15 @@ public class BoardServiceTests {
 		log.info("count:" + count);
 	}
 	
+
+	//검색
+	@Test
+	public void testSearch() {
+		 String type = "TC";
+		 String keyword = "운영";
+		 List<BoardVO> list = boardService.search(type, keyword);
+		 log.info("list:" + list);
+
 	// 글 하나 가져오기
 	@Test
 	public void testSelectByNo() {
@@ -81,6 +90,7 @@ public class BoardServiceTests {
 		Long board_no = 1L;
 		int count = boardService.readCount(board_no);
 		log.info("count : " + count);
+
 	}
 	
 }

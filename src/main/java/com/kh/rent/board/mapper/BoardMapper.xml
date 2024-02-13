@@ -45,6 +45,7 @@
  		where board_no = #{board_no}
  	</select>
  	
+
 	<!-- 조회수 업데이트  --> 	
 	<update id="readCountUpdate" parameterType="long">
 		update TBL_BOARD set
@@ -73,5 +74,6 @@
 	        </when>
 	    </choose>
 	</select>
+
  	
  </mapper>

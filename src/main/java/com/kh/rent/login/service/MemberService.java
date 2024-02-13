@@ -35,5 +35,9 @@ public interface MemberService {
 		//이메일 중복체크
 		public int checkEmail(String mem_email);
 		
+		//카카오로그인
+		public int kakaCheck(String mem_phone);
 		
+		//카카오로그인 정보
+		public MemberVO getKakalInfo(MemberVO memberVO);
 }

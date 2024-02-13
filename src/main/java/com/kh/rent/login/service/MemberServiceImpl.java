@@ -122,6 +122,19 @@ public class MemberServiceImpl implements MemberService{
 		return count;
 	}
 
+	//카카오 로그인 휴대폰
+	@Override
+	public int kakaCheck(String mem_phone) {
+		int count = memberMapper.checkPhone(mem_phone);
+		return count;
+	}
+
+	@Override
+	public MemberVO getKakalInfo(MemberVO memberVO) {
+		MemberVO vo= memberMapper.getKakaoInfo(memberVO);
+		return vo;
+	}
+
 	
 
 }

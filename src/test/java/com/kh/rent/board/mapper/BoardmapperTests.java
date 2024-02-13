@@ -80,6 +80,15 @@ public class BoardmapperTests {
 		log.info("boardVO: " + boardVO);
 	}
 	
+
+	@Test
+	public void testSearch() {
+		String type = "TC";
+		String keyword = "예약";
+		List<BoardVO> list = boardMapper.search(type, keyword);
+		log.info("list:" + list);
+	}
+
 	// 조회수 업데이트
 	@Test
 	public void testReadCount() {
@@ -88,4 +97,5 @@ public class BoardmapperTests {
 		log.info("count : "+ count);
 	}
 	
+
 }

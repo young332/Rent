@@ -115,7 +115,7 @@ public class MemberMapperTests {
 	
 	@Test
 	public void testCheckPhone() {
-		String mem_phone ="01015450428";
+		String mem_phone ="01099998888";
 		int count = memberMapper.checkPhone(mem_phone);
 		log.info("count : " + count);
 	}
@@ -141,4 +141,27 @@ public class MemberMapperTests {
 		log.info("count : " + count);
 	}
 	
+	@Test
+	public void testKaka() {
+		String id = "MEMBER02";
+		String pw = "MEMBER02!";
+		String name ="강감찬";
+		String email ="zkflsk@gmail.com";
+		String birth ="19550101";
+		String phone = "01099998888";
+		String code ="89833";
+		String addr ="경기 평택시 청북읍 판교길 4";
+		MemberVO memberVO = MemberVO.builder()
+				.mem_id(id)
+				.mem_pw(pw)
+				.mem_name(name)
+				.mem_email(email)
+				.mem_birth(birth)
+				.mem_phone(phone)
+				.mem_zip_code(code)
+				.mem_addr(addr)
+				.build();
+		MemberVO memberVO2 = memberMapper.getKakaoInfo(memberVO);
+		log.info("memberVO2:" +memberVO2);
+	}
 }

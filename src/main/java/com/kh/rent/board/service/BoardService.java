@@ -20,13 +20,13 @@ public interface BoardService {
 	
 	// 글 삭제
 	public int remove(Long board_no);
-	
+
 	// 글 하나 가져오기
 	public BoardVO get(Long board_no);
 	
 	// 조회수 업데이트
 	public int readCount(Long board_no);
-	
+
 	//검색
 	public List<BoardVO> search(String type, String keyword);
 }

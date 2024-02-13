@@ -112,6 +112,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+
 	// 답글페이지
 	@GetMapping("/answer")
 	public String answer(Long board_no, Model model) {
@@ -122,6 +123,7 @@ public class BoardController {
 	    return "/board/answer"; // 수정 폼 페이지 경로 반환
 	}
 	
+
 	//검색기능
 	@GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

@@ -7,7 +7,15 @@
   
 <!-- 테이블 CSS -->
 <%@ include file="/WEB-INF/views/include/boardStyle.jsp" %>
-
+<style>
+    .custom-select-8 {
+        width: 130px;
+    }
+    .pagination {
+    display: flex;
+    justify-content: center;
+}
+</style>
 <script>
 // 등록일 날짜변환
 function formattedDate(cdate) {
@@ -46,7 +54,7 @@ $(function(){
         });
 			
 	});
-	
+
 	// 일반 게시물
 	$(".board-row").click(function() {
 		console.log("클릭");
@@ -122,10 +130,12 @@ $(function(){
 			error: function(xhr, status, error) {
 	            console.error("Error occurred during search:", error);
 	        }
+
 			
 		});  
 		    
 	});
+
 });
 </script>
    
@@ -137,6 +147,8 @@ $(function(){
       	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>문의사항 <i class="ion-ios-arrow-forward"></i></span></p>
         <h1 class="mb-3 bread">문의사항</h1>
       </div>
+
+
     </div>
   </div>
 </section>
@@ -168,6 +180,7 @@ $(function(){
 						<button type="button" class="btn btn-secondary btn-oper mr-2" onclick="location.href='/board/register'">글쓰기</button>
 					</div>
 				</c:if>
+
 			</div>
 		</div>
 		

@@ -29,7 +29,9 @@ public interface BoardMapper {
 	// 조회수 업데이트
 	public int readCountUpdate(Long board_no);
 	
+
 	// 검색 기능
 	public List<BoardVO> search(@Param("type")String type,
 			@Param("keyword")String keyword);
+
 }

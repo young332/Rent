@@ -11,14 +11,6 @@
 		and mem_pw = #{mem_pw}
 	</select>
 	
- 		<!-- 비회원 로그인 --> 
-<!-- 	<select id="NonMembersLogin" resultType="com.kh.rent.login.domain.NonMemberLoginDTO" parameterType="com.kh.rent.login.domain.NonMemberLoginDTO"> -->
-<!-- 		select * from rent001.TBL_NONMEMBER -->
-<!-- 		where non_name = #{non_name} -->
-<!-- 		and non_tel = #{non_tel} -->
-<!-- 	</select> -->
-	
-	
 	<!-- 비회원 정보 check -->
 	<select id="checkNoMemberInfo" resultType="int" parameterType="map">
 		select count(*) from rent001.TBL_NONMEMBER
@@ -61,7 +53,7 @@
 		where mem_id = #{mem_id}
 	</select>
 	
-	<!-- 전화번호 중복체크 -->
+	<!-- 전화번호 중복체크 or 카카오로그인 (phone) -->
 	<select id="checkPhone" resultType="int">
 		select count(*) from rent001.TBL_MEMBER
 		where mem_phone = #{mem_phone}
@@ -79,6 +71,12 @@
 	<select id="checkEmail" resultType="int">
 		select count(*) from TBL_MEMBER
 		where mem_email = #{mem_email}
+	</select>
+	
+	<!-- 카카오 로그인 -->
+	<select id="getKakaoInfo" parameterType="com.kh.rent.login.domain.MemberVO" resultType="com.kh.rent.login.domain.MemberVO">
+		select * from TBL_MEMBER
+		where mem_phone = #{mem_phone}
 	</select>
 	
 </mapper>
