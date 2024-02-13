@@ -10,6 +10,11 @@
 .txt_birth{
 	font-size:13px;
 }
+/* #btnNonMemPay, #btnMemPay { */
+/*   background: #f07039 !important; */
+/*     border: 1px solid #f07039 !important; */
+/*     color: #fff !important; */
+/*     } */
 </style>
 <section class="hero-wrap hero-wrap-2 js-fullheight"
 	style="background-image: url('/resources/carbook-master/images/bg_3.jpg');"
@@ -35,16 +40,19 @@
 		<div class="row">
 			<div class="col-md-12 ftco-animate">
 				<h4>●운전자(예약자) 정보를 입력해 주세요</h4>
-				<h6>입력한 정보는 안전하게 보호할게요</h6>
+				<h6>&nbsp;&nbsp;&nbsp;&nbsp;입력한 정보는 안전하게 보호할게요</h6>
 				<form id="frmLicense" role="form" action="/reserve/reserveinsert" method="post">
 					<div class="jumbotron card card-block"
 						style="background-color: white;">
-						<p>기본정보*</p>
-						이름<input type="text" id="name" name="name"
+						<h4>기본정보*</h4><br>
+						<h5>이름</h5>
+						<input type="text" id="name" name="name"
 							placeholder="이름을 입력해주세요." value="${loginInfo.mem_name}"><br>
-						전화번호<input type="text" id="tel" name="tel"
+						<h5>전화번호</h5>
+						<input type="text" id="tel" name="tel"
 							placeholder="'-'없이 입력해주세요." value="${loginInfo.mem_phone}"><br>
-						생년월일<input type="text" id="birthdate" name="birthdate"
+						<h5>생년월일</h5>
+						<input type="text" id="birthdate" name="birthdate"
 							placeholder="생년월일을 입력해주세요." value="${loginInfo.mem_birth}">
 							<p class="txt_birth">
 								예시)1900-00-00
@@ -53,7 +61,7 @@
 
 						
 						<br>
-						<p>운전면허 정보</p>
+						<h5>운전면허 정보*</h5>
 						<div class="license_img">
 							<center>
 								<img src="/resources/carbook-master/images/img_license.png"
@@ -62,8 +70,8 @@
 						</div>
 						<br>
 						<div class="form_row select_box ">
-							<label class="form_label">면허종류</label><br> <select
-								name="res_license_type">
+						<h5><label class="form_label">면허종류</label></h5> 
+						<select name="res_license_type">
 								<option value="">면허종류를 선택해주세요</option>
 								<option value="2종보통">2종보통</option>
 								<option value="1종보통">1종보통</option>
@@ -72,13 +80,14 @@
 							</select>
 						</div>
 						<br> 
-						면허번호<input type="text" id="licensenum"
-							name="res_license_num" placeholder="면허번호 최대 12자를 입력해주세요.">
+						<h5>면허번호</h5>
+						<input type="text" id="licensenum"
+							name="res_license_num" placeholder="최대 12자를 입력해주세요.">
 
 						<div class="ex_box">
 							<p class="txt">
-								구면허증) 서울-01-123456-00 → 서울0112345600<br> 
-								신면허증) 11-01-123456-00 → 110112345600
+								&nbsp;구면허증) 서울-01-123456-00 → 서울0112345600<br> 
+								&nbsp;신면허증) 11-01-123456-00 → 110112345600
 							</p>
 
 						</div>
@@ -109,6 +118,17 @@
 $(function() {
 	 // 로그인 여부 확인
     var isLoggedIn = ${not empty loginInfo};
+    
+    function disableInputFields() {
+        $("#name").prop('disabled', true);
+        $("#tel").prop('disabled', true);
+        $("#birthdate").prop('disabled', true);
+    }
+
+    if (isLoggedIn) {
+        disableInputFields();
+    }
+    
 	$("#btnMemPay").click(function() {
 		// 로그인 여부 확인
         if (!isLoggedIn) {
@@ -116,9 +136,10 @@ $(function() {
             return;
         }
 
-		$("input[name=name]").remove();
-		$("input[name=tel]").remove();
-		$("input[name=birthdate]").remove();
+// 		$("input[name=name]").remove();
+// 		$("input[name=tel]").remove();
+// 		$("input[name=birthdate]").remove();
+		
 		 var non_license_type = $("select[name=res_license_type]").val().trim();
 		    var non_license_num = $("#licensenum").val().trim();
 		    // 입력 값이 비어 있는지 확인
@@ -134,7 +155,12 @@ $(function() {
 	        }
 		$("#frmLicense").submit();
 		
+ 		alert("예약이 완료되었습니다.");
+		
+
+		
 	});
+	
 	
 	$("#btnNonMemPay").click(function() {
 		// 로그인 여부 확인
@@ -153,11 +179,17 @@ $(function() {
 	        alert("입력값을 모두 입력하세요.");
 	        return; // 함수 종료
 	    }
-	    // 유효성 검사
+	    // 전화번호 유효성 검사
+	    var telValidationResult = validatePhoneNumber(non_tel);
+	    if (telValidationResult !== true) {
+	        alert(telValidationResult);
+	        return;
+	    }
+	    // 면허 번호 유효성 검사
         var validationResult = validateLicenseNumber(non_license_num);
         if (validationResult !== true) {
             alert(validationResult);
-            return; // 함수 종료
+            return; 
         }
 
 	    var formData = {
@@ -180,8 +212,11 @@ $(function() {
 		        success: function(rData) {
 		            console.log("rData:", rData);
 		            if (rData=="success") {
+		            	alert("예약이 완료되었습니다.");
 		            	location.href = "/";
-		            }
+		            } else {
+	                    alert("예약에 실패했습니다. 다시 시도해주세요.");
+	                }
 		        }
 		    });
 	    
@@ -199,8 +234,18 @@ $(function() {
         if (licenseNumber.length < 12) {
             return "면허번호 12자를 입력해주세요.";
         }
-        return true; // 유효성 검사 통과
+        return true; 
     }
+	// 전화번호 유효성 검사 함수
+	function validatePhoneNumber(phoneNumber) {
+	    if (!/^\d+$/.test(phoneNumber)) {
+	        return "전화번호는 숫자로만 입력해주세요.";
+	    }
+	    if (phoneNumber.length !== 11) {
+	        return "전화번호는 11자를 입력해주세요.";
+	    }
+	    return true;
+	}
 	 
 });
 

@@ -25,5 +25,9 @@ public interface CarInfoService {
 	
 	public int updateCarInfo(CarInfoVO carInfoVO);
 	
+	public int deleteCarFile(Integer file_id);
+	
+	public int updateCarinfoFile(Integer file_id);
+	
 	
 }

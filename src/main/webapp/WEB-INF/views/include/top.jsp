@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
     <title>HAKA</title>
+
     
     <!-- 글리피콘 -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -41,19 +44,40 @@
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
-
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="/reserve/reserve" class="nav-link">예약</a></li>
-	          <li class="nav-item"><a href="/myPage/reservationList" class="nav-link">예약확인</a></li>
-	          <li class="nav-item"><a href="/board/list" class="nav-link">이용안내</a></li>
-	          <li class="nav-item"><a href="/customer.jsp" class="nav-link">고객센터</a></li>
-	          <li class="nav-item"><a href="/login/login" class="nav-link">로그인</a></li>
-	          <li class="nav-item"><a href="/myPage/myPage" class="nav-link">마이페이지(임시)</a></li>
-	          <li class="nav-item"><a href="#" data-toggle="modal" data-target="#logoutmodal" class="nav-link">
-	         	<i class="fa fa-sign-out-alt"></i>
-	          	</a>
-	        </ul>
+
+	          <c:choose>
+	          		<c:when test="${not empty nonMemberLoginDTO}">
+	          			  <li class="nav-item"><a href="/myPage/reservationList_guest" class="nav-link">예약확인</a></li>
+	          		</c:when>
+	          		<c:otherwise>
+	         			 <li class="nav-item"><a href="/myPage/reservationList" class="nav-link">예약확인</a></li>
+	         		</c:otherwise>
+	          </c:choose>
+	          		<li class="nav-item"><a href="/customer.jsp" class="nav-link">FAQ</a></li>
+	              <li class="nav-item"><a href="/board/list" class="nav-link">고객의소리</a></li>
+			<c:choose>
+				    <c:when test="${not empty nonMemberLoginDTO}">
+				        <!-- 비회원으로 로그인한 경우 -->
+				        <li class="nav-item"><a href="#" data-toggle="modal" data-target="#logoutmodal" class="nav-link">
+				            <i class="fa fa-sign-out-alt"></i>
+				        </a></li>
+				    </c:when>
+				    <c:when test="${not empty loginInfo}">
+				        <!-- 회원으로 로그인한 경우 -->
+				        <li class="nav-item"><a href="/myPage/myPage" class="nav-link">마이페이지</a></li>
+				        <li class="nav-item"><a href="#" data-toggle="modal" data-target="#logoutmodal" class="nav-link">
+				            <i class="fa fa-sign-out-alt"></i>
+				        </a></li>
+				    </c:when>
+			    <c:otherwise>
+			        <!-- 로그인 정보가 없는 경우 -->
+			        <li class="nav-item"><a href="/login/login" class="nav-link">로그인</a></li>
+			    </c:otherwise>
+			</c:choose>
+
 	      </div>
 	    </div>
 	  </nav>

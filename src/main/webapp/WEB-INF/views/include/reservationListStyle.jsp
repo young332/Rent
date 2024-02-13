@@ -10,8 +10,7 @@ table {
   border-spacing: 0;
   width: 100%;
 }
-th,
-td {
+th,td {
   padding: 6px 15px;
 }
 th {

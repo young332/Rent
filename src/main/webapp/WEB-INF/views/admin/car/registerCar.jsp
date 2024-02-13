@@ -136,9 +136,9 @@
 						name="create_user" value="${loginInfo.mem_name}" required>
 				</div>
 				<div class="form-group">
-					<label class="form-label w-100">차량사진</label> <input type="file"
-						name="image_path"> <small class="form-text text-muted">차량이미지를
-						첨부하세요.</small>
+					<label class="form-label w-100">차량사진</label>
+					<input type="file" name="image_path">
+					<small class="form-text text-muted">차량이미지를 첨부하세요.</small>
 				</div>
 
 				<!-- 등록 버튼 -->

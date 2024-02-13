@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ReserveDTO {
-	private String car_index;
+	private Integer car_index;
    
     private String car_name;
     private String car_company;

@@ -55,8 +55,14 @@ public class ReserveServiceImpl implements ReserveService{
 	}
 
 	@Override
-	public ReserveDTO getMemberInfo(String car_index) {
+	public ReserveDTO findByCindex(int car_index) {
 		ReserveDTO list = reserveMapper.findByCindex(car_index);
+		return list;
+	}
+
+	@Override
+	public List<CarInfoVO> getPosCar() {
+		List<CarInfoVO> list = reserveMapper.getPosCar();
 		return list;
 	}
 

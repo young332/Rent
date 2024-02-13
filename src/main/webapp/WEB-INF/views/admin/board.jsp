@@ -2,34 +2,44 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
+<style>
+table td {
+	vertical-align: middle !important;
+	border-top: 1px solid #d1d1d1 !important;
+}
 
+p {
+	margin-top: auto !important;
+	margin-bottom: auto !important;
+}
+</style>
 <script>
-$(function(){
-	$(".board-row").click(function() {
-		console.log("클릭");
-		var boardNo = $(this).data("board-no");
-		console.log("boardNo:" , boardNo);
-       	window.location.href = "get?board_no=" + boardNo;
-        
-        $.ajax({
-        	type: "GET",
-            url: "/board/readCount?board_no=" + boardNo,
-            success: function(rData) {
-            	console.log("rData:" , rData);
-            },
-            error : function(){
-            	console.log("error");
-            }
-        });
-        
-	});
-	
-    var registerResult = "${registerResult}";
-    if(registerResult !== "") {
-        alert("등록이 완료되었습니다.");
-    }
+	$(function() {
+		$(".board-row").click(function() {
+			console.log("클릭");
+			var boardNo = $(this).data("board-no");
+			console.log("boardNo:", boardNo);
+			window.location.href = "get?board_no=" + boardNo;
 
-});
+			$.ajax({
+				type : "GET",
+				url : "/board/readCount?board_no=" + boardNo,
+				success : function(rData) {
+					console.log("rData:", rData);
+				},
+				error : function() {
+					console.log("error");
+				}
+			});
+
+		});
+
+		var registerResult = "${registerResult}";
+		if (registerResult !== "") {
+			alert("등록이 완료되었습니다.");
+		}
+
+	});
 </script>
 
     <!-- [ content ] Start -->

@@ -4,11 +4,10 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- 네이버로 로그인 -->
-<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <!-- 카카오톡 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-
+<!-- 카카오톡 로그인 js -->
+<script src="/resources/js/kakaoLogin.js"></script>
 
 <script>
 $(function(){
@@ -76,7 +75,7 @@ $(function(){
 			
 			}
 	});	
-		
+	
 
 });	
 </script>
@@ -131,6 +130,19 @@ $(function(){
 					</div>
 				</form>
 			</c:if>
+			<!-- 카카오로그인 -->
+			<div class="col-md-12 block-9 mb-md-5">
+				<form action="/login/kakaLogin" method="post" id="kakaLogin">
+				<div class="form-group">
+				<a href="javascript:void(0);" id="kakaoLoginButton">
+					<img src="/resources/carbook-master/images/btn_kakao.png" style="width: 50px; height: 50px; cursor: pointer;">
+						</a>
+						<input type="hidden" name="mem_email">
+						<input type="hidden" name="mem_name">
+						<input type="hidden" name="mem_phone">
+				</div>
+			</form>
+			</div>
 			</div>
 			<!-- 왼쪽 -->
 			<div class="col-md-6 block-9 mb-md-5">
@@ -144,102 +156,14 @@ $(function(){
 						<div class="form-group">
 							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
 						</div>
-						<!-- 예약번호,이름,휴대폰번호 비회원예약확인 -->
+						<!--이름,휴대폰번호 비회원예약확인 -->
 					</div>
 				</form>
 				</c:if>
 			</div>
-			<div class="col-md-12 block-9 mb-md-5">
-				<p>---------------------간편로그인---------------------</p>
-				<br>
-				<form action="/login/naverLoginPost" method="post">
-				<div class="form-group">
-					<div id="naverIdLogin">
-					<button type="submit" class="btn"  style="width: 80px; height: 60px;">
-					<img src="/resources/carbook-master/images/btn_naver.png" style="width: 100%; height: 100%;" alt="Naver Login">
-					</button>
-					</div>
-					<button type="button" class="btn"  style="width: 80px; height: 70px;">
-					<img src="/resources/carbook-master/images/btn_kakao.png" style="width: 100%; height: 100%;" >
-					</button>
-					
-					<button type="button" class="btn"  style="width: 80px; height: 70px;" onclick='location.href="'><img src="/resources/carbook-master/images/web_neutral_rd_na@1x.png" style="width: 100%; height: 100%;" ></button>
-				</div>
-			</form>
-			</div>
+			
 		</div>
 	</div>
-<!-- 카카오 로그인 -->
-<script>
-Kakao.init('ad0e9d2b12012c07c7790d43080005cc'); // 사용하려는 앱의 JavaScript 키 입력
-</script>
-<!-- //카카오 -->	
-<!-- 네이버 로그인 test -->
-<script type="text/javascript">
-        var naverLogin = new naver.LoginWithNaverId({
-            clientId: "PX8yklCfbTPCekEdyMrO",
-            callbackUrl: "http://localhost",
-            isPopup: false, /* 팝업을 통한 연동처리 여부 */
-            loginButton: {color: "green", type: 1, height: 50} /* 로그인 버튼의 타입을 지정 */
-        }); /* 설정정보를 초기화하고 연동을 준비 */
-        
-//콜백
-var naverLoginCallback = new naver.LoginWithNaverId({
-            clientId: "PX8yklCfbTPCekEdyMrO", // 내꺼
-            callbackUrl: "http://localhost",
-            isPopup: true,
-            callbackHandle: true
-            /* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
-        });
-
-    /* (3) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */
-   
-    naverLoginCallback.init();
-        
-    /* (4) Callback의 처리. 정상적으로 Callback 처리가 완료될 경우 main page로 redirect(또는 Popup close) */
-    window.addEventListener('load', function () {
-    	naverLogin.init();
-    	console.log("Window loaded");
-        naverLogin.getLoginStatus(function (status) {
-        	console.log("Login Status:", status);
-            if (status) {
-                /* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
-
-                // 유저 아이디, 이메일 주소, 이름을 Session에 저장하였습니다.
-                sessionStorage.setItem("user_info",naverLogin.user.id);
-                sessionStorage.setItem("naver_email", naverLogin.user.getEmail());
-                sessionStorage.setItem("naver_name", naverLogin.user.getName());
-                console.log("User ID:", naverLogin.user.id);
-                console.log("User Email:", naverLogin.user.getEmail());
-                console.log("User Name:", naverLogin.user.getName());
-
-                // 네이버 로그인과 카카오 로그인을 구분하기 위해 별도의 세션을 저장합니다.
-                sessionStorage.setItem("kinds","naver");
-
-                // 회원가입 혹은 로그인 시 처리하기 위한 페이지 입니다. 예를 들어 DB
-                /* 인증이 완료된후 /sample/main.html 페이지로 이동하라는것이다. 본인 페이로 수정해야한다. */
-                location.href = "/myPage/myPage";
-                } else {
-                console.log("callback 처리에 실패하였습니다.");
-            }
-        });
-    });
-    console.log("End of script");
-    function logout() {
-    	  sessionStorage.clear();
-
-    	  naverLoginCallback.logout();
-
-    	  location.href = "/"; 
-    	}
-
-//     	var logoutButton = document.getElementById('btn_logout');
-//     	logoutButton.addEventListener('click', function () {
-//     	  logout();
-//     	});    
-</script>	
-<!-- //네이버 -->	
-<!--// 로그인 -->
 <!-- 비회원 모달 -->
 	<div class="row">
 		<div class="col-md-12">
