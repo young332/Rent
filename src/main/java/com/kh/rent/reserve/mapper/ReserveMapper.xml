@@ -52,11 +52,11 @@
 	    AND A.CAR_INDEX NOT IN (
 	        SELECT RES_CAR_ID
 	        FROM TBL_RESERVE
-	        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
+	        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료','기한만료')
 	        UNION ALL
 	        SELECT NON_CAR_ID
 	        FROM TBL_NONMEMBER
-	        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
+	        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료','기한만료')
 	    )
 
      </select>
@@ -95,11 +95,11 @@
 		    AND A.CAR_INDEX NOT IN (
 		        SELECT RES_CAR_ID
 		        FROM TBL_RESERVE
-		        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료')
+		        WHERE RES_STATUS IN ('이용중', '예약중', '예약완료','기한만료')
 		        UNION ALL
 		        SELECT NON_CAR_ID
 		        FROM TBL_NONMEMBER
-		        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료')
+		        WHERE NON_STATUS IN ('이용중', '예약중', '예약완료','기한만료')
 		    )
 		    AND (A.car_company = #{car_company} OR #{car_company} IS NULL OR #{car_company} = '')
 		    AND (A.car_size = #{car_size} OR #{car_size} IS NULL OR #{car_size} = '')

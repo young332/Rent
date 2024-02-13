@@ -66,16 +66,16 @@ $(function(){
         
         switch(itemId) {
             case 'newyearPoint':
-                $("#modal-point-event").find('.modal-title').text('포인트 응모 이벤트');
-                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning6.png" alt="Point Event Image">');
+                $("#modal-point-event").find('.modal-title').text('5만 포인트 이벤트');
+                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning9.png" alt="Point Event Image">');
                 break;
             case 'firstPoint':
                 $("#modal-point-event").find('.modal-title').text('선착순 포인트 적립');
-                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning5.png" alt="Point Event Image">');
+                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning7.png" alt="Point Event Image">');
                 break;
             case 'joopPoint':
                 $("#modal-point-event").find('.modal-title').text('포인트 줍줍 이벤트');
-                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winningg.png" alt="Point Event Image">');
+                $("#modal-point-event").find('.modal-body').html('<img src="/resources/carbook-master/img/winning8.png" alt="Point Event Image">');
                 break;
         }
         
@@ -398,19 +398,19 @@ $(function(){
     				<div class="carousel-car owl-carousel">
     					<div class="item-eventbox" id="newyearPoint" data-event="newyearPoint">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/rannpoint.png'); cursor: pointer;">
+		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/50point.png'); cursor: pointer;">
 		    					</div>
 		    					<div class="text">
-		    						<h2 class="mb-0"><a href="#">포인트 응모 이벤트</a></h2>
+		    						<h2 class="mb-0"><a href="#">5만 포인트 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto"><span></span>100,000<span>/포인트</span></p>
+			    						<p class="price ml-auto"><span></span>50,000<span>/포인트</span></p>
 		    						</div>
 		    					</div>
 		    				</div>
     					</div>
     					<div class="item-joinevent" style="cursor: pointer;" id="signupCarWrap">
     						<a href="/login/signUp">
-	    						<div class="car-wrap rounded ftco-animate" id="signupCarWrap">
+	    						<div class="car-wrap rounded ftco-animate" >
 			    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/joinpoint.png'); cursor: pointer;"></div>
 			    					<div class="text">
 			    						<h2 class="mb-0">회원가입 시 포인트 적립</h2>
@@ -423,24 +423,24 @@ $(function(){
     					</div>
     					<div class="item-eventbox" id="firstPoint" data-event="firstPoint">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" id="firstPoint" style="background-image: url('/resources/carbook-master/img/firstpoint.jpg');cursor: pointer;">
+		    					<div class="img rounded d-flex align-items-end" id="firstPoint" style="background-image: url('/resources/carbook-master/img/freePoint.png');cursor: pointer;">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">선착순 포인트 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
+			    						<p class="price ml-auto">10,000<span>/포인트</span></p>
 		    						</div>
 		    					</div>
 		    				</div>
     					</div>
     					<div class="item-eventbox" id="joopPoint" data-event="joopPoint">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" id="joopPoint" style="background-image: url('/resources/carbook-master/img/clickpoint.jpg');cursor: pointer;">
+		    					<div class="img rounded d-flex align-items-end" id="joopPoint" style="background-image: url('/resources/carbook-master/img/clickpointtt.jpg');cursor: pointer;">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">포인트 줍줍 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto">100,000<span>/포인트</span></p>
+			    						<p class="price ml-auto">20,000<span>/포인트</span></p>
 		    						</div>
 		    					</div>
 		    				</div>
