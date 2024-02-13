@@ -67,7 +67,7 @@
 	        <when test="type == 'W'.toString()">
 	            board_mem_id like CONCAT('%', #{keyword}, '%')
 	        </when>
-	        <when test="type == 'TC'.toString()">
+	        <when test="type == 'TCW'.toString()">
 	            (board_title like CONCAT('%', #{keyword}, '%')
 	            or board_content like CONCAT('%', #{keyword}, '%')
 	            or board_mem_id like CONCAT('%', #{keyword}, '%'))
