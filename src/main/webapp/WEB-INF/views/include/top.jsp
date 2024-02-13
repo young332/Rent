@@ -77,7 +77,7 @@
 			        <li class="nav-item"><a href="/login/login" class="nav-link">로그인</a></li>
 			    </c:otherwise>
 			</c:choose>
-
+			</ul>
 	      </div>
 	    </div>
 	  </nav>

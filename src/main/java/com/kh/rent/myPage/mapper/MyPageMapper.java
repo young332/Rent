@@ -49,4 +49,5 @@ public interface MyPageMapper {
 	
 	// 예약취소(비회원)
 	public int cancelReservation_non(int non_rid);
+
 }
