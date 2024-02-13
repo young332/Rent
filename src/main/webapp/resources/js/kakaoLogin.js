@@ -2,7 +2,7 @@
 	 * kakaoLogin.js
 	 */
 
-	Kakao.init('ad0e9d2b12012c07c7790d43080005cc');
+	Kakao.init('7af7b7d13502aeea69908896cb3f9201');
 		Kakao.isInitialized();
 
 		function kakaoLogin() {

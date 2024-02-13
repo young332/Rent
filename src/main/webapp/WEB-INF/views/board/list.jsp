@@ -7,6 +7,7 @@
   
 <!-- 테이블 CSS -->
 <%@ include file="/WEB-INF/views/include/boardStyle.jsp" %>
+
 <style>
     .custom-select-8 {
         width: 130px;
@@ -167,7 +168,7 @@ $(function(){
 					<label>검색</label>
 					<select class="custom-select-8" name="type">
 						<option value="">------------------</option>
-                        <option value="TC" ${param.type =='TCW' ? 'selected' : ''}>전체</option>
+                        <option value="TCW" ${param.type =='TCW' ? 'selected' : ''}>전체</option>
                         <option value="T" ${param.type =='T' ? 'selected' : ''}>제목</option>
                         <option value="C" ${param.type =='C' ? 'selected' : ''}>내용</option>
                         <option value="W" ${param.type == 'W' ? 'selected' : ''}>작성자</option>

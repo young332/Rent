@@ -396,19 +396,19 @@ $(function(){
     		<div class="row">
     			<div class="col-md-12">
     				<div class="carousel-car owl-carousel">
-    					<div class="item-eventbox" id="newyearPoint">
+    					<div class="item-eventbox" id="newyearPoint" data-event="newyearPoint">
     						<div class="car-wrap rounded ftco-animate">
-		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/ranpoint.png'); cursor: pointer;">
+		    					<div class="img rounded d-flex align-items-end" id="newyearPoint" style="background-image: url('/resources/carbook-master/img/rannpoint.png'); cursor: pointer;">
 		    					</div>
 		    					<div class="text">
 		    						<h2 class="mb-0"><a href="#">포인트 응모 이벤트</a></h2>
 		    						<div class="d-flex mb-3">
-			    						<p class="price ml-auto"><span>최대&nbsp;</span>100,000<span>/포인트</span></p>
+			    						<p class="price ml-auto"><span></span>100,000<span>/포인트</span></p>
 		    						</div>
 		    					</div>
 		    				</div>
     					</div>
-    					<div class="item-joinevent" style="cursor: pointer;">
+    					<div class="item-joinevent" style="cursor: pointer;" id="signupCarWrap">
     						<a href="/login/signUp">
 	    						<div class="car-wrap rounded ftco-animate" id="signupCarWrap">
 			    					<div class="img rounded d-flex align-items-end" style="background-image: url('/resources/carbook-master/img/joinpoint.png'); cursor: pointer;"></div>
@@ -421,7 +421,7 @@ $(function(){
 			    				</div>
 		    				</a>
     					</div>
-    					<div class="item-eventbox" id="firstPoint">
+    					<div class="item-eventbox" id="firstPoint" data-event="firstPoint">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="img rounded d-flex align-items-end" id="firstPoint" style="background-image: url('/resources/carbook-master/img/firstpoint.jpg');cursor: pointer;">
 		    					</div>
@@ -433,7 +433,7 @@ $(function(){
 		    					</div>
 		    				</div>
     					</div>
-    					<div class="item-eventbox" id="joopPoint">
+    					<div class="item-eventbox" id="joopPoint" data-event="joopPoint">
     						<div class="car-wrap rounded ftco-animate">
 		    					<div class="img rounded d-flex align-items-end" id="joopPoint" style="background-image: url('/resources/carbook-master/img/clickpoint.jpg');cursor: pointer;">
 		    					</div>
