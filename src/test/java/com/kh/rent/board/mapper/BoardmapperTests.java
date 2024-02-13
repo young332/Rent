@@ -22,23 +22,29 @@ public class BoardmapperTests {
 	@Autowired
 	private BoardMapper boardMapper;
 
-	//등록
+	// 글 등록
 	@Test
 	public void testInsert() {
-		
-		for(int i=1; i<=10; i++) {
+		for(int i=1; i<=5; i++) {
 			BoardVO boardVO = BoardVO.builder()
-					.board_no(1L + i)
 					.board_title("제목"+ i)
 					.board_content("내용"+ i)
-					.readcount(1 + i)
+					.board_mem_id("MEMBER05")
+					.board_privateYN("N")
+					.board_noticeYN("N")
 					.build();
 			boardMapper.insert(boardVO);
-			
 		}
-		
 	}
-	//리스트
+	
+	// 공지사항 목록
+	@Test
+	public void testNotice() {
+		List<BoardVO> noticeList = boardMapper.notice();
+		log.info("noticeList:" + noticeList);
+	}
+	
+	// 글 목록
 	@Test
 	public void testList() {
 		List<BoardVO> list = boardMapper.selectList();
@@ -46,18 +52,9 @@ public class BoardmapperTests {
 	}
 	
 	
-	//조회수 업데이트
-	@Test
-	public void testReadCount() {
-		Long board_no = 1L;
-		int count = boardMapper.readCountUpdate(board_no);
-		log.info("count : "+ count);
-	}
-
-	//수정
+	// 글 수정
 	@Test
 	public void testupdate() {
-		
 		BoardVO boardVO = BoardVO.builder()
 				.board_title("제목 수정")
 				.board_content("내용 수정")
@@ -67,7 +64,7 @@ public class BoardmapperTests {
 		log.info("result: " + result );
 	}
 	
-	//삭제
+	// 글 삭제
 	@Test
 	public void testdelete() {
 		Long board_no = 12L;
@@ -75,12 +72,20 @@ public class BoardmapperTests {
 		log.info("result : " + result);
 	}
 	
-	//글갯수
+	// 글 하나 가져오기
 	@Test
 	public void testSelectByNo() {
 		Long board_no = 11L;
 		BoardVO boardVO = boardMapper.selectByNo(board_no);
 		log.info("boardVO: " + boardVO);
+	}
+	
+	// 조회수 업데이트
+	@Test
+	public void testReadCount() {
+		Long board_no = 1L;
+		int count = boardMapper.readCountUpdate(board_no);
+		log.info("count : "+ count);
 	}
 	
 }

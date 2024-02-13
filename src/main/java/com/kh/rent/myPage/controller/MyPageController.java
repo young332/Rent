@@ -73,7 +73,7 @@ public class MyPageController {
 	
 	// 마이페이지
 	@GetMapping("/myPage")
-	public void myPage(HttpSession session) {
+	public void myPage() {
 		log.info("myPageGet..");
 	}
 	
