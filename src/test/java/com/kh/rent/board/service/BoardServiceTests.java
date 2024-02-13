@@ -75,6 +75,8 @@ public class BoardServiceTests {
 		 String keyword = "운영";
 		 List<BoardVO> list = boardService.search(type, keyword);
 		 log.info("list:" + list);
+		 
+	}
 
 	// 글 하나 가져오기
 	@Test
