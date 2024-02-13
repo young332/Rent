@@ -68,9 +68,15 @@ public class ReserveMapperTests {
 	}
 	@Test
 	public void testFindByCindex() {
-		String car_index="3";
+		int car_index=3;
 		ReserveDTO rserveDto =reserveMapper.findByCindex(car_index);
 		log.info("rserveDto:"+rserveDto);
+	}
+	
+	@Test
+	public void testGetPosCar() {
+		List<CarInfoVO> list = reserveMapper.getPosCar();
+		log.info("carpos:"+list);
 	}
 	
 }

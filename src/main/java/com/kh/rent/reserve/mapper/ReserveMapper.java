@@ -15,5 +15,7 @@ public interface ReserveMapper {
 	public List<CarInfoVO> getCarInfo();
 	public List<ReserveDTO> selectCheck(ReserveDTO reserveDTO);
 	public List<MemberVO> getMemberInfo();
-	public ReserveDTO findByCindex(String car_index);
+	public ReserveDTO findByCindex(int car_index);
+	public List<CarInfoVO> getPosCar();
+	
 }

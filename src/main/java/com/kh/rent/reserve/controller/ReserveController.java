@@ -1,9 +1,9 @@
 package com.kh.rent.reserve.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.admin.domain.CarInfoVO;
-import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.reserve.domain.LicenseDTO;
 import com.kh.rent.reserve.domain.NonMemberVO;
 import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveInfoDTO;
@@ -33,7 +29,7 @@ import com.kh.rent.reserve.service.ReserveService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/reserve/*")
+@RequestMapping("/reserve")
 @Log4j
 public class ReserveController {
 	@Autowired
@@ -43,10 +39,24 @@ public class ReserveController {
 	
 	@GetMapping("/reserve")
 	public void reserve( CarInfoVO carinfoVO, HttpSession session, Model model) {
-		List<CarInfoVO> carlist = reserveService.getCarInfo();
+		//List<CarInfoVO> carlist = reserveService.getCarInfo();
+		List<CarInfoVO> carlist = reserveService.getPosCar();
 		model.addAttribute("carlist", carlist); 
 		log.info("carlist"+carlist);
 		log.info("reserve...");
+	}
+	
+	@GetMapping("/reserve/{car_index}")
+	public String reserveCarIndex(@PathVariable("car_index") int car_index, HttpSession session, Model model) {
+		List<ReserveDTO> carlist = new ArrayList<>();
+		ReserveDTO dto = reserveService.findByCindex(car_index);
+		carlist.add(dto);
+		model.addAttribute("carlist", carlist); 
+		
+	
+		log.info("carlist"+carlist);
+		log.info("reserve car_index...");
+		return "reserve/reserve";
 	}
 	
 	@GetMapping("/licenseinfo")
@@ -147,7 +157,7 @@ public class ReserveController {
 	    log.info("reserveVO:"+reserveVO);
 	    
 	    reserveService.reserveinsert(reserveVO);
-
+	   
 	    return "redirect:/myPage/reservationList";
 	}
 
@@ -174,6 +184,7 @@ public class ReserveController {
 	    log.info("nonMemberVO2:" + nonMemberVO);
 	    
 	    nonMemberService.nonmeminsert(nonMemberVO);
+	    
 	    //log.info("하연 비회원 데이터 추가됨");
 	    return "success";
 	}

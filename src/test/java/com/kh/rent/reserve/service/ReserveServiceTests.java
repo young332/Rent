@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kh.rent.admin.domain.CarInfoVO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
@@ -44,5 +45,11 @@ public class ReserveServiceTests {
 		List<ReserveVO> list = reserveService.getList();
 		log.info("list:"+list);
 	}
-
+	
+	@Test
+	public void testGetPosCar() {
+		List<CarInfoVO> list = reserveService.getPosCar();
+		log.info("carpos:"+list);
+	}
+	
 }
