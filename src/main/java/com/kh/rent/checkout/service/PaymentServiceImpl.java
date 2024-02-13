@@ -20,23 +20,12 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentMapper paymentMapper; 
 	
-//	@Override
-//	public boolean addPayment(PaymentDTO paymentDTO) {
-//		int count = paymentMapper.addPaymentRecord(paymentDTO);
-//		return (count == 1) ? true : false;
-//		
-//	}
-
 	@Override
 	public int getMemberPoint(int mem_point) {
 		return paymentMapper.getMemberPoint(mem_point);
 	}
 
-	@Override
-	public int getPayNonResRid(int pay_res_rid) {
-		return paymentMapper.getPayNonResRid(pay_res_rid);
-	}
-
+	
 	@Transactional
 	@Override
 	public boolean pay(PaymentVO paymentVO) {
@@ -51,24 +40,19 @@ public class PaymentServiceImpl implements PaymentService {
 		// 회원 포인트 차감 (update)
 		int result3 = paymentMapper.deductPayment(paymentVO);
 		log.info("result3: " + result3);
+		
 		// 예약 상태 변경
 		log.info("res_rid:" + paymentVO.getPay_res_rid());
 		
 		int result4 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
 		log.info("result4: " + result4);
 		
-		return (result1 + result2 + result3 + result4) == 4 ? true : false;
+		// point_cost 값 전달
+		int result5 = paymentMapper.point_cost_record(paymentVO);
+		log.info("result5: " + result5);
+		
+		return (result1 + result2 + result3 + result4 + result5) == 5 ? true : false;
 	}
-
-
-//	@Override
-//	public List<PaymentDTO> getPaymentInfo(String pay_mem_id) {
-//		
-//		List<PaymentDTO> list = paymentMapper.getPaymentInfo(pay_mem_id);
-//		log.info("list:" + list);
-//		return list;
-//	}
-
 
 	@Override
 	public List<ReserveVO> payNumber(int res_rid) {
@@ -90,24 +74,25 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	
 	// 예약 취소
-	@Transactional //여러 쿼리가 실행이 되기 때문에 하나의 단위로 동작을 위해
-	@Override
-	public boolean paymentCancel(PaymentVO paymentVO) {	
-		
-        //결제 기록 내역
-				
-		//회원 포인트 증가
-		int result1 = paymentMapper.refundPay(paymentVO);
-		log.info("result1: " + result1);
-		
-		//예약 상태 변경
-		int result2 = paymentMapper.reserveCancel(paymentVO.getPay_pid());
-		log.info("result2: " + result2);
-		
-        return (result1 + result2) == 2 ? true : false;
-	}
+	//여러 쿼리가 실행이 되기 때문에 하나의 단위로 동작을 위해
+//	@Transactional
+//	@Override
+//	public boolean paymentCancel(PaymentVO paymentVO) {	
+//		
+//        //결제 기록 내역
+//				
+//		//회원 포인트 증가
+//		int result1 = paymentMapper.refundPay(paymentVO);
+//		log.info("result1: " + result1);
+//		
+//		//예약 상태 변경
+//		int result2 = paymentMapper.reserveCancel(paymentVO.getPay_pid());
+//		log.info("result2: " + result2);
+//		
+//        return (result1 + result2) == 2 ? true : false;
+//	}
 	
-	// 결제 취소
+	// 결제취소로 상태변경
 	@Override
 	public int payCancel(int pay_pid) {
 		
@@ -117,19 +102,23 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		return result;
 	}
-
+	
+	// 환불
 	@Transactional
 	@Override
 	public void cancelPayAndReserveAndRefund(PaymentVO paymentVO) {
 		//회원 포인트 증가
 		int i1 =paymentMapper.refundPay(paymentVO);
 		log.info("i1 변경: " + i1);
-		//예약 상태 변경
+		//예약상태 변경
 		int i2 = paymentMapper.reserveCancel(paymentVO.getPay_pid());
 		log.info("i2 변경: " + i2);
-		// 결제 상태 변경
+		// 결제상태 변경
 		int i3 = paymentMapper.payCancel(paymentVO.getPay_pid());
 		log.info("i3 변경: " + i3);
+		// point_cost 값 변경
+		int i4 = paymentMapper.point_cost_update(paymentVO.getPay_mem_id());
+		log.info("i4 변경: " + i4);
 	}
 
 	@Override

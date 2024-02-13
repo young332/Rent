@@ -479,6 +479,7 @@
    $("#minutes").text(minutes);
    
    $(document).ready(function() {
+	   
 	    // 페이지 로드 시 최종 결제 금액 초기화
 	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
 	    var point = "${loginInfo.mem_point}";

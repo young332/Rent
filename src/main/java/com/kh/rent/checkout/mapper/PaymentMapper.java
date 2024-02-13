@@ -16,9 +16,6 @@ public interface PaymentMapper {
 	// 결제 금액 변경
 	public int pay_amount(int pay_res_rid);
 	
-	// 결제 조회
-	public List<PaymentDTO> getPaymentInfo(String pay_mem_id);
-	
 	// 결제 번호
 	public List<ReserveVO> payNumber(int res_rid);
 	
@@ -30,17 +27,15 @@ public interface PaymentMapper {
 	
 	// 예약번호 조회
 	public List<ReserveVO> getResRid(String mem_id);
-	
-	// 비회원 번호 조회
-	public int getPayNonResRid(int pay_res_rid);
-	
+		
 	// 예약상태 확인
 	public int reserveStatus(int pay_res_rid); 
-	
-	public int getPay(int pay_res_rid);
-	
-	// 예약 금액
+		
+	// 예약 금액(결제완료)
 	public int getTotalPay(int pay_res_rid);
+	
+	// 예약 금액(결제취소)
+	public int getPay(int pay_res_rid);
 	
 	// 예약정보 조회하기
 	public List<ReserveVO> getReserveList(String mem_id);
@@ -57,6 +52,10 @@ public interface PaymentMapper {
 	// 포인트 증가(환불)
 	public int refundPay(PaymentVO paymentVO);
 	
-
+	// 포인트 기록 (insert)
+	public int point_cost_record(PaymentVO paymentVO);
+	
+	// 포인트 기록 변경 (update)
+	public int point_cost_update(String pay_mem_id);
 
 }
