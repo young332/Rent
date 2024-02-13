@@ -68,8 +68,17 @@
 	  
 	 <!-- 선택한 차 보이기 --> 
 	 <select  id="findByCindex" resultType="com.kh.rent.reserve.domain.ReserveDTO">
-	 	select * from TBL_CAR_INFO
-  		where car_index = #{car_index}
+	 	SELECT 
+		    A.*, 
+		    B.orignl_file_nm, 
+		    B.unique_file_nm
+		FROM 
+		    TBL_CAR_INFO A 
+		    LEFT JOIN TBL_FILE B ON A.file_id = B.file_id 
+		WHERE
+		    A.use_yn='Y'
+		    AND A.car_index = #{car_index}
+
 	 </select>
   	
   	<!-- 체크박스선택시 값 불러오기 -->
