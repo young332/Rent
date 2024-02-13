@@ -1,12 +1,15 @@
 package com.kh.rent.admin.controller;
 
+import java.io.File;
 import java.io.IOException;
 import org.springframework.util.StringUtils;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +44,9 @@ public class CarInfoController {
 	private CarInfoService carInfoService;
 	
 	// 업로드된 파일이 저장될 디렉토리 경로
-    @Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
+    //@Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
 	//@Value("${upload.directory}")
-	//@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
+	@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
     private String uploadDirectory;
 	
 	// 차량 등록 처리
@@ -60,8 +63,6 @@ public class CarInfoController {
             UUID uuid = UUID.randomUUID();
             String originalFilename = imagePath.getOriginalFilename();
             String uniqueFilename = uuid + "_" + originalFilename;
-            
-            //Path destination = Paths.get(uploadPath, uniqueFilename);
             
             // 상대경로를 기반으로 Path 객체 생성
             Path relativeDestination = Paths.get(uploadDirectory, uniqueFilename);
@@ -106,10 +107,7 @@ public class CarInfoController {
     							RedirectAttributes rttr) {
     	log.info("carInfoUpdateVO: "+carInfoVO);
     	log.info("uploadDirectory:" +uploadDirectory);
-    	
-    	
-    	   	
-        
+
         FileVO fileVO = new FileVO();
   
         try {
@@ -118,12 +116,9 @@ public class CarInfoController {
             String originalFilename = imagePath.getOriginalFilename();
             String uniqueFilename = uuid + "_" + originalFilename;
             
-            //Path destination = Paths.get(uploadPath, uniqueFilename);
-            
             // 상대경로를 기반으로 Path 객체 생성
             Path relativeDestination = Paths.get(uploadDirectory, uniqueFilename);
 
-            
             String fileExtension = StringUtils.getFilenameExtension(originalFilename);
             
             long fileSize = imagePath.getSize();
@@ -145,7 +140,7 @@ public class CarInfoController {
             return "redirect:/admin/car/ListCar";
         }
         
-        System.out.println("fileID:"+carInfoVO.getFile_id());
+        //System.out.println("fileID:"+carInfoVO.getFile_id());
         
         int file_id = carInfoService.insertFile(fileVO);
         carInfoVO.setFile_id(file_id);
@@ -153,23 +148,32 @@ public class CarInfoController {
 //        if(carInfoVO.getFile_id() != 0) {
 //        	
 //        }
-       
-        
-        
+
         int count = carInfoService.updateCarInfo(carInfoVO);
     	if (count == 1) {
             rttr.addFlashAttribute("ModifyCar", "success");
         }
         
-   
-        
-       
-        
-    	
-    	
-    	
-    	
     	return "redirect:/admin/car/ListCar";
+    }
+    
+    @GetMapping(value = "/deleteCarFile", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+    public Map<String, String> deleteCarFile(@RequestParam Integer file_id) {
+    	Map<String, String> response = new HashMap<>();
+		int resultDel = carInfoService.deleteCarFile(file_id);
+		int resultUpdate = carInfoService.updateCarinfoFile(file_id);
+		
+		// 작업에 따른 응답 메시지 설정
+	    if (resultDel > 0 && resultUpdate > 0) {
+	        response.put("status", "success");
+	        response.put("message", "파일 삭제 및 차량 정보 업데이트 성공");
+	    } else {
+	        response.put("status", "error");
+	        response.put("message", "파일 삭제 및 차량 정보 업데이트 실패");
+	    }
+	    
+	    return response;
     }
     
 	@GetMapping(value = "/getCarInfo", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -180,21 +184,7 @@ public class CarInfoController {
 		
         return carInfoVO;
     }
-	
-	@GetMapping(value = "/deleteCarFile", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-    public String deleteCarFile(@RequestParam Integer file_id) {
-		System.out.println("File_id: " + file_id);
-		int resultDel = carInfoService.deleteCarFile(file_id);
-		int resultUpdate = carInfoService.updateCarinfoFile(file_id);
-		
-		
-		return "redirect:/admin/car/ListCar";
-    }
-    
-    
- 
-    
+
 	 //검색기능
 	 @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	 @ResponseBody

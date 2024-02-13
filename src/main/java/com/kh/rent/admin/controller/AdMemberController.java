@@ -104,21 +104,24 @@ public class AdMemberController {
 	        return pointList;
 	    }
 	
-	 //포인트 충전
-		@PostMapping("/pointIn")
-		public String pointIn(HttpSession session, MemberVO memberVO, PointDTO pointDTO, RedirectAttributes rttr) {
-			log.info("memberVO:" + memberVO);
-			log.info("pointDTO:"+pointDTO);
-			int result = adMemberService.addPoint(memberVO);
-			adMemberService.addPointTable(pointDTO);
-			rttr.addFlashAttribute("addResult", result);
-			// 변경 결과에 따라 응답 반환
-		    if (result == 1) {
-		    	return "redirect:/admin/member";
-		    } else {
-		        return "fail";
-		    }
-		}
+	 
+	 
+	//포인트 충전
+	@Transactional
+	@PostMapping("/pointIn")
+	public String pointIn(HttpSession session, MemberVO memberVO, PointDTO pointDTO, RedirectAttributes rttr) {
+		log.info("memberVO:" + memberVO);
+		log.info("pointDTO:"+pointDTO);
+		int result = adMemberService.addPoint(memberVO);
+		adMemberService.addPointTable(pointDTO);
+		rttr.addFlashAttribute("addResult", result);
+		// 변경 결과에 따라 응답 반환
+	    if (result == 1) {
+	    	return "redirect:/admin/member";
+	    } else {
+	        return "fail";
+	    }
+	}
 	
 	
 }

@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
 <!-- 주소찾기 -->
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
  
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,28 +79,24 @@ function fn_memberPoint(mem_id) {
           row.append($("<td colspan='4'>").text("포인트 현황이 없습니다."));
           tbody.append(row);
       } else {
-          // 데이터 반복 처리
+          
           $.each(data, function(index, point) {
               var row = $("<tr>");
 
-              // 각 데이터에 해당하는 열 추가
               row.append($("<td>").text(point.point_user_id));
               row.append($("<td>").text(point.point_code_name));
               row.append($("<td>").text(point.point_cost));
               
-              // 사용일 Date형식 변환
-              var date = new Date(point.point_use_date);
-
-              var year = date.getFullYear();
-              var month = (date.getMonth() + 1).toString().padStart(2, "0");
-              var day = date.getDate().toString().padStart(2, "0");
-              var formattedDate = year + "-" + month + "-" + day;
-              row.append($("<td>").text(formattedDate));
-              tbody.append(row);
-              
+              // 사용일 Date형식 변환(상단 라이브러리 추가)
+			  var formattedDate = moment.utc(point.point_use_date).format('YYYY-MM-DD');
+			  //console.log("formattedDate:" ,formattedDate);
+			  var $td = $("<td>").text(formattedDate);
+			  row.append($td);
+			  tbody.append(row);
+			  
            	  // 클릭한 버튼의 mem_id 값을 가져와서 설정
               $("#point_user_id").val(point.point_user_id);  
-              $("#mem_id").val(point.point_user_id);  
+              $("#point_mem_id").val(point.point_user_id);  
               
           });
       }
@@ -180,7 +177,6 @@ $(function() {
 	                checkboxCell.append(checkboxDiv);
 	                row.append(checkboxCell);
 
-	                // 각 데이터에 해당하는 열 추가
 	                row.append($("<td>").text(member.mem_id));
 	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberModify('" + member.mem_id + "');\">" + member.mem_name + "</a>"));
 	                var memberTypeText = member.mem_type == 1 ? "관리자" : "일반회원"; 
@@ -193,7 +189,6 @@ $(function() {
 	                
 	                // 가입일 Date형식 변환
 	                var date = new Date(member.mem_cdate);
-
 	                var year = date.getFullYear();
 	                var month = (date.getMonth() + 1).toString().padStart(2, "0");
 	                var day = date.getDate().toString().padStart(2, "0");
@@ -234,6 +229,15 @@ $(function() {
 		console.log(mem_id);
 		$("#PointInModal").modal("show");
 	});
+	
+	$("#btn-point-save").click(function(){
+        // 입력된 값을 가져와서 mem_point input의 value로 설정
+        var memPointValue = $("#in_point").val();
+        $("#point_cost").val(memPointValue);
+        console.log("memPointValue:",memPointValue);
+
+        $("#FrmpointIn").submit();
+    });
 
 
 });
@@ -536,18 +540,19 @@ $(function() {
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
-			<form action="/admin/member/pointIn" method="post">
+			<form action="/admin/member/pointIn" method="post" id="FrmpointIn">
 				<input type="hidden" name="point_code" value="POINT_C">
-				<input type="hidden" name="mem_id" id="mem_id" value="">
+				<input type="hidden" name="mem_id" id="point_mem_id" value="">
 				<input type="hidden" name="point_user_id" id="point_user_id" value="">
+				<input type="hidden" name="point_cost" id="point_cost" value="">
 				
 				<div class="modal-body" style="display: flex; align-items: center;">
 				    <label style="margin-right: 10px;">충전금액:</label>
-				    <input class="form-control" type="number" name="mem_point" style="width: 65%;">원		    
+				    <input class="form-control" type="number" name="mem_point" id="in_point" style="width: 65%;">원		    
 				</div>
 	
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary" id="btn-point-save">확인</button>
+					<button type="button" class="btn btn-primary" id="btn-point-save">확인</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 				</div>
 			</form>
