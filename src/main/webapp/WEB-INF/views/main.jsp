@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
-	
+
+<section>
     <div class="hero-wrap ftco-degree-bg" style="background-image: url('/resources/carbook-master/img/banner.png');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -19,6 +20,7 @@
         </div>
       </div>
     </div>
+</section>
 
      <section class="ftco-section ftco-no-pt bg-light">
     	<div class="container">
@@ -53,8 +55,8 @@
 									</div>
 								</div>
 								 <div class="form-group">
-					              <buttom type="submit" class="btn btn-secondary py-3 px-4" id="bntSearch">
-					              <a id="reservationLink" href="#">차량 조회하고 예약하기</a></buttom>
+					              <button type="submit" class="btn btn-secondary py-3 px-4" id="bntSearch">
+					              <a id="reservationLink" href="#">차량 조회하고 예약하기</a></button>
 					            </div>
 
 							</form>
@@ -93,6 +95,7 @@
 	  					</div>
 	  				</div>
 				</div>
+  			</div>
   		</div>
     </section>
     <section class="ftco-section ftco-no-pt bg-light">

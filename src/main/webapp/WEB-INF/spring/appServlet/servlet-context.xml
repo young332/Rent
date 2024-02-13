@@ -25,6 +25,8 @@
 	
 <!-- 	<context:component-scan base-package="com.kh.rent.MainController" /> -->
 	
+	<context:component-scan base-package="com.kh.rent.MainController" />
+	<context:component-scan base-package="com.kh.rent.upload" />
 	<context:component-scan base-package="com.kh.rent.admin.controller" />
 	<context:component-scan base-package="com.kh.rent.login.controller" />
 	<context:component-scan base-package="com.kh.rent.myPage.controller" />

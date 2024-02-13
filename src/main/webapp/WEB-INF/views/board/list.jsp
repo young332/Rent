@@ -7,6 +7,7 @@
   
 <!-- 테이블 CSS -->
 <%@ include file="/WEB-INF/views/include/boardStyle.jsp" %>
+
 <style>
     .custom-select-8 {
         width: 130px;
