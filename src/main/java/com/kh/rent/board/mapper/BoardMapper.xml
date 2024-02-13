@@ -4,46 +4,74 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.kh.rent.board.mapper.BoardMapper">
  
- <!-- 등록 -->
+	<!-- 글 등록 -->
  	<insert id="insert">
-    INSERT INTO TBL_BOARD 
-    	(BOARD_TITLE, BOARD_CONTENT)
-    VALUES 
-    	(#{board_title}, #{board_content})
-</insert>
+    	INSERT INTO TBL_BOARD 
+    	(BOARD_TITLE, BOARD_CONTENT, BOARD_CDATE, BOARD_MEM_ID, BOARD_PRIVATEYN, BOARD_NOTICEYN)
+    	VALUES 
+    	(#{board_title}, #{board_content}, now(), #{board_mem_id}, #{board_privateYN}, #{board_noticeYN})
+	</insert>
  
- <!-- 글목록 -->
+	<!-- 공지사항 목록 -->
+	<select id="notice" resultType="com.kh.rent.board.domain.BoardVO">
+		select * from rent001.TBL_BOARD where board_noticeYN = 'Y' order by board_no desc
+	</select>
+ 
+	<!-- 글 목록 -->
  	<select id="selectList" resultType="com.kh.rent.board.domain.BoardVO">
- 		select * from TBL_BOARD
+ 		select * from rent001.TBL_BOARD where board_noticeYN = 'N' order by board_no desc
  	</select>
  	
-<!--조회수 업데이트  --> 	
+	<!-- 글 수정 -->
+ 	<update id="update">
+ 		update TBL_BOARD set
+ 			board_title = #{board_title},
+ 			board_content = #{board_content},
+ 			board_udate = now(),
+ 			board_privateYN = #{board_privateYN},
+ 			board_noticeYN = #{board_noticeYN}
+ 		where board_no = #{board_no}	
+ 	</update>
+ 	
+	<!-- 글 삭제 -->
+ 	<delete id="delete">
+ 		delete from TBL_BOARD
+ 		where board_no = #{board_no}
+ 	</delete>
+ 	
+	<!-- 글 하나 가져오기 -->
+ 	<select id="selectByNo" resultType="com.kh.rent.board.domain.BoardVO">
+ 		select * from TBL_BOARD
+ 		where board_no = #{board_no}
+ 	</select>
+ 	
+	<!-- 조회수 업데이트  --> 	
 	<update id="readCountUpdate" parameterType="long">
 		update TBL_BOARD set
 		readcount = readcount + 1
 		where board_no = #{board_no}
 	</update>
  	
- <!-- 수정 -->
- 	<update id="update">
- 		update TBL_BOARD set
- 			board_title = #{board_title},
- 			board_content = #{board_content},
- 			board_udate = now()
- 		where board_no = #{board_no}	
- 	</update>
- 	
- <!-- 삭제 -->
- 	<delete id="delete">
- 		delete from TBL_BOARD
- 		where board_no = #{board_no}
- 	</delete>
- 	
- <!-- 글갯수 -->
- 	<select id="selectByNo" resultType="com.kh.rent.board.domain.BoardVO">
- 		select * from TBL_BOARD
- 		where board_no = #{board_no}
- 	</select>
- 	
+ 	<!-- 검색 -->
+	<select id="search" resultType="com.kh.rent.board.domain.BoardVO">
+    select * from TBL_BOARD
+    where
+	    <choose>
+	        <when test="type == 'T'.toString()">
+	            board_title like CONCAT('%', #{keyword}, '%')
+	        </when>
+	        <when test="type == 'C'.toString()">
+	            board_content like CONCAT('%', #{keyword}, '%')
+	        </when>
+	        <when test="type == 'W'.toString()">
+	            board_mem_id like CONCAT('%', #{keyword}, '%')
+	        </when>
+	        <when test="type == 'TC'.toString()">
+	            (board_title like CONCAT('%', #{keyword}, '%')
+	            or board_content like CONCAT('%', #{keyword}, '%')
+	            or board_mem_id like CONCAT('%', #{keyword}, '%'))
+	        </when>
+	    </choose>
+	</select>
  	
  </mapper>

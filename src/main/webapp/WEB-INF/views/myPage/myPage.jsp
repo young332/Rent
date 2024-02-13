@@ -85,19 +85,9 @@ $(document).ready(function() {
 						</div>
 					</div>
 <!-- 				</div> -->
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-12">
-				<div>
-					<h3>
-						1:1 문의사항 
-					</h3>
-					<a class="btn btn-primary btn-large" href="/myPage/inquery">문의내역 바로가기</a>
 				</div>
 			</div>
-			</div>
+			<hr>
 			</div>
 			<div class="col-md-2">
 			</div>

@@ -1,8 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
-	.board-row {
-    cursor: pointer;
+#frmSearch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 검색창을 왼쪽으로 이동 */
+  height: 30px;
+}
+
+#frmSearch label {
+  display: flex;
+  font-size: 18px;
+  margin-right: 5px;
+  height: auto;
+  text-align: center;
+}
+
+#frmSearch select {
+  margin-right: 5px;
+  height: 100%;
+}
+
+#frmSearch input[type="text"] {
+  margin-right: 5px;
+}
+
+.board-row {
+  cursor: pointer;
 }
 body {
   color: #666;
@@ -19,14 +43,13 @@ th,td {
 th {
   background: #42444e;
   color: #fff;
-  text-align: left;
+  text-align: center;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
 }
 tr:first-child th:first-child {
   border-top-left-radius: 6px;
   width: 8%;
-}
-td:nth-child(2) {
-  padding-left: 10px; /* 좌측 여백 추가 */
 }
 
 th:nth-child(3), td:nth-child(3) {
@@ -34,8 +57,13 @@ th:nth-child(3), td:nth-child(3) {
 }
 
 th:nth-child(4), td:nth-child(4) {
+  width: 10%;
+}
+
+th:nth-child(5), td:nth-child(5) {
   width: 8%;
 }
+
 tr:first-child th:last-child {
   border-top-right-radius: 6px;
   
@@ -43,10 +71,18 @@ tr:first-child th:last-child {
 td {
   border-right: 1px solid #c6c9cc;
   border-bottom: 1px solid #c6c9cc;
+  text-align : center;
+  line-height: 5px;
 }
 td:first-child {
   border-left: 1px solid #c6c9cc;
 }
+
+td:nth-child(2) {  /* 좌측 여백 추가 */
+  text-align: left;
+  padding-left: 10px !important; 
+}
+
 tr:nth-child(even) td {
   background: #eaeaed;
 }
