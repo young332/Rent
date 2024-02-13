@@ -5,12 +5,16 @@ import java.util.Map;
 
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 public interface PaymentMapper {
 	
 	// 결제 내역 (insert)
 	public int addPaymentRecord(PaymentVO paymentVO);
+	
+	// 결제 금액 변경
+	public int pay_amount(int pay_res_rid);
 	
 	// 결제 조회
 	public List<PaymentDTO> getPaymentInfo(String pay_mem_id);
@@ -41,6 +45,9 @@ public interface PaymentMapper {
 	// 예약정보 조회하기
 	public List<ReserveVO> getReserveList(String mem_id);
 	
+	// ReserveDTO 조회하기
+	public List<ReserveDTO> getReserveDTO(String mem_id);
+	
 	// 예약 상태 변경 (예약 취소)
 	public int reserveCancel(int pay_pid);
 	
@@ -49,7 +56,6 @@ public interface PaymentMapper {
 	
 	// 포인트 증가(환불)
 	public int refundPay(PaymentVO paymentVO);
-	
 	
 
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.mapper.PaymentMapper;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 
 import lombok.extern.log4j.Log4j;
@@ -41,27 +42,32 @@ public class PaymentServiceImpl implements PaymentService {
 	public boolean pay(PaymentVO paymentVO) {
 		// 결제 내역 기록 (insert)
 		int result1 = paymentMapper.addPaymentRecord(paymentVO);
-		log.info("result1:" + result1);
+		log.info("result1: " + result1);
+		
+		// 결제 금액
+		int result2 = paymentMapper.pay_amount(paymentVO.getPay_res_rid());
+		log.info("resutl2: " + result2);
+		
 		// 회원 포인트 차감 (update)
-		int result2 = paymentMapper.deductPayment(paymentVO);
-		log.info("result2:" + result2);
+		int result3 = paymentMapper.deductPayment(paymentVO);
+		log.info("result3: " + result3);
 		// 예약 상태 변경
 		log.info("res_rid:" + paymentVO.getPay_res_rid());
 		
-		int result3 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
-		log.info("result3:" + result3);
+		int result4 = paymentMapper.reserveStatus(paymentVO.getPay_res_rid());
+		log.info("result4: " + result4);
 		
-		return (result1 + result2 + result3) == 3 ? true : false;
+		return (result1 + result2 + result3 + result4) == 4 ? true : false;
 	}
 
 
-	@Override
-	public List<PaymentDTO> getPaymentInfo(String pay_mem_id) {
-		
-		List<PaymentDTO> list = paymentMapper.getPaymentInfo(pay_mem_id);
-		log.info("list:" + list);
-		return list;
-	}
+//	@Override
+//	public List<PaymentDTO> getPaymentInfo(String pay_mem_id) {
+//		
+//		List<PaymentDTO> list = paymentMapper.getPaymentInfo(pay_mem_id);
+//		log.info("list:" + list);
+//		return list;
+//	}
 
 
 	@Override
@@ -130,7 +136,5 @@ public class PaymentServiceImpl implements PaymentService {
 	public int getPay(int pay_res_rid) {
 		return paymentMapper.getPay(pay_res_rid);	
 	}
-
-
 
 }

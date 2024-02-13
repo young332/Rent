@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.rent.admin.domain.CarInfoVO;
+import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.service.PaymentService;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
+import com.kh.rent.reserve.service.ReserveService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -31,6 +36,9 @@ public class CheckoutController {
 	@Autowired
     private PaymentService paymentService;
 	
+	@Autowired
+	private ReserveService reserveService;
+	
 	@GetMapping("/payment")
 	public void paymentGet(@ModelAttribute("res_rid") int res_rid, HttpSession session, Model model) {
 		
@@ -42,17 +50,22 @@ public class CheckoutController {
 		int totalPay = paymentService.getPay(res_rid);
 		log.info("totalPay" + totalPay);
 		
+		PaymentVO paymentVO = (PaymentVO)session.getAttribute("paymentVO");
+		model.addAttribute("paymentVO", paymentVO);
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
 		List<ReserveVO> reserveList = paymentService.getReserveList(mem_id);
 		model.addAttribute("reserveList", reserveList);
+		List<CarInfoVO> carlist = reserveService.getCarInfo();
+		model.addAttribute("carlist", carlist);
 		
+		log.info("carlist: " + carlist);
 		log.info("reserveList: " + reserveList);
 		
 		model.addAttribute("totalPay", totalPay);
 
 	}
-
+	@Transactional
     @PostMapping("/payment")
 	public String paymentPost(PaymentVO paymentVO, Model model,
 	                                 HttpSession session,
@@ -61,11 +74,12 @@ public class CheckoutController {
     	log.info("paymentVO:" + paymentVO);
     	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");		
     	String mem_id = loginInfo.getMem_id();
+    	int point = loginInfo.getMem_point();
     	log.info("mem_id:" + mem_id);
     	
     	//int totalPay = paymentService.getTotalPay(paymentVO.getPay_res_rid());
     	int totalPay = paymentService.getPay(paymentVO.getPay_res_rid());
-    	
+    	paymentVO.setPay_amount(totalPay);
     	paymentVO.setPay_mem_id(mem_id);
     	paymentVO.setPay_type("PAY_P");
     	
@@ -73,12 +87,17 @@ public class CheckoutController {
     	boolean result = paymentService.pay(paymentVO);
     	
     	log.info("result: " + result);
-    	if (result) {
-    		loginInfo.setMem_point(loginInfo.getMem_point() - totalPay);
-    		session.setAttribute("loginInfo", loginInfo);
-    	}
+    	
+//    	if (result) {
+//    		loginInfo.setMem_point(point - totalPay);
+//    		session.setAttribute("loginInfo", loginInfo);
+//    	}
+    	
 //    	model.addAttribute("result", result);	
 //		rttr.addFlashAttribute("pay_result", String.valueOf(result));
+    	
+    	loginInfo.setMem_point(point - totalPay);
+    	session.setAttribute("loginInfo", loginInfo);
 
 	    return "redirect:/myPage/reservationList";
 	    

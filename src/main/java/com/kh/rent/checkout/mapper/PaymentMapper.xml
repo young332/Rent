@@ -6,8 +6,8 @@
 		
 	<!-- 결제 내역 기록-->
 	<insert id="addPaymentRecord">
-		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type, pay_status)
-		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type}, '결제완료')
+		insert into TBL_PAYMENT (pay_res_rid, pay_mem_id, pay_type, pay_status, pay_amount)
+		values (#{pay_res_rid}, #{pay_mem_id}, #{pay_type}, '결제완료', #{pay_amount})
 	</insert>
 	
 	 <!-- 예약 상태 변경 -->
@@ -19,6 +19,22 @@
 		res_status = '예약완료'
 		where res_rid = #{pay_res_rid}
 		and pay_status = '결제완료'
+    </update>
+    
+    	 <!-- 결제금액 변경 -->
+    <update id="pay_amount" parameterType="map">
+<!-- 		UPDATE rent001.TBL_PAYMENT AS p -->
+<!-- 		JOIN rent001.TBL_RESERVE AS r ON p.pay_res_rid = r.res_rid -->
+<!-- 		SET p.pay_amount = #{pay_amount} -->
+<!-- 		WHERE r.res_rid = #{res_rid} -->
+<!-- 		AND p.pay_res_rid = #{pay_res_rid} -->
+<!-- 		AND r.res_totalpay = #{res_totalpay}; -->
+
+	UPDATE rent001.TBL_RESERVE, rent001.TBL_PAYMENT 
+	SET rent001.TBL_PAYMENT.pay_amount = #{pay_amount}
+	WHERE rent001.TBL_RESERVE.res_rid = #{res_rid}
+	AND rent001.TBL_PAYMENT.pay_res_rid = #{pay_res_rid}
+	AND rent001.TBL_RESERVE.res_totalpay = #{res_totalpay};
     </update>
 		
 	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
@@ -62,15 +78,14 @@
         select * from TBL_RESERVE
  		where res_mem_id = #{mem_id}
     </select>
-           
+               
     <!-- 비회원 예약 번호 불려오기 -->	
 	<select id="getPayNonResRid" parameterType="int" resultType="int">
         SELECT non_rid
         FROM TBL_NONMEMBER
         WHERE non_rid = #{pay_res_rid}
     </select>
-    
-    
+
      <!-- 결제 시 res_totalpay 불려오기 -->
     <select id="getPay" resultType="int">
     	select res_totalpay 
@@ -110,7 +125,7 @@
 <!--     ) -->
 <!--     </update> -->
     
-    <!-- 예약 상태 변경(예약취소) : 쌤 -->
+    <!-- 예약 상태 변경(예약취소) -->
     <update id="reserveCancel" parameterType="int">
     	update TBL_RESERVE set
 			res_status = '예약취소'

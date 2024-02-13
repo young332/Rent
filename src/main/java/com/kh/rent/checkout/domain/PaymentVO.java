@@ -26,4 +26,6 @@ public class PaymentVO {
 	
 	private String pay_status;
 	
+	private int pay_amount;
+	
 }
