@@ -619,7 +619,7 @@
 	        // 결제 요청을 보내기 전에 서버로부터 이미 결제가 완료된 PAY_RES_RID 값이 있는지 확인
 	        $.ajax({
 	            type: "GET",
-	            url: "/checkout/checkPaymentStatus", 
+	            url: "/checkout/payment", 
 	            contentType: "application/json",
 	            data: res_rid, 
 	            success: function(data) {
