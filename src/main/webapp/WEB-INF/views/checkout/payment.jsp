@@ -624,11 +624,12 @@
 	            data: res_rid, 
 	            success: function(data) {
 	                if (data === "already_paid") {
-	                    // 이미 결제가 완료된 경우
+	                    
+	                	// 이미 결제가 완료된 경우
 	                    var confirmAgain = confirm("이미 결제가 완료된 예약입니다. 다른 작업을 진행하시겠습니까?");
 	                    if (confirmAgain) {
 	                        // 사용자가 확인을 누른 경우
-	                        window.location.href = "/otherPage"; // 다른 페이지로 이동
+	                        window.location.href = "/myPage/reservationList"; // 다른 페이지로 이동
 	                    } else {
 	                        // 사용자가 취소를 누른 경우
 	                        // 아무 작업도 하지 않음
