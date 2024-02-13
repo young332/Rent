@@ -619,7 +619,7 @@
 	        // 결제 요청을 보내기 전에 서버로부터 이미 결제가 완료된 PAY_RES_RID 값이 있는지 확인
 	        $.ajax({
 	            type: "GET",
-	            url: "/checkout/payment", 
+	            url: "/checkout/checkPaymentStatus", 
 	            contentType: "application/json",
 	            data: res_rid, 
 	            success: function(data) {
@@ -676,9 +676,9 @@
 	        });
 	    }
    
-// 		    window.onbeforeunload = function() {
-// 		        return "만료된 페이지 입니다."; // 사용자에게 표시할 경고 메시지
-// 		    };
+		    window.onbeforeunload = function() {
+ 		        return "만료된 페이지 입니다."; // 사용자에게 표시할 경고 메시지
+		    };
 	
 	    	
 	});	
