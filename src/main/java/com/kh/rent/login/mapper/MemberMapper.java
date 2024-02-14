@@ -3,6 +3,7 @@ package com.kh.rent.login.mapper;
 import java.util.List;
 
 import com.kh.rent.login.domain.FindIdDTO;
+import com.kh.rent.login.domain.FindPwDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NonMemberLoginDTO;
@@ -26,6 +27,9 @@ public interface MemberMapper {
 		
 		//비밀번호변경
 		public int changePassword(LoginDTO loginDTO);
+		
+		//비밀번호 변경시 아이디 이메일 찾기
+		public int findByIdAndEmail(FindPwDTO findPwDTO);
 		
 		//조회
 		public List<MemberVO> getList();

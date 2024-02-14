@@ -74,7 +74,12 @@ $(function(){
 			$("#non_name").focus();
 			
 			}
-	});	
+	});
+	
+		// 비밀번호 재설정 성공 여부 확인
+		<c:if test="${emailSend eq true}">
+		    alert("새로운 비밀번호가 이메일로 전송되었습니다.");
+		</c:if>
 	
 
 });	

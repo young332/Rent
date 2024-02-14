@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.login.domain.FindIdDTO;
+import com.kh.rent.login.domain.FindPwDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NonMemberLoginDTO;
@@ -93,7 +94,19 @@ public class MemberServiceTests {
 		.mem_id("MEMBER01")
 		.build();
 		memberService.changePassword(loginDTO);
-	}	
+	}
+	
+	@Test
+	public void testFindIdAndEmail() {
+		String mem_id ="MEMBER03";
+		String mem_email = "tgk3732@naver.com";
+		FindPwDTO findPwDTO = FindPwDTO.builder()
+				.mem_id(mem_id)
+				.mem_email(mem_email)
+				.build();
+		int result = memberService.findByIdAndEmail(findPwDTO);
+		log.info("result : " + result);
+	}
 	
 	@Test
 	public void testCheckId() {

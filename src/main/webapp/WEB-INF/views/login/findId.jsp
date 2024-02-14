@@ -72,11 +72,11 @@ $(function(){
             <div class="form-group">
               <div class="form-group">
              	<label for="mem_name">이름</label>
-                <input type="text" id="mem_name" name="mem_name" class="form-control" placeholder="이름를 입력해주세요." value="이순신">
+                <input type="text" id="mem_name" name="mem_name" class="form-control" placeholder="이름를 입력해주세요.">
               </div> 
               <div class="form-group">
               	<label for="mem_phone">휴대전화</label>
-                <input type="number"  id="mem_phone"  name="mem_phone" class="form-control" placeholder="핸드폰 번호를 입력해주세요." value="01015450428">
+                <input type="number"  id="mem_phone"  name="mem_phone" class="form-control" placeholder="핸드폰 번호를 입력해주세요.">
               </div>
               <div class="form-group">
                 <button type="button" id="find_id" class="btn btn-primary py-3 px-5">아이디 찾기</button>
