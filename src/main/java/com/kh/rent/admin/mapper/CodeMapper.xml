@@ -47,9 +47,4 @@
 		where code_id = #{code_id} 
 	</delete>
 
-	
-	
-	
-	
-
 </mapper>

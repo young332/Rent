@@ -7,7 +7,7 @@
 	<delete id="deleteCheckedBoard">
         DELETE FROM rent001.TBL_BOARD
         WHERE board_no IN
-        <foreach item="board_no" collection="boardNumbers" open="(" separator="," close=")">
+        <foreach item="board_no" collection="list" open="(" separator="," close=")">
             #{board_no}
         </foreach>
     </delete>	

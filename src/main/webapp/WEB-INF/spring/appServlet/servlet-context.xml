@@ -81,8 +81,8 @@
 			<exclude-mapping path="/admin/car/search"/>
 			<exclude-mapping path="/admin/car/getCarInfo"/>
 			<exclude-mapping path="/admin/car/deleteCarFile"/>
+			<exclude-mapping path="/admin/car/deleteCheckedCar"/>
 			<exclude-mapping path="/admin/board/deleteCheckedBoard"/>
-
 			<beans:ref bean="menuInterceptor" />
 		</interceptor>
 		

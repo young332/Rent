@@ -27,6 +27,7 @@ public interface CarInfoMapper {
 	public int deleteCarFile(Integer file_id);
 
 	public int updateCarinfoFile(Integer file_id);
-
+	
+	public int deleteCheckedCar(List<Integer> carNumbers);
 
 }

@@ -73,4 +73,10 @@ public class CarInfoServiceImpl implements CarInfoService {
 		return fileId;
 	}
 
+	@Override
+	public int deleteCheckedCar(List<Integer> carNumbers) {
+		int count = carInfoMapper.deleteCheckedCar(carNumbers);
+		return count;
+	}
+
 }

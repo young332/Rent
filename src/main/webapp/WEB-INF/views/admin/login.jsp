@@ -3,7 +3,6 @@
 
 <head>
     <title>관리자페이지 로그인</title>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -105,31 +104,30 @@
     <!-- <script src="/resources/assets/js/demo.js"></script>
     <script src="assets/js/analytics.js"></script> -->
     
-    <script>
-		$(function(){
-			var loginResult = "${loginFailure}";
-			if(loginResult == "true"){
-				alert("아이디와 비밀번호를 다시 확인해주세요");
-					$("#mem_id").focus();
-				}
-		
-			//쿠키 아이디
-			var cookie = document.cookie;
-				console.log("cookie:",cookie);
-				var cookies = cookie.split(";");
-				console.log("cookies:" , cookies);
-				for (var v = 0; v < cookies.length; v++) {
-					var aCookie = cookies[v].split("=");
-					if (aCookie[0].trim() == "savedId") {
-						var savedId = aCookie[1];
-						console.log("savedId:", savedId);
-						$("#mem_id").val(savedId);
-						$("#mem_pw").focus();
-						break;
-					}
-				}
-			
-			});
+<script>
+$(function(){
+	var loginResult = "${loginFailure}";
+	if(loginResult == "true"){
+		alert("아이디와 비밀번호를 다시 확인해주세요");
+			$("#mem_id").focus();
+	}
+
+//쿠키 아이디
+var cookie = document.cookie;
+console.log("cookie:",cookie);
+var cookies = cookie.split(";");
+console.log("cookies:" , cookies);
+	for (var v = 0; v < cookies.length; v++) {
+		var aCookie = cookies[v].split("=");
+		if (aCookie[0].trim() == "savedId") {
+			var savedId = aCookie[1];
+			console.log("savedId:", savedId);
+			$("#mem_id").val(savedId);
+			$("#mem_pw").focus();
+			break;
+		}
+	}
+});
 
 </script>
     
