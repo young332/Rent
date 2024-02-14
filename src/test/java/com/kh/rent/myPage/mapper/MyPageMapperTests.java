@@ -23,7 +23,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @WebAppConfiguration
 public class MyPageMapperTests {
-	// 잘올라가라
 	
 	@Autowired
 	private MyPageMapper myPageMapper;

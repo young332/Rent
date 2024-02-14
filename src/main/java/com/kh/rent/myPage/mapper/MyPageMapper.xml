@@ -57,7 +57,7 @@
 		        when r.res_status != '예약취소' 
 		            and r.res_rental_date <= now() 
 		            and r.res_return_date >= now() 
-		            and p.pay_status is null then '예약취소'
+		            and p.pay_status is null then '기한만료'
 		        when r.res_status != '예약취소' 
 		            and r.res_rental_date <= now() 
 		            and r.res_return_date >= now() then '이용중'
@@ -65,7 +65,7 @@
 		            and r.res_return_date < now() then '이용완료'
 		        when r.res_status != '예약취소' 
 		            and r.res_return_date < now()
-		            and p.pay_status is null then '예약취소'
+		            and p.pay_status is null then '기한만료'
 		        else r.res_status
 		    end,
 		    r.res_modi_date = now()
@@ -128,7 +128,7 @@
 		where n.non_rid = #{res_rid} and n.non_car_id = #{res_car_id}
 	</select>
 	
-	<!-- 예약취소 -->
+	<!-- 예약취소(비회원) -->
 	<update id="cancelReservation_non">
 		update rent001.TBL_NONMEMBER
 		set non_status = '예약취소'

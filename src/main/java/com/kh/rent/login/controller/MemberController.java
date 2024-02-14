@@ -31,6 +31,8 @@ import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NonMemberLoginDTO;
 import com.kh.rent.login.service.MemberService;
 import com.kh.rent.login.service.Sha256;
+import com.kh.rent.point.domain.PointVO;
+import com.kh.rent.point.service.PointService;
 import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
@@ -48,6 +50,9 @@ public class MemberController {
 	
 	@Autowired
 	private Sha256 sha256;
+	
+	@Autowired
+	private PointService pointService;
 
 	@GetMapping("/login")
 	public void login() {
@@ -97,6 +102,7 @@ public class MemberController {
 	public void signup() {
 		log.info("signUp");
 	}
+	
 	//회원가입
 	@PostMapping("/signUpPost")
 	public String singUpPost(MemberVO memberVO, RedirectAttributes rttr) {
@@ -106,6 +112,16 @@ public class MemberController {
 		
 		boolean result = memberService.registerPost(memberVO);
 		log.info("result:" + result);
+		
+		// 회원가입 포인트 기록 추가
+		PointVO pointVO = PointVO.builder()
+				.point_user_id(memberVO.getMem_id())
+				.point_code("POINT_J")
+				.point_cost(100000)
+				.build();
+		if (result == true) {
+			pointService.addPointTable(pointVO);
+		}
 		rttr.addFlashAttribute("registerResult", String.valueOf(true));
 		return "redirect:/login/login";
 	}

@@ -11,10 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PointVO {
-	private int point_id;
+public class PointDTO {
+	private Integer rowNum;
+	private Integer point_id;
 	private String point_user_id;
 	private String point_code;
+	private String point_code_name;
 	private Timestamp point_use_date;
-	private int point_cost;
+	private Integer point_cost;
+	private Integer mem_point;
+	private String point_section;
 }

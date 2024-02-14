@@ -25,6 +25,8 @@ import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
+import com.kh.rent.point.domain.PointDTO;
+import com.kh.rent.point.service.PointService;
 import com.kh.rent.reserve.domain.NonMemberVO;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
@@ -37,6 +39,9 @@ public class MyPageController {
 	
 	@Autowired
 	private MyPageService myPageService;
+	
+	@Autowired
+	private PointService pointService;
 	
 	// 예약확인 페이지
 	@GetMapping("/reservationList")
@@ -73,8 +78,14 @@ public class MyPageController {
 	
 	// 마이페이지
 	@GetMapping("/myPage")
-	public void myPage() {
+	public void myPage(HttpSession session, Model model) {
 		log.info("myPageGet..");
+		
+		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		String mem_id = loginInfo.getMem_id();
+		List<PointDTO> pointList = pointService.getPointList(mem_id);
+//		log.info("pointList:" + pointList);
+		model.addAttribute("pointList", pointList);
 	}
 	
 	// 내 정보관리 페이지
