@@ -62,6 +62,7 @@
 		<interceptor>
 			<mapping path="/myPage/**/*" />
       		<mapping path="/checkout/**/*"/>
+      		<exclude-mapping path="/login/kakaLogin"/>
       		<exclude-mapping path="/myPage/reservationList_guest"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
