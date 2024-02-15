@@ -103,12 +103,14 @@ $(function(){
        
 
     });
+    
     $(".item-joinevent").click(function(e){
     	e.preventDefault(); 
     	if(isLoggedIn){
             alert("이벤트는 비회원 전용입니다. 로그아웃 후 이용해주세요.");
-         
             return;
+        }  else {
+            window.location.href = "/login/signUp";
         }
     });
 
