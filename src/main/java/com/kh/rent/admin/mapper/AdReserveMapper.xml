@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.rent.admin.mapper.AdReserveMapper">
+
+	<select id="allReserveList" resultType="com.kh.rent.myPage.domain.GetStatusDTO">
+		select r.*, p.pay_status, p.pay_pid
+		from TBL_RESERVE as r
+		left join TBL_PAYMENT as p on r.res_rid = p.pay_res_rid
+	</select>
+
+
+</mapper>

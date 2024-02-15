@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService {
 	
-	private List<MenuVO> menuList;
-	
 	@Autowired
 	private MenuMapper menuMapper;
 
@@ -67,8 +65,4 @@ public class MenuServiceImpl implements MenuService {
 		int count = menuMapper.delete(menu_id);
 		return count;
 	}
-
-	
-
-
 }
