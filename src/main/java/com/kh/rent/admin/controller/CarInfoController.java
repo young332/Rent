@@ -43,8 +43,7 @@ public class CarInfoController {
 
 	// 차량 등록 처리
 	@PostMapping("/CarInfoAdd")
-	public String carInfoAdd(CarInfoVO carInfoVO, @RequestParam("image_path") MultipartFile imagePath,
-			RedirectAttributes rttr) {
+	public String carInfoAdd(CarInfoVO carInfoVO, @RequestParam("image_path") MultipartFile imagePath, RedirectAttributes rttr) {
 		log.info("carInfoVO:" + carInfoVO);
 		log.info("uploadDirectory:" + uploadDirectory);
 		FileVO fileVO = new FileVO();
@@ -98,6 +97,7 @@ public class CarInfoController {
 
 		int file_id1 = carInfoVO.getFile_id();
 		System.out.println("file_id1:" + file_id1);
+		
 		int resultDel = carInfoService.deleteCarFile(file_id1);
 
 		FileVO fileVO = new FileVO();
