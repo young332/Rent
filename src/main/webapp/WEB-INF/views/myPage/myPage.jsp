@@ -54,6 +54,46 @@ function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+// 예약 건 정보 가져오기
+function getResInfo(res_rid) {
+	$.ajax({
+	    type: 'GET',
+	    url: '/myPage/getResInfo',  
+	    data: { res_rid: res_rid },
+	    success: function (data) {
+	    	console.log('Success:', data);
+			var modalBody = $("#resModalBody");
+			modalBody.empty();
+			
+	     	if (data.length == 0) {
+	     		modalBody.text("예약건 정보없음");
+	      	} else {
+	    		$.each(data, function(index, resInfo) {
+	    			var rental_date = formattedDate(resInfo.res_rental_date);
+	    			var return_date = formattedDate(resInfo.res_return_date);
+	    			var totalPay = formatNumberWithCommas(resInfo.res_totalpay);
+	    			
+	   	  			var row = $("<ul style='color: black;'>");
+	    	  		row.append($("<li>").text("예약번호: " + resInfo.res_rid));
+	    	  		row.append($("<li>").text("대여시작일: " + rental_date));
+	    	  		row.append($("<li>").text("대여종료일: " + return_date));
+	    	  		row.append($("<li>").text("차종: " + resInfo.car_name));
+	    	  		row.append($("<li>").text("예약상태: " + resInfo.res_status));
+	    	  		row.append($("<li>").text("예약금액: " + totalPay));
+	    	  		row.append($("</ul>"));
+	    	  		
+	    	  		modalBody.append(row);
+	            });
+	
+	            $("#reserveInModal").modal("show");
+	         }
+      },
+      error: function(xhr, status, error) {
+          console.log('Error:', error);
+      }
+	});
+}
+
 $(document).ready(function() {
 	
 	var myPoint = $("#myPoint").text();
@@ -125,10 +165,10 @@ $(function() {
    
 	// 포인트충전 모달열기
 	$("#btnPoint").click(function() {
-		var mem_id = "${loginInfo.mem_id}";
-   	console.log(mem_id);
-   	$("#point_mem_id").val(mem_id);
-   	$("#point_user_id").val(mem_id);
+	var mem_id = "${loginInfo.mem_id}";
+	   	console.log(mem_id);
+	   	$("#point_mem_id").val(mem_id);
+	   	$("#point_user_id").val(mem_id);
    	
 		$("#pointInModal").modal("show");
 	});
@@ -156,19 +196,10 @@ $(function() {
 		return;
 	}
 	
-	// 예약내역 모달열기
+	// 예약내역 모달창 열기
 	$(".reserveDiv").click(function() {
-		var resInfo = $(this).data("res-info");
-	    console.log("resInfo:", resInfo);
-	    if (resInfo) {
-	        $("#reserve_rid").text("예약번호: " + resInfo.res_rid);
-	        $("#reserve_rental_date").text("대여시작일: " + resInfo.res_rental_date);
-	        $("#reserve_return_date").text("대여종료일: " + resInfo.res_return_date);
-	        $("#reserve_car_name").text("차종: " + resInfo.car_name);
-// 	        $("#reserve_payment_status").text("결제상태: " + resInfo.payment_status);
-	    }
-	    alert("열림");
-	    $("#reserveInModal").modal("show");
+		var res_rid = $(this).data("res-rid");
+		getResInfo(res_rid);
 	});
 });
 
@@ -265,7 +296,7 @@ $(function() {
           	<c:if test="${not empty reserveList}">
 	          	<div class="row">
 	          		<c:forEach var="myReserve" items="${reserveList}">
-						<div class="reserveDiv col-md-4" data-res-info="${myReserve}" style="padding-bottom: 30px;">
+						<div class="reserveDiv col-md-4" data-res-rid="${myReserve.res_rid}" style="padding-bottom: 30px;">
 							<div class="card" style="height: 100%;">
 								<h6 class="card-header" style="background-color: #f07039; color:#fff;
 															   display: flex; justify-content: center;
@@ -326,21 +357,16 @@ $(function() {
 
 <!-- 예약내역 모달창 -->
 <div class="modal fade" id="reserveInModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal" role="document">
+	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myModalLabel">예약 정보</h5>
+			<div class="modal-header" style="background-color: #f07039;">
+				<h5 class="modal-title" id="myModalLabel" style="color: #fff;">예약 정보</h5>
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				<ul>
-					<li class="list-item" id="reserve_rid"></li>
-					<li class="list-item" id="reserve_rental_date"></li>
-					<li class="list-item" id="reserve_return_date"></li>
-					<li class="list-item" id="reserve_car_name"></li>
-				</ul>
+			<div class="modal-body" id="resModalBody">
+			
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>

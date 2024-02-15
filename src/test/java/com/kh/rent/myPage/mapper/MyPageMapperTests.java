@@ -168,5 +168,13 @@ public class MyPageMapperTests {
 		List<GetStatusDTO> list = myPageMapper.getMyReserveList(mem_id);
 		log.info("Reservelist:" + list);
 	}
+	
+	// 예약정보 조회하기(예약번호 1개 정보)
+	@Test
+	public void testGetMyResInfo() {
+		int res_rid = 86;
+		List<GetStatusDTO> list = myPageMapper.getMyResInfo(res_rid);
+		log.info("res_info:" + list);
+	}
 }
 
