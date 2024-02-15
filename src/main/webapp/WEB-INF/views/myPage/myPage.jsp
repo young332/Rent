@@ -15,6 +15,10 @@ $(document).ready(function() {
 	if (point.length > 0) {
 		$("#myPoint").text(formatNumberWithCommas(point));
 	}
+	var msg = "${msg}";
+	if (msg == "fail") {
+		alert("이벤트 실패");
+	}
 });
 
 </script>
