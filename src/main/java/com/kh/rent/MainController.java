@@ -86,7 +86,7 @@ public class MainController {
 	    	rttr.addFlashAttribute("msg", "fail");
 	    }
 		 
-		return "redirect:/myPage/myPage";
+		return "redirect:/customerevent";
 		
 	}
 	
