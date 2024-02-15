@@ -17,6 +17,7 @@
 	}
 </style>
 <section>
+
     <div class="hero-wrap ftco-degree-bg" style="background-image: url('/resources/carbook-master/img/banner.png');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -31,7 +32,6 @@
         </div>
       </div>
     </div>
-</section>
 
      <section class="ftco-section ftco-no-pt bg-light">
     	<div class="container">
@@ -106,7 +106,6 @@
 	  					</div>
 	  				</div>
 				</div>
-  			</div>
   		</div>
     </section>
     <section class="ftco-section ftco-no-pt bg-light">
@@ -160,12 +159,7 @@
     
 <script>
 $(function() {
-	$("#bntSearch").click(function() {
-		var p = $("#book_pick_date").val();
-		var o = $("#book_off_date").val();
-		console.log("p:", p);
-		console.log("o:", o);
-	});
+
 	$("#bntSearch").click(function() {
         var pickDate = $("#book_pick_date").val();
         var offDate = $("#book_off_date").val();
@@ -185,7 +179,7 @@ $(function() {
 
 	        var selectedDate = new Date(selectedDateTime);
 
-	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
+	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 07:59)
 	        var isDawnTime = selectedDate.getHours() < 8;
 
 	        // 이용시간 어긴경우인 경우 알림 띄우기
