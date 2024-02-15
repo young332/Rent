@@ -78,8 +78,8 @@ function getResInfo(res_rid) {
 	    	  		row.append($("<li>").text("대여시작일: " + rental_date));
 	    	  		row.append($("<li>").text("대여종료일: " + return_date));
 	    	  		row.append($("<li>").text("차종: " + resInfo.car_name));
+	    	  		row.append($("<li>").text("금액: " + totalPay));
 	    	  		row.append($("<li>").text("예약상태: " + resInfo.res_status));
-	    	  		row.append($("<li>").text("예약금액: " + totalPay));
 	    	  		row.append($("</ul>"));
 	    	  		
 	    	  		modalBody.append(row);
@@ -118,7 +118,14 @@ $(document).ready(function() {
 	$(".card-header").each(function() {
 		var cardDate= $(this).text();
 		if (cardDate) {
-			$(this).text(formattedDate(cardDate));
+			var date = new Date(cardDate);
+			var year = date.getFullYear();
+		    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+		    var day = ("0" + date.getDate()).slice(-2);
+		    
+		    var cDate = year + "-" + month + "-" + day;
+		    
+			$(this).text(cDate);
 		}
 	});
 });
