@@ -21,6 +21,7 @@ import com.kh.rent.admin.domain.DelMemberVO;
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.AdMemberService;
+import com.kh.rent.admin.service.AdReserveService;
 import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.admin.service.CodeService;
 import com.kh.rent.admin.service.MenuService;
@@ -28,6 +29,7 @@ import com.kh.rent.board.domain.BoardVO;
 import com.kh.rent.board.service.BoardService;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
+import com.kh.rent.myPage.domain.GetStatusDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -51,6 +53,8 @@ public class AdminController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private AdReserveService adReserveService;
 	
 	
 	@GetMapping("/")
@@ -127,6 +131,12 @@ public class AdminController {
 		model.addAttribute("dateTime",formattedDateTime);
 		model.addAttribute("boardVO", list);
 		log.info("model:" +  model);
+	}
+
+	@GetMapping("/reserve")
+	public void adminReserveGet(Model model) {
+		List<GetStatusDTO> reserveList = adReserveService.allReserveList();
+		model.addAttribute("reserveList", reserveList);
 	}
 	
     // ----------- 로그인 관련 --------------- 	
