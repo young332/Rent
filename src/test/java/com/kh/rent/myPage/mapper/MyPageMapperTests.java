@@ -23,7 +23,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @WebAppConfiguration
 public class MyPageMapperTests {
-	// 잘올라가라
 	
 	@Autowired
 	private MyPageMapper myPageMapper;
@@ -160,6 +159,14 @@ public class MyPageMapperTests {
 		int non_rid = 4;
 		int result = myPageMapper.cancelReservation_non(non_rid);
 		log.info("cancleResult:" + result);
+	}
+	
+	// 예약정보 조회하기(마이페이지)
+	@Test
+	public void testGetMyReserveList() {
+		String mem_id = "MEMBER03";
+		List<GetStatusDTO> list = myPageMapper.getMyReserveList(mem_id);
+		log.info("Reservelist:" + list);
 	}
 }
 

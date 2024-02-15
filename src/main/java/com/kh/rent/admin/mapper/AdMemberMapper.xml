@@ -98,13 +98,12 @@
 	
 	<!-- 충전내역 입력 -->
 	<insert id="addPointTable">
-	    INSERT INTO rent001.TBL_POINT (point_user_id, point_code, point_use_date, point_cost)
+
+	    INSERT INTO TBL_POINT (point_user_id, point_code, point_use_date, point_cost)
+
 	    VALUES (
 	        #{point_user_id}, #{point_code}, NOW(), #{point_cost}
 	    )
 	</insert>
-
-	
-	
            
 </mapper>
