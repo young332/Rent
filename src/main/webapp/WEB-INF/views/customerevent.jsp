@@ -506,8 +506,8 @@ $(function(){
 
 								<button type="button" class="btn btn-primary" id="btnpoint">
 									확인</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">닫기</button>
+<!-- 								<button type="button" class="btn btn-secondary" -->
+<!-- 									data-dismiss="modal">닫기</button> -->
 							</div>
 						</form>
 					</div>
