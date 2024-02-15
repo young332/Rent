@@ -23,7 +23,6 @@ public class DelMemberVO {
 	private Timestamp del_ddate;
 	private Integer del_point;
 	
-
 }
 
 

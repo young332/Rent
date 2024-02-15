@@ -12,16 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.admin.domain.CarInfoVO;
-import com.kh.rent.checkout.domain.PaymentDTO;
 import com.kh.rent.checkout.domain.PaymentVO;
 import com.kh.rent.checkout.service.PaymentService;
 import com.kh.rent.login.domain.MemberVO;
-import com.kh.rent.reserve.domain.ReserveDTO;
 import com.kh.rent.reserve.domain.ReserveVO;
 import com.kh.rent.reserve.service.ReserveService;
 
@@ -67,11 +66,14 @@ public class CheckoutController {
 	}
 	@Transactional
     @PostMapping("/payment")
-	public String paymentPost(PaymentVO paymentVO, Model model,
+	@ResponseBody
+	public String paymentPost(@RequestBody PaymentVO paymentVO, Model model,
 	                                 HttpSession session,
 	                                 RedirectAttributes rttr) {
     	
     	log.info("paymentVO:" + paymentVO);
+    	
+    	
     	MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");		
     	String mem_id = loginInfo.getMem_id();
     	int point = loginInfo.getMem_point();
@@ -98,8 +100,8 @@ public class CheckoutController {
     	
     	loginInfo.setMem_point(point - totalPay);
     	session.setAttribute("loginInfo", loginInfo);
-
-	    return "redirect:/myPage/reservationList";
+		
+	    return "success";
 	    
     }
     

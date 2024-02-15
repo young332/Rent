@@ -1,6 +1,6 @@
 package com.kh.rent.point.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +15,6 @@ public class PointVO {
 	private int point_id;
 	private String point_user_id;
 	private String point_code;
-	private Date point_use_date;
+	private Timestamp point_use_date;
 	private int point_cost;
 }

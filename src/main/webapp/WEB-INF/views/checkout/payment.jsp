@@ -126,7 +126,18 @@
  
   </head>
   
+  <script type="text/javascript">
+
+ 		window.history.forward();
+
+ 		function noBack(){window.history.forward();}
+
+	</script>
+
 <body>
+  
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+
 	
 <%-- res_rid: ${res_rid} --%>
 
@@ -140,7 +151,7 @@
     </div>
 
     <div class="row g-5">
-      <div class="col-md-5 col-lg-4 order-md-last">
+      <div class="col-md-4 col-lg-5 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">결제내역</span>
         </h4>
@@ -150,7 +161,7 @@
               <c:if test="${not empty reserveList}">
 				<c:set var="firstReservation" value="${reserveList[0]}" />
               	<h6 class="my-0" style="color: black;">울산지점</h6>
-              	<span>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</span>
+              	<span>${firstReservation.res_rental_date} ~ ${firstReservation.res_return_date}</span><br>
 			  	<h7>(총시간 : <span id="hours">${hours}</span>시간 <span id="minutes">${minutes}</span>분)</h7><br>
 			  </c:if><br>
 				    <c:set var="carlist" value="${carlist[0]}"/>
@@ -175,10 +186,10 @@
           </li>
         <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-		    <h6 class="my-0" style="color:black;">운전자</h6>
-		    <small class="text-muted">${loginInfo.mem_name}</small><br>
+		    <h6 style="color:black;">운전자</h6>
+		    <span>${loginInfo.mem_name}</span><br>
 		    <!-- 면허번호 -->
-		    <small class="text-muted">${firstReservation.res_license_type} ${firstReservation.res_license_num}</small>
+		    <span>${firstReservation.res_license_type} ${firstReservation.res_license_num}</span>
 			</div>
           </li>
         <ul class="list-group mb-3" type="none">
@@ -220,10 +231,10 @@
 			    <col width="*"   />
 			  </colgroup>
 		  <tbody>
-		    <tr>
-		      <th>결제금액</th>
-		      <td><span class="bold txt_blue" id="totalPay" name="totalPay" value="${totalPay}">${totalPay}원</span></td>
-		    </tr>
+<!-- 		    <tr> -->
+<!-- 		      <th>결제금액</th> -->
+<%-- 		      <td><span class="bold txt_blue" id="totalPay" name="totalPay" value="${totalPay}">${totalPay}원</span></td> --%>
+<!-- 		    </tr> -->
 		    <tr>
 		      <th> 사용가능 포인트  </th>
 		      <td><span id="left_pnt" name="left_pnt">${loginInfo.mem_point}</span>p</span></td>
@@ -281,14 +292,14 @@
 <!--           </div> -->
 <!--         </form> -->
       </div>
-      <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">예약자 정보</h4>
+      <div class="col-md-3 col-lg-7">
+        <h4>예약자 정보</h4>
 <!--         <form id="checkout_form" class="needs-validation"> -->
         <form id="checkout_form" class="needs-validation" action="/checkout/payment" method="POST">
         	<input type="hidden" name="pay_res_rid" id="pay_res_rid" value="${res_rid}">
 <%--         	<input type="hidden" name="pay_amount" id="pay_amount" value="${res_totalpay}"> --%>
-          <div class="row g-3">
-            <div class="col-sm-12">
+          <div>
+            <div class="col-sm-8">
               <label for="name" class="form-label">이름</label>
               <input type="text" class="form-control" id="name" value="${loginInfo.mem_name}" readonly>
               <div class="invalid-feedback">
@@ -296,7 +307,7 @@
               </div><br>
             </div>
 
-            <div class="col-12">
+            <div class="col-sm-8">
               <label for="text" class="form-label">연락처<span class="text-muted"></span></label>
               <input type="text" class="form-control" id="phone" value=${loginInfo.mem_phone} readonly>
               <div class="invalid-feedback">
@@ -304,13 +315,13 @@
               </div><br>
             </div>
 
-            <div class="col-12">
+            <div class="col-sm-8">
               <label for="birth" class="form-label">생년월일</label>
               <input type="text" class="form-control" id="birth" value=${loginInfo.mem_birth} readonly>
               <div class="invalid-feedback">
                 생년월일 불려오기
               </div><br>
-            </div>
+            </div><br><br><br><br>
 
 <!-- 		<div class="col-md-7 col-lg-8"> -->
 <!--           <h4 class="mb-3">Payment</h4> -->
@@ -479,6 +490,7 @@
    $("#minutes").text(minutes);
    
    $(document).ready(function() {
+	   
 	    // 페이지 로드 시 최종 결제 금액 초기화
 	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
 	    var point = "${loginInfo.mem_point}";
@@ -556,24 +568,32 @@
 
 	
 	
-	$("#btn_pay").on("click", function(e) {
-	    e.preventDefault(); // 폼 전송 막기
+// 	$("#btn_pay").on("click", function(e) {
+// 	    e.preventDefault(); // 폼 전송 막기
 
-	    var res_rid = $("#res_rid").val();
-	    var pay_res_rid = $("#pay_res_rid").val();
-	    var pay_mem_id = $("#pay_mem_id").val();
-	    var res_totalpay = $("#res_totalpay").val();
-	    console.log("res_totalpay", res_totalpay);
-	    var pay_amount = $("#pay_amount").val();
-	    console.log("pay_amount 1", pay_amount);
+// 	    var res_rid = $("#res_rid").val();
+// 	    console.log("res_rid: ", res_rid);
+// 	    var pay_res_rid = $("#pay_res_rid").val();
+// 	    console.log("pay_res_rid: ", pay_res_rid);
+//	    var pay_mem_id = $("#pay_mem_id").val();
+//	    console.log("pay_mem_id: ", pay_mem_id);
+//	    var res_totalpay = $("#res_totalpay").val();
+//	    console.log("res_totalpay: ", res_totalpay);
+//	    var pay_amount = $("#pay_amount").val();
+//	    console.log("pay_amount form: ", pay_amount);
 
 	    /* 서버 전송 */
-	    $("#checkout_form").submit();
-	});
+// 	    $("#checkout_form").submit();
+// 	});
 
 	$("#btn_pay").on("click", function(e) {
 	    
 		e.preventDefault(); // 폼 전송 막기
+		
+// 		var res_rid = $("#res_rid").val();
+// 	    console.log("res_rid: ", res_rid);
+	    var pay_res_rid = $("#pay_res_rid").val();
+	    console.log("pay_res_rid: ", pay_res_rid);
 
 	    // 필수 약관에 대한 checkbox 요소들을 가져옴
 	    var checkboxes = document.querySelectorAll('.agree_list input[type="checkbox"]');
@@ -591,6 +611,7 @@
 	        // 약관에 동의하도록 안내하는 알림창 표시
 	        alert("약관에 동의해주세요. 결제를 진행하시려면 모든 약관에 동의하셔야 합니다.");
 	        history.go(0);
+			return;
 	    }
 	    
 	    // 결제금액이 부족하지 않은지 확인
@@ -606,6 +627,7 @@
 	    if (totalPay > availablePoint) {
 	        alert("결제 포인트가 부족합니다.");
 	        history.go(0); // 페이지 이동을 막음
+	        return;
 	    }
 	    
 	    
@@ -615,71 +637,45 @@
 // 		console.log("res_rid:", res_rid);
 		
 	    var cfm = confirm("결제 하시겠습니까?");
+	    console.log("cfm", cfm);
+	    var sendData = {"pay_res_rid" : pay_res_rid};
+	    console.log("sendData:", sendData);
 	    if(cfm){
-	        // 결제 요청을 보내기 전에 서버로부터 이미 결제가 완료된 PAY_RES_RID 값이 있는지 확인
-	        $.ajax({
-	            type: "GET",
-	            url: "/checkout/checkPaymentStatus", 
-	            contentType: "application/json",
-	            data: res_rid, 
-	            success: function(data) {
-	                if (data === "already_paid") {
-	                    // 이미 결제가 완료된 경우
-	                    var confirmAgain = confirm("이미 결제가 완료된 예약입니다. 다른 작업을 진행하시겠습니까?");
-	                    if (confirmAgain) {
-	                        // 사용자가 확인을 누른 경우
-	                        window.location.href = "/otherPage"; // 다른 페이지로 이동
-	                    } else {
-	                        // 사용자가 취소를 누른 경우
-	                        // 아무 작업도 하지 않음
-	                    }
-	                } else {
-	                    // 결제 요청을 보냄
-	                    $.ajax({
-	                        async: true,
-	                        type: "GET",
-	                        url: "/checkout/payment", 
-	                        contentType: "application/json",
-	                        data: res_rid, 
-	                        success: function(data) {
-	                            if (data === "success") {
-	                                // 결제가 성공한 경우
-	                                alert("결제완료 했습니다."); // 결제 완료 메시지 표시
-	                                // 페이지 이동
-	                                window.location.replace("/myPage/reservationList");
-	                            } else {
-	                                // 결제가 실패한 경우
-	                                alert("결제에 실패했습니다. 다시 시도해주세요."); // 결제 실패 메시지 표시
-	                                history.go(0);
-	                            }
-	                        },
-	                        error: function(xhr, status, error) {
-	                            // AJAX 요청 실패 시 처리
-	                            console.error("AJAX 요청 실패:", error);
-	                            alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
-	                            history.go(0);
-	                        },
-	                        complete: function() {
-	                            // 결제 진행 중 여부를 false로 설정하여 다시 결제할 수 없게
-	                            isPaymentInProgress = false;
-	                        }
-	                    });
-	                }
-	            },
-	            error: function(xhr, status, error) {
-	                // AJAX 요청 실패 시 처리
-	                console.error("AJAX 요청 실패:", error);
-	                alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
-	                history.go(0);
-	            }
+	         // 결제 요청을 보냄
+             $.ajax({
+                 async: true,
+                 type: "POST",
+                 url: "/checkout/payment", 
+                 contentType: "application/json",
+                 data: JSON.stringify(sendData), 
+                 success: function(data) {
+                	 console.log("data", data);
+                     if (data === "success") {
+                         // 결제가 성공한 경우
+                         alert("결제완료 했습니다."); // 결제 완료 메시지 표시
+                         // 페이지 이동
+                         location.href = "/myPage/reservationList";
+                     } else {
+                         // 결제가 실패한 경우
+                         alert("결제에 실패했습니다. 다시 시도해주세요."); // 결제 실패 메시지 표시
+                         history.go(0);
+                     }
+                 },
+                 error: function(xhr, status, error) {
+                     // AJAX 요청 실패 시 처리
+                     console.error("AJAX 요청 실패:", error);
+//                      alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
+//                      history.go(0);
+                 }
 	        });
+	         
+	    } else {
+	        // 취소 버튼을 눌렀을 때의 동작
+	        // 아무런 동작을 하지 않고 그대로 페이지에 머무르도록 설정
+	        console.log("결제가 취소되었습니다.");
 	    }
-   
-// 		    window.onbeforeunload = function() {
-// 		        return "만료된 페이지 입니다."; // 사용자에게 표시할 경고 메시지
-// 		    };
-	
-	    	
+	    
+   	    	
 	});	
    </script>
    

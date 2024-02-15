@@ -6,7 +6,6 @@
 
 <head>
     <title>관리자페이지</title>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -59,37 +58,33 @@
     <!-- <script src="/resources/assets/js/demo.js"></script> -->
     <!-- <script src="/resources/assets/js/analytics.js"></script> -->
     <!-- <script src="/resources/assets/js/pages/dashboards_index.js"></script> -->
-    <script>
-   
-    function TopMenuClick(href, obj) {
-        console.log("href: ", href);
-         $.ajax({
-	        url: href,
-	        success: function(data) {
-	            console.log("data: ", data);
-	            $("#sub_menu").html(data);
-
-	        }
-	    }); 
- 
-    }
-   
-    $(document).ready(function() {
-        $("#sub_menu").on("click", ".s-link", function(e) {
-        	e.stopPropagation();
-        	e.preventDefault();
-        	var href= $(this).attr("href");
-        	$(this).parent().addClass("open");
-        	TopMenuClick(href, $(this));
-        });
-        
-    });
-    
-    
-</script>
-
 </head>
+<script>
 
+$(document).ready(function() {
+	
+	$("#sub_menu").on("click", ".s-link", function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		var href = $(this).attr("href");
+		$(this).parent().addClass("open");
+		TopMenuClick(href, $(this));
+	});
+
+	function TopMenuClick(href, obj) {
+		console.log("href:", href);
+		$.ajax({
+			url : href,
+			success : function(data) {
+				//console.log("data: ", data);
+				$("#sub_menu").html(data);
+			}
+		});
+
+	}
+
+});
+</script>
 <body>
     <!-- [ Preloader ] Start -->
     <div class="page-loader">
@@ -104,11 +99,12 @@
             <!-- [ Layout sidenav ] Start -->
             <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
                 <!-- Brand demo (see assets/css/demo/demo.css) -->
-                <div class="app-brand demo">
+                <div class="app-brand demo" style="height: 95px;">
                     <span class="app-brand-logo demo">
                         <img src="/resources/adimg/logoY.png" alt="Brand Logo" class="" style=" width: 65px;">
                     </span>
-                    <a href="/admin/" class="app-brand-text demo sidenav-text font-weight-normal ml-2">관리자페이지</a>
+                    <a href="/admin/" class="app-brand-text demo sidenav-text font-weight-normal ml-2" 
+                    style="font-weight: bold !important; font-size: large;">관리자페이지</a>
 
                 </div>
                 <div class="sidenav-divider mt-0"></div>
@@ -140,38 +136,32 @@
                     <!-- 관리자 -->
                     <c:forEach var="topMenu" items="${topMenuList}" varStatus="status">
 	                    <li class="sidenav-item">
-	                        
-							    <a href="${topMenu.menu_url}?menu_id=${topMenu.menu_id}" class="sidenav-link sidenav-toggle  s-link">
-							        <div>${topMenu.menu_name}</div>
-							    </a>
-							    <ul class="sidenav-menu">
-		                        	<c:forEach var="subMenu" items="${subMenuList}" varStatus="sta">
-			                            <c:if test="${subMenu.parent_menu_id eq topMenu.menu_id}"> 
-						                    <li class="sidenav-item">
-						                        <a href="${subMenu.menu_url}?menu_id=${subMenu.parent_menu_id}" class="sidenav-link">
-						                            <div>${subMenu.menu_name}</div>
-						                        </a>
-						                    </li>
-						                 </c:if> 
-		                         	</c:forEach>
-	                        	</ul>
+						    <a href="${topMenu.menu_url}?menu_id=${topMenu.menu_id}" class="sidenav-link sidenav-toggle s-link">
+						        <div>${topMenu.menu_name}</div>
+						    </a>
+						    <ul class="sidenav-menu">
+	                        	<c:forEach var="subMenu" items="${subMenuList}" varStatus="sta">
+		                            <c:if test="${subMenu.parent_menu_id eq topMenu.menu_id}"> 
+					                    <li class="sidenav-item">
+					                        <a href="${subMenu.menu_url}?menu_id=${subMenu.parent_menu_id}" class="sidenav-link">
+					                            <div>${subMenu.menu_name}</div>
+					                        </a>
+					                    </li>
+					                 </c:if> 
+	                         	</c:forEach>
+                        	</ul>
 	                    </li>
                     </c:forEach> 
-                    	
-                     </span>
-                    
-                    
-                    
-
+                    </span>
                     <!-- 회원관리 -->
-                    <!-- <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">로그인</li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-header small font-weight-semibold">메인페이지</li>
                     <li class="sidenav-item">
-                        <a href="/admin/login" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-clipboard"></i>
-                            <div>로그인</div>
+                        <a href="/" target="_blank" class="sidenav-link ">
+                            <i class="sidenav-icon feather icon-star-on"></i>
+                            <div>HAKA</div>
                         </a>
-                         <ul class="sidenav-menu">
+                         <!-- <ul class="sidenav-menu">
                             <li class="sidenav-item">
                                 <a href="forms_layouts.html" class="sidenav-link">
                                     <div>Layouts and elements</div>
@@ -182,8 +172,8 @@
                                     <div>Input groups</div>
                                 </a>
                             </li>
-                        </ul> 
-                    </li> -->
+                        </ul> --> 
+                    </li>
 
                 </ul>
             </div>
@@ -290,12 +280,6 @@
                                     </span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
- <!--                                    <a href="javascript:" class="dropdown-item">
-                                        <i class="feather icon-user text-muted"></i> &nbsp; My profile</a>
-                                    <a href="javascript:" class="dropdown-item">
-                                        <i class="feather icon-mail text-muted"></i> &nbsp; Messages</a>
-                                    <a href="javascript:" class="dropdown-item">
-                                        <i class="feather icon-settings text-muted"></i> &nbsp; Account settings</a> -->
                                     <div class="dropdown-divider"></div>
                                     <a href="/admin/logout" class="dropdown-item">
                                         <i class="feather icon-power text-danger"></i>&nbsp; 로그아웃</a>

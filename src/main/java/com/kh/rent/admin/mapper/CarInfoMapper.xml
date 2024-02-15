@@ -42,10 +42,7 @@
 	            </choose>
 	    </where>
 	</sql>
-	
-	
-	
-	
+
 	<select id="selectCarInfo" resultType="com.kh.rent.admin.domain.CarInfoVO">
 		SELECT 
 			A.car_index, A.car_name, A.car_number, A.car_company, A.car_size, A.car_fuel, A.car_cost, A.create_user, 
@@ -100,9 +97,7 @@
 		update TBL_CAR_INFO set file_id = null
 		where file_id = #{file_id}
 	</update> -->
-	
-	
-	
+
 	<!-- 파일 수정  -->
 <!-- 	<insert id="updateFile" useGeneratedKeys="true" keyProperty="file_id" parameterType="com.kh.rent.admin.domain.FileVO">
 	    update TBL_FILE set
@@ -115,11 +110,12 @@
 		where file_id = #{file_id}
 	</insert> -->
 
-
-
-	
-	
-	
-	
+	<delete id="deleteCheckedCar">
+        DELETE FROM rent001.TBL_CAR_INFO
+        WHERE car_index IN
+        <foreach item="car_index" collection="list" open="(" separator="," close=")">
+            #{car_index}
+        </foreach>
+    </delete>
 
 </mapper>
