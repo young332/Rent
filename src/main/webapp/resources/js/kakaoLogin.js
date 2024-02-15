@@ -11,13 +11,20 @@
 					Kakao.API.request({
 						url : '/v2/user/me',
 						success : function(response) {
-
+							console.log(" response.kakao_account :" , response.kakao_account);
 							var mem_email = response.kakao_account.email;
-                   			var mem_name = response.kakao_account.profile.nickname;
-                    
+                   			var mem_name = response.kakao_account.name;
+                    		var birthyear = response.kakao_account.birthyear;
+                    		var birthday = response.kakao_account.birthday;
+                    		var mem_birth = "";
+								if (birthyear && birthday) {
+    								var formattedBirthday = birthday.substring(0, 2) + "-" + birthday.substring(2);
+    								mem_birth = birthyear + "-" + formattedBirthday;
+							}
+                    		var mem_addr = response.kakao_account.shipping_address;
                     		var phone_number = response.kakao_account.phone_number;
-                    		var mem_phone = (phone_number && phone_number.split(" ").length > 1) ? "0" + phone_number.split(" ")[1] : "";
-							
+                    		
+							var mem_phone = (phone_number && phone_number.replace(/-/g, "").split(" ").join("")) || "";		
 
 							console.log("정보:", response.kakao_account);
 							console.log("이메일:", mem_email);
@@ -29,7 +36,8 @@
 							$("#kakaLogin").find("input[name=mem_email]").val(mem_email);
 							$("#kakaLogin").find("input[name=mem_name]").val(mem_name);
 							$("#kakaLogin").find("input[name=mem_phone]").val(mem_phone);
-							$("#kakaLogin").submit();
+							$("#kakaLogin").find("input[name=mem_birth]").val(mem_birth);
+							//$("#kakaLogin").submit();
 						},
 
 						fail : function(error) {
