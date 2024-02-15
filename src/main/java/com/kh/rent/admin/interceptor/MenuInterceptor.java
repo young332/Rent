@@ -2,18 +2,13 @@ package com.kh.rent.admin.interceptor;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.service.MenuService;
-import com.kh.rent.login.domain.MemberVO;
 
 import lombok.extern.log4j.Log4j;
 

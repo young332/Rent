@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.rent.login.domain.FindIdDTO;
+import com.kh.rent.login.domain.FindPwDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NonMemberLoginDTO;
@@ -133,6 +134,13 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO getKakalInfo(MemberVO memberVO) {
 		MemberVO vo= memberMapper.getKakaoInfo(memberVO);
 		return vo;
+	}
+
+	@Override
+	public int findByIdAndEmail(FindPwDTO findPwDTO) {
+		int result = memberMapper.findByIdAndEmail(findPwDTO);
+		return result;
+		
 	}
 
 	

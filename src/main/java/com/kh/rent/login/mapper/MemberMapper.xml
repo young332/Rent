@@ -41,6 +41,13 @@
 		where mem_id = #{mem_id}	
 	</update>
 	
+	<!-- 비빌번호 변경 시 아이디 이메일 확인-->
+	<select id="findByIdAndEmail" resultType="int">
+		select count(*) FROM rent001.TBL_MEMBER
+        where mem_id = #{mem_id}
+        and mem_email = #{mem_email}
+	</select>
+	
 	<!-- 회원정보 조회 -->
 	<select id="getList" resultType="com.kh.rent.login.domain.MemberVO">
 		select * from rent001.TBL_MEMBER
@@ -78,5 +85,7 @@
 		select * from TBL_MEMBER
 		where mem_phone = #{mem_phone}
 	</select>
+	
+
 	
 </mapper>

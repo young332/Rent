@@ -195,12 +195,19 @@ $(function() {
 		alert("포인트충전 완료되었습니다.");
 		return;
 	}
+
+	var msg = "${msg}";
+	if (msg == "fail") {
+		alert("이벤트 실패");
+	}
+
 	
 	// 예약내역 모달창 열기
 	$(".reserveDiv").click(function() {
 		var res_rid = $(this).data("res-rid");
 		getResInfo(res_rid);
 	});
+
 });
 
 </script>

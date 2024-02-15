@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MenuVO {
+	
 	private String menu_id;
 	private String parent_menu_id;
 	private Integer menu_type;
@@ -18,4 +19,5 @@ public class MenuVO {
 	private String menu_url;
 	private Integer orderby;
 	private String use_yn;
+	
 }

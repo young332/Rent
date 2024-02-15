@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.kh.rent.reserve.mapper.CustomerEventMapper">
+  
+  	
+   <!-- 이벤트 포인트 충전 -->
+   <update id="addEventPoint">
+   		UPDATE TBL_MEMBER
+		SET
+		    MEM_POINT = MEM_POINT + #{point_cost},
+		    MEM_UDATE = NOW()
+		WHERE
+		    MEM_ID = #{mem_id}
+   </update>
+ 
+   
+   <!-- 포인트 내역 기록 -->
+	<insert id="addPointTable">
+		INSERT INTO TBL_POINT (point_user_id, point_code, point_use_date, point_cost)
+	    VALUES (
+	        #{mem_id}, #{point_code}, NOW(), #{point_cost}
+	    )
+	</insert>
+	
+	<!-- 멤버아이디로 포인트 조회 -->
+	<select id="selectPoint" resultType="Integer">
+		SELECT MEM_POINT
+		FROM TBL_MEMBER
+		WHERE MEM_ID = #{mem_id}
+	</select>
+  </mapper>

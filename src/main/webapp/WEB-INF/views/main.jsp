@@ -2,10 +2,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 주소 -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7af7b7d13502aeea69908896cb3f9201&libraries=services"></script>  
+<!-- //주소 -->
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 
+<style>
+	#bntSearch{
+		background: #f07039 !important;
+	    border: 1px solid #f07039 !important;
+	    color: #fff !important;
+	}
+</style>
 <section>
+
     <div class="hero-wrap ftco-degree-bg" style="background-image: url('/resources/carbook-master/img/banner.png');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -20,7 +32,6 @@
         </div>
       </div>
     </div>
-</section>
 
      <section class="ftco-section ftco-no-pt bg-light">
     	<div class="container">
@@ -95,7 +106,6 @@
 	  					</div>
 	  				</div>
 				</div>
-  			</div>
   		</div>
     </section>
     <section class="ftco-section ftco-no-pt bg-light">
@@ -132,22 +142,24 @@
     				</div>
     			</div>
     		</div>
-    		
-    	</div>
-    	
+    		<!-- 주소 -->
+    		<div class="container">
+				<div class="row justify-content-center">
+          		<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+          			<span class="subheading">HAKA 렌트카</span>
+            			<h2 class="mb-2">오시는 길</h2>
+          				</div>
+        				</div>
+				<div id="map" style="width:80%;height:400px; margin: auto;"></div>
+			</div>
+			</div>
     </section>
-
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>
    
     
 <script>
 $(function() {
-	$("#bntSearch").click(function() {
-		var p = $("#book_pick_date").val();
-		var o = $("#book_off_date").val();
-		console.log("p:", p);
-		console.log("o:", o);
-	});
+
 	$("#bntSearch").click(function() {
         var pickDate = $("#book_pick_date").val();
         var offDate = $("#book_off_date").val();
@@ -167,7 +179,7 @@ $(function() {
 
 	        var selectedDate = new Date(selectedDateTime);
 
-	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 05:59)
+	        // 새벽 시간인지 확인 (새벽 시간은 00:00 ~ 07:59)
 	        var isDawnTime = selectedDate.getHours() < 8;
 
 	        // 이용시간 어긴경우인 경우 알림 띄우기
@@ -209,6 +221,47 @@ $(function() {
     
 	    
 });
+$(document).ready(function(){
+    // Kakao Maps API 로드가 완료될 때까지 기다립니다.
+    kakao.maps.load(function() {
+        var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+        var mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };  
+
+        // 지도를 생성합니다    
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
+        
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+        
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch('울산 남구 삼산로35번길 19', function(result, status) {
+        
+            // 정상적으로 검색이 완료됐으면 
+            if (status === kakao.maps.services.Status.OK) {
+        
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+        
+                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">HAKA렌트카</div>'
+                });
+                infowindow.open(map, marker);
+        
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            } 
+        });
+    });
+});    
 </script> 
     
   </body>

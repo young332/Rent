@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.rent.admin.domain.DelMemberVO;
-import com.kh.rent.admin.domain.MenuVO;
 import com.kh.rent.admin.domain.PointDTO;
 import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.mapper.AdMemberMapper;

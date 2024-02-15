@@ -61,8 +61,8 @@
     
 		<interceptor>
 			<mapping path="/myPage/**/*" />
-<!-- 			<mapping path="/myPage/reservationList"/> -->
       		<mapping path="/checkout/**/*"/>
+<!--       		<exclude-mapping path="/login/kakaLogin"/> -->
       		<exclude-mapping path="/myPage/reservationList_guest"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
@@ -81,7 +81,8 @@
 			<exclude-mapping path="/admin/car/search"/>
 			<exclude-mapping path="/admin/car/getCarInfo"/>
 			<exclude-mapping path="/admin/car/deleteCarFile"/>
-
+			<exclude-mapping path="/admin/car/deleteCheckedCar"/>
+			<exclude-mapping path="/admin/board/deleteCheckedBoard"/>
 			<beans:ref bean="menuInterceptor" />
 		</interceptor>
 		

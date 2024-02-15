@@ -29,5 +29,7 @@ public interface CarInfoService {
 	
 	public int updateCarinfoFile(Integer file_id);
 	
+	public int deleteCheckedCar(List<Integer> carNumbers);
+	
 	
 }

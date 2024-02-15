@@ -3,7 +3,6 @@
 
 <head>
     <title>관리자페이지 로그인</title>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -65,7 +64,7 @@
                 <div class="form-group">
                     <label class="form-label d-flex justify-content-between align-items-end">
                         <span>패스워드</span>
-                        <a href="pages_authentication_password-reset.html" class="d-block small">비밀번호 찾기</a>
+                        <!-- <a href="pages_authentication_password-reset.html" class="d-block small">비밀번호 찾기</a> -->
                     </label>
                     <input type="password" class="form-control" name="mem_pw" id="mem_pw">
                     <div class="clearfix"></div>
@@ -73,7 +72,7 @@
                 <div class="d-flex justify-content-between align-items-center m-0">
                     <label class="custom-control custom-checkbox m-0">
                         <input type="checkbox" class="custom-control-input">
-                        <span class="custom-control-label">아이디 기억하기</span>
+                        <!-- <span class="custom-control-label">아이디 기억하기</span> -->
                     </label>
                     <button type="submit" class="btn btn-primary">로그인</button>
                 </div>
@@ -105,31 +104,30 @@
     <!-- <script src="/resources/assets/js/demo.js"></script>
     <script src="assets/js/analytics.js"></script> -->
     
-    <script>
-		$(function(){
-			var loginResult = "${loginFailure}";
-			if(loginResult == "true"){
-				alert("아이디와 비밀번호를 다시 확인해주세요");
-					$("#mem_id").focus();
-				}
-		
-			//쿠키 아이디
-			var cookie = document.cookie;
-				console.log("cookie:",cookie);
-				var cookies = cookie.split(";");
-				console.log("cookies:" , cookies);
-				for (var v = 0; v < cookies.length; v++) {
-					var aCookie = cookies[v].split("=");
-					if (aCookie[0].trim() == "savedId") {
-						var savedId = aCookie[1];
-						console.log("savedId:", savedId);
-						$("#mem_id").val(savedId);
-						$("#mem_pw").focus();
-						break;
-					}
-				}
-			
-			});
+<script>
+$(function(){
+	var loginResult = "${loginFailure}";
+	if(loginResult == "true"){
+		alert("아이디와 비밀번호를 다시 확인해주세요");
+			$("#mem_id").focus();
+	}
+
+//쿠키 아이디
+var cookie = document.cookie;
+console.log("cookie:",cookie);
+var cookies = cookie.split(";");
+console.log("cookies:" , cookies);
+	for (var v = 0; v < cookies.length; v++) {
+		var aCookie = cookies[v].split("=");
+		if (aCookie[0].trim() == "savedId") {
+			var savedId = aCookie[1];
+			console.log("savedId:", savedId);
+			$("#mem_id").val(savedId);
+			$("#mem_pw").focus();
+			break;
+		}
+	}
+});
 
 </script>
     

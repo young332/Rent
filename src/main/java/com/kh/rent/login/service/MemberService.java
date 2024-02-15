@@ -1,6 +1,7 @@
 package com.kh.rent.login.service;
 
 import com.kh.rent.login.domain.FindIdDTO;
+import com.kh.rent.login.domain.FindPwDTO;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.login.domain.NonMemberLoginDTO;
@@ -22,6 +23,9 @@ public interface MemberService {
 		
 		//비밀번호변경
 		public void changePassword(LoginDTO loginDTO);
+		
+		//비밀번호 변경 시 아이디,이메일 확인
+		public int findByIdAndEmail(FindPwDTO findPwDTO);
 		
 		//아이디 중복체크
 		public int checkId(String mem_id);

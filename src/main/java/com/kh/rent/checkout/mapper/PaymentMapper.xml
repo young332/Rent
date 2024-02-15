@@ -36,13 +36,7 @@
 	AND rent001.TBL_PAYMENT.pay_res_rid = #{pay_res_rid}
 	AND rent001.TBL_RESERVE.res_totalpay = #{res_totalpay};
     </update>
-		
-	<select id="getPaymentInfo" resultType="com.kh.rent.checkout.domain.PaymentDTO">
-		SELECT pay_res_rid, pay_type, pay_mem_id, pay_date
-		FROM TBL_PAYMENT
-		WHERE pay_mem_id = #{pay_mem_id}
-	</select>
-		
+			
 	<!-- 조인 res_rid = pay_res_rid -->
     <select id="payNumber" resultType="com.kh.rent.reserve.domain.ReserveVO">
     	select p.pay_mem_id, p.pay_date, p.pay_type,
@@ -67,6 +61,7 @@
 		where mem_id = #{pay_mem_id};	
 	</select>
 	
+	
 	<!-- res_rid 불려오기 -->
 	<select id="getResRid" resultType="com.kh.rent.reserve.domain.ReserveVO">
         select * from TBL_RESERVE
@@ -78,14 +73,8 @@
         select * from TBL_RESERVE
  		where res_mem_id = #{mem_id}
     </select>
+    
                
-    <!-- 비회원 예약 번호 불려오기 -->	
-	<select id="getPayNonResRid" parameterType="int" resultType="int">
-        SELECT non_rid
-        FROM TBL_NONMEMBER
-        WHERE non_rid = #{pay_res_rid}
-    </select>
-
      <!-- 결제 시 res_totalpay 불려오기 -->
     <select id="getPay" resultType="int">
     	select res_totalpay 
@@ -112,19 +101,11 @@
      <!-- 결제 상태 변경 (결제취소) -->
     <update id="payCancel">
     	update TBL_PAYMENT set
-		pay_status = '결제취소'
+		pay_status = '결제취소',
+		pay_date = (select res_modi_date from TBL_RESERVE where res_rid = #{res_rid})
 		where pay_pid = #{pay_pid}
     </update>
-      
-    <!-- 예약 상태 변경(예약취소) -->
-<!--     <update id="reserveCancel"> -->
-<!--     	update TBL_RESERVE, TBL_PAYMENT set -->
-<!-- 		res_status = '예약취소' -->
-<!-- 		where res_rid = #{pay_res_rid} -->
-<!-- 		and pay_status = '결제취소' -->
-<!--     ) -->
-<!--     </update> -->
-    
+          
     <!-- 예약 상태 변경(예약취소) -->
     <update id="reserveCancel" parameterType="int">
     	update TBL_RESERVE set
@@ -143,5 +124,35 @@
     )
     where mem_id = #{pay_mem_id}
 	</update>
+	
+	<!-- 포인트 테이블 결제내역 기록 -->
+	<insert id="point_cost_record">
+	INSERT INTO TBL_POINT (point_cost, point_use_date, point_code, point_user_id)
+		select
+		-pay_amount AS point_cost,
+		pay_date AS point_use_date,
+		'POINT_P' AS point_code,
+		pay_mem_id AS point_user_id
+		from
+			TBL_PAYMENT
+		where
+			pay_mem_id = #{pay_mem_id}
+			and pay_status = '결제완료';
+	</insert>
+	
+	<!-- 포인트 테이블 결제내역 변경 -->
+	<insert id="point_cost_update">
+		insert into TBL_POINT (point_cost, point_use_date, point_code, point_user_id)
+		select
+			pay_amount as point_cost,
+			pay_date as pay_use_date,
+			'POINT_R' as point_code,
+			pay_mem_id as point_user_id
+		from
+			TBL_PAYMENT
+		where
+			pay_mem_id = #{pay_mem_id}
+			and pay_status = '결제취소';
+	</insert>
 	
 </mapper>
