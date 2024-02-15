@@ -456,6 +456,11 @@
    
    var pay_amount = 0;
    
+   var totalpay = 0;
+   
+   var totalpay = '${totalPay}';
+   console.log("totalpay : " ,totalpay);
+   
    // 총 결제금액
    var res_totalpay = '${totalPay}';
    console.log("res_totalpay : " ,res_totalpay);
@@ -492,7 +497,9 @@
    $(document).ready(function() {
 	   
 	    // 페이지 로드 시 최종 결제 금액 초기화
-	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
+//	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
+	    var totalpay = '${totalPay}';
+	    console.log("totalpay 페이지로드", totalpay)
 	    var point = "${loginInfo.mem_point}";
 	    var min = 1; // 최소 사용 가능 포인트
 	    changePoint(totalpay, point, min, 0);
@@ -615,7 +622,8 @@
 	    }
 	    
 	    // 결제금액이 부족하지 않은지 확인
-	    var totalPay = parseInt($("#totalPay").text());
+//	    var totalPay = parseInt($("#totalPay").text());
+	    var totalPay = '${totalPay}';
 	    var availablePoint = parseInt($("span[name='left_pnt']").text());
 	    var usedPoint = parseInt($("#use_point").text());
 	    
@@ -664,7 +672,7 @@
                  error: function(xhr, status, error) {
                      // AJAX 요청 실패 시 처리
                      console.error("AJAX 요청 실패:", error);
-//                      alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
+                     alert("error: 네트워크 오류 및 서버 접근 불가 등의 문제로 결제에 실패했습니다. 다시 시도해주세요.");
 //                      history.go(0);
                  }
 	        });
