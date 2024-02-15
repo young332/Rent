@@ -106,40 +106,49 @@ $(function(){
 		console.log("keyword:", keyword);
 		
 	    if(keyword.trim() == ""){
-	    	window.location.href="/board/list";
+	    	window.location.href="/board/list?type=" + type + "&keyword=" + keyword;
 // 	        alert("검색어를 입력해주세요.");
 // 	        $("[name=keyword]").focus();
 // 	        return false;
 	    }
-	    
-		$.ajax({
-			type :"get",
-			url : "/board/search",
-			data : {type : type,
-					keyword : keyword},
-			success : function(rData){
-				console.log("rData:" , rData);
+// 		$.ajax({
+// 			type :"get",
+// 			url : "/board/search",
+// 			data : {type : type,
+// 					keyword : keyword},
+// 			success : function(rData){
+// 				console.log("rData:" , rData);
 				
-				 $("table tbody tr").hide();
+// 				 $("table tbody tr").hide();
 				
-				rData.forEach(function(item) {
-	                var boardNo = item.board_no;
-	                console.log("boardNo:" , boardNo);
-	                $("table tbody tr[data-board-no=" + boardNo + "]").show();
-	            });
-			},
-			error: function(xhr, status, error) {
-	            console.error("Error occurred during search:", error);
-	        }
+// 				rData.forEach(function(item) {
+// 	                var boardNo = item.board_no;
+// 	                console.log("boardNo:" , boardNo);
+// 	                $("table tbody tr[data-board-no=" + boardNo + "]").show();
+// 	            });
+// 			},
+// 			error: function(xhr, status, error) {
+// 	            console.error("Error occurred during search:", error);
+// 	        }
 
 			
-		});  
+// 		});  
 		    
 	});
+    
+    $("a.page-link").click(function(e){
+		e.preventDefault();
+		var pageDTO = $(this).attr("href");
+		$("#frmCriteria input[name='pageNum']").val(pageDTO);
+        $("#frmCriteria").submit();
+		
+    });
 
 });
 </script>
-   
+
+
+
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
   <div class="overlay"></div>
   <div class="container">
@@ -184,7 +193,9 @@ $(function(){
 
 			</div>
 		</div>
-		
+<%-- 		<div>noticeList:${noticeList }</div> --%>
+<%-- <div>boardList:${boardList }</div> --%>
+<div>pageDTO:${pageDTO }</div>
 		<div class="row">
 			<div class="col-md-12">
 				<table class="table">
@@ -226,6 +237,37 @@ $(function(){
 				</table>
 			</div>
 		</div>
+		<!-- 페이징 -->
+		<div class="row" >
+			<div class="col-md-12">
+				<nav>
+					<ul class="pagination justify-content-center">
+						<c:if test="${pageDTO.prev == true}">
+						<li class="page-item">
+							<a class="page-link" href="${pageDTO.startPage - 1}">&laquo;</a>
+						</li>
+						</c:if>
+						<c:forEach begin="${pageDTO.startPage}" end="${pageDTO.endPage}" var="v">
+							<li class="page-item ${(board.pageDTO.pageNum == v)? 'active' :''}">
+								<a class="page-link" data-oper="list" href="${v}">${v}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${pageDTO.next == true}">
+							<li class="page-item">
+							<a class="page-link"  id="endPage" href="${pageDTO.endPage + 1}">&raquo;</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav>
+		</div>
+	</div>
+		<form id="frmCriteria" action="/board/list" method="get">
+			<input type="hidden" name="pageNum" value="${pageDTO.criteria.pageNum}">
+			<input type="hidden" name="amount" value="${pageDTO.criteria.amount}">
+			<input type="hidden" name="keyword" value="${pageDTO.criteria.keyword}">
+			<input type="hidden" name="type" value="${pageDTO.criteria.type}">
+		</form>
+	<!-- //페이징 -->
 	</div>
 </section>
 	

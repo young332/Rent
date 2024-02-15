@@ -15,6 +15,9 @@ public class Criteria {
 	private int startRow;
 	private int endRow;
 	
+	//검색
+	private String type; 
+	private String keyword;
 	
 	//기본생성자 기본값 1페이지,10개
 	public Criteria() {
@@ -22,11 +25,13 @@ public class Criteria {
 		setRows();
 	}
 	
+	
 	public Criteria(int pageNum, int amount, int startRow, int endRow) {
 		this.pageNum = pageNum;
 		this.amount = amount;
 		this.startRow = startRow;
 		this.endRow = endRow;
+	
 	}
 	
 	//현재 페이지 번호와 한 페이지당 데이터 수를 이용하여 시작행과 끝행을 계산
@@ -41,6 +46,8 @@ public class Criteria {
 		setRows();
 	}
 	
-	
+	public String[] getTypeArr() {
+		return type == null ? new String[] {} : type.split("");
+	}
 
 }

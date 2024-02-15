@@ -133,12 +133,12 @@ public class AdminController {
 	@GetMapping("/board")
 	public void adminboardGet(Model model) {
 		log.info("list");
-		List<BoardVO> list = boardService.getList();
+//		List<BoardVO> list = boardService.getList();
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String formattedDateTime = now.format(formatter);
 		model.addAttribute("dateTime",formattedDateTime);
-		model.addAttribute("boardVO", list);
+//		model.addAttribute("boardVO", list);
 		log.info("model:" +  model);
 	}
 	
