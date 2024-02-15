@@ -71,7 +71,7 @@ public class MenuController {
 	
 	@PostMapping("/subMenuModify")
 	public String subMenuModify(MenuVO menuVO, RedirectAttributes rttr) {
-		log.info("menuVO넘어온::"+menuVO);
+		log.info("넘어온menuVO:"+menuVO);
 		int count = menuService.modifyMenu(menuVO);
 		log.info("count"+count);
 		if(count == 1) {
@@ -91,12 +91,6 @@ public class MenuController {
 		}
 		return "redirect:/admin/menu";
 	}
-	
-	
-	
-	
-	
-	 	
-	
+
 	
 }

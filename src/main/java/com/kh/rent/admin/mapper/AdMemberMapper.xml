@@ -61,6 +61,7 @@
 		from rent001.TBL_MEMBER
 		where mem_pw = #{mem_pw}
 		and mem_id = #{mem_id}
+		AND mem_adminck = 1
 	</select>
 	
 
@@ -78,7 +79,7 @@
            p.point_use_date, 
            p.point_cost
 	FROM 
-	    rent001.TBL_POINT_MEMBER p
+	    rent001.TBL_POINT p
 	JOIN 
 	    rent001.TBL_COMMON_CODE c
 	ON 
@@ -97,7 +98,7 @@
 	
 	<!-- 충전내역 입력 -->
 	<insert id="addPointTable">
-	    INSERT INTO TBL_POINT_MEMBER (point_user_id, point_code, point_use_date, point_cost)
+	    INSERT INTO rent001.TBL_POINT (point_user_id, point_code, point_use_date, point_cost)
 	    VALUES (
 	        #{point_user_id}, #{point_code}, NOW(), #{point_cost}
 	    )

@@ -1,107 +1,150 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/include/top.jsp" %>
 <script>
-    function fn_deleteFile(file_id) {
-        if(confirm('삭제하시겠습니까?')) {
-            $.ajax({
-                type: 'GET',
-                url: '/admin/car/deleteCarFile',  
-                data: {file_id : file_id },
-                success: function (data) {
-                    console.log('deleteFileComplete:', data);
-                }
-            });
-        }
-    }
-
-    // 알림창 설정
-    $(function(){
-        var AddCar = '<c:out value="${AddCar}"/>';
-        var ModifyCar = '<c:out value="${ModifyCar}"/>';
-        var errorMessage = '<c:out value="${errorMessage}"/>';
-        console.log("AddCar: " , AddCar);
-        console.log("ModifyCar: " , ModifyCar);
-        console.log("errorMessage: " , errorMessage);
-
-        var v = "";
-        if(AddCar == "success"){
-            v = "등록";
-        } else if(ModifyCar == "success"){
-            v = "수정";
-        }
-
-        if(AddCar == "success" || ModifyCar == "success") {
-            $("#alertModal").find(".modal-body").text(" 차량이 "+ v +" 되었습니다.");
-            $("#alertModal").find(".modal-title").text("차량 "+ v);
-            $("#alertModal").modal("show");
-        } else if(errorMessage){
-            $("#alertModal").find(".modal-body").text("해당요청을 수행하지 못했습니다.");
-        }
-    });
-
-    // 차량정보수정
-    function fn_carInfoModify(car_index) {    
+function fn_deleteFile(file_id) {
+    if(confirm('삭제하시겠습니까?')) {
         $.ajax({
             type: 'GET',
-            url: '/admin/car/getCarInfo',  
-            data: {car_index : car_index },
+            url: '/admin/car/deleteCarFile',  
+            data: {file_id : file_id },
             success: function (data) {
-                console.log('Success:', data);
+                console.log('deleteFileComplete:', data);
+            }
+        });
+    }
+}
 
-                $("#car_index").val(data['car_index']);
-                $("#file_id").val(data['file_id']);
-                $("#car_name").val(data['car_name']);
-                $("#car_number").val(data['car_number']);
-                $("#car_company").val(data['car_company']);
-                $("#car_size").val(data['car_size']);
-                $("#car_fuel").val(data['car_fuel']);
-                $("#car_cost").val(data['car_cost']);
-                $("#file_name").text(data['orignl_file_nm']);
-                $("#delete_btn").attr("onclick", "fn_deleteFile('" + data['file_id'] + "')");
+// 알림창 설정
+$(function(){
+    var AddCar = '<c:out value="${AddCar}"/>';
+    var ModifyCar = '<c:out value="${ModifyCar}"/>';
+    var errorMessage = '<c:out value="${errorMessage}"/>';
+    console.log("AddCar: " , AddCar);
+    console.log("ModifyCar: " , ModifyCar);
+    console.log("errorMessage: " , errorMessage);
 
-                // file이 있을경우 추가파일 등록못하게 설정
-                /* console.log("test",data['file_id']);
-                if(data['file_id'] != 0){
-                    $(".file_add").hide();    
-                    $(".file_show").show();    
-                } else{
-                    $(".file_add").show();
-                    $(".file_show").hide();    
-                } */
-
-                var op_carseat = data['op_carseat'];
-                var op_navi = data['op_navi'];
-                var op_bt = data['op_bt'];
-                var op_cam = data['op_cam'];
-                var use_yn = data['use_yn'];
-
-                // op_carseat, op_navi, op_bt, op_cam, use_yn에 대한 처리
-                var options = ["op_carseat", "op_navi", "op_bt", "op_cam", "use_yn"];
-                $.each(options, function(index, option) {
-                    if (data[option] == "Y") {
-                        $('input[name="' + option + '"][value="Y"]').prop("checked", true);
-                    } else {
-                        $('input[name="' + option + '"][value="N"]').prop("checked", true);
-                    }
-                });
-
-                $("#update_user").val("${loginInfo.mem_name}");
-                $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
-
-                // 모달 창 열기
-                $("#CarmodifyModal").modal("show");
-            } 
-        }); 
+    var v = "";
+    if(AddCar == "success"){
+        v = "등록";
+    } else if(ModifyCar == "success"){
+        v = "수정";
     }
 
-    function updateCarInfo() {
-        var selectedOption = $("#car_name option:selected");
-        var company = selectedOption.data("company");
-        var size = selectedOption.data("size");
-
-        $("#car_company").val(company);
-        $("#car_size").val(size);
+    if(AddCar == "success" || ModifyCar == "success") {
+        $("#alertModal").find(".modal-body").text(" 차량이 "+ v +" 되었습니다.");
+        $("#alertModal").find(".modal-title").text("차량 "+ v);
+        $("#alertModal").modal("show");
+    } else if(errorMessage){
+        $("#alertModal").find(".modal-body").text("해당요청을 수행하지 못했습니다.");
     }
+
+    //전체 선택 체크박스 클릭 시 모든 체크박스 선택/해제
+    $("#selectAllCheckbox").click(function() {
+        $(".car-checkbox").prop("checked", $(this).prop("checked"));
+    });
+
+    //각 체크박스가 클릭될 때 전체 선택 체크박스 상태 업데이트
+    $(".car-checkbox").click(function() {
+        if ($(".car-checkbox:checked").length == $(".car-checkbox").length) {
+            $("#selectAllCheckbox").prop("checked", true);
+        } else {
+            $("#selectAllCheckbox").prop("checked", false);
+        }
+    });
+    
+    //차량 선택삭제
+    $("#btnDelete").click(function(e) {
+    	e.preventDefault();
+        var carNumbers = getCheckedCarNumbers();
+        alert(carNumbers + "번 차를 삭제하시겠습니까?");
+        console.log("carNumbers:", carNumbers);
+        
+        $.ajax({
+            url: "/admin/car/deleteCheckedCar",
+            method: "POST",
+            contentType: "application/json", 
+            data: JSON.stringify({ carNumbers: carNumbers }),
+            success: function(response) {
+            	$(".car-checkbox:checked").closest("tr").fadeOut();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+
+    function getCheckedCarNumbers() {
+        var checkedCarNumbers = [];
+        $('.car-checkbox:checked').each(function() {
+        	checkedCarNumbers.push($(this).closest('tr').data('car-index'));
+        });
+        return checkedCarNumbers;
+    }
+});
+
+//차량정보수정
+function fn_carInfoModify(car_index) {    
+    $.ajax({
+        type: 'GET',
+        url: '/admin/car/getCarInfo',  
+        data: {car_index : car_index },
+        success: function (data) {
+            console.log('Success:', data);
+
+            $("#car_index").val(data['car_index']);
+            $("#file_id").val(data['file_id']);
+            $("#car_name").val(data['car_name']);
+            $("#car_number").val(data['car_number']);
+            $("#car_company").val(data['car_company']);
+            $("#car_size").val(data['car_size']);
+            $("#car_fuel").val(data['car_fuel']);
+            $("#car_cost").val(data['car_cost']);
+            $("#file_name").text(data['orignl_file_nm']);
+            $("#delete_btn").attr("onclick", "fn_deleteFile('" + data['file_id'] + "')");
+
+            // file이 있을경우 추가파일 등록못하게 설정
+            /* console.log("test",data['file_id']);
+            if(data['file_id'] != 0){
+                $(".file_add").hide();    
+                $(".file_show").show();    
+            } else{
+                $(".file_add").show();
+                $(".file_show").hide();    
+            } */
+
+            var op_carseat = data['op_carseat'];
+            var op_navi = data['op_navi'];
+            var op_bt = data['op_bt'];
+            var op_cam = data['op_cam'];
+            var use_yn = data['use_yn'];
+
+            // op_carseat, op_navi, op_bt, op_cam, use_yn에 대한 처리
+            var options = ["op_carseat", "op_navi", "op_bt", "op_cam", "use_yn"];
+            $.each(options, function(index, option) {
+                if (data[option] == "Y") {
+                    $('input[name="' + option + '"][value="Y"]').prop("checked", true);
+                } else {
+                    $('input[name="' + option + '"][value="N"]').prop("checked", true);
+                }
+            });
+
+            $("#update_user").val("${loginInfo.mem_name}");
+            $("#file").attr('src', '${pageContext.request.contextPath}/resources/upload/' + data['unique_file_nm']);
+
+            // 모달 창 열기
+            $("#CarmodifyModal").modal("show");
+        } 
+    }); 
+}
+
+function updateCarInfo() {
+    var selectedOption = $("#car_name option:selected");
+    var company = selectedOption.data("company");
+    var size = selectedOption.data("size");
+
+    $("#car_company").val(company);
+    $("#car_size").val(size);
+}
 </script>
 
 <!-- [ content ] Start -->
@@ -139,9 +182,10 @@
         </form> 
 
         <div class="dt-buttons col-sm-12 mb-3">
+        
             <button class="btn btn-secondary flaot-left" type="button" onclick="javascript:fn_excel('member','');"><span>엑셀 다운로드</span></button>
             <div class="float-right" style="vertical-align: bottom;">
-                <button class="btn btn-danger mr-2" type="button" onclick="javascript:fn_memberChkDel();"><span>선택 삭제</span></button>
+                <button class="btn btn-danger mr-2" type="button" id="btnDelete"><span>선택 삭제</span></button>
                 <a class="btn btn-success" type="button" href="/admin/car/registerCar"><span>차량 등록</span></a>
             </div>
         </div>
@@ -158,32 +202,24 @@
                                 <table class="table mb-0 table-hover table-responsive-xl">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input checkall" id="checkall">
-                                                    <label class="custom-control-label" for="checkall"></label>
-                                                </div>
-                                            </th>
-                                            <th scope="col">사진</th>
-                                            <th scope="col">차종</th>
-                                            <th scope="col">차번호</th>
-                                            <th scope="col">제조사</th>
-                                            <th scope="col">크기</th>
-                                            <th scope="col">가격/h</th>
-                                            <th scope="col">사용유무</th>
-                                            <th scope="col">등록자</th>
-                                            <th scope="col">수정일</th>
+                                           <th scope="col" style="text-align: center;"><input type="checkbox" id="selectAllCheckbox"></th>
+                                           <th scope="col">사진</th>
+                                           <th scope="col">차종</th>
+                                           <th scope="col">차번호</th>
+                                           <th scope="col">제조사</th>
+                                           <th scope="col">크기</th>
+                                           <th scope="col">가격/h</th>
+                                           <th scope="col">사용유무</th>
+                                           <th scope="col">등록자</th>
+                                           <th scope="col">수정일</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <c:forEach var="carInfo" items="${carInfoList}">
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input chk" id="chk0" emplyrid="jml8758" membertype="general">
-                                                        <label class="custom-control-label" for="chk0"></label>
-                                                    </div>
-                                                </td>
+                                            <tr data-car-index="${carInfo.car_index}">
+                                                <td style="text-align: center;">
+								                    <input type="checkbox" class="car-checkbox">
+								                </td>
                                                 <td>
                                                     <img src="${pageContext.request.contextPath}/resources/upload/${carInfo.unique_file_nm}" style="width: 50px; height: 50px" alt="Image">
                                                 </td>

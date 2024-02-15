@@ -2,14 +2,16 @@
                     <nav class="layout-footer footer bg-white">
                         <div class="container-fluid d-flex flex-wrap justify-content-between text-center container-p-x pb-3">
                             <div class="pt-3">
-                                <span class="footer-text font-weight-semibold">&copy; <a href="#" class="footer-link" target="_blank">Copyright &copy; rent2024</a></span>
+                                <span class="footer-text font-weight-semibold">&copy;
+                                	<a href="#" class="footer-link" target="_blank">Copyright &copy; HAKA 2024 | HAKA</a>
+                                </span>
                             </div>
-                            <div>
+                            <!-- <div>
                                 <a href="javascript:" class="footer-link pt-3">About Us</a>
                                 <a href="javascript:" class="footer-link pt-3 ml-4">Help</a>
                                 <a href="javascript:" class="footer-link pt-3 ml-4">Contact</a>
                                 <a href="javascript:" class="footer-link pt-3 ml-4">Terms &amp; Conditions</a>
-                            </div>
+                            </div> -->
                         </div>
                     </nav>
                     <!-- [ Layout footer ] End -->
