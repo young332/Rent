@@ -160,4 +160,12 @@ public class MyPageServiceTests {
 		log.info("cancleResult:" + result);
 	}
 	
+	// 예약정보 조회하기(마이페이지)
+	@Test
+	public void testGetMyReserveList() {
+		String mem_id = "MEMBER03";
+		List<GetStatusDTO> list = myPageService.getMyReserveList(mem_id);
+		log.info("Reservelist:" + list);
+	}
+	
 }

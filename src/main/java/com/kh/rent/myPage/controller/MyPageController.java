@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -83,9 +85,17 @@ public class MyPageController {
 		
 		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
 		String mem_id = loginInfo.getMem_id();
+		
+		// 포인트 내역
 		List<PointDTO> pointList = pointService.getPointList(mem_id);
 //		log.info("pointList:" + pointList);
+		
+		// 예약내역
+		myPageService.updateTBLReserve(mem_id);
+		List<GetStatusDTO> reserveList = myPageService.getMyReserveList(mem_id);
+		
 		model.addAttribute("pointList", pointList);
+		model.addAttribute("reserveList", reserveList);
 	}
 	
 	// 내 정보관리 페이지
@@ -212,6 +222,5 @@ public class MyPageController {
 			return "fail";
 		}
 	}
-	
 	
 }

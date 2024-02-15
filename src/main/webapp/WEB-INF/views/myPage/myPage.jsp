@@ -31,7 +31,7 @@
 	}
 </style>
 <script>
-//등록일 날짜변환
+// 등록일 날짜변환
 function formattedDate(point_use_date) {
 	if (!point_use_date) {
         return "";
@@ -49,7 +49,7 @@ function formattedDate(point_use_date) {
     return year + "-" + month + "-" + day + "   " + hours + ":" + minutes;
 }
 
-//금액 자릿수 표시하기(콤마)
+// 금액 자릿수 표시하기(콤마)
 function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -75,10 +75,20 @@ $(document).ready(function() {
 		}
 	});
 	
+	$(".card-header").each(function() {
+		var cardDate= $(this).text();
+		if (cardDate) {
+			$(this).text(formattedDate(cardDate));
+		}
+	});
+});
+
+$(function() {
+	
 	var originalData = $("#tbl_point tbody").html();
 	
 	 // 전체 버튼 클릭
-    $("#pointAll").click(function() {
+   $("#pointAll").click(function() {
 	    var tbody = $("#tbl_point tbody");
 	    tbody.html(originalData);
 	    $("#tbl_point thead tr").removeClass().addClass("table-warning");
@@ -86,9 +96,9 @@ $(document).ready(function() {
 	        tbody.html("<tr><td colspan='5'>포인트 내역이 없습니다.</td></tr>");
 	    }
 	});
-    
-    // 적립 버튼 클릭
-    $("#plusPoint").click(function() {
+   
+   // 적립 버튼 클릭
+   $("#plusPoint").click(function() {
 	    var tbody = $("#tbl_point tbody");
 	    tbody.html(originalData);
 	    tbody.find("tr").hide();
@@ -99,8 +109,8 @@ $(document).ready(function() {
 	        tbody.html("<tr><td colspan='5'>적립포인트 내역이 없습니다.</td></tr>");
 	    }
 	});
-    
-    // 사용 버튼 클릭
+   
+   // 사용 버튼 클릭
 	$("#minusPoint").click(function() {
 	    var tbody = $("#tbl_point tbody");
 	    tbody.html(originalData);
@@ -112,29 +122,33 @@ $(document).ready(function() {
 	        tbody.html("<tr><td colspan='5'>사용포인트 내역이 없습니다.</td></tr>");
 	    }
 	});
-    
+   
 	// 포인트충전 모달열기
 	$("#btnPoint").click(function() {
 		var mem_id = "${loginInfo.mem_id}";
-    	console.log(mem_id);
-    	$("#point_mem_id").val(mem_id);
-    	$("#point_user_id").val(mem_id);
-    	
+   	console.log(mem_id);
+   	$("#point_mem_id").val(mem_id);
+   	$("#point_user_id").val(mem_id);
+   	
 		$("#pointInModal").modal("show");
 	});
 	
 	// 포인트 충전 모달저장
 	$("#btn-point-save").click(function() {
-        // 입력된 값을 가져와서 mem_point input의 value로 설정
-        var memPointValue = $("#in_point").val();
-        $("#point_cost").val(memPointValue);
-        console.log("memPointValue:", memPointValue);
-        var confirmed = confirm(memPointValue + "P 를 충전하시겠습니까?");
-		
-        if (confirmed) {
-            $("#frmpointIn").submit();
-        }
-    });
+       // 입력된 값을 가져와서 mem_point input의 value로 설정
+       var memPointValue = $("#in_point").val();
+       if (!memPointValue) {
+       	alert("충전금액을 입력하세요");
+       } else {
+	        $("#point_cost").val(memPointValue);
+	        console.log("memPointValue:", memPointValue);
+	        var confirmed = confirm(memPointValue + "P 를 충전하시겠습니까?");
+			
+	        if (confirmed) {
+	            $("#frmpointIn").submit();
+	        }
+       }
+   });
 	
 	var addResult = '${addResult}';
 	if (addResult == 1) {
@@ -142,6 +156,20 @@ $(document).ready(function() {
 		return;
 	}
 	
+	// 예약내역 모달열기
+	$(".reserveDiv").click(function() {
+		var resInfo = $(this).data("res-info");
+	    console.log("resInfo:", resInfo);
+	    if (resInfo) {
+	        $("#reserve_rid").text("예약번호: " + resInfo.res_rid);
+	        $("#reserve_rental_date").text("대여시작일: " + resInfo.res_rental_date);
+	        $("#reserve_return_date").text("대여종료일: " + resInfo.res_return_date);
+	        $("#reserve_car_name").text("차종: " + resInfo.car_name);
+// 	        $("#reserve_payment_status").text("결제상태: " + resInfo.payment_status);
+	    }
+	    alert("열림");
+	    $("#reserveInModal").modal("show");
+	});
 });
 
 </script>
@@ -159,7 +187,7 @@ $(document).ready(function() {
 </section>
 <%-- ${loginInfo} --%>
 <%-- ${pointList} --%>
-   <section class="ftco-section">
+<section class="ftco-section">
 <div class="container">
 	<div class="row">
 		<div class="col-md-12" >
@@ -172,7 +200,7 @@ $(document).ready(function() {
 				</a>
 			</div>
 			<hr>
-			<div style="padding-top: 50px; padding-bottom: 20px;">
+			<div style="padding-top: 30px; padding-bottom: 50px;">
 				<div style="display: flex; align-items: center;">
 					<h3 style="margin-right:20px;">나의 포인트 : <a id="myPoint" style="margin-left:10px;">${loginInfo.mem_point}</a>P </h3>
 					<button class="btn btn-primary" id="btnPoint">포인트 충전하기</button>
@@ -215,41 +243,59 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
+	<hr>
 	<div class="row">
-		<div class="col-md-12" style="padding-top: 50px; padding-bottom: 50px;">
-			<div style="display: flex; justify-content: space-between;">
+		<div class="col-md-12" style="padding-top: 30px; padding-bottom: 30px;">
+			<div style="display: flex; justify-content: space-between;" style="padding-bottom: 50px;">
 				<h3>
-					최근 예약내역
+					다가오는 대여리스트
 				</h3>
-				<a href="/myPage/reservationList">예약내역 상세보기
+				<a href="/myPage/reservationList">전체 예약내역
 				<i class="fa fa-arrow-circle-right"></i>
 				</a>
 			</div>
-<!-- 				<div class="jumbotron card card-block"> -->
-				<div class="card">
-					<h6 class="card-header">
-						Card title
-					</h6>
-					<div class="card-body">
-						<p class="card-text">
-							Card content
-						</p>
-					</div>
-					<div class="card-footer">
-						
-					</div>
+			<%-- 예약내역이 없는 경우 --%>
+         	<c:if test="${empty reserveList}">
+				<div class="jumbotron card card-block">
+		            <p>예약 건이 없습니다.</p>
+		            <p><a class="btn btn-primary btn-large" href="/reserve/reserve">예약하러 가기</a></p>
+		        </div>
+          	</c:if>
+          	<%-- 예약내역이 있는 경우 --%>
+          	<c:if test="${not empty reserveList}">
+	          	<div class="row">
+	          		<c:forEach var="myReserve" items="${reserveList}">
+						<div class="reserveDiv col-md-4" data-res-info="${myReserve}" style="padding-bottom: 30px;">
+							<div class="card" style="height: 100%;">
+								<h6 class="card-header" style="background-color: #f07039; color:#fff;
+															   display: flex; justify-content: center;
+															   align-items: center;">
+									${myReserve.res_rental_date}
+								</h6>
+								<div class="card-body" style="height: 250px; 
+															  background-image: url(/resources/upload/${myReserve.unique_file_nm}); 
+															  background-size: cover; 
+															  background-position: center;">
+							    </div>
+								<div class="card-footer" style="background-color: #f07039;
+																display: flex; justify-content: center; 
+																align-items: center;">
+									<h4 style="color:#fff;">${myReserve.car_name}</h4>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
 				</div>
-<!-- 				</div> -->
-			</div>
+			</c:if>
 		</div>
-		<hr>
 	</div>
+	<hr>
+</div>
 </section>
 
 <!-- 포인트 충전 모달창 -->
-<div class="modal fade" id="pointInModal" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm" role="document">
+<div class="modal fade" id="pointInModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myModalLabel">포인트 충전</h5>
@@ -277,6 +323,32 @@ $(document).ready(function() {
 	</div>
 </div>
 <!-- // 포인트 충전 모달창 -->
+
+<!-- 예약내역 모달창 -->
+<div class="modal fade" id="reserveInModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">예약 정보</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<ul>
+					<li class="list-item" id="reserve_rid"></li>
+					<li class="list-item" id="reserve_rental_date"></li>
+					<li class="list-item" id="reserve_return_date"></li>
+					<li class="list-item" id="reserve_car_name"></li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- // 예약내역 모달창 -->
 
 
 <%@ include file="/WEB-INF/views/include/bottom.jsp" %>

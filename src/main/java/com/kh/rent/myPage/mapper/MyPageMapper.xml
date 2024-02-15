@@ -135,4 +135,15 @@
 		where non_rid = #{non_rid}
 	</update>
 	
+	<!-- 예약정보 조회하기(마이페이지) -->
+ 	<select id="getMyReserveList" resultType="com.kh.rent.myPage.domain.GetStatusDTO">
+ 		SELECT R.*, CI.FILE_ID, CI.CAR_INDEX, CI.CAR_NAME, F.UNIQUE_FILE_NM
+		FROM TBL_RESERVE R
+		LEFT JOIN TBL_CAR_INFO CI ON R.RES_CAR_ID = CI.CAR_INDEX
+		LEFT JOIN TBL_FILE F ON CI.FILE_ID = F.FILE_ID
+		WHERE R.res_mem_id = #{mem_id}
+		AND (R.res_status = '예약중' OR R.res_status = '예약완료')
+		ORDER BY R.res_rental_date ASC;
+	</select>
+	
 </mapper>

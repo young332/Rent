@@ -29,7 +29,7 @@ public interface MyPageMapper {
 	// 예약정보 현재시각기준 업데이트
 	public void updateTBLReserve(String mem_id);
 	
-	// 예약정보 조회하기
+	// 예약정보 조회하기(예약페이지)
 	public List<GetStatusDTO> getReserveList(String mem_id);
 	
 	// 예약번호로 차종 조회하기
@@ -49,5 +49,8 @@ public interface MyPageMapper {
 	
 	// 예약취소(비회원)
 	public int cancelReservation_non(int non_rid);
+	
+	// 예약정보 조회하기(마이페이지)
+	public List<GetStatusDTO> getMyReserveList(String mem_id);
 
 }
