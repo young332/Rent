@@ -1,6 +1,5 @@
 package com.kh.rent.board.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,11 +29,13 @@ public class Criteria {
 		this.endRow = endRow;
 	}
 	
+	//현재 페이지 번호와 한 페이지당 데이터 수를 이용하여 시작행과 끝행을 계산
 	private void setRows() {
 		endRow = pageNum * amount;
 		startRow = endRow - (amount -1);
 	}
 	
+	// 페이지번호를 설정할때마다 시작행과 끝행을 다시 계산
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
 		setRows();

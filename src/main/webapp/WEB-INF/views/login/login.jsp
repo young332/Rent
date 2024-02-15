@@ -136,20 +136,20 @@ $(function(){
 				</form>
 			</c:if>
 			<!-- 카카오로그인 -->
-			<div class="col-md-12 block-9 mb-md-5">
-				<form action="/login/kakaLogin" method="post" id="kakaLogin">
-				<div class="form-group">
-					<a href="javascript:void(0);" id="kakaoLoginButton">
-						<img src="/resources/carbook-master/images/btn_kakao.png" style="width: 50px; height: 50px; cursor: pointer;">
-							</a>
-							<input type="hidden" name="mem_email">
-							<input type="hidden" name="mem_name">
-							<input type="hidden" name="mem_birth">
-							<input type="hidden" name="mem_phone">
-							<input type="hidden" name="mem_addr">
-					</div>
-				</form>
-				</div>
+<!-- 			<div class="col-md-12 block-9 mb-md-5"> -->
+<!-- 				<form action="/login/kakaLogin" method="post" id="kakaLogin"> -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<a href="javascript:void(0);" id="kakaoLoginButton"> -->
+<!-- 						<img src="/resources/carbook-master/images/btn_kakao.png" style="width: 50px; height: 50px; cursor: pointer;"> -->
+<!-- 							</a> -->
+<!-- 							<input type="hidden" name="mem_email"> -->
+<!-- 							<input type="hidden" name="mem_name"> -->
+<!-- 							<input type="hidden" name="mem_birth"> -->
+<!-- 							<input type="hidden" name="mem_phone"> -->
+<!-- 							<input type="hidden" name="mem_addr"> -->
+<!-- 					</div> -->
+<!-- 				</form> -->
+<!-- 				</div> -->
 			</div>
 			<!-- 왼쪽 -->
 			<div class="col-md-6 block-9 mb-md-5">
