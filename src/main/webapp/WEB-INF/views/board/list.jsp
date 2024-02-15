@@ -202,7 +202,7 @@ $(function(){
 						<tr class="notice-row" data-board-no="${notice.board_no}">
 							<td style="font-weight: bold;">[공지]</td>
 							<td style="font-weight: bold;">${notice.board_title}</td>
-							<td>${notice.board_mem_id}</td>
+							<td>관리자</td>
 							<td class="cdate">${notice.board_cdate}</td>
 							<td>${notice.readcount}</td>
 						</tr>

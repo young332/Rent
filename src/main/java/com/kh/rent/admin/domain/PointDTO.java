@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class PointDTO {
+	
 	private Integer point_id;
 	private String point_user_id;
 	private String point_code;

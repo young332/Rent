@@ -15,15 +15,18 @@
 
 <!-- 비밀번호변경 유효성 검사 스크립트 include -->
 <script src="/resources/js/change-pw-checker-admin.js"></script>
-
 <!-- 비밀번호 암호화 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
 <script>
 
+//금액 자릿수 표시하기(콤마)
+function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 //회원정보수정하기
 function fn_memberModify(mem_id) {
-	
    $.ajax({
     type: 'GET',
     url: '/admin/member/getMemberInfo',  
@@ -31,31 +34,28 @@ function fn_memberModify(mem_id) {
     success: function (data) {
       console.log('Success:', data);
 
-      
-        $("#mem_id").val(data['mem_id']);
-	    $("#mem_name").val(data['mem_name']);
-	    $("#mem_pw").val(data['mem_pw']);
-	    $("#mem_adminck").val(data['mem_adminck']);
-	    var mem_adminck = data['mem_adminck'];
-	    if (mem_adminck == 0) {
-        	$("#mem_adminck").val("0").prop("selected", true);
-        } 
-        if (mem_adminck == 1) {
-        	$("#mem_adminck").val("1").prop("selected", true);
-        }
-        if (mem_adminck == 2) {
-        	$("#mem_adminck").val("2").prop("selected", true);
-        }
-	    	    
-	    $("#mem_birth").val(data['mem_birth']);
-	    $("#mem_phone").val(data['mem_phone']);
-	    $("#mem_email").val(data['mem_email']);
-	    $("#mem_zip_code").val(data['mem_zip_code']);
-	    $("#mem_addr").val(data['mem_addr']);
+      $("#mem_id").val(data['mem_id']);
+      $("#mem_name").val(data['mem_name']);
+      $("#mem_pw").val(data['mem_pw']);
+      $("#mem_adminck").val(data['mem_adminck']);
+      var mem_adminck = data['mem_adminck'];
+      if (mem_adminck == 0) {
+       	$("#mem_adminck").val("0").prop("selected", true);
+      } 
+      if (mem_adminck == 1) {
+       	$("#mem_adminck").val("1").prop("selected", true);
+      }
+      if (mem_adminck == 2) {
+       	$("#mem_adminck").val("2").prop("selected", true);
+      }
+    	    
+      $("#mem_birth").val(data['mem_birth']);
+      $("#mem_phone").val(data['mem_phone']);
+      $("#mem_email").val(data['mem_email']);
+      $("#mem_zip_code").val(data['mem_zip_code']);
+      $("#mem_addr").val(data['mem_addr']);
 
-      // 모달 창 열기
-      $("#MembermodifyModal").modal("show");
-    
+      $("#MembermodifyModal").modal("show");   
     }
     
   }); 
@@ -63,7 +63,6 @@ function fn_memberModify(mem_id) {
 
 //개별 포인트현황
 function fn_memberPoint(mem_id) {
-	
    $.ajax({
     type: 'GET',
     url: '/admin/member/getMemberPoint',  
@@ -79,13 +78,11 @@ function fn_memberPoint(mem_id) {
           row.append($("<td colspan='4'>").text("포인트 현황이 없습니다."));
           tbody.append(row);
       } else {
-          
           $.each(data, function(index, point) {
               var row = $("<tr>");
-
               row.append($("<td>").text(point.point_user_id));
               row.append($("<td>").text(point.point_code_name));
-              row.append($("<td>").text(point.point_cost));
+              row.append($("<td class='point'>").text(formatNumberWithCommas(point.point_cost)));
               
               // 사용일 Date형식 변환(상단 라이브러리 추가)
 			  var formattedDate = moment.utc(point.point_use_date).format('YYYY-MM-DD');
@@ -97,15 +94,11 @@ function fn_memberPoint(mem_id) {
            	  // 클릭한 버튼의 mem_id 값을 가져와서 설정
               $("#point_user_id").val(point.point_user_id);  
               $("#point_mem_id").val(point.point_user_id);  
-              
           });
       }
-      // 모달 창 열기
       $("#PointModal").modal("show");
-    
-    }
-    
-  }); 
+     }
+   }); 
 }
 
 //주소 검색
@@ -127,7 +120,14 @@ function openZipSearch() {
 }
 
 $(function() {
-
+	
+	$(".point a").each(function() {
+	    var point = $(this).text();
+	    if (point) {
+	        $(this).text(formatNumberWithCommas(point));
+	    }
+	});
+	
 	//검색
 	$("#frmSearch").submit(function(event) {
 	    event.preventDefault();
@@ -149,7 +149,6 @@ $(function() {
 	        return false;
 	    }
 
-	    
 	    $.ajax({
 	        type: "GET",
 	        url: "/admin/member/search", 
@@ -160,13 +159,12 @@ $(function() {
 	            var tbody = $(".table tbody");
 	            tbody.empty();
 
-	            // JSON 데이터를 반복하여 행을 추가
 	            $.each(response, function(index, member) {
 	                
 	                var row = $("<tr>");
 
 	                // 체크박스 열 추가
-	                var checkboxCell = $("<td>");
+	                /* var checkboxCell = $("<td>");
 	                var checkboxDiv = $("<div class='custom-control custom-checkbox'>");
 	                var checkboxInput = $("<input type='checkbox' class='custom-control-input chk'>")
 	                    .attr("id", "chk" + index) // 인덱스를 기반으로 유일한 ID 생성
@@ -175,12 +173,12 @@ $(function() {
 	                var checkboxLabel = $("<label class='custom-control-label'>").attr("for", "chk" + index);
 	                checkboxDiv.append(checkboxInput).append(checkboxLabel);
 	                checkboxCell.append(checkboxDiv);
-	                row.append(checkboxCell);
+	                row.append(checkboxCell); */
 
 	                row.append($("<td>").text(member.mem_id));
 	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberModify('" + member.mem_id + "');\">" + member.mem_name + "</a>"));
 	                var memberTypeText = member.mem_type == 1 ? "관리자" : "일반회원"; 
-	                row.append($("<td>").html("<div class='badge badge-outline-primary'>" + memberTypeText + "</div>"));
+	                row.append($("<td>").html("<div class='badge badge-pill badge-primary typeM'>" + memberTypeText + "</div>"));
 	                /* row.append($("<td>").text(member.mem_birth)); */
 	                row.append($("<td>").text(member.mem_email));
 	                row.append($("<td>").text(member.mem_phone));
@@ -195,7 +193,6 @@ $(function() {
 	                var formattedDate = year + "-" + month + "-" + day;
 	                row.append($("<td>").text(formattedDate));
 	                tbody.append(row);
-	                
 	            });
 	            
 	        },
@@ -206,7 +203,7 @@ $(function() {
 
 	});
 
-	// 비밀번호변경 모달열기
+	//비밀번호변경 모달열기
 	$("#pwdChange").click(function() {
 		var password1 = $("#mem_pw").val();
 		console.log(password1);
@@ -218,18 +215,19 @@ $(function() {
 		$("#modal-pwdChangeForm").modal("show");
 	});
 	
-	// 비밀번호변경 처리
+	//비밀번호변경 처리
 	$("#btn-pwdChange-save").click(function() {
 	    validatePasswordChangeForm();
 	});
 	
-	// 포인트충전 모달열기
+	//포인트충전 모달열기
 	$("#btnPoint").click(function() {
 		var mem_id = $("#point_mem_id").val();
 		console.log(mem_id);
 		$("#PointInModal").modal("show");
 	});
 	
+	//포인트충전 form전송
 	$("#btn-point-save").click(function(){
         // 입력된 값을 가져와서 mem_point input의 value로 설정
         var memPointValue = $("#in_point").val();
@@ -238,11 +236,16 @@ $(function() {
 
         $("#FrmpointIn").submit();
     });
-
-
 });
 </script>
-
+<style>
+.typeM{
+	font-size: 0.9rem;
+}
+.point{
+	font-weight: bold;
+}
+</style>
 
 <!-- [ content ] Start -->
 <div class="container-fluid flex-grow-1 container-p-y">
@@ -298,14 +301,8 @@ $(function() {
 							<div class="simplebar-content" style="padding: 0px;">
 								<table class="table mb-0 table-hover table-responsive-xl">
 									<thead class="thead-dark">
-										<tr>
-											<th scope="col">
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox"
-														class="custom-control-input checkall" id="checkall">
-													<label class="custom-control-label" for="checkall"></label>
-												</div>
-											</th>
+										<tr style="text-align: center;">
+											<!-- <th scope="col"><input type="checkbox" id="selectAllCheckbox"></th> -->
 											<th scope="col">아이디</th>
 											<th scope="col">이름</th>
 											<th scope="col">회원구분</th>
@@ -320,21 +317,16 @@ $(function() {
 									</thead>
 									<tbody>
 										<c:forEach var="memberVO" items="${MemberList}">
-											<tr>
-												<td>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input chk"
-															id="chk0" emplyrid="jml8758" membertype="general">
-														<label class="custom-control-label" for="chk0"></label>
-													</div>
-												</td>
-
+											<tr style="text-align: center;">
+												<!-- <td style="text-align: center;">
+								                    <input type="checkbox" class="board-checkbox">
+								                </td> -->
 												<td>${memberVO.mem_id}</td>
 												<td><a href="javascript:void(0);"
 													onclick="javascript:fn_memberModify('${memberVO.mem_id}');">${memberVO.mem_name}</a>
 												</td>
 												<td>
-													<div class="badge badge-outline-primary">
+													<div class="badge badge-pill badge-primary typeM">
 														<c:choose>
 															<c:when test="${memberVO.mem_adminck == 0}">일반회원</c:when>
 															<c:when test="${memberVO.mem_adminck == 1}">관리자</c:when>
@@ -348,7 +340,7 @@ $(function() {
 												<td>${memberVO.mem_phone}</td>
 												<td>${memberVO.mem_addr}</td>
 												<%-- <td>${memberVO.mem_point}</td> --%>
-												<td><a href="javascript:void(0);"
+												<td class="point"><a href="javascript:void(0);"
 													onclick="javascript:fn_memberPoint('${memberVO.mem_id}');">${memberVO.mem_point}</a></td>
 												<td>${memberVO.mem_cdate}</td>
 											</tr>

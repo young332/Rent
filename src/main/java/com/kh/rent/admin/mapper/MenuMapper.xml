@@ -56,9 +56,4 @@
 		where menu_id = #{menu_id} 
 	</delete>
 
-	
-	
-	
-	
-
 </mapper>
