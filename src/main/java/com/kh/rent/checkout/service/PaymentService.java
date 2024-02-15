@@ -10,12 +10,7 @@ import com.kh.rent.reserve.domain.ReserveVO;
 
 public interface PaymentService {
 	
-	
-//	public boolean addPayment(PaymentVO paymentVO);
-	
-	// 결제 조회
-//	public List<PaymentDTO> getPaymentInfo(String pay_mem_id);
-	
+			
 	// 결제 번호 조회
 	public List<ReserveVO> payNumber(int res_rid);
 	
@@ -29,21 +24,19 @@ public interface PaymentService {
 	
 	// 예약정보 조회하기
 	public List<ReserveVO> getReserveList(String mem_id);
-		
-	// 비회원 번호 조회
-	public int getPayNonResRid(int pay_res_rid);
-	
+			
 	public int getPay(int pay_res_rid);
 	
 	// 예약 금액
 	public int getTotalPay(int pay_res_rid);
 	
 	// 환불
-	public boolean paymentCancel(PaymentVO paymentVO);
+//	public boolean paymentCancel(PaymentVO paymentVO);
 	
-	// 결제취소
+	// 결제취소로 상태변경
 	public int payCancel(int pay_pid);
 	
+	// 환불
 	public void cancelPayAndReserveAndRefund(PaymentVO paymentVO);
 	
 		
