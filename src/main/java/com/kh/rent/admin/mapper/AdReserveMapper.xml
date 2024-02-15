@@ -7,7 +7,7 @@
 	<select id="allReserveList" resultType="com.kh.rent.myPage.domain.GetStatusDTO">
 		select r.*, p.pay_status, p.pay_pid
 		from TBL_RESERVE as r
-		left join TBL_PAYMENT as p on r.res_rid = p.pay_res_rid
+		left join TBL_PAYMENT as p on r.res_rid = p.pay_res_rid order by r.res_rid desc
 	</select>
 
 
