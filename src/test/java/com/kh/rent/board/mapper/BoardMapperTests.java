@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*.xml"})
 @Log4j
 @WebAppConfiguration
-public class BoardmapperTests {
+public class BoardMapperTests {
 	
 	@Autowired
 	private BoardMapper boardMapper;
@@ -45,12 +45,12 @@ public class BoardmapperTests {
 	}
 	
 	// 글 목록
-	@Test
-	public void testList() {
-		List<BoardVO> list = boardMapper.selectList();
-		log.info("list:" + list);
-	}
-	
+//	@Test
+//	public void testList() {
+//		List<BoardVO> list = boardMapper.selectList();
+//		log.info("list:" + list);
+//	}
+//	
 	
 	// 글 수정
 	@Test
@@ -81,13 +81,13 @@ public class BoardmapperTests {
 	}
 	
 
-	@Test
-	public void testSearch() {
-		String type = "TC";
-		String keyword = "예약";
-		List<BoardVO> list = boardMapper.search(type, keyword);
-		log.info("list:" + list);
-	}
+//	@Test
+//	public void testSearch() {
+//		String type = "TC";
+//		String keyword = "예약";
+//		List<BoardVO> list = boardMapper.search(type, keyword);
+//		log.info("list:" + list);
+//	}
 
 	// 조회수 업데이트
 	@Test
