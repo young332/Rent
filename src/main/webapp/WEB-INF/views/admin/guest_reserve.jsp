@@ -58,7 +58,7 @@ $(function() {
         }
         //결과가 없는 경우 메시지 추가
         if (!found) {
-            var messageRow = "<tr><td colspan='9' style='font-size: 0.9rem; text-align: center; font-weight: bold;'>해당 내역이 없습니다.</td></tr>";
+            var messageRow = "<tr><td colspan='10' style='font-size: 0.9rem; text-align: center; font-weight: bold;'>해당 내역이 없습니다.</td></tr>";
             $(".table tbody").append(messageRow);
         } else {
             //결과가 있는 경우 메시지 삭제
@@ -71,18 +71,18 @@ $(function() {
 
 <!-- [ content ] Start -->
 <div class="container-fluid flex-grow-1 container-p-y">
-    <h4 class="font-weight-bold py-3 mb-0">회원예약관리</h4>
+    <h4 class="font-weight-bold py-3 mb-0">비회원 예약</h4>
     <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
-            <li class="breadcrumb-item"><a href="#">회원관리</a></li>
-            <li class="breadcrumb-item active">회원예약관리</li>
+            <li class="breadcrumb-item"><a href="#">예약관리</a></li>
+            <li class="breadcrumb-item active">비회원 예약</li>
         </ol>
     </div>
 
 	<div class="card-body">
 
-		<form method="get" id="frmSearch" name="frm">
+		<!-- <form method="get" id="frmSearch" name="frm">
 			<div class="alert alert-light bg-light text-dark sch_wrap">
 				<div class="input-group col-sm-12">
 					<div class="input-group col-sm">
@@ -98,7 +98,7 @@ $(function() {
 					</div>
 				</div>
 			</div>
-		</form>
+		</form> -->
 
 		<div class="dt-buttons col-sm-12 mb-3">
 			<button class="btn btn-secondary flaot-left" type="button"
@@ -122,37 +122,39 @@ $(function() {
 										<tr style="text-align: center;">
 											<th scope="col"><input type="checkbox" id="selectAllCheckbox"></th>
 											<th scope="col">예약번호</th>
-											<th scope="col">아이디</th>
+											<th scope="col">예약명</th>
+											<th scope="col">전화번호</th>
+											<th scope="col">면허번호</th>
 											<th scope="col">이용시작일</th>
 											<th scope="col">이용종료일</th>
-											<th scope="col">차량</th>
+											<th scope="col">차량</th>											
 											<th scope="col">결제금액</th>
 											<th scope="col">예약상태</th>
-											<th scope="col">결제상태</th>
 										</tr>
 									</thead>
 									<tbody class="table">
-										<c:forEach var="reserveVO" items="${reserveList}">
+										<c:forEach var="nonMemberVO" items="${nonMemberList}">
 											<tr style="text-align: center;">
 												<td style="text-align: center;">
 								                    <input type="checkbox" class="board-checkbox">
 								                </td>
-												<td>${reserveVO.res_rid}</td>
-												<td>${reserveVO.res_mem_id}</td>
+												<td>${nonMemberVO.non_rid}</td>
+												<td>${nonMemberVO.non_name}</td>
+												<td>${nonMemberVO.non_tel}</td>
+												<td>${nonMemberVO.non_license_num}</td>
 												<td>
 													<div class="badge badge-primary" style="font-size: 0.9rem">
-														${reserveVO.res_rental_date}
+														${nonMemberVO.non_rental_date}
 													</div>
 												</td>
 												<td>
 													<div class="badge badge-info" style="font-size: 0.9rem">
-														${reserveVO.res_return_date}
+														${nonMemberVO.non_return_date}
 													</div>
 												</td>
-												<td>${reserveVO.res_car_id}</td>
-												<td class="totalpay" style="font-weight: bold;">${reserveVO.res_totalpay}</td>
-												<td style="color: ${reserveVO.res_status == '예약완료' ? 'red' : 'inherit'}; font-weight: ${reserveVO.res_status == '예약완료' ? 'bold' : 'normal'};">${reserveVO.res_status}</td>
-        										<td style="color: ${reserveVO.pay_status == '결제완료' ? 'red' : 'inherit'}; font-weight: ${reserveVO.pay_status == '결제완료' ? 'bold' : 'normal'};">${reserveVO.pay_status}</td>
+												<td>${nonMemberVO.non_car_id}</td>
+												<td class="totalpay" style="font-weight: bold;">${nonMemberVO.non_totalpay}</td>
+												<td style="color: ${nonMemberVO.non_status == '예약완료' ? 'red' : 'inherit'}; font-weight: ${nonMemberVO.non_status == '예약완료' ? 'bold' : 'normal'};">${nonMemberVO.non_status}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -178,6 +180,5 @@ $(function() {
 
 </div>
 <!-- [ content ] End -->
-
 
 <%@ include file="/WEB-INF/views/admin/include/bottom.jsp" %>                  

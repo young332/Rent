@@ -6,7 +6,7 @@
 	
 	<select id="getTopMenu" resultType="com.kh.rent.admin.domain.MenuVO">
 		select menu_id, parent_menu_id, menu_type, menu_name, menu_url, use_yn, orderby from TBL_MENU
-		where parent_menu_id = '@'
+		where parent_menu_id = '@' ORDER BY orderby asc
 	</select>
 	
 	<select id="getSubMenuAll" resultType="com.kh.rent.admin.domain.MenuVO">		

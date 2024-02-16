@@ -30,6 +30,7 @@ import com.kh.rent.board.service.BoardService;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.GetStatusDTO;
+import com.kh.rent.reserve.domain.NonMemberVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -64,9 +65,6 @@ public class AdminController {
 		log.info("****");
 		return "admin/login";
 	}
-	
-	
-	
 	
 	@GetMapping(value = "/main")
 	public String adminMainPost(@RequestParam(value="menu_id", defaultValue = "MENU001") String menu_id,
@@ -137,6 +135,12 @@ public class AdminController {
 	public void adminReserveGet(Model model) {
 		List<GetStatusDTO> reserveList = adReserveService.allReserveList();
 		model.addAttribute("reserveList", reserveList);
+	}
+	
+	@GetMapping("/guest_reserve")
+	public void adminguest_reserveGet(Model model) {
+		List<NonMemberVO> nonMemberList = adReserveService.allNonlist();
+		model.addAttribute("nonMemberList", nonMemberList);
 	}
 	
     // ----------- 로그인 관련 --------------- 	
