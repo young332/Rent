@@ -324,8 +324,8 @@ $(function(){
 							<div class="input-group-append">
 								<button type="button" id="phone_check" class="btn btn-primary py-1 px-2" style="margin-left: 5px;">본인인증</button>
 							</div>
-								<span id="phoneDoubleCheck"></span>						
 						</div>
+								<span id="phoneDoubleCheck"></span>						
 					</div>
 					<div class="form-group">
               <small>이메일</small>
