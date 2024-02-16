@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class FileVO {
+	
 	private Integer file_id;
 	private Integer file_sn;
 	private String file_stre_cours;
@@ -20,4 +21,5 @@ public class FileVO {
 	private String file_extension;
 	private long file_size;
 	private Timestamp file_create_date;
+	
 }

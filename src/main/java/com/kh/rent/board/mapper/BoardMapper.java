@@ -12,6 +12,12 @@ public interface BoardMapper {
 	// 글 등록
 	public int insert(BoardVO boardVO);
 	
+	// 답글 등록
+	public int replyInsert(BoardVO boardVO);
+	
+	// 답글 순서 업데이트
+	public int replySeqUpdate(BoardVO boardVO);
+	
 	// 공지사항 목록
 	public List<BoardVO> notice();
 	

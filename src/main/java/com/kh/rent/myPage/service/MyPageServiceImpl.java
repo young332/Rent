@@ -117,5 +117,19 @@ public class MyPageServiceImpl implements MyPageService{
 		myPageMapper.updateNonMember(nonMemberLoginDTO);
 	}
 
+	// 예약정보 조회하기(마이페이지)
+	@Override
+	public List<GetStatusDTO> getMyReserveList(String mem_id) {
+		List<GetStatusDTO> list = myPageMapper.getMyReserveList(mem_id);
+		return list;
+	}
+
+	// 예약정보 조회하기(예약번호 1개 정보)
+	@Override
+	public List<GetStatusDTO> getMyResInfo(int res_rid) {
+		List<GetStatusDTO> list = myPageMapper.getMyResInfo(res_rid);
+		return list;
+	}
+
 }
 

@@ -117,7 +117,12 @@ $(function(){
                             	<dl id="dl_info">
                             		<dt>작성자</dt>
                             		<dt>ㅣ</dt>
-                            		<dd>${boardVO.board_mem_id}</dd>
+								    <c:if test="${board.board_seq ne 0}">
+								        <dd>관리자</dd>
+								    </c:if>
+								    <c:if test="${board.board_seq eq 0}">
+								        <dd>${boardVO.board_mem_id}</dd>
+								    </c:if>
                             	</dl>
                             	<dl id="dl_info">
                             		<dt>조회수</dt>
@@ -139,16 +144,16 @@ $(function(){
 				<div class="col-md-12">
 				    <div class="d-flex justify-content-end align-items-center">
 				        <c:if test="${loginInfo.mem_adminck eq 1}">
-				        	<button type="button" class="btn btn-secondary btn-oper mr-2" data-oper="answer" data-no="${boardVO.board_no}">답글쓰기</button>
+				        	<button type="button" class="btn btn-primary btn-oper mr-2" data-oper="answer" data-no="${boardVO.board_no}">답글쓰기</button>
 				        </c:if>
 				        <c:if test="${(loginInfo.mem_id eq boardVO.board_mem_id) or (loginInfo.mem_adminck eq 1 and boardVO.board_noticeYN eq 'Y')}">
-				            <button type="button" class="btn btn-secondary btn-oper mr-2" data-oper="modify" data-no="${boardVO.board_no}">수정</button>
-				            <button type="button" class="btn btn-secondary btn-oper" data-oper="delete" data-no="${boardVO.board_no}">삭제</button>
+				            <button type="button" class="btn btn-primary btn-oper mr-2" data-oper="modify" data-no="${boardVO.board_no}">수정</button>
+				            <button type="button" class="btn btn-primary btn-oper" data-oper="delete" data-no="${boardVO.board_no}">삭제</button>
 				        </c:if>
 				    </div>
 				</div>
 				<div class="col-md-12 d-flex justify-content-center">
-				    <button type="button" class="btn btn-secondary btn-oper" id="btnlist" >목록</button>
+				    <button type="button" class="btn btn-primary btn-oper" id="btnlist" >목록</button>
 				</div>
 			</div>
 		</div>

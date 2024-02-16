@@ -25,4 +25,17 @@ public class GetStatusDTO {
 	private String res_status;
 	private String pay_status;
 	private int pay_pid;
+	
+	// 이미지
+	private String car_name;
+	private int file_id;
+    private String unique_file_nm;
+    
+    // 차량 옵션
+    private String car_company;
+    private String car_fuel;
+    private String op_carseat;
+    private String op_navi;
+    private String op_bt;
+    private String op_cam;
 }

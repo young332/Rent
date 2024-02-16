@@ -215,7 +215,7 @@ $(function(){
 				</form>
 				<c:if test="${not empty loginInfo}">
 					<div class="ml-auto">
-						<button type="button" class="btn btn-secondary btn-oper mr-2" onclick="location.href='/board/register'">글쓰기</button>
+						<button type="button" class="btn btn-primary btn-oper mr-2" onclick="location.href='/board/register'">글쓰기</button>
 					</div>
 				</c:if>
 
@@ -241,7 +241,7 @@ $(function(){
 						<tr class="notice-row" data-board-no="${notice.board_no}">
 							<td style="font-weight: bold;">[공지]</td>
 							<td style="font-weight: bold;">${notice.board_title}</td>
-							<td>${notice.board_mem_id}</td>
+							<td>관리자</td>
 							<td class="cdate">${notice.board_cdate}</td>
 							<td>${notice.readcount}</td>
 						</tr>
@@ -249,14 +249,29 @@ $(function(){
 					<c:forEach items="${boardList}" var="board">
 						<tr class="board-row" data-board-no="${board.board_no}" 
 											  data-board-private="${board.board_privateYN}" 
+											  data-board-group="${board.board_group}"
 											  data-board-id="${board.board_mem_id}">
 							<td>${board.board_no}</td>
 							<td>
+								<c:if test="${board.board_level > 0}">
+									<c:forEach begin="1" end ="${board.board_level}">
+										<span style="padding-left:20px"></span>
+									</c:forEach>
+									<img src="/resources/carbook-master/images/arrow.png" width="12" height="12">
+								</c:if>
 								<c:if test="${board.board_privateYN eq 'Y'}">
 								<i class="fa fa-lock"></i>
 								</c:if>
+								
 							${board.board_title}</td>
-							<td>${board.board_mem_id}</td>
+							<td>
+							    <c:if test="${board.board_seq ne 0}">
+							        관리자
+							    </c:if>
+							    <c:if test="${board.board_seq eq 0}">
+							        ${board.board_mem_id}
+							    </c:if>
+							</td>
 							<td class="cdate">${board.board_cdate}</td>
 							<td>${board.readcount}</td>
 						</tr>

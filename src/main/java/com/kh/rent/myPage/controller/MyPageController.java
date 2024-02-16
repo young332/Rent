@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,6 +27,8 @@ import com.kh.rent.myPage.domain.GetCarNameDTO;
 import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
 import com.kh.rent.myPage.service.MyPageService;
+import com.kh.rent.point.domain.PointDTO;
+import com.kh.rent.point.service.PointService;
 import com.kh.rent.reserve.domain.NonMemberVO;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
@@ -37,6 +41,9 @@ public class MyPageController {
 	
 	@Autowired
 	private MyPageService myPageService;
+	
+	@Autowired
+	private PointService pointService;
 	
 	// 예약확인 페이지
 	@GetMapping("/reservationList")
@@ -73,8 +80,22 @@ public class MyPageController {
 	
 	// 마이페이지
 	@GetMapping("/myPage")
-	public void myPage() {
+	public void myPage(HttpSession session, Model model) {
 		log.info("myPageGet..");
+		
+		MemberVO loginInfo = (MemberVO)session.getAttribute("loginInfo");
+		String mem_id = loginInfo.getMem_id();
+		
+		// 포인트 내역
+		List<PointDTO> pointList = pointService.getPointList(mem_id);
+//		log.info("pointList:" + pointList);
+		
+		// 예약내역
+		myPageService.updateTBLReserve(mem_id);
+		List<GetStatusDTO> reserveList = myPageService.getMyReserveList(mem_id);
+		
+		model.addAttribute("pointList", pointList);
+		model.addAttribute("reserveList", reserveList);
 	}
 	
 	// 내 정보관리 페이지
@@ -202,5 +223,13 @@ public class MyPageController {
 		}
 	}
 	
+	// 예약 건별 정보
+	@GetMapping(value = "/getResInfo", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+    public List<GetStatusDTO> getResInfo(@RequestParam int res_rid) {
+		System.out.println("get_res_rid: " + res_rid);
+		List<GetStatusDTO> reserveList = myPageService.getMyResInfo(res_rid);
+        return reserveList;
+    }
 	
 }

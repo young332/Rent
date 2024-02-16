@@ -114,7 +114,7 @@ $(document).ready(function() {
 									<td>${reservation.non_status}</td>
 									<td>
 									<c:if test="${reservation.non_status eq '예약완료'}">
-									<button onclick="res_cancel_non(${reservation.non_rid})">예약취소</button>
+									<button class="btn btn-sm btn-warning" onclick="res_cancel_non(${reservation.non_rid})">예약취소</button>
 				                    </c:if>
 				                    </td>
 				                  </tr>

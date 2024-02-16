@@ -27,6 +27,21 @@ public class BoardServiceImpl implements BoardService{
 		return count;
 	}
 	
+	// 답글 등록
+	@Override
+	public int replyInsert(BoardVO boardVO) {
+		int count = boardMapper.replyInsert(boardVO);
+		return count;
+	}
+
+	// 답글 순서 업데이트
+	@Override
+	public int replySeqUpdate(BoardVO boardVO) {
+		int count = boardMapper.replySeqUpdate(boardVO);
+		return count;
+	}
+
+	
 	// 공지사항 목록
 	@Override
 	public List<BoardVO> getNotice() {

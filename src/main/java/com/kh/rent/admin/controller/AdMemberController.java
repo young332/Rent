@@ -24,7 +24,6 @@ import com.kh.rent.admin.domain.Search;
 import com.kh.rent.admin.service.AdMemberService;
 import com.kh.rent.login.domain.MemberVO;
 import com.kh.rent.myPage.domain.PWchangeDTO;
-import com.kh.rent.myPage.service.MyPageService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -52,7 +51,7 @@ public class AdMemberController {
 		log.info("updateVO:" + updateVO);
 		int result = adMemberService.updateMember(updateVO);
 		rttr.addFlashAttribute("modifyResult", result);
-		// 변경 결과에 따라 응답 반환
+
 	    if (result == 1) {
 	    	
 	    	return "redirect:/admin/member";
@@ -61,7 +60,7 @@ public class AdMemberController {
 	    }
 	}
 	
-	// 비밀번호 변경
+	//비밀번호 변경
 	@Transactional
 	@PutMapping("/pwdChange")
 	public ResponseEntity<String> pwdChange(HttpSession session, @RequestBody PWchangeDTO pwChangeDTO) {
@@ -69,10 +68,10 @@ public class AdMemberController {
 		log.info("mem_id:" + pwChangeDTO.getMem_id());
 		log.info("password:" + pwChangeDTO.getPassword());
 		log.info("newPassword:" + pwChangeDTO.getNewPassword());
-	    // 비밀번호 변경 로직 수행
+	    
 	    int result = adMemberService.changePassword(pwChangeDTO);
 	    log.info("pwdChange result:" + result);
-	    // 변경 결과에 따라 응답 반환
+	    
 	    if (result == 1) {
 	    	//로그인 한 회원 정보가 아닌 관리자가 수정하는 회원의 비밀번호 변경 
 	    	pwChangeDTO.setPassword(pwChangeDTO.getNewPassword());
@@ -97,31 +96,31 @@ public class AdMemberController {
 	 
 	 //개별 포인트 내역
 	 @GetMapping(value = "/getMemberPoint", produces = MediaType.APPLICATION_JSON_VALUE)
-		@ResponseBody
-	    public List<PointDTO> getMemberPoint(@RequestParam String mem_id) {
-			System.out.println("getMemberPoint mem_id: " + mem_id);
-			List<PointDTO> pointList = adMemberService.selectPointByid(mem_id);
-	        return pointList;
-	    }
+	 @ResponseBody
+     public List<PointDTO> getMemberPoint(@RequestParam String mem_id) {
+		 System.out.println("getMemberPoint mem_id: " + mem_id);
+		 List<PointDTO> pointList = adMemberService.selectPointByid(mem_id);
+         return pointList;
+     }
 	
 	 
 	 
-	//포인트 충전
-	@Transactional
-	@PostMapping("/pointIn")
-	public String pointIn(HttpSession session, MemberVO memberVO, PointDTO pointDTO, RedirectAttributes rttr) {
+	 //포인트 충전
+	 @Transactional
+	 @PostMapping("/pointIn")
+	 public String pointIn(HttpSession session, MemberVO memberVO, PointDTO pointDTO, RedirectAttributes rttr) {
 		log.info("memberVO:" + memberVO);
 		log.info("pointDTO:"+pointDTO);
 		int result = adMemberService.addPoint(memberVO);
 		adMemberService.addPointTable(pointDTO);
 		rttr.addFlashAttribute("addResult", result);
-		// 변경 결과에 따라 응답 반환
+		
 	    if (result == 1) {
 	    	return "redirect:/admin/member";
 	    } else {
 	        return "fail";
 	    }
-	}
+	 }
 	
 	
 }

@@ -3,57 +3,54 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.rent.point.mapper.PointMapper">
-	
-	
-	<select id="getPointCode" resultType="String">
-        SELECT * FROM TBL_COMMON_CODE
-        WHERE code_id = #{code_id}
-    </select>
-	
-	
-	<!-- Member Mapper에 넣어야 포인트 값 연동 가능. 포인트 변경 -->
-<!-- 	<update id="updateMemberPoint"> -->
-<!-- 	    update TBL_MEMBER set -->
-<!-- 	        mem_point = mem_point + #{mem_point} -->
-<!-- 	    where mem_id = #{mem_id} -->
-<!-- 	</update> -->
-    
-	<!-- 회원 가입, 글쓸 때 등 포인트 얻을 시 -->
-    <insert id="insertPoint" parameterType="map">
-        INSERT INTO TBL_POINT_MEMBER (point_id, point_user_id, point_code, point_use_date, point_cost)
-        VALUES (
-            #{point_id},
-			#{point_user_id},
-			#{point_code},
-			#{point_use_date},
-			#{point_cost}
-            CASE
-              WHEN #{point_code} = '글쓰기' THEN 10
-              WHEN #{point_code} = "POINT_J" THEN 100000
-              ELSE 0
-            END
-        )
-    </insert>
-		
-<!-- 	<insert id="insertPoint"> -->
-<!-- 		insert into TBL_POINT_MEMBER -->
-<!-- 			(point_id, point_user_id, point_code, point_cost, point_use_date)  -->
-<!-- 		values  -->
-<!-- 			(#{point_id}, #{point_user_id}, #{point_code}, #{point_cost}, #{point_use_date}) -->
-<!-- 	</insert> -->
-		
-	<!-- 포인트 변경 -->
-	<update id="updatePoint">
-	    update TBL_POINT_MEMBER set
-	        point_user_id = point_user_id + (select sum(point_cost) from TBL_POINT_MEMBER where point_user_id = #{point_user_id})
-	    where point_user_id = #{point_user_id}
+
+	<!-- 포인트 전체 조회하기(한사람) -->
+ 	<select id="getPointList" resultType="com.kh.rent.point.domain.PointDTO">
+ 		SELECT @ROWNUM:=@ROWNUM+1 AS ROWNUM, A.*,
+	    CASE 
+	        WHEN A.POINT_CODE = 'POINT_J' THEN '회원가입'
+	        WHEN A.POINT_CODE = 'POINT_C' THEN '충전'
+	        WHEN A.POINT_CODE = 'POINT_B' THEN '게시판'
+	        WHEN A.POINT_CODE = 'POINT_P' THEN '결제'
+	        WHEN A.POINT_CODE = 'POINT_E' THEN '이벤트'
+	        WHEN A.POINT_CODE = 'POINT_R' THEN '결제취소'
+	        ELSE '기타'
+	    END AS POINT_CODE_NAME,
+	    CASE 
+	        WHEN A.POINT_COST >= 0 THEN '적립'
+	       	ELSE '사용'
+	    END AS POINT_SECTION
+		FROM (
+		    SELECT P.*, M.MEM_POINT
+		    FROM TBL_POINT AS P
+		    JOIN TBL_MEMBER AS M ON P.POINT_USER_ID = M.MEM_ID
+		    WHERE M.MEM_ID = #{mem_id}
+		    ORDER BY POINT_USE_DATE DESC
+		) AS A, (SELECT @ROWNUM:=0) AS R
+		ORDER BY ROWNUM DESC;
+  	</select>
+  	
+  	<!-- 포인트 충전 -->
+	<update id="addPoint">
+		UPDATE rent001.TBL_MEMBER SET
+			MEM_POINT = mem_point + #{mem_point},
+			MEM_UDATE = now()
+		WHERE MEM_ID = #{mem_id}
 	</update>
 	
-
-	<!-- 포인트 조회 -->
-	<select id="pointList" resultType="int" parameterType="String">
-		 SELECT SUM(point_cost) from TBL_POINT_MEMBER
-		 WHERE point_user_id = #{point_user_id}
+	<!-- 포인트 내역 기록 -->
+	<insert id="addPointTable">
+		INSERT INTO TBL_POINT (point_user_id, point_code, point_use_date, point_cost)
+	    VALUES (
+	        #{point_user_id}, #{point_code}, NOW(), #{point_cost}
+	    )
+	</insert>
+	
+	<!-- 갱신 포인트 조회 -->
+	<select id="getMemPoint" resultType="Integer">
+		SELECT MEM_POINT
+		FROM TBL_MEMBER
+		WHERE MEM_ID = #{mem_id}
 	</select>
 	
 </mapper>

@@ -3,56 +3,54 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.kh.rent.board.mapper.BoardMapper">
- 	<sql id="searchSql">
- 		<where>
-    	 <choose>
-	        <when test="type == 'T'.toString()">
-	            board_title like CONCAT('%', #{keyword}, '%')
-	        </when>
-	        <when test="type == 'C'.toString()">
-	            board_content like CONCAT('%', #{keyword}, '%')
-	        </when>
-	        <when test="type == 'W'.toString()">
-	            board_mem_id like CONCAT('%', #{keyword}, '%')
-	        </when>
-	        <when test="type == 'TCW'.toString()">
-	            (board_title like CONCAT('%', #{keyword}, '%')
-	            or board_content like CONCAT('%', #{keyword}, '%')
-	            or board_mem_id like CONCAT('%', #{keyword}, '%'))
-	        </when>
-	    </choose>
-	    </where>
-	</sql>
-	
-	<!-- 주석 -->
-	<select id="selsec">
-		select * from tbl_board
-	</select>
  
 	<!-- 글 등록 -->
  	<insert id="insert">
     	INSERT INTO TBL_BOARD 
-    	(BOARD_TITLE, BOARD_CONTENT, BOARD_CDATE, BOARD_MEM_ID, BOARD_PRIVATEYN, BOARD_NOTICEYN)
-    	VALUES 
-    	(#{board_title}, #{board_content}, now(), #{board_mem_id}, #{board_privateYN}, #{board_noticeYN})
+		    (BOARD_TITLE, BOARD_CONTENT, BOARD_CDATE, BOARD_MEM_ID, BOARD_PRIVATEYN, BOARD_NOTICEYN, BOARD_GROUP, BOARD_SEQ, BOARD_LEVEL, BOARD_DELETEYN)
+		SELECT 
+		    #{board_title}, #{board_content}, NOW(), #{board_mem_id}, #{board_privateYN}, #{board_noticeYN}, IFNULL(max(board_Group)+1, 0), 0, 0, 'N'
+		FROM TBL_BOARD
 	</insert>
+	
+	<!-- 답글 등록 -->
+ 	<insert id="replyInsert">
+    	INSERT INTO TBL_BOARD 
+    	(BOARD_TITLE, BOARD_CONTENT, BOARD_CDATE, BOARD_MEM_ID, BOARD_PRIVATEYN, BOARD_NOTICEYN,
+    		BOARD_GROUP, BOARD_SEQ, BOARD_LEVEL, BOARD_DELETEYN)
+    	VALUES(#{board_title}, #{board_content}, now(), #{board_mem_id}, #{board_privateYN}, 'N',
+    		#{board_group}, #{board_seq}, #{board_level}, 'N')
+	</insert>
+	
+	<!-- 답글 순서 업데이트 -->
+	<update id="replySeqUpdate">
+		update TBL_BOARD set 
+		board_seq = board_seq + 1
+		where board_group = #{board_group} 
+		and board_seq > #{board_seq}
+	</update>
  
 	<!-- 공지사항 목록 -->
 	<select id="notice" resultType="com.kh.rent.board.domain.BoardVO">
-		select * from rent001.TBL_BOARD where board_noticeYN = 'Y' order by board_no desc
+		select * from rent001.TBL_BOARD 
+		where board_noticeYN = 'Y' 
+		order by board_no desc
 	</select>
  
-	<!-- 일반 글 목록 -->
+
+
+	<!-- 글 목록 -->
  	<select id="selectList" resultType="com.kh.rent.board.domain.BoardVO">
-	    select * from (
-	        select 
-	            board_no, board_title, board_content, board_cdate, board_udate, readcount, board_mem_id, board_privateyn, board_noticeyn
-	        from TBL_BOARD
-	        
-	            <include refid="searchSql"></include>	
-	    ) AS derived_table_alias
-	    LIMIT #{startRow}, #{amount}
-	</select>
+ 		SELECT * FROM (
+		    SELECT * 
+		    FROM rent001.TBL_BOARD 
+		    WHERE board_noticeyn = 'N' 
+	        <include refid="searchSql"></include>
+		    ORDER BY board_seq ASC, board_level ASC
+		    LIMIT #{startRow}, #{amount}
+		) AS sorted_board 
+		ORDER BY board_group DESC, board_seq ASC, board_no ASC;
+ 	</select>
  	
 	<!-- 글 수정 -->
  	<update id="update">
@@ -84,35 +82,37 @@
 		readcount = readcount + 1
 		where board_no = #{board_no}
 	</update>
-	
+ 	
 	<!-- 글갯수 -->
 	<select id="getTotal" resultType="int">
 		select count(*) from TBL_BOARD
-		<include refid="searchSql"></include>
+		<where>
+		<include refid="searchSql">
+		</include>
+		</where>
 	</select>
- 	
- 	<!-- 검색 -->
-<!-- 		<select id="search" resultType="com.kh.rent.board.domain.BoardVO"> -->
-<!-- 		    select * from TBL_BOARD -->
-<!-- 		    where -->
-<!-- 		    <choose> -->
-<!-- 		        <when test="type == 'T'.toString()"> -->
-<!-- 		            board_title like CONCAT('%', #{keyword}, '%') -->
-<!-- 		        </when> -->
-<!-- 		        <when test="type == 'C'.toString()"> -->
-<!-- 		            board_content like CONCAT('%', #{keyword}, '%') -->
-<!-- 		        </when> -->
-<!-- 		        <when test="type == 'W'.toString()"> -->
-<!-- 		            board_mem_id like CONCAT('%', #{keyword}, '%') -->
-<!-- 		        </when> -->
-<!-- 		        <when test="type == 'TCW'.toString()"> -->
-<!-- 		            (board_title like CONCAT('%', #{keyword}, '%') -->
-<!-- 		            or board_content like CONCAT('%', #{keyword}, '%') -->
-<!-- 		            or board_mem_id like CONCAT('%', #{keyword}, '%')) -->
-<!-- 		        </when> -->
-<!-- 		    </choose> -->
-<!-- 		</select> -->
-
+	
+	
+	<sql id="searchSql">
+   	 <choose>
+        <when test="type == 'T'.toString()">
+            AND board_title like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'C'.toString()">
+            AND board_content like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'W'.toString()">
+            AND board_mem_id like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'TCW'.toString()">
+            AND (
+                board_title like CONCAT('%', #{keyword}, '%')
+                OR board_content like CONCAT('%', #{keyword}, '%')
+                OR board_mem_id like CONCAT('%', #{keyword}, '%')
+            )
+        </when>
+    </choose>
+</sql>
 
  	
  </mapper>
