@@ -23,6 +23,9 @@
         }
     </style>    
 <script>
+
+var mem_id = '${loginInfo.mem_id}';
+
 $(function(){
 	//예약.변경
 	$("#reservationTitle").click(function(){
@@ -139,6 +142,7 @@ $(function(){
        
     });
     
+   
     
 });
 </script>     

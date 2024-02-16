@@ -362,14 +362,14 @@
           				<label for="agree01">고유식별정보 수집 및 이용 동의(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree01" name="0">보기</a>
+          				<a id="agree01" name="0">	보기</a>
           				</span></li>
           				<li>
           				<span class="chk_box">
           				<input type="checkbox" id="agree02" name="agree02" readonly>
           				<label for="agree02">대여자격 확인 동의(필수)
           				</label></span><span class="view">
-          				<a id="agree02" name="1">보기</a>
+          				<a id="agree02" name="1">	보기</a>
           				</span></li><li><span class="chk_box">
           				<input type="checkbox" id="agree03" name="agree03" readonly>
           				<label for="agree03">개인정보 수집 및 이용 동의(필수)</label>
@@ -381,7 +381,7 @@
           				<input type="checkbox" id="agree04" name="agree04" readonly="">
           				<label for="agree04">개인정보 제3자 제공 동의(필수)</label>
           				</span><span class="view">
-          				<a id="agree04" name="3">보기</a>
+          				<a id="agree04" name="3">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -390,7 +390,7 @@
           				<label for="agree05">고유식별정보 제3자 제공에 관한 동의(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree05" name="4">보기</a>
+          				<a id="agree05" name="4">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -399,7 +399,7 @@
           				<label for="agree06">자동차 표준 대여약관(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree06" name="5">보기</a>
+          				<a id="agree06" name="5">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -408,7 +408,7 @@
           				<label for="agree07">취소 및 위약금 규정 동의(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree07" name="6">보기</a>
+          				<a id="agree07" name="6">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -417,7 +417,7 @@
           				<label for="agree08">전자금융거래 이용약관(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree08" name="7">보기</a>
+          				<a id="agree08" name="7">	보기</a>
           				</span>
           				</li>
           				</ul>
@@ -435,7 +435,28 @@
         </form>
       </div>
     </div>
+    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">이용 약관 및 정책 동의</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 모달 내용을 입력합니다. -->
+        <p>이 사이트는 테스트용으로 제작되었으며, 결제는 단순한 시뮬레이션입니다. 이로 인해 발생하는 모든 거래는 실제 서비스와는 무관하며, 어떠한 법적 효력도 갖지 않습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
   </main>
+  
+  
 </div>
 
    <script>
@@ -444,6 +465,54 @@
    function formatNumberWithCommas(number) {
        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
    }
+	
+	// 보기 링크를 클릭했을 때 모달 창을 표시합니다.
+	   $(document).ready(function(){
+	     $('a[name="0"]').click(function(){
+	       $('#exampleModal').modal('show');
+	     });
+	   });
+	
+	   $(document).ready(function(){
+		     $('a[name="1"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="2"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="3"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="4"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="5"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   $(document).ready(function(){
+		     $('a[name="6"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   $(document).ready(function(){
+		     $('a[name="7"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	
 
    // 변수 선언 및 초기 값 설정
    var mem_id = '${loginInfo.mem_id}';
