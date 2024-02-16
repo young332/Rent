@@ -257,10 +257,12 @@
 				<tr>
 				    <th>남은포인트</th>
 				    <td>
-				    <span id="pay_point_display" name="pay_point_display">${remainingPoint}p</span>
-<%-- 				    	<c:if test="${loginInfo.mem_point >= totalPay}"> --%>
-<%-- 				    	<span id="pay_point_display" name="pay_point_display">${v_point}</span>  --%>
-<%-- 			            </c:if> --%>
+				    <c:if test="${totalPay > loginInfo.mem_point}">
+				    	<span id="pay_point_display" name="pay_point_display" style="color: red;">${remainingPoint}p</span>
+					</c:if>
+					 <c:if test="${totalPay <= loginInfo.mem_point}">
+            			<span id="pay_point_display" name="pay_point_display">${remainingPoint}p</span>
+        			</c:if>
 				    </td>
 				</tr>
 				
@@ -534,7 +536,6 @@
 	    console.log("pay_point_display", pay_point_display);
 	    console.log("point", point);
 	    console.log("v_point", v_point);
-	    console.log("use_point", use_point);
 
 	    
 	    document.getElementById("result_pnt").innerHTML = formatNumberWithCommas(totalpay) + "p";
