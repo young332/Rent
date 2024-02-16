@@ -237,7 +237,7 @@
 <!-- 		    </tr> -->
 		    <tr>
 		      <th> 사용가능 포인트  </th>
-		      <td><span id="left_pnt" name="left_pnt">${loginInfo.mem_point}</span>p</span></td>
+		      <td><span id="left_pnt" name="left_pnt">${loginInfo.mem_point}</span>p</td>
 		    </tr>
 		    <tr>
 		      <th> 사용포인트  </th>
@@ -250,24 +250,26 @@
 <%-- 		        	<span id="use_point" min="0" max="${totalPay}">${initialPointCost}</span> p <br> --%>
 <%-- 		        	</c:otherwise> --%>
 <%-- 		        </c:choose>  --%>
-		        	<span id="use_point" min="0" max="${totalPay}">${initialPointCost}</span> p <br>
+		        	<span id="use_point" min="0" max="${totalPay}">${initialPointCost}</span>p<br>
 		      </td>
 		    </tr>
 		    
 				<tr>
 				    <th>남은포인트</th>
 				    <td>
-				    <span id="pay_point_display" name="pay_point_display">${remainingPoint}</span>
-<%-- 				    	<c:if test="${loginInfo.mem_point >= totalPay}"> --%>
-<%-- 				    	<span id="pay_point_display" name="pay_point_display">${v_point}</span>  --%>
-<%-- 			            </c:if> --%>
+				    <c:if test="${totalPay > loginInfo.mem_point}">
+				    	<span id="pay_point_display" name="pay_point_display" style="color: red;">${remainingPoint}p</span>
+					</c:if>
+					 <c:if test="${totalPay <= loginInfo.mem_point}">
+            			<span id="pay_point_display" name="pay_point_display">${remainingPoint}p</span>
+        			</c:if>
 				    </td>
 				</tr>
 				
 			  <tr>
 		    	<th>총 결제금액</th>
 		      <td>
-		      	<span class="bold txt_red" id="result_pnt">${totalPay}원</span>
+		      	<span class="bold txt_red" id="result_pnt">${totalPay}</span>
 		      </td>
 		    </tr>
 		  </tbody>
@@ -360,14 +362,14 @@
           				<label for="agree01">고유식별정보 수집 및 이용 동의(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree01" name="0">보기</a>
+          				<a id="agree01" name="0">	보기</a>
           				</span></li>
           				<li>
           				<span class="chk_box">
           				<input type="checkbox" id="agree02" name="agree02" readonly>
           				<label for="agree02">대여자격 확인 동의(필수)
           				</label></span><span class="view">
-          				<a id="agree02" name="1">보기</a>
+          				<a id="agree02" name="1">	보기</a>
           				</span></li><li><span class="chk_box">
           				<input type="checkbox" id="agree03" name="agree03" readonly>
           				<label for="agree03">개인정보 수집 및 이용 동의(필수)</label>
@@ -379,7 +381,7 @@
           				<input type="checkbox" id="agree04" name="agree04" readonly="">
           				<label for="agree04">개인정보 제3자 제공 동의(필수)</label>
           				</span><span class="view">
-          				<a id="agree04" name="3">보기</a>
+          				<a id="agree04" name="3">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -388,7 +390,7 @@
           				<label for="agree05">고유식별정보 제3자 제공에 관한 동의(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree05" name="4">보기</a>
+          				<a id="agree05" name="4">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -397,7 +399,7 @@
           				<label for="agree06">자동차 표준 대여약관(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree06" name="5">보기</a>
+          				<a id="agree06" name="5">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -406,7 +408,7 @@
           				<label for="agree07">취소 및 위약금 규정 동의(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree07" name="6">보기</a>
+          				<a id="agree07" name="6">	보기</a>
           				</span>
           				</li>
           				<li>
@@ -415,7 +417,7 @@
           				<label for="agree08">전자금융거래 이용약관(필수)</label>
           				</span>
           				<span class="view">
-          				<a id="agree08" name="7">보기</a>
+          				<a id="agree08" name="7">	보기</a>
           				</span>
           				</li>
           				</ul>
@@ -433,11 +435,85 @@
         </form>
       </div>
     </div>
+    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">이용 약관 및 정책 동의</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 모달 내용을 입력합니다. -->
+        <p>이 사이트는 테스트용으로 제작되었으며, 결제는 단순한 시뮬레이션입니다. 이로 인해 발생하는 모든 거래는 실제 서비스와는 무관하며, 어떠한 법적 효력도 갖지 않습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
   </main>
+  
+  
 </div>
 
    <script>
    
+	// 금액 자릿수 표시하기(콤마)
+   function formatNumberWithCommas(number) {
+       return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+   }
+	
+	// 보기 링크를 클릭했을 때 모달 창을 표시합니다.
+	   $(document).ready(function(){
+	     $('a[name="0"]').click(function(){
+	       $('#exampleModal').modal('show');
+	     });
+	   });
+	
+	   $(document).ready(function(){
+		     $('a[name="1"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="2"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="3"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="4"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   
+	   $(document).ready(function(){
+		     $('a[name="5"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   $(document).ready(function(){
+		     $('a[name="6"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	   $(document).ready(function(){
+		     $('a[name="7"]').click(function(){
+		       $('#exampleModal').modal('show');
+		     });
+		   });
+	
+
    // 변수 선언 및 초기 값 설정
    var mem_id = '${loginInfo.mem_id}';
    
@@ -494,12 +570,14 @@
    $("#hours").text(hours);
    $("#minutes").text(minutes);
    
+  
    $(document).ready(function() {
 	   
 	    // 페이지 로드 시 최종 결제 금액 초기화
 //	    var totalpay = parseInt($("#res_totalpay", "#pay_amount").val());
 	    var totalpay = '${totalPay}';
-	    console.log("totalpay 페이지로드", totalpay)
+	    console.log("totalpay: ", totalpay)
+	    
 	    var point = "${loginInfo.mem_point}";
 	    var min = 1; // 최소 사용 가능 포인트
 	    changePoint(totalpay, point, min, 0);
@@ -510,6 +588,7 @@
 	        chkPoint(totalpay, point, min, pay_amount);
 	        console.log("use_point", use_point);
 	    });
+		
 	});
    
    function changePoint(totalpay, point, min, v_point) {
@@ -518,20 +597,27 @@
 	    var v_point = pay_amount;
 	    
 	    // 화면에 사용할 포인트, 남은 포인트, 최종 결제 금액 표시
-	    document.getElementById("view_use_point").innerHTML = ${totalPay} + "원";
-	    document.getElementById("pay_point_display").innerText = point - v_point + "p"; // 남은 포인트 표시
+	    document.getElementById("view_use_point").innerHTML = formatNumberWithCommas(totalpay) + "p";
+	    document.getElementById("pay_point_display").innerText = formatNumberWithCommas(point - v_point) + "p"; // 남은 포인트 표시
 	    
 	    
 	    console.log("view_use_point", view_use_point);
 	    console.log("pay_point_display", pay_point_display);
 	    console.log("point", point);
 	    console.log("v_point", v_point);
-	    console.log("use_point", use_point);
 
 	    
-	    document.getElementById("result_pnt").innerHTML = ${totalPay} + " 원";
-  
-	}
+	    document.getElementById("result_pnt").innerHTML = formatNumberWithCommas(totalpay) + "p";
+  		
+	    var use_point = formatNumberWithCommas(initialPointCost);
+	    document.getElementById("use_point").textContent = use_point;
+	    console.log("use_point", use_point);
+	    
+	    var left_pnt = formatNumberWithCommas(point);
+	    document.getElementById("left_pnt").textContent =left_pnt;
+	
+   
+   }
 
 //    function chkPoint(totalpay, point, min) {
 // 	    // totalpay : 결제 금액 / point : 사용가능,남은 포인트 / min : 사용 가능 최소 포인트
@@ -617,15 +703,16 @@
 	    if (!allChecked) {
 	        // 약관에 동의하도록 안내하는 알림창 표시
 	        alert("약관에 동의해주세요. 결제를 진행하시려면 모든 약관에 동의하셔야 합니다.");
-	        history.go(0);
+
 			return;
 	    }
 	    
 	    // 결제금액이 부족하지 않은지 확인
 //	    var totalPay = parseInt($("#totalPay").text());
 	    var totalPay = '${totalPay}';
-	    var availablePoint = parseInt($("span[name='left_pnt']").text());
-	    var usedPoint = parseInt($("#use_point").text());
+	    var availablePoint = parseInt($("span[name='left_pnt']").text().replace(/,/g, ""));
+	    var usedPoint = parseInt($("#use_point").text().replace(/,/g, ""));
+	    
 	    
 	    console.log("최종결제금액", totalPay);
 	    console.log("사용가능 포인트", availablePoint);
@@ -634,7 +721,6 @@
 	    
 	    if (totalPay > availablePoint) {
 	        alert("결제 포인트가 부족합니다.");
-	        history.go(0); // 페이지 이동을 막음
 	        return;
 	    }
 	    

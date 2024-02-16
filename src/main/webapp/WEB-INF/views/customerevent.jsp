@@ -23,6 +23,9 @@
         }
     </style>    
 <script>
+
+var mem_id = '${loginInfo.mem_id}';
+
 $(function(){
 	//예약.변경
 	$("#reservationTitle").click(function(){
@@ -142,6 +145,7 @@ $(function(){
 // 		console.log("pointValue:",pointValue);
 // 		console.log("point_cost:",point_cost);
 		
+
 //      $("#frmpoint").submit();
       	 
 //     });
@@ -198,7 +202,6 @@ $(function(){
     // 포인트 적립 폼 제출
     $("#frmpoint").submit();
 });
-
 
     
 });
