@@ -11,6 +11,12 @@ public interface BoardMapper {
 	// 글 등록
 	public int insert(BoardVO boardVO);
 	
+	// 답글 등록
+	public int replyInsert(BoardVO boardVO);
+	
+	// 답글 순서 업데이트
+	public int replySeqUpdate(BoardVO boardVO);
+	
 	// 공지사항 목록
 	public List<BoardVO> notice();
 	
@@ -29,7 +35,6 @@ public interface BoardMapper {
 	// 조회수 업데이트
 	public int readCountUpdate(Long board_no);
 	
-
 	// 검색 기능
 	public List<BoardVO> search(@Param("type")String type,
 			@Param("keyword")String keyword);

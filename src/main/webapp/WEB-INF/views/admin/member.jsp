@@ -163,18 +163,6 @@ $(function() {
 	                
 	                var row = $("<tr>");
 
-	                // 체크박스 열 추가
-	                /* var checkboxCell = $("<td>");
-	                var checkboxDiv = $("<div class='custom-control custom-checkbox'>");
-	                var checkboxInput = $("<input type='checkbox' class='custom-control-input chk'>")
-	                    .attr("id", "chk" + index) // 인덱스를 기반으로 유일한 ID 생성
-	                    .attr("emplyrid", member.mem_id)
-	                    .attr("membertype", member.mem_type);
-	                var checkboxLabel = $("<label class='custom-control-label'>").attr("for", "chk" + index);
-	                checkboxDiv.append(checkboxInput).append(checkboxLabel);
-	                checkboxCell.append(checkboxDiv);
-	                row.append(checkboxCell); */
-
 	                row.append($("<td>").text(member.mem_id));
 	                row.append($("<td>").html("<a href='javascript:void(0);' onclick=\"javascript:fn_memberModify('" + member.mem_id + "');\">" + member.mem_name + "</a>"));
 	                var memberTypeText = member.mem_type == 1 ? "관리자" : "일반회원"; 

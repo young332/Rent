@@ -124,5 +124,12 @@ public class MyPageServiceImpl implements MyPageService{
 		return list;
 	}
 
+	// 예약정보 조회하기(예약번호 1개 정보)
+	@Override
+	public List<GetStatusDTO> getMyResInfo(int res_rid) {
+		List<GetStatusDTO> list = myPageMapper.getMyResInfo(res_rid);
+		return list;
+	}
+
 }
 

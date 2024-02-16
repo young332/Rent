@@ -13,11 +13,12 @@ function cancleRegi() {
 
 $(function() {
 	// 폼 전송
-	$("#formRegister").submit(function(e) {
+	$("#formReply").submit(function(e) {
 		e.preventDefault();
 		var content = $("#board_content").val();
 		content = content.replace(/(?:\r\n|\r|\n)/g, "<br>");
 		$("#board_content").val(content);
+		console.log("boardVO:")
 		this.submit();
 	});
 });
@@ -34,30 +35,40 @@ $(function() {
         </div>
       </div>
     </section>
-
+<%-- ${parent} --%>
 <section class="ftco-section contact-section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form id="formRegister" role="form" action="/board/register" method="post">
+				<div class="jumbotron">
+					<div>
+						<label for="board_title">
+							원글 제목
+						</label>
+						<input type="text" class="form-control" value="${parent.board_title}" readonly/>
+					</div>
+					<div>
+						<label for="board_title">
+							원글 내용
+						</label>
+						<textarea class="form-control" rows="5" readonly>${parent.board_content}</textarea>
+					</div>
+				</div>
+				<form id="formReply" role="form" action="/board/answer.do" method="post">
+					<input type="hidden" class="form-control" name="board_mem_id" value="${parent.board_mem_id}"/>
+					<input type="hidden" class="form-control" name="board_no" value="${parent.board_no}"/>
 					<div class="form-group">
 						<label for="board_title">
-							제목
+							답글 제목
 						</label>
-						<input type="text" class="form-control" id="board_title" name="board_title" required/>
+						<input type="text" class="form-control" id="board_title" name="board_title" 
+							   value="RE: ${parent.board_title}" required/>
 					</div>
 					<div class="form-group">
 						<label for="board_content">
-							내용
+							답글 내용
 						</label>
 						<textarea rows="10" class="form-control textarea" id="board_content" name="board_content" wrap="hard" required>${BoardVO.board_content}</textarea>
-					</div>
-					<div class="form-group">
-						<label for="board_mem_id">
-							작성자
-						</label>
-						<input type="text" class="form-control" id="board_mem_id" name="board_mem_id"
-						value="${loginInfo.mem_id}" readonly/>
 					</div>
 					<div class="form-group">
 						<label for="board_privateYN">
@@ -65,39 +76,19 @@ $(function() {
 						</label>
 						<div>
 					        <label>
-					            <input type="radio" id="board_privateYN" name="board_privateYN" value="N" checked> 아니오
+					            <input type="radio" id="board_privateYN" name="board_privateYN" value="N" 
+					            	<c:if test="${parent.board_privateYN eq 'N'}">checked</c:if>> 아니오
 					        </label>
 					        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					        <label>
-					            <input type="radio" id="board_privateYN" name="board_privateYN" value="Y"> 예
+					            <input type="radio" id="board_privateYN" name="board_privateYN" value="Y"
+					            	<c:if test="${parent.board_privateYN eq 'Y'}">checked</c:if>> 예
 					        </label>
-					    </div>
+				    	</div>
 					</div>
-					<c:choose>
-						<c:when test="${loginInfo.mem_adminck eq 1}">
-							<div class="form-group">
-								<label for="board_noticeYN">
-									공지 설정
-								</label>
-								<div>
-							        <label>
-							            <input type="radio" id="board_noticeYN" name="board_noticeYN" value="N" checked> 아니오
-							        </label>
-							        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							        <label>
-							            <input type="radio" id="board_noticeYN" name="board_noticeYN" value="Y"> 예
-							        </label>
-							    </div>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="form-group">
-								<input type="hidden" id="board_noticeYN" name="board_noticeYN" value="N">
-							</div>
-						</c:otherwise>
-					</c:choose>
+					<input type="hidden" name="board_noticeYN" value="N">
 					<div class="col-md-12 d-flex justify-content-center">
-						<button type="submit" class="btn btn-primary mr-2">글 등록</button>
+						<button type="submit" class="btn btn-primary mr-2">답글 등록</button>
 						<button class="btn btn-primary" onclick="cancleRegi()">취소</button>
 					</div>
 				</form>

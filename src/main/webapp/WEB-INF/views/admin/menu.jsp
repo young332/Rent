@@ -375,7 +375,7 @@ $(function(){
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label class="form-label">Menu_id</label>
-									<input type="text" class="form-control" placeholder="ex)Menu001" id="menu_id" name="menu_id" required>
+									<input type="text" class="form-control" placeholder="ex)MENU001" id="menu_id" name="menu_id" required>
 									<div class="clearfix"></div>
 								</div>
 								<div class="form-group col-md-6">
@@ -451,7 +451,7 @@ $(function(){
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label class="form-label">Menu_id</label>
-									<input type="text" class="form-control" placeholder="ex)Sub001" name="menu_id" id="sub_menu_id" required>
+									<input type="text" class="form-control" placeholder="ex)SUB001" name="menu_id" id="sub_menu_id" required>
 									<div class="clearfix"></div>
 								</div>
 								<div class="form-group col-md-6">

@@ -9,6 +9,12 @@ public interface BoardService {
 	// 글 등록
 	public int register(BoardVO boardVO);
 	
+	// 답글 등록
+	public int replyInsert(BoardVO boardVO);
+	
+	// 게시글 시퀀스 수정
+	public int replySeqUpdate(BoardVO boardVO);
+	
 	// 공지사항 목록
 	public List<BoardVO> getNotice();
 	

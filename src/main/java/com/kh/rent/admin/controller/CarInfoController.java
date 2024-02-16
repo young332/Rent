@@ -89,64 +89,62 @@ public class CarInfoController {
 	}
 
 	@PostMapping("/CarInfoModify")
-	public String CarInfoModify(CarInfoVO carInfoVO, @RequestParam("image_path") MultipartFile imagePath,
-			RedirectAttributes rttr) {
+	public String CarInfoModify(CarInfoVO carInfoVO, @RequestParam(name = "image_path", required = false) MultipartFile imagePath,
+	        RedirectAttributes rttr) {
 
-		log.info("carInfoUpdateVO: " + carInfoVO);
-		log.info("uploadDirectory:" + uploadDirectory);
+	    log.info("carInfoUpdateVO: " + carInfoVO);
+	    log.info("uploadDirectory:" + uploadDirectory);
 
-		int file_id1 = carInfoVO.getFile_id();
-		System.out.println("file_id1:" + file_id1);
-		
-		int resultDel = carInfoService.deleteCarFile(file_id1);
+	    int file_id1 = carInfoVO.getFile_id();
+	    System.out.println("file_id1:" + file_id1);
 
-		FileVO fileVO = new FileVO();
+	    // 이미지 파일이 업로드되었는지 확인
+	    if (imagePath != null && !imagePath.isEmpty()) {
+	        // 새로운 이미지 업로드 처리
+	        FileVO fileVO = new FileVO();
 
-		try {
-			// 업로드할 파일에 대한 정보 설정
-			UUID uuid = UUID.randomUUID();
-			String originalFilename = imagePath.getOriginalFilename();
-			String uniqueFilename = uuid + "_" + originalFilename;
+	        try {
+	            // 업로드할 파일에 대한 정보 설정
+	            UUID uuid = UUID.randomUUID();
+	            String originalFilename = imagePath.getOriginalFilename();
+	            String uniqueFilename = uuid + "_" + originalFilename;
 
-			// 상대경로를 기반으로 Path 객체 생성
-			Path relativeDestination = Paths.get(uploadDirectory, uniqueFilename);
+	            // 상대경로를 기반으로 Path 객체 생성
+	            Path relativeDestination = Paths.get(uploadDirectory, uniqueFilename);
 
-			String fileExtension = StringUtils.getFilenameExtension(originalFilename);
+	            String fileExtension = StringUtils.getFilenameExtension(originalFilename);
 
-			long fileSize = imagePath.getSize();
+	            long fileSize = imagePath.getSize();
 
-			// 파일 업로드
-			imagePath.transferTo(relativeDestination.toFile());
-			fileVO.setFile_id(carInfoVO.getFile_id());
-			fileVO.setFile_sn(1);
-			fileVO.setFile_stre_cours(uploadDirectory);
-			fileVO.setOrignl_file_nm(originalFilename);
-			fileVO.setUnique_file_nm(uniqueFilename);
-			fileVO.setFile_extension(fileExtension);
-			fileVO.setFile_size(fileSize);
+	            // 파일 업로드
+	            imagePath.transferTo(relativeDestination.toFile());
+	            fileVO.setFile_id(carInfoVO.getFile_id());
+	            fileVO.setFile_sn(1);
+	            fileVO.setFile_stre_cours(uploadDirectory);
+	            fileVO.setOrignl_file_nm(originalFilename);
+	            fileVO.setUnique_file_nm(uniqueFilename);
+	            fileVO.setFile_extension(fileExtension);
+	            fileVO.setFile_size(fileSize);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			rttr.addFlashAttribute("error", "파일 업로드 중 오류가 발생했습니다.");
-			return "redirect:/admin/car/ListCar";
-		}
+	            // 파일 정보 DB에 저장
+	            int file_id = carInfoService.insertFile(fileVO);
+	            carInfoVO.setFile_id(file_id);
 
-		System.out.println("fileID:" + carInfoVO.getFile_id());
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            rttr.addFlashAttribute("error", "파일 업로드 중 오류가 발생했습니다.");
+	            return "redirect:/admin/car/ListCar";
+	        }
+	    }
 
-		int file_id = carInfoService.insertFile(fileVO);
-		carInfoVO.setFile_id(file_id);
+	    int count = carInfoService.updateCarInfo(carInfoVO);
+	    if (count == 1) {
+	        rttr.addFlashAttribute("ModifyCar", "success");
+	    }
 
-//        if(carInfoVO.getFile_id() != 0) {
-//        	
-//        }
-
-		int count = carInfoService.updateCarInfo(carInfoVO);
-		if (count == 1) {
-			rttr.addFlashAttribute("ModifyCar", "success");
-		}
-
-		return "redirect:/admin/car/ListCar";
+	    return "redirect:/admin/car/ListCar";
 	}
+
 
 	@GetMapping(value = "/deleteCarFile", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

@@ -25,16 +25,43 @@ public class BoardmapperTests {
 	// 글 등록
 	@Test
 	public void testInsert() {
-		for(int i=1; i<=5; i++) {
-			BoardVO boardVO = BoardVO.builder()
-					.board_title("제목"+ i)
-					.board_content("내용"+ i)
-					.board_mem_id("MEMBER05")
-					.board_privateYN("N")
-					.board_noticeYN("N")
-					.build();
-			boardMapper.insert(boardVO);
-		}
+		BoardVO boardVO = BoardVO.builder()
+				.board_title("테스트 ㅇㅇ")
+				.board_content("테스트 ㅇㅇ")
+				.board_mem_id("MEMBER05")
+				.board_privateYN("N")
+				.board_noticeYN("N")
+				.build();
+		boardMapper.insert(boardVO);
+		log.info("resultVO:" + boardVO);
+	}
+	
+	// 답글 등록
+	@Test
+	public void replyInsert() {
+		BoardVO boardVO = BoardVO.builder()
+				.board_title("제목15의 답글22")
+				.board_content("답글내용")
+				.board_mem_id("MEMBER05")
+				.board_privateYN("N")
+				.board_group(300)
+				.board_seq(1)
+				.board_level(1)
+				.build();
+		boardMapper.replyInsert(boardVO);
+		boardMapper.replyInsert(boardVO);
+		log.info("resultVO:" + boardVO);
+	}
+	
+	// 게시글 시퀀스 수정
+	@Test
+	public void testReplySeqUpdate() {
+		BoardVO boardVO = BoardVO.builder()
+				.board_group(300)
+				.board_seq(0)
+				.build();
+		int result = boardMapper.replySeqUpdate(boardVO);
+		log.info("result:" + result);
 	}
 	
 	// 공지사항 목록
@@ -56,12 +83,14 @@ public class BoardmapperTests {
 	@Test
 	public void testupdate() {
 		BoardVO boardVO = BoardVO.builder()
-				.board_title("제목 수정")
-				.board_content("내용 수정")
-				.board_no(2L)
+				.board_title("테스트 원글")
+				.board_content("테스트 테스트")
+				.board_privateYN("N")
+				.board_noticeYN("N")
+				.board_no(550L)
 				.build();
 		int result = boardMapper.update(boardVO);
-		log.info("result: " + result );
+		log.info("result:" + result );
 	}
 	
 	// 글 삭제
@@ -69,7 +98,7 @@ public class BoardmapperTests {
 	public void testdelete() {
 		Long board_no = 12L;
 		int result = boardMapper.delete(board_no);
-		log.info("result : " + result);
+		log.info("result:" + result);
 	}
 	
 	// 글 하나 가져오기
@@ -77,7 +106,7 @@ public class BoardmapperTests {
 	public void testSelectByNo() {
 		Long board_no = 11L;
 		BoardVO boardVO = boardMapper.selectByNo(board_no);
-		log.info("boardVO: " + boardVO);
+		log.info("boardVO:" + boardVO);
 	}
 	
 
@@ -94,7 +123,7 @@ public class BoardmapperTests {
 	public void testReadCount() {
 		Long board_no = 1L;
 		int count = boardMapper.readCountUpdate(board_no);
-		log.info("count : "+ count);
+		log.info("count:"+ count);
 	}
 	
 
