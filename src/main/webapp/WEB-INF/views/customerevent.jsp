@@ -59,7 +59,7 @@ $(function(){
 // 		console.log("클릭");
 // 		$("#modal-point-event").modal("show");
 // 	});
-
+	
 	//이벤트3개 모달창 설정
 	 $('.item-eventbox').click(function() {
         var itemId = $(this).attr('id');
@@ -81,18 +81,19 @@ $(function(){
         
         $('#modal-point-event').modal('show');
     });
-
-	//회원만 이벤트 참여
-     var isLoggedIn = ${not empty loginInfo};
+	
+	 // 회원만 이벤트 참여
+	 var isLoggedIn = ${not empty loginInfo};
 	
     $("#newyearPoint, #firstPoint, #joopPoint").click(function(e){
     	e.preventDefault(); 
     	if (!isLoggedIn) {
-            alert("이벤트는 회원 전용입니다. 로그인 후 이용해주세요.");
-            window.location.href = "/login/login";
-            return;
-        }
-        
+			alert("이벤트는 회원 전용입니다. 로그인 후 이용해주세요.");
+			window.location.href = "/login/login";
+			return;
+		}
+
+		
         var mem_id = "${loginInfo.mem_id}";
         var mem_point = "${loginInfo.mem_point}";
         console.log("mem_point:", mem_point);
@@ -101,44 +102,104 @@ $(function(){
         $("#point_user_id").val(mem_id);
         $("#point_mem_point").val(mem_point);
        
-
+        
+        
+        
     });
+ 	
+    
     $(".item-joinevent").click(function(e){
     	e.preventDefault(); 
     	if(isLoggedIn){
             alert("이벤트는 비회원 전용입니다. 로그아웃 후 이용해주세요.");
          
             return;
+        }  else {
+            window.location.href = "/login/signUp";
         }
     });
 
     
     //모달버튼누르면 포인트 폼 보내기
-    $("#btnpoint").click(function() {
-        var eventName = $("#modal-point-event").find('.modal-title').text().trim();
-        var pointValue = 0;
+//     $("#btnpoint").click(function() {
+//         var eventName = $("#modal-point-event").find('.modal-title').text().trim();
+//         var pointValue = 0;
 
-        switch (eventName) {
-            case '5만 포인트 이벤트':
-                pointValue = 50000;
-                break;
-            case '1만 포인트 적립':
-                pointValue = 10000;
-                break;
-            case '2만 줍줍 이벤트':
-                pointValue = 20000;
-                break;
-        }
-        console.log("eventName:",eventName);
+//         switch (eventName) {
+//             case '5만 포인트 이벤트':
+//                 pointValue = 50000;
+//                 break;
+//             case '1만 포인트 적립':
+//                 pointValue = 10000;
+//                 break;
+//             case '2만 줍줍 이벤트':
+//                 pointValue = 20000;
+//                 break;
+//         }
+//         console.log("eventName:",eventName);
         
-        $("#point_cost").val(pointValue);
-		console.log("pointValue:",pointValue);
-		console.log("point_cost:",point_cost);
+//         $("#point_cost").val(pointValue);
+// 		console.log("pointValue:",pointValue);
+// 		console.log("point_cost:",point_cost);
 		
-       $("#frmpoint").submit();
-       
-    });
-    
+//      $("#frmpoint").submit();
+      	 
+//     });
+    $("#btnpoint").click(function() {
+    // 사용자 아이디를 가져옴
+     var mem_id = "${loginInfo.mem_id}";
+
+    // 각 이벤트에 대한 사용자의 참여 여부 확인
+    var pointClaimed_5 = sessionStorage.getItem(mem_id + "_pointClaimed_5");
+    var pointClaimed_1 = sessionStorage.getItem(mem_id + "_pointClaimed_1");
+    var pointClaimed_2 = sessionStorage.getItem(mem_id + "_pointClaimed_2");
+
+    // 해당 이벤트에 이미 참여한 경우, 추가 적립을 막음
+    if (pointClaimed_5 && pointClaimed_1 && pointClaimed_2) {
+        alert("이벤트에 이미 참여하셨습니다.");
+        return;
+    }
+
+    // 포인트를 적립하는 로직 추가
+    var eventName = $("#modal-point-event").find('.modal-title').text().trim();
+    var pointValue = 0;
+
+    switch (eventName) {
+        case '5만 포인트 이벤트':
+            if (pointClaimed_5) {
+                alert("5만 포인트 이벤트에 이미 참여하셨습니다.");
+                return;
+            }
+            pointValue = 50000;
+            sessionStorage.setItem(mem_id + "_pointClaimed_5", true);
+            break;
+        case '1만 포인트 적립':
+            if (pointClaimed_1) {
+                alert("1만 포인트 적립 이벤트에 이미 참여하셨습니다.");
+                return;
+            }
+            pointValue = 10000;
+            sessionStorage.setItem(mem_id + "_pointClaimed_1", true);
+            break;
+        case '2만 줍줍 이벤트':
+            if (pointClaimed_2) {
+                alert("2만 줍줍 이벤트에 이미 참여하셨습니다.");
+                return;
+            }
+            pointValue = 20000;
+            sessionStorage.setItem(mem_id + "_pointClaimed_2", true);
+            break;
+    }
+
+    console.log("eventName:", eventName);
+    $("#point_cost").val(pointValue);
+    console.log("pointValue:", pointValue);
+
+    // 포인트 적립 폼 제출
+    $("#frmpoint").submit();
+});
+
+
     
 });
 </script>     
@@ -506,8 +567,8 @@ $(function(){
 
 								<button type="button" class="btn btn-primary" id="btnpoint">
 									확인</button>
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">닫기</button>
+<!-- 								<button type="button" class="btn btn-secondary" -->
+<!-- 									data-dismiss="modal">닫기</button> -->
 							</div>
 						</form>
 					</div>

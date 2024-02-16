@@ -63,6 +63,9 @@ public class MainController {
 		log.info("YeonPointVO:"+ pointVO);
 		
 		int point_cost = pointVO.getPoint_cost();
+		
+		
+		
 		String point_code = pointVO.getPoint_code();
 		String mem_id = loginInfo.getMem_id();
 		Map<String, Object> pointMap = new HashMap<>();
@@ -72,13 +75,9 @@ public class MainController {
 		
 		boolean result = customerEventService.addPointOfEvent(pointMap);
 		
-//		int result = customerEventService.addEventPoint(memberVO);
-//		customerEventService.addPointTable(pointVO);
-		
+	
 		 if (result) {
-//	    	String mem_id = pointVO.getPoint_user_id();
-//	    	int point= customerEventService.selectPoint(mem_id);
-//	    	int eventpoint = pointVO.getPoint_cost();
+
 	    	loginInfo.setMem_point(memberVO.getMem_point()+point_cost);
 	    	session.setAttribute("loginInfo", loginInfo);
 	    	
@@ -86,10 +85,9 @@ public class MainController {
 	    	rttr.addFlashAttribute("msg", "fail");
 	    }
 		 
-		return "redirect:/myPage/myPage";
+		return "redirect:/customerevent";
 		
 	}
 	
 }
-
 
