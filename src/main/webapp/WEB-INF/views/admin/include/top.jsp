@@ -275,7 +275,7 @@ $(document).ready(function() {
                             <div class="demo-navbar-user nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                                     <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
-                                        <img src="/resources/assets/img/avatars/1.png" alt class="d-block ui-w-30 rounded-circle">
+                                        <img src="/resources/assets/img/avatars/N2.png" alt class="d-block ui-w-30 rounded-circle">
                                         <span class="px-1 mr-lg-2 ml-2 ml-lg-0">${loginInfo.mem_name}</span>
                                     </span>
                                 </a>

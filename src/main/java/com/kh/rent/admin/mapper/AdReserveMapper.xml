@@ -9,6 +9,10 @@
 		from TBL_RESERVE as r
 		left join TBL_PAYMENT as p on r.res_rid = p.pay_res_rid order by r.res_rid desc
 	</select>
+	
+	<select id="allNonlist" resultType="com.kh.rent.reserve.domain.NonMemberVO">
+	  		select * from TBL_NONMEMBER order by non_rid desc
+	</select>
 
 
 </mapper>
