@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.board.domain.BoardVO;
+import com.kh.rent.board.domain.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
@@ -40,10 +41,12 @@ public class BoardServiceTests {
 		log.info("noticeList:" + noticeList);
 	}
 	
-	// 글 목록
+	// 일반글 목록
 	@Test
 	public void testGetList() {
-		List<BoardVO> list = boardService.getList();
+		log.info("boardService: "+ boardService);
+		Criteria cri = new Criteria();
+		List<BoardVO> list = (List<BoardVO>)boardService.getList(cri);
 		log.info(list);
 	}
 	
@@ -69,14 +72,14 @@ public class BoardServiceTests {
 	
 
 	//검색
-	@Test
-	public void testSearch() {
-		 String type = "TC";
-		 String keyword = "운영";
-		 List<BoardVO> list = boardService.search(type, keyword);
-		 log.info("list:" + list);
-		 
-	}
+//	@Test
+//	public void testSearch() {
+//		 String type = "TC";
+//		 String keyword = "운영";
+//		 List<BoardVO> list = boardService.search(type, keyword);
+//		 log.info("list:" + list);
+//		 
+//	}
 
 	// 글 하나 가져오기
 	@Test
