@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.kh.rent.board.domain.BoardVO;
-import com.kh.rent.board.domain.Criteria;
 
 public interface BoardMapper {
 
@@ -15,8 +14,8 @@ public interface BoardMapper {
 	// 공지사항 목록
 	public List<BoardVO> notice();
 	
-	// 일반글 목록
-	public List<BoardVO> selectList(Criteria cri) ;
+	// 글 목록
+	public List<BoardVO> selectList();
 	
 	// 글 수정
 	public int update(BoardVO boardVO);
@@ -30,11 +29,9 @@ public interface BoardMapper {
 	// 조회수 업데이트
 	public int readCountUpdate(Long board_no);
 	
-	//글 갯수
-	public int getTotal(Criteria cri);
-	
+
 	// 검색 기능
-//	public List<BoardVO> search(@Param("type")String type,
-//			@Param("keyword")String keyword);
+	public List<BoardVO> search(@Param("type")String type,
+			@Param("keyword")String keyword);
 
 }
