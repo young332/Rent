@@ -223,4 +223,13 @@ public class MyPageController {
 		}
 	}
 	
+	// 예약 건별 정보
+	@GetMapping(value = "/getResInfo", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+    public List<GetStatusDTO> getResInfo(@RequestParam int res_rid) {
+		System.out.println("get_res_rid: " + res_rid);
+		List<GetStatusDTO> reserveList = myPageService.getMyResInfo(res_rid);
+        return reserveList;
+    }
+	
 }

@@ -52,4 +52,8 @@ public interface MyPageService {
 	
 	// 예약정보 조회하기(마이페이지)
 	public List<GetStatusDTO> getMyReserveList(String mem_id);
+	
+	// 예약정보 조회하기(예약번호 1개 정보)
+	public List<GetStatusDTO> getMyResInfo(int res_rid);
+
 }

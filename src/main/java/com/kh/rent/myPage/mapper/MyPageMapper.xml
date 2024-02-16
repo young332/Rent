@@ -146,4 +146,16 @@
 		ORDER BY R.res_rental_date ASC;
 	</select>
 	
+	<!-- 예약정보 조회하기(예약번호 1개 정보) -->
+	<select id="getMyResInfo" resultType="com.kh.rent.myPage.domain.GetStatusDTO">
+ 		select r.*, 
+ 			   p.pay_status, p.pay_pid, 
+ 			   c.car_name, c.car_company, c.car_fuel,
+ 			   c.op_carseat, c.op_navi, c.op_bt, c.op_cam
+		from TBL_RESERVE as r
+		left join TBL_PAYMENT as p on r.res_rid = p.pay_res_rid
+   		left join TBL_CAR_INFO as c on r.res_car_id = c.car_index
+ 		where res_rid = #{res_rid}
+	</select>
+	
 </mapper>

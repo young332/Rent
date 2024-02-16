@@ -23,4 +23,10 @@ public class BoardVO {
 	private String board_mem_id;
 	private String board_privateYN;
 	private String board_noticeYN;
+	
+	// 답글
+	private int board_group; // 그룹핑
+	private int board_seq; // 답글 순서
+	private int board_level; // 들여쓰기(답글의 답글)
+	private String board_deleteYN; // 삭제여부(1:정상, 0:삭제)
 }
