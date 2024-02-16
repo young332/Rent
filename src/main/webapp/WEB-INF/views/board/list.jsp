@@ -203,7 +203,6 @@ $(function(){
 		<div class="row">
 			<div class="col-md-12 d-flex mb-1">
 				<form id="frmSearch" action="/board/list" method="get">
-					<label>검색</label>
 					<select class="custom-select-8" name="type">
 						<option value="">------------------</option>
                         <option value="TCW" ${param.type =='TCW' ? 'selected' : ''}>전체</option>
