@@ -72,11 +72,18 @@ $(function(){
 	if(modifyResult){
 		alert("수정이 완료되었습니다.");
 	}
+	
+	$("#btnlist").click(function(e){
+		e.preventDefault();
+		var frmCriteria = $("#frmCriteria");
+		frmCriteria.attr("action","/board/list");
+		frmCriteria.submit();
+	});
 
 });
 
 </script>
-
+<%@ include file="/WEB-INF/views/include/frmCriteria.jsp" %>
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -141,7 +148,7 @@ $(function(){
 				    </div>
 				</div>
 				<div class="col-md-12 d-flex justify-content-center">
-				    <button type="button" class="btn btn-secondary btn-oper" onclick="location.href='/board/list'">목록</button>
+				    <button type="button" class="btn btn-secondary btn-oper" id="btnlist" >목록</button>
 				</div>
 			</div>
 		</div>

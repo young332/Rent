@@ -15,7 +15,28 @@
     .pagination {
     display: flex;
     justify-content: center;
-}
+	}
+	 .pagination .page-link {
+        color: #fff; 
+        background-color: #f07039; 
+        border-color: #f07039;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #0056b3; 
+        border-color: #0056b3; 
+    }
+    
+    .btn-success {
+        color: #fff; 
+        background-color: #f07039; 
+        border-color: #f07039;
+    }
+
+    .btn-success:hover {
+        background-color: #218838; /* Hover background color */
+        border-color: #1e7e34; /* Hover border color */
+    }
 </style>
 <script>
 // 등록일 날짜변환
@@ -72,7 +93,13 @@ $(function(){
 		console.log("loginID:" , loginID);
 		
 		if (boardPrivate == "N" || (boardPrivate == "Y" && adminck == 1) || (loginID == boardID)) {
-	       	window.location.href = "get?board_no=" + boardNo;
+			var url = "get?board_no=" + boardNo +
+            "&pageNum=${pageDTO.criteria.pageNum}" +
+            "&amount=${pageDTO.criteria.amount}" +
+            "&keyword=${pageDTO.criteria.keyword}" +
+            "&type=${pageDTO.criteria.type}";
+			 // Navigate to the page
+			 window.location.href = url;
 	        
 	        $.ajax({
 	        	type: "GET",
@@ -98,19 +125,18 @@ $(function(){
     }
     
     // 검색기능
-    $("#frmSearch").submit(function(e){
-		e.preventDefault();
+    $("#frmSearch").submit(function(){
 		var type = $(this).find("[name=type]").val();
 		var keyword = $(this).find("[name=keyword]").val();
 		console.log("type:",type );
 		console.log("keyword:", keyword);
 		
-	    if(keyword.trim() == ""){
-	    	window.location.href="/board/list?type=" + type + "&keyword=" + keyword;
+// 	    if(keyword.trim() == ""){
+// 	    	window.location.href="/board/list?type=" + type + "&keyword=" + keyword;
 // 	        alert("검색어를 입력해주세요.");
 // 	        $("[name=keyword]").focus();
 // 	        return false;
-	    }
+// 	    }
 // 		$.ajax({
 // 			type :"get",
 // 			url : "/board/search",
@@ -135,19 +161,22 @@ $(function(){
 // 		});  
 		    
 	});
-    
+    //페이지 번호
     $("a.page-link").click(function(e){
 		e.preventDefault();
 		var pageDTO = $(this).attr("href");
-		$("#frmCriteria input[name='pageNum']").val(pageDTO);
-        $("#frmCriteria").submit();
+		var frmCriteria = $("#frmCriteria");
+		frmCriteria.find("input[name=pageNum]").val(pageDTO);
+		frmCriteria.find("input[name=boarad_no]").remove();
+		frmCriteria.attr("action", "/board/list");
+		frmCriteria.submit();
 		
     });
 
 });
 </script>
 
-
+<%@ include file="/WEB-INF/views/include/frmCriteria.jsp" %>
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
   <div class="overlay"></div>
@@ -173,7 +202,7 @@ $(function(){
       
 		<div class="row">
 			<div class="col-md-12 d-flex mb-1">
-				<form id="frmSearch" action="/board/search" method="get">
+				<form id="frmSearch" action="/board/list" method="get">
 					<label>검색</label>
 					<select class="custom-select-8" name="type">
 						<option value="">------------------</option>
@@ -183,7 +212,7 @@ $(function(){
                         <option value="W" ${param.type == 'W' ? 'selected' : ''}>작성자</option>
                     </select>
 					<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어 입력">
-					<button type="submit" class="btn btn-sm btn-success">검색</button>
+					<button type="submit" class="btn btn-sm btn-success" >검색</button>
 				</form>
 				<c:if test="${not empty loginInfo}">
 					<div class="ml-auto">
@@ -195,7 +224,7 @@ $(function(){
 		</div>
 <%-- 		<div>noticeList:${noticeList }</div> --%>
 <%-- <div>boardList:${boardList }</div> --%>
-<div>pageDTO:${pageDTO }</div>
+<%-- <div>pageDTO:${pageDTO }</div> --%>
 		<div class="row">
 			<div class="col-md-12">
 				<table class="table">
@@ -238,35 +267,29 @@ $(function(){
 			</div>
 		</div>
 		<!-- 페이징 -->
-		<div class="row" >
-			<div class="col-md-12">
-				<nav>
-					<ul class="pagination justify-content-center">
-						<c:if test="${pageDTO.prev == true}">
-						<li class="page-item">
-							<a class="page-link" href="${pageDTO.startPage - 1}">&laquo;</a>
-						</li>
-						</c:if>
-						<c:forEach begin="${pageDTO.startPage}" end="${pageDTO.endPage}" var="v">
-							<li class="page-item ${(board.pageDTO.pageNum == v)? 'active' :''}">
-								<a class="page-link" data-oper="list" href="${v}">${v}</a>
-							</li>
-						</c:forEach>
-						<c:if test="${pageDTO.next == true}">
+			<div class="row" >
+				<div class="col-md-12">
+					<nav>
+						<ul class="pagination justify-content-center">
+							<c:if test="${pageDTO.prev == true}">
 							<li class="page-item">
-							<a class="page-link"  id="endPage" href="${pageDTO.endPage + 1}">&raquo;</a>
-						</li>
-					</c:if>
-				</ul>
-			</nav>
+								<a class="page-link" href="${pageDTO.startPage - 1}">&laquo;</a>
+							</li>
+							</c:if>
+							<c:forEach begin="${pageDTO.startPage}" end="${pageDTO.endPage}" var="v">
+								<li class="page-item ${(board.pageDTO.pageNum == v)? 'active' :''}">
+									<a class="page-link" data-oper="list" href="${v}">${v}</a>
+								</li>
+							</c:forEach>
+							<c:if test="${pageDTO.next == true}">
+								<li class="page-item">
+								<a class="page-link"  id="endPage" href="${pageDTO.endPage + 1}">&raquo;</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
+			</div>
 		</div>
-	</div>
-		<form id="frmCriteria" action="/board/list" method="get">
-			<input type="hidden" name="pageNum" value="${pageDTO.criteria.pageNum}">
-			<input type="hidden" name="amount" value="${pageDTO.criteria.amount}">
-			<input type="hidden" name="keyword" value="${pageDTO.criteria.keyword}">
-			<input type="hidden" name="type" value="${pageDTO.criteria.type}">
-		</form>
 	<!-- //페이징 -->
 	</div>
 </section>
