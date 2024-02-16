@@ -29,6 +29,10 @@
 	    max-width: 100%;
 	    margin: 1.75rem auto;
 	}
+	
+	ul {
+    list-style-type: square;
+}
 </style>
 <script>
 // 등록일 날짜변환
@@ -72,14 +76,26 @@ function getResInfo(res_rid) {
 	    			var rental_date = formattedDate(resInfo.res_rental_date);
 	    			var return_date = formattedDate(resInfo.res_return_date);
 	    			var totalPay = formatNumberWithCommas(resInfo.res_totalpay);
+	    			var op_carseat = resInfo.op_carseat == 'Y' ? 'O' : 'X';
+	    			var op_navi = resInfo.op_navi == 'Y' ? 'O' : 'X';
+	    			var op_bt = resInfo.op_bt == 'Y' ? 'O' : 'X';
+	    			var op_cam = resInfo.op_cam == 'Y' ? 'O' : 'X';
 	    			
 	   	  			var row = $("<ul style='color: black;'>");
 	    	  		row.append($("<li>").text("예약번호: " + resInfo.res_rid));
 	    	  		row.append($("<li>").text("대여시작일: " + rental_date));
 	    	  		row.append($("<li>").text("대여종료일: " + return_date));
-	    	  		row.append($("<li>").text("차종: " + resInfo.car_name));
-	    	  		row.append($("<li>").text("금액: " + totalPay));
-	    	  		row.append($("<li>").text("예약상태: " + resInfo.res_status));
+	    	  		row.append($("<li>").text("차종: " + resInfo.car_company + "-" + resInfo.car_name + "(" + resInfo.car_fuel + ")"));
+	    	  		row.append($("<li>").html("옵션 <br>	-카시트: " + op_carseat + 
+	    	  								  "<br> -내비게이션: " + op_navi + 
+	    	  								  "<br> -블루투스: " + op_bt + 
+	    	  								  "<br> -후방카메라: " + op_cam));
+	    	  		row.append($("<li>").text("금액: " + totalPay + " P"));
+	    	  		if (resInfo.pay_status == null) {
+		    	  		row.append($("<li>").text("예약상태: " + resInfo.res_status + "(결제 전)"));
+	    	  		} else {
+		    	  		row.append($("<li>").text("예약상태: " + resInfo.res_status));
+	    	  		}
 	    	  		row.append($("</ul>"));
 	    	  		
 	    	  		modalBody.append(row);
@@ -209,12 +225,6 @@ $(function() {
 	}
 
 	
-	// 예약내역 모달창 열기
-	$(".reserveDiv").click(function() {
-		var res_rid = $(this).data("res-rid");
-		getResInfo(res_rid);
-	});
-
 });
 
 </script>
@@ -293,7 +303,7 @@ $(function() {
 		<div class="col-md-12" style="padding-top: 30px; padding-bottom: 30px;">
 			<div style="display: flex; justify-content: space-between;" style="padding-bottom: 50px;">
 				<h3>
-					다가오는 대여리스트
+					다가오는 예약
 				</h3>
 				<a href="/myPage/reservationList">전체 예약내역
 				<i class="fa fa-arrow-circle-right"></i>
@@ -310,7 +320,7 @@ $(function() {
           	<c:if test="${not empty reserveList}">
 	          	<div class="row">
 	          		<c:forEach var="myReserve" items="${reserveList}">
-						<div class="reserveDiv col-md-4" data-res-rid="${myReserve.res_rid}" style="padding-bottom: 30px;">
+						<div class="reserveDiv col-md-4" onclick="getResInfo(${myReserve.res_rid})" style="padding-bottom: 30px;">
 							<div class="card" style="height: 100%;">
 								<h6 class="card-header" style="background-color: #f07039; color:#fff;
 															   display: flex; justify-content: center;
@@ -382,7 +392,7 @@ $(function() {
 			<div class="modal-body" id="resModalBody">
 			
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" style="justify-content: center;">
 				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 			</div>
 		</div>

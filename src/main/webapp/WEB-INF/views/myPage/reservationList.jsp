@@ -160,7 +160,7 @@ $(document).ready(function() {
 									    	<button class="btn btn-sm btn-warning" 
 									    		onclick="res_cancel(${reservation.res_rid})">예약취소</button>
 										</c:if>
-					                    <c:if test="${reservation.pay_status eq '결제완료'}">
+					                    <c:if test="${reservation.pay_status eq '결제완료' and reservation.res_status eq '예약완료'}">
 									    	<button class="btn btn-sm btn-danger" 
 									    		onclick="pay_cancel(${reservation.pay_pid})">결제취소</button>
 										</c:if>
