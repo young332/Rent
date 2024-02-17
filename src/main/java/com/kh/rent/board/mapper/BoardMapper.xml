@@ -37,16 +37,19 @@
 		order by board_no desc
 	</select>
  
+
+
 	<!-- 글 목록 -->
  	<select id="selectList" resultType="com.kh.rent.board.domain.BoardVO">
- 		select * 
-		from (
-		    select * 
-		    from rent001.TBL_BOARD 
-		    where board_noticeyn = 'N' 
-		    order by board_seq asc, board_level asc
-		) as sorted_board
-		order by board_group desc, board_seq asc, board_no asc;
+ 		SELECT * FROM (
+		    SELECT * 
+		    FROM rent001.TBL_BOARD 
+		    WHERE board_noticeyn = 'N' 
+	        <include refid="searchSql"></include>
+		    ORDER BY board_seq ASC, board_level ASC
+		    LIMIT #{startRow}, #{amount}
+		) AS sorted_board 
+		ORDER BY board_group DESC, board_seq ASC, board_no ASC;
  	</select>
  	
 	<!-- 글 수정 -->
@@ -80,27 +83,36 @@
 		where board_no = #{board_no}
 	</update>
  	
- 	<!-- 검색 -->
-	<select id="search" resultType="com.kh.rent.board.domain.BoardVO">
-    select * from TBL_BOARD
-    where
-	    <choose>
-	        <when test="type == 'T'.toString()">
-	            board_title like CONCAT('%', #{keyword}, '%')
-	        </when>
-	        <when test="type == 'C'.toString()">
-	            board_content like CONCAT('%', #{keyword}, '%')
-	        </when>
-	        <when test="type == 'W'.toString()">
-	            board_mem_id like CONCAT('%', #{keyword}, '%')
-	        </when>
-	        <when test="type == 'TCW'.toString()">
-	            (board_title like CONCAT('%', #{keyword}, '%')
-	            or board_content like CONCAT('%', #{keyword}, '%')
-	            or board_mem_id like CONCAT('%', #{keyword}, '%'))
-	        </when>
-	    </choose>
+	<!-- 글갯수 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from TBL_BOARD
+		<where>
+		<include refid="searchSql">
+		</include>
+		</where>
 	</select>
+	
+	
+	<sql id="searchSql">
+   	 <choose>
+        <when test="type == 'T'.toString()">
+            AND board_title like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'C'.toString()">
+            AND board_content like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'W'.toString()">
+            AND board_mem_id like CONCAT('%', #{keyword}, '%')
+        </when>
+        <when test="type == 'TCW'.toString()">
+            AND (
+                board_title like CONCAT('%', #{keyword}, '%')
+                OR board_content like CONCAT('%', #{keyword}, '%')
+                OR board_mem_id like CONCAT('%', #{keyword}, '%')
+            )
+        </when>
+    </choose>
+</sql>
 
  	
  </mapper>

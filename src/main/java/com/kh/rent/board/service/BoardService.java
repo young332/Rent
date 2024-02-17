@@ -1,8 +1,10 @@
 package com.kh.rent.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.rent.board.domain.BoardVO;
+import com.kh.rent.board.domain.Criteria;
 
 public interface BoardService {
 
@@ -18,8 +20,8 @@ public interface BoardService {
 	// 공지사항 목록
 	public List<BoardVO> getNotice();
 	
-	// 글 목록
-	public List<BoardVO> getList();
+	// 일반 글 목록
+	public Map<String, Object> getList(Criteria cri);
 	
 	// 글 수정
 	public int modify(BoardVO boardVO);
@@ -34,5 +36,5 @@ public interface BoardService {
 	public int readCount(Long board_no);
 
 	//검색
-	public List<BoardVO> search(String type, String keyword);
+//	public List<BoardVO> search(String type, String keyword);
 }

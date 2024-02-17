@@ -1,11 +1,14 @@
 package com.kh.rent.board.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.rent.board.domain.BoardVO;
+import com.kh.rent.board.domain.Criteria;
 import com.kh.rent.board.mapper.BoardMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -46,11 +49,17 @@ public class BoardServiceImpl implements BoardService{
 		return noticeList;
 	}
 	
-	// 글 목록
+	// 일반글 목록
 	@Override
-	public List<BoardVO> getList() {
-		List<BoardVO> list = boardMapper.selectList();
-		return list;
+	public Map<String, Object> getList(Criteria cri) {
+		
+		List<BoardVO> list = boardMapper.selectList(cri);
+		int total = boardMapper.getTotal(cri);
+		Map<String, Object> map = new HashMap<>();
+		map.put("boardList", list);
+		map.put("total", total);
+		
+		return map;
 	}
 
 	// 글 수정
@@ -83,11 +92,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	// 검색
-	@Override
-	public List<BoardVO> search(String type, String keyword) {
-		List<BoardVO> list = boardMapper.search(type, keyword);
-		return list;
-	}
+//	@Override
+//	public List<BoardVO> search(String type, String keyword) {
+//		List<BoardVO> list = boardMapper.search(type, keyword);
+//		return list;
+//	}
 
 
 }

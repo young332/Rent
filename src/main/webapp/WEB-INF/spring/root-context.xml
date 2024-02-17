@@ -26,11 +26,13 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<!-- <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/> -->
 		 <property name="driverClassName"
-			value="com.mysql.cj.jdbc.Driver" /> 
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" /> 
+<!-- 		 <property name="driverClassName" -->
+<!-- 			value="com.mysql.cj.jdbc.Driver" />  -->
 		<!-- mysql 서버 디비 돌릴때 -->
 		<!-- <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/> -->
 		<property name="jdbcUrl"
-			value="jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowPublicKeyRetrieval=true" />
+			value="jdbc:log4jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowPublicKeyRetrieval=true" />
 <!-- 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true" /> -->
 		<property name="username" value="rent001" />

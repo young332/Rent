@@ -25,12 +25,13 @@ import com.kh.rent.admin.service.AdReserveService;
 import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.admin.service.CodeService;
 import com.kh.rent.admin.service.MenuService;
-import com.kh.rent.board.domain.BoardVO;
 import com.kh.rent.board.service.BoardService;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
+
 import com.kh.rent.myPage.domain.GetStatusDTO;
 import com.kh.rent.reserve.domain.NonMemberVO;
+
 
 import lombok.extern.log4j.Log4j;
 
@@ -122,12 +123,12 @@ public class AdminController {
 	@GetMapping("/board")
 	public void adminboardGet(Model model) {
 		log.info("list");
-		List<BoardVO> list = boardService.getList();
+//		List<BoardVO> list = boardService.getList();
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String formattedDateTime = now.format(formatter);
 		model.addAttribute("dateTime",formattedDateTime);
-		model.addAttribute("boardVO", list);
+//		model.addAttribute("boardVO", list);
 		log.info("model:" +  model);
 	}
 

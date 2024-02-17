@@ -1,21 +1,22 @@
 package com.kh.rent.board.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.rent.board.domain.BoardVO;
+import com.kh.rent.board.domain.Criteria;
+import com.kh.rent.board.domain.PageDTO;
 import com.kh.rent.board.service.BoardService;
 import com.kh.rent.point.domain.PointVO;
 import com.kh.rent.point.service.PointService;
@@ -34,16 +35,24 @@ public class BoardController {
 	private PointService pointService;
 	
 	// 글 목록 가져오기
+	@SuppressWarnings("unchecked")
 	@GetMapping("/list")
-	public void list(HttpSession session, Model model) {
-		log.info("list...");
-		
+	public void list(HttpSession session, Model model ,Criteria cri) {
+		log.info("list");
+
 		List<BoardVO> noticeList = boardService.getNotice();
-		List<BoardVO> boardList = boardService.getList();
+		Map<String, Object> boardMap = boardService.getList(cri);
+		log.info("boardMap:" + boardMap);
+		List<BoardVO> boardList = (List<BoardVO>) boardMap.get("boardList");
+		int total = (Integer)boardMap.get("total");
+		PageDTO pageDTO = new PageDTO(cri, total);
 		
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("pageDTO", pageDTO);
+		
 		log.info("boardList:" + boardList);;
+
 		
 	}
 	
@@ -76,11 +85,14 @@ public class BoardController {
 	
 	// 글 하나 가져오기
 	@GetMapping("/get")
-	public void get(Long board_no, Model model) {
+	public void get(Long board_no, Model model,Criteria cri) {
 		log.info("boardGet...");
 		
 		BoardVO boardVO = boardService.get(board_no);
 		
+		PageDTO pageDTO = new PageDTO();
+		pageDTO.setCriteria(cri);
+		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("boardVO",boardVO);
 		log.info("boardVO:" + boardVO);
 	}
@@ -98,6 +110,7 @@ public class BoardController {
 	public String showModifyForm(Long board_no, Model model) {
 	    log.info("showModifyForm...");
 	    BoardVO boardVO = boardService.get(board_no);
+	   
 	    model.addAttribute("boardVO", boardVO);
 	    log.info("boardVOget: " + boardVO);
 	    return "/board/modify"; // 수정 폼 페이지 경로 반환
@@ -105,13 +118,17 @@ public class BoardController {
 	
 	// 글 수정하기
 	@PostMapping("/modify")
-	public String modify(BoardVO boardVO,RedirectAttributes rttr) {
+	public String modify(BoardVO boardVO,RedirectAttributes rttr, Criteria cri) {
 		log.info("modifypost...");
 		log.info("updateboardVO :" + boardVO);
 		int result = boardService.modify(boardVO);
 		log.info("result : " + result);
 		if (result == 1) {
+			rttr.addFlashAttribute("pageNum",cri.getPageNum());
 			rttr.addFlashAttribute("modifyResult",result);
+			rttr.addAttribute("amount",cri.getAmount());
+			rttr.addAttribute("type",cri.getType());
+			rttr.addAttribute("keyword",cri.getKeyword());
 			rttr.addAttribute("board_no", boardVO.getBoard_no());
 	    	return "redirect:/board/get";
 	    } else {
@@ -121,10 +138,14 @@ public class BoardController {
 	
 	// 글 삭제하기
 	@PostMapping("/remove")
-	public String remove(Long board_no, RedirectAttributes rttr) {
+	public String remove(Long board_no, RedirectAttributes rttr,Criteria cri) {
 		log.info("remove...");
 		int result = boardService.remove(board_no);
 		rttr.addFlashAttribute("removeResult" , result);
+		rttr.addAttribute("pageNum",cri.getPageNum());
+		rttr.addAttribute("amount",cri.getAmount());
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
 		return "redirect:/board/list";
 	}
 	
@@ -163,13 +184,13 @@ public class BoardController {
 	
 
 	//검색기능
-	@GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<BoardVO> search(@RequestParam("type") String type, @RequestParam("keyword") String keyword){
-		log.info("search");
-		List<BoardVO> list = boardService.search(type, keyword);
-		log.info("list_search:" + list);
-		return list;
-	}
+//	@GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public List<BoardVO> search(@RequestParam("type") String type, @RequestParam("keyword") String keyword){
+//		log.info("search");
+//		List<BoardVO> list = boardService.search(type, keyword);
+//		log.info("list_search:" + list);
+//		return list;
+//	}
 	
 }

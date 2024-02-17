@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.kh.rent.board.domain.BoardVO;
+import com.kh.rent.board.domain.Criteria;
 
 import lombok.extern.log4j.Log4j;
 
@@ -71,10 +72,11 @@ public class BoardmapperTests {
 		log.info("noticeList:" + noticeList);
 	}
 	
-	// 글 목록
+//	// 글 목록
 	@Test
 	public void testList() {
-		List<BoardVO> list = boardMapper.selectList();
+		Criteria criteria = new Criteria();
+		List<BoardVO> list = boardMapper.selectList(criteria);
 		log.info("list:" + list);
 	}
 	
@@ -110,13 +112,13 @@ public class BoardmapperTests {
 	}
 	
 
-	@Test
-	public void testSearch() {
-		String type = "TC";
-		String keyword = "예약";
-		List<BoardVO> list = boardMapper.search(type, keyword);
-		log.info("list:" + list);
-	}
+//	@Test
+//	public void testSearch() {
+//		String type = "TC";
+//		String keyword = "예약";
+//		List<BoardVO> list = boardMapper.search(type, keyword);
+//		log.info("list:" + list);
+//	}
 
 	// 조회수 업데이트
 	@Test
