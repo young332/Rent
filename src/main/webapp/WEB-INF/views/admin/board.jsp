@@ -120,18 +120,52 @@ $(document).ready(function() {
 											<th scope="col"><input type="checkbox" id="selectAllCheckbox"></th>
 											<th scope="col">글번호</th>
 											<th scope="col">제목</th>
+											<th scope="col">작성자</th>
 											<th scope="col">등록일</th>
 											<th scope="col">조회수</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${boardVO}" var="boardVO">
-											<tr class="board-row" data-board-no="${boardVO.board_no}">
-												<td style="text-align: center;"><input type="checkbox" class="board-checkbox"></td>
-												<td style="text-align: center;">${boardVO.board_no}</td>
-												<td>${boardVO.board_title}</td>
-												<td style="text-align: center;"><p>${dateTime}</p></td>
-												<td style="text-align: center;">${boardVO.readcount}</td>
+									
+									<tbody style="text-align: center;">
+										<c:forEach items="${noticeList}" var="notice">
+											<tr class="notice-row" data-board-no="${notice.board_no}">
+											    <td style="text-align: center;"><input type="checkbox" class="board-checkbox"></td>
+												<td style="font-weight: bold;">[공지]</td>
+												<td style="font-weight: bold;">${notice.board_title}</td>
+												<td>관리자</td>
+												<td class="cdate">${notice.board_cdate}</td>
+												<td>${notice.readcount}</td>
+											</tr>
+										</c:forEach>
+										<c:forEach items="${boardList}" var="board">
+											<tr class="board-row" data-board-no="${board.board_no}" 
+																  data-board-private="${board.board_privateYN}" 
+																  data-board-group="${board.board_group}"
+																  data-board-id="${board.board_mem_id}">
+											    <td style="text-align: center;"><input type="checkbox" class="board-checkbox"></td>
+												<td>${board.board_no}</td>
+												<td>
+													<c:if test="${board.board_level > 0}">
+														<c:forEach begin="1" end ="${board.board_level}">
+															<span style="padding-left:20px"></span>
+														</c:forEach>
+														<img src="/resources/carbook-master/images/arrow.png" width="12" height="12">
+													</c:if>
+													<c:if test="${board.board_privateYN eq 'Y'}">
+													<i class="fa fa-lock"></i>
+													</c:if>
+													
+												${board.board_title}</td>
+												<td>
+												    <c:if test="${board.board_seq ne 0}">
+												        관리자
+												    </c:if>
+												    <c:if test="${board.board_seq eq 0}">
+												        ${board.board_mem_id}
+												    </c:if>
+												</td>
+												<td class="cdate">${board.board_cdate}</td>
+												<td>${board.readcount}</td>
 											</tr>
 										</c:forEach>
 									</tbody>

@@ -3,6 +3,7 @@ package com.kh.rent.admin.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,9 @@ import com.kh.rent.admin.service.AdReserveService;
 import com.kh.rent.admin.service.CarInfoService;
 import com.kh.rent.admin.service.CodeService;
 import com.kh.rent.admin.service.MenuService;
+import com.kh.rent.board.domain.BoardVO;
+import com.kh.rent.board.domain.Criteria;
+import com.kh.rent.board.domain.PageDTO;
 import com.kh.rent.board.service.BoardService;
 import com.kh.rent.login.domain.LoginDTO;
 import com.kh.rent.login.domain.MemberVO;
@@ -121,14 +125,26 @@ public class AdminController {
 	}
 	
 	@GetMapping("/board")
-	public void adminboardGet(Model model) {
+	public void adminboardGet(Model model,Criteria cri) {
 		log.info("list");
-//		List<BoardVO> list = boardService.getList();
+		
+		Map<String, Object> boardMap = boardService.getList(cri);
+		List<BoardVO> noticeList = boardService.getNotice();
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String formattedDateTime = now.format(formatter);
-		model.addAttribute("dateTime",formattedDateTime);
-//		model.addAttribute("boardVO", list);
+		
+		log.info("boardMap:" + boardMap);
+		List<BoardVO> boardList = (List<BoardVO>) boardMap.get("boardList");
+		int total = (Integer)boardMap.get("total");
+		PageDTO pageDTO = new PageDTO(cri, total);
+		
+//		model.addAttribute("dateTime",formattedDateTime);
+//		model.addAttribute("boardVO", boardMap);		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pageDTO", pageDTO);
+		
 		log.info("model:" +  model);
 	}
 
