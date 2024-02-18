@@ -36,8 +36,14 @@ public interface BoardMapper {
 	// 조회수 업데이트
 	public int readCountUpdate(Long board_no);
 	
-	//글 갯수
+	// 글 갯수
 	public int getTotal(Criteria cri);
+	
+	// 답글 갯수
+	public int replyCount(int board_group);
+	
+	// 답글있는 원글 삭제처리
+	public int isReplyDelete(Long board_no);
 	
 	// 검색 기능
 //	public List<BoardVO> search(@Param("type")String type,

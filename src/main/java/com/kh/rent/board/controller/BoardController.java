@@ -85,7 +85,7 @@ public class BoardController {
 	
 	// 글 하나 가져오기
 	@GetMapping("/get")
-	public void get(Long board_no, Model model,Criteria cri) {
+	public void get(Long board_no, Model model, Criteria cri) {
 		log.info("boardGet...");
 		
 		BoardVO boardVO = boardService.get(board_no);
@@ -140,7 +140,23 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(Long board_no, RedirectAttributes rttr,Criteria cri) {
 		log.info("remove...");
-		int result = boardService.remove(board_no);
+		BoardVO boardVO = boardService.get(board_no);
+		int board_group = boardVO.getBoard_group();
+		int board_seq = boardVO.getBoard_seq();
+		String board_mem_id = boardVO.getBoard_mem_id();
+		
+		int result = boardService.remove(board_no, board_group, board_seq);
+		
+		// 글삭제 포인트 기록 추가
+ 		PointVO pointVO = PointVO.builder()
+ 				.point_user_id(board_mem_id)
+ 				.point_code("POINT_D")
+ 				.point_cost(-30000)
+ 				.build();
+ 		if (result == 1) {
+ 			pointService.addPointTable(pointVO);
+ 		}
+		 		
 		rttr.addFlashAttribute("removeResult" , result);
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());

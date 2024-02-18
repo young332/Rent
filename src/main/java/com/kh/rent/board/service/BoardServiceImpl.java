@@ -72,8 +72,17 @@ public class BoardServiceImpl implements BoardService{
 
 	// 글 삭제
 	@Override
-	public int remove(Long board_no) {
-		int count = boardMapper.delete(board_no);
+	public int remove(Long board_no, int board_group, int board_seq) {
+		int groupCount = boardMapper.replyCount(board_group);
+		log.info("groupCount:" + groupCount);
+		int count = 0;
+		if (groupCount > 1 && board_seq == 0) {
+			log.info("isReplyBoardDelete...");
+			count = boardMapper.isReplyDelete(board_no);
+		} else {
+			log.info("boardDelete...");
+			count = boardMapper.delete(board_no);
+		}
 		return count;
 	}
 	

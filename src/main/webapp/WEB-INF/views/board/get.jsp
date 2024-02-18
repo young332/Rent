@@ -41,18 +41,18 @@ $(function(){
 	$(".btn-oper").click(function(){
 		console.log("클릭");
 		var operation = $(this).data("oper");
-		var no = $(this).data("no");
+		var board_no = $(this).data("no");
 		console.log("operation:" , operation);
-		console.log("no:" , no);
+		console.log("board_no:" , board_no);
 		
 		if (operation == "modify") {
-			window.location.href = '/board/modify?board_no=' + no;
+			window.location.href = '/board/modify?board_no=' + board_no;
 		} else if (operation == "delete"){
 			if(confirm("게시글을 삭제하시겠습니까?")) {
 				$.ajax({
 					type:"post",
 					url : "/board/remove",
-					data : {"board_no" : no},
+					data : {"board_no" : board_no},
 					success : function(rData) {
 						alert("삭제되었습니다.");
 						window.location.href = '/board/list';
@@ -95,7 +95,7 @@ $(function(){
         </div>
       </div>
 </section>
-
+<%-- ${boardVO} --%>
 <section class="ftco-section contact-section">
 	<div class="container">
 		<div class="row">
@@ -117,10 +117,10 @@ $(function(){
                             	<dl id="dl_info">
                             		<dt>작성자</dt>
                             		<dt>ㅣ</dt>
-								    <c:if test="${board.board_seq ne 0}">
+								    <c:if test="${boardVO.board_seq ne 0}">
 								        <dd>관리자</dd>
 								    </c:if>
-								    <c:if test="${board.board_seq eq 0}">
+								    <c:if test="${boardVO.board_seq eq 0}">
 								        <dd>${boardVO.board_mem_id}</dd>
 								    </c:if>
                             	</dl>
@@ -144,11 +144,15 @@ $(function(){
 				<div class="col-md-12">
 				    <div class="d-flex justify-content-end align-items-center">
 				        <c:if test="${loginInfo.mem_adminck eq 1}">
-				        	<button type="button" class="btn btn-primary btn-oper mr-2" data-oper="answer" data-no="${boardVO.board_no}">답글쓰기</button>
+				        	<button type="button" class="btn btn-primary btn-oper mr-2" 
+				        			data-oper="answer" data-no="${boardVO.board_no}">답글쓰기</button>
 				        </c:if>
-				        <c:if test="${(loginInfo.mem_id eq boardVO.board_mem_id) or (loginInfo.mem_adminck eq 1 and boardVO.board_noticeYN eq 'Y')}">
-				            <button type="button" class="btn btn-primary btn-oper mr-2" data-oper="modify" data-no="${boardVO.board_no}">수정</button>
-				            <button type="button" class="btn btn-primary btn-oper" data-oper="delete" data-no="${boardVO.board_no}">삭제</button>
+				        <c:if test="${(loginInfo.mem_id eq boardVO.board_mem_id) or 
+				        			  (loginInfo.mem_adminck eq 1 and boardVO.board_noticeYN eq 'Y')}">
+				            <button type="button" class="btn btn-primary btn-oper mr-2" 
+				            		data-oper="modify" data-no="${boardVO.board_no}">수정</button>
+				            <button type="button" class="btn btn-primary btn-oper" 
+				            		data-oper="delete" data-no="${boardVO.board_no}">삭제</button>
 				        </c:if>
 				    </div>
 				</div>

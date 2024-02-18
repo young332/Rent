@@ -12,14 +12,36 @@ function cancleRegi() {
 }
 
 $(function() {
+	var content = $("#board_content").val();
+	content = content.replace(/<br\s*\/?>/mg, "\n");
+	$("#board_content").val(content);
+	
+	// 최대 글자 수 초과 검사 함수
+    function checkMaxLength() {
+        var currentLength = $("#board_content").val().length;
+        var maxLength = 2000;
+        if (currentLength > maxLength) {
+            alert('입력 글자 수가 ' + maxLength + '자를 초과했습니다.');
+            return false;
+        }
+        return true;
+    }
+	
 	// 폼 전송
 	$("#formRegister").submit(function(e) {
 		e.preventDefault();
+		// 최대 글자 수 초과 시 폼 제출 중단
+		if (!checkMaxLength()) {
+            return; 
+        }
 		var content = $("#board_content").val();
 		content = content.replace(/(?:\r\n|\r|\n)/g, "<br>");
 		$("#board_content").val(content);
 		this.submit();
 	});
+	$("#board_content").on('input', function() {
+		checkMaxLength();
+	 });
 });
 
 </script>   

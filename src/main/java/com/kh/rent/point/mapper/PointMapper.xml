@@ -14,6 +14,7 @@
 	        WHEN A.POINT_CODE = 'POINT_P' THEN '결제'
 	        WHEN A.POINT_CODE = 'POINT_E' THEN '이벤트'
 	        WHEN A.POINT_CODE = 'POINT_R' THEN '결제취소'
+	        WHEN A.POINT_CODE = 'POINT_D' THEN '글삭제'
 	        ELSE '기타'
 	    END AS POINT_CODE_NAME,
 	    CASE 

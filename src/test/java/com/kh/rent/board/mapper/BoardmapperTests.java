@@ -128,5 +128,21 @@ public class BoardmapperTests {
 		log.info("count:"+ count);
 	}
 	
+	// 답글 갯수
+	@Test
+	public void testReplyCount() {
+		int board_group = 66;
+		int result = boardMapper.replyCount(board_group);
+		log.info("result:" + result);
+	}
+	
+	// 답글있는 원글 삭제처리
+	@Test
+	public void testIsReplyDelete() {
+		Long board_no = 579L; 
+		int result = boardMapper.isReplyDelete(board_no);
+		log.info("result:" + result);
+	}
+	
 
 }
