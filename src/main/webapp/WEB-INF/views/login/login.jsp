@@ -161,9 +161,8 @@ $(function(){
 					<div class="form-group">
 						<p style="margin-bottom: 150px;">이름과 전화번호로 예약내역을 확인해 보세요.</p>
 						<div class="form-group">
-							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
+							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약조회</button>
 						</div>
-						<!--이름,휴대폰번호 비회원예약확인 -->
 					</div>
 				</form>
 				</c:if>
