@@ -64,14 +64,19 @@ $(function(){
 				})
 			}
 		} else if (operation == "answer") {
-			window.location.href = '/board/answer?board_no=' + no;
+			window.location.href = '/board/answer?board_no=' + board_no;
 		}
 	});
 	
-	var modifyResult = '${modifyResult}';
-	if(modifyResult){
-		alert("수정이 완료되었습니다.");
-	}
+    var referrer = document.referrer;
+    // 수정 페이지로부터 돌아왔을 때에만 alert 표시
+    if(referrer.includes("/board/modifyBoard")) {
+        var modifyResult = '${modifyResult}';
+        if(modifyResult == 1){
+            alert("수정이 완료되었습니다.");
+            return;
+        }
+    }
 	
 	$("#btnlist").click(function(e){
 		e.preventDefault();
@@ -89,8 +94,11 @@ $(function(){
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>공지사항 <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">공지사항</h1>
+          	<p class="breadcrumbs">
+          	<span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2"><a href="/myPage/myPage">고객의소리 <i class="ion-ios-arrow-forward"></i></a></span> 
+          	</p>
+        	<h1 class="mb-3 bread">문의게시판</h1>
           </div>
         </div>
       </div>

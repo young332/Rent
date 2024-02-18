@@ -117,7 +117,7 @@ public class BoardController {
 	}
 	
 	// 글 수정하기
-	@PostMapping("/modify")
+	@PostMapping("/modifyBoard")
 	public String modify(BoardVO boardVO,RedirectAttributes rttr, Criteria cri) {
 		log.info("modifypost...");
 		log.info("updateboardVO :" + boardVO);

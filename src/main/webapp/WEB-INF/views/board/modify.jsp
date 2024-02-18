@@ -6,9 +6,12 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>   
 <script>
 function cancleModi() {
-	alert("글 수정이 취소되었습니다.");
-	history.back();
-	return false;
+	if(confirm("글 수정을 취소하시겠습니까?")) {
+		history.back();
+		return false; 
+	} else {
+		return false;
+	}
 }
 
 $(document).ready(function() {
@@ -52,8 +55,12 @@ $(document).ready(function() {
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>공지사항 <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">공지사항</h1>
+          	<p class="breadcrumbs">
+          	<span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2"><a href="/myPage/myPage">고객의소리 <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2">글수정 <i class="ion-ios-arrow-forward"></i></span> 
+          	</p>
+            <h1 class="mb-3 bread">글수정</h1>
           </div>
         </div>
       </div>
@@ -63,7 +70,7 @@ $(document).ready(function() {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<form id="frmModify" role="form" action="/board/modify" method="post">
+				<form id="frmModify" role="form" action="/board/modifyBoard" method="post">
 				<div class="form-group">
 				<input type="hidden" name="board_no" value="${boardVO.board_no}">
 					<label for="board_title">
@@ -129,7 +136,7 @@ $(document).ready(function() {
 					<button type="submit" class="btn btn-primary mr-2">
 						수정완료
 					</button>
-					<button class="btn btn-primary" onclick="cancleModi()">취소</button>
+					<button class="btn btn-primary" onclick="return cancleModi()">취소</button>
 				</div>
 			</form>
 		</div>
