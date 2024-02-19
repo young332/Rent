@@ -25,8 +25,7 @@
 
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<!-- <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/> -->
-		 <property name="driverClassName"
-			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" /> 
+		 <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" /> 
 <!-- 		 <property name="driverClassName" -->
 <!-- 			value="com.mysql.cj.jdbc.Driver" />  -->
 		<!-- mysql 서버 디비 돌릴때 -->
