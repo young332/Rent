@@ -20,8 +20,7 @@
 	<insert id="addPointTable">
 		INSERT INTO TBL_POINT (point_user_id, point_code, point_use_date, point_cost)
 	    VALUES (
-	        #{mem_id}, #{point_code}, NOW(), #{point_cost}
-	    )
+	        #{mem_id}, #{point_code}, NOW(), #{point_cost})
 	</insert>
 	
 	<!-- 멤버아이디로 포인트 조회 -->
