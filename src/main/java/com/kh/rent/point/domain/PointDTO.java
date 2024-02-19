@@ -16,7 +16,7 @@ public class PointDTO {
 	private Integer point_id;
 	private String point_user_id;
 	private String point_code;
-	private String point_code_name;
+	private String code_name;
 	private Timestamp point_use_date;
 	private Integer point_cost;
 	private Integer mem_point;

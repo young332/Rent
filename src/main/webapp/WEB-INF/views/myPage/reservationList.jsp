@@ -8,6 +8,24 @@
 <%@ include file="/WEB-INF/views/include/reservationListStyle.jsp" %>
 
 <script>
+//등록일 날짜변환
+function formattedDate(point_use_date) {
+	if (!point_use_date) {
+        return "";
+    }
+    
+    var date = new Date(point_use_date);
+    
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    var hours = ("0" + date.getHours()).slice(-2);
+    var minutes = ("0" + date.getMinutes()).slice(-2);
+    var seconds = ("0" + date.getSeconds()).slice(-2);
+    
+    return year + "-" + month + "-" + day + "   " + hours + ":" + minutes;
+}
+
 // 금액 자릿수 표시하기(콤마)
 function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -19,10 +37,9 @@ function pay(reservationId) {
 }
 
 // 결제취소 버튼 - 결제취소처리
-function pay_cancel(paymentId) {
-	var totalPay = $("#totalpay").val();
+function pay_cancel(paymentId, totalPay) {
 	console.log("totalPay:" + totalPay);
-    var confirmflag = confirm("결제취소 하시겠습니까?");
+    var confirmflag = confirm("결제취소 하시겠습니까? " + totalPay + "P가 환불됩니다.");
     if(confirmflag){
 		console.log("결제취소:" + confirmflag);
 		$.ajax({
@@ -74,6 +91,16 @@ $(document).ready(function() {
 	$(".carName").each(function(i) {
 		var carNamesArray = '${carNames}'.slice(1, -1).split(',');
         $(this).text(carNamesArray[i]);
+    });
+	
+	$(".res_rental_date").each(function() {
+		var rental_date = $(this).text();
+        $(this).text(formattedDate(rental_date));
+    });
+	
+	$(".res_return_date").each(function() {
+		var return_date = $(this).text();
+        $(this).text(formattedDate(return_date));
     });
 	
 });
@@ -137,7 +164,7 @@ $(document).ready(function() {
 				                <c:forEach var="reservation" items="${reserveList}">
 				                  <tr>
 				                    <td class="res_rid">${reservation.res_rid}</td>
-				                    <td>${reservation.res_rental_date}</td>
+				                    <td class="res_rental_date">${reservation.res_rental_date}</td>
 				                    <td class="res_return_date">${reservation.res_return_date}</td>
 				                    <td class="carName"></td>
 				                    <td class="totalpay">${reservation.res_totalpay}</td>
@@ -161,8 +188,8 @@ $(document).ready(function() {
 									    		onclick="res_cancel(${reservation.res_rid})">예약취소</button>
 										</c:if>
 					                    <c:if test="${reservation.pay_status eq '결제완료' and reservation.res_status eq '예약완료'}">
-									    	<button class="btn btn-sm btn-danger" 
-									    		onclick="pay_cancel(${reservation.pay_pid})">결제취소</button>
+									    	<button class="btn btn-sm btn-danger"
+									    		onclick="pay_cancel(${reservation.pay_pid}, ${reservation.res_totalpay})">결제취소</button>
 										</c:if>
 				                    </td>
 				                  </tr>

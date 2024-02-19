@@ -86,14 +86,21 @@ $(function(){
 		var boardNo = $(this).data("board-no");
 		var boardPrivate = $(this).data("board-private");
 		var boardID = $(this).data("board-id");
+		var deleteYN = $(this).data("deleteyn");
 		var adminck = "${loginInfo.mem_adminck}";
 		var loginID = "${loginInfo.mem_id}";
 		
 		console.log("boardNo:" , boardNo);
 		console.log("boardPrivate:" , boardPrivate);
 		console.log("boardID:" , boardID);
+		console.log("deleteYN:" , deleteYN);
 		console.log("adminck:" , adminck);
 		console.log("loginID:" , loginID);
+		
+		if (deleteYN == "Y") {
+			alert("삭제된 게시글입니다.");
+			return;
+		}
 		
 		if (boardPrivate == "N" || (boardPrivate == "Y" && adminck == 1) || (loginID == boardID)) {
 			var url = "get?board_no=" + boardNo +
@@ -123,8 +130,8 @@ $(function(){
 	
 	// 등록완료 메세지
     var registerResult = "${registerResult}";
-    if(registerResult !== "") {
-        alert("등록이 완료되었습니다.");
+    if(registerResult == 1) {
+        alert("글 등록이 완료되었습니다.");
     }
     
     // 검색기능
@@ -164,6 +171,7 @@ $(function(){
 // 		});  
 		    
 	});
+    
     //페이지 번호
     $("a.page-link").click(function(e){
 		e.preventDefault();
@@ -186,8 +194,8 @@ $(function(){
   <div class="container">
     <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
       <div class="col-md-9 ftco-animate pb-5">
-      	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>문의사항 <i class="ion-ios-arrow-forward"></i></span></p>
-        <h1 class="mb-3 bread">문의사항</h1>
+      	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>고객의소리 <i class="ion-ios-arrow-forward"></i></span></p>
+        <h1 class="mb-3 bread">문의게시판</h1>
       </div>
 
 
@@ -251,32 +259,37 @@ $(function(){
 					</c:forEach>
 					<c:forEach items="${boardList}" var="board">
 						<tr class="board-row" data-board-no="${board.board_no}" 
-											  data-board-private="${board.board_privateYN}" 
-											  data-board-group="${board.board_group}"
+											  data-board-private="${board.board_privateYN}"
+											  data-deleteyn="${board.board_deleteYN}"
 											  data-board-id="${board.board_mem_id}">
 							<td>${board.board_no}</td>
 							<td>
+								<!-- 답글 제목처리 -->
 								<c:if test="${board.board_level > 0}">
 									<c:forEach begin="1" end ="${board.board_level}">
 										<span style="padding-left:20px"></span>
 									</c:forEach>
 									<img src="/resources/carbook-master/images/arrow.png" width="12" height="12">
 								</c:if>
+								<!-- 비밀글 제목처리 -->
 								<c:if test="${board.board_privateYN eq 'Y'}">
 								<i class="fa fa-lock"></i>
 								</c:if>
-								
-							${board.board_title}</td>
+					            ${board.board_title}
+							</td>
 							<td>
-							    <c:if test="${board.board_seq ne 0}">
-							        관리자
-							    </c:if>
-							    <c:if test="${board.board_seq eq 0}">
-							        ${board.board_mem_id}
-							    </c:if>
+							    <c:choose>
+							        <c:when test="${board.board_seq ne 0}">
+							            관리자
+							        </c:when>
+							        <c:otherwise>
+							            ${board.board_mem_id}
+							        </c:otherwise>
+							    </c:choose>
 							</td>
 							<td class="cdate">${board.board_cdate}</td>
 							<td>${board.readcount}</td>
+<%-- 							<td style="display:none;" data-deleteyn="${board.board_deleteYN}" >${board.board_deleteYN}</td> --%>
 						</tr>
 					</c:forEach>
 					</tbody>
