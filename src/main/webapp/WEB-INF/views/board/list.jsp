@@ -37,6 +37,9 @@
         background-color: #218838; /* Hover background color */
         border-color: #1e7e34; /* Hover border color */
     }
+    .custom-cursor {
+            cursor: pointer;
+        }
 </style>
 <script>
 // 등록일 날짜변환
@@ -238,7 +241,7 @@ $(function(){
 					</thead>
 					<tbody>
 					<c:forEach items="${noticeList}" var="notice">
-						<tr class="notice-row" data-board-no="${notice.board_no}">
+						<tr class="notice-row custom-cursor" data-board-no="${notice.board_no}">
 							<td style="font-weight: bold;">[공지]</td>
 							<td style="font-weight: bold;">${notice.board_title}</td>
 							<td>관리자</td>
