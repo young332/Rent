@@ -16,9 +16,7 @@
 /*     color: #fff !important; */
 /*     } */
 </style>
-<section class="hero-wrap hero-wrap-2 js-fullheight"
-	style="background-image: url('/resources/carbook-master/images/bg_3.jpg');"
-	data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/img/top2.jpg'); background-size: cover; background-position: bottom center; height: 100vh; position: relative;">
 	<div class="overlay"></div>
 	<div class="container">
 		<div
@@ -29,7 +27,7 @@
 							class="ion-ios-arrow-forward"></i></a></span> <span>예약 <i
 						class="ion-ios-arrow-forward"></i></span>
 				</p>
-				<h1 class="mb-3 bread"></h1>
+				<h1 class="mb-3 bread">예약하기</h1>
 			</div>
 		</div>
 	</div>
