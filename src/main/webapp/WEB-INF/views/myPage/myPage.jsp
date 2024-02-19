@@ -192,7 +192,7 @@ $(function() {
 	   	console.log(mem_id);
 	   	$("#point_mem_id").val(mem_id);
 	   	$("#point_user_id").val(mem_id);
-   	
+	    $("#in_point").text("");
 		$("#pointInModal").modal("show");
 	});
 	
@@ -200,12 +200,13 @@ $(function() {
 	$("#btn-point-save").click(function() {
        // 입력된 값을 가져와서 mem_point input의 value로 설정
        var memPointValue = $("#in_point").val();
+       var formatPoint = formatNumberWithCommas(memPointValue);
        if (!memPointValue) {
        	alert("충전금액을 입력하세요");
        } else {
 	        $("#point_cost").val(memPointValue);
-	        console.log("memPointValue:", memPointValue);
-	        var confirmed = confirm(memPointValue + "P 를 충전하시겠습니까?");
+	        console.log("memPointValue:", formatPoint);
+	        var confirmed = confirm(formatPoint + "P 를 충전하시겠습니까?");
 			
 	        if (confirmed) {
 	            $("#frmpointIn").submit();
@@ -287,7 +288,7 @@ $(function() {
 							<tr>
 								<td>${point.rowNum}</td>
 								<td class="point_use_date">${point.point_use_date}</td>
-								<td>${point.point_code_name}</td>
+								<td>${point.code_name}</td>
 								<td class="point_cost">${point.point_cost} P</td>
 								<td>${point.point_section}</td>
 							</tr>

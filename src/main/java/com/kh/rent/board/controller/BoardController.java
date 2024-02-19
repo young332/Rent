@@ -64,7 +64,7 @@ public class BoardController {
 	
 	// 글 등록하기
 	@PostMapping("/register")
-	public String registerPost(BoardVO boardVO,RedirectAttributes rttr) {
+	public String registerPost(BoardVO boardVO, RedirectAttributes rttr) {
 		log.info("registerPost...");
 	 	int result = boardService.register(boardVO);
 	 	rttr.addFlashAttribute("registerResult",result);
@@ -178,7 +178,7 @@ public class BoardController {
 	
 	// 답글 등록하기
 	@PostMapping("/answer.do")
-	public String answerDo(BoardVO replyVO, Model model) {
+	public String answerDo(BoardVO replyVO, Model model, RedirectAttributes rttr) {
 		log.info("showAnswerPost...");
 		log.info("replyVO:" + replyVO);
 		// 1.부모글 정보 가져오기
@@ -192,7 +192,8 @@ public class BoardController {
 		// 5.부모글의 board_group을 꺼내와서 답글(replyVO)의 board_group에 넣어줌
 		replyVO.setBoard_group(parent.getBoard_group());
 		// 6.답글을 테이블에 저장
-		boardService.replyInsert(replyVO);
+		int result = boardService.replyInsert(replyVO);
+		rttr.addFlashAttribute("registerResult",result);
 		log.info("replyVO:" + replyVO);
 		
 		return "redirect:/board/list";

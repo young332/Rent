@@ -127,8 +127,8 @@ $(function(){
 	
 	// 등록완료 메세지
     var registerResult = "${registerResult}";
-    if(registerResult !== "") {
-        alert("등록이 완료되었습니다.");
+    if(registerResult == 1) {
+        alert("글 등록이 완료되었습니다.");
     }
     
     // 검색기능
