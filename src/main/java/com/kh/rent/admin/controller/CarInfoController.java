@@ -37,8 +37,9 @@ public class CarInfoController {
 
 	//업로드된 파일이 저장될 디렉토리 경로
 	//@Value("C:\\Users\\well0\\git\\Rent\\src\\main\\webapp\\resources\\upload")
-	//@Value("${upload.directory}")
-	@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
+	//@Value("G:/Workspace/spring/Rent/src/main/webapp/resources/upload")
+	//@Value("C:\\dev\\workspace\\spring\\Rent\\src\\main\\webapp\\resources\\upload")
+	@Value("\\tomcat\\webapp\\resources\\upload") //호스팅경로
 	private String uploadDirectory;
 
 	// 차량 등록 처리
