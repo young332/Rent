@@ -37,6 +37,9 @@
         background-color: #218838; /* Hover background color */
         border-color: #1e7e34; /* Hover border color */
     }
+    .custom-cursor {
+            cursor: pointer;
+        }
 </style>
 <script>
 // 등록일 날짜변환
@@ -178,7 +181,7 @@ $(function(){
 
 <%@ include file="/WEB-INF/views/include/frmCriteria.jsp" %>
 
-<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/img/top2.jpg'); background-size: cover; background-position: bottom center; height: 100vh; position: relative;">
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
@@ -238,7 +241,7 @@ $(function(){
 					</thead>
 					<tbody>
 					<c:forEach items="${noticeList}" var="notice">
-						<tr class="notice-row" data-board-no="${notice.board_no}">
+						<tr class="notice-row custom-cursor" data-board-no="${notice.board_no}">
 							<td style="font-weight: bold;">[공지]</td>
 							<td style="font-weight: bold;">${notice.board_title}</td>
 							<td>관리자</td>

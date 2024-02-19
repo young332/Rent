@@ -3,6 +3,7 @@ package com.kh.rent.board.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.kh.rent.board.domain.BoardVO;
 import com.kh.rent.board.domain.Criteria;
 import com.kh.rent.board.domain.PageDTO;
 import com.kh.rent.board.service.BoardService;
+import com.kh.rent.login.util.LocationUtil;
 import com.kh.rent.point.domain.PointVO;
 import com.kh.rent.point.service.PointService;
 
@@ -37,9 +39,9 @@ public class BoardController {
 	// 글 목록 가져오기
 	@SuppressWarnings("unchecked")
 	@GetMapping("/list")
-	public void list(HttpSession session, Model model ,Criteria cri) {
+	public void list(HttpSession session, Model model ,Criteria cri,HttpServletRequest request) {
 		log.info("list");
-
+		LocationUtil.saveTargetLocation(request);
 		List<BoardVO> noticeList = boardService.getNotice();
 		Map<String, Object> boardMap = boardService.getList(cri);
 		log.info("boardMap:" + boardMap);
