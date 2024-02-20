@@ -4,6 +4,9 @@
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<!-- 비밀번호 암호화 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
 <script>
 function sha256(password) {
 	if (password.trim() == "") {
@@ -33,39 +36,38 @@ $(function() {
 		var shaDelPassword = sha256(del_enter_pwd);
 		console.log("shaDelPassword:", shaDelPassword);
 		
-		return false;
-// 		if (password != shaDelPassword) {
-// 			alert("비밀번호가 맞지 않습니다.");
-// 		} else if (password == shaDelPassword) {
-// 			alert("비밀번호 일치확인");
-// 			// 폼 데이터 생성
-// 			var formData = {
-//                 mem_id: mem_id
-//             };
+		if (password != shaDelPassword) {
+			alert("비밀번호가 맞지 않습니다.");
+		} else if (password == shaDelPassword) {
+			alert("비밀번호 일치확인");
+			// 폼 데이터 생성
+			var formData = {
+                mem_id: mem_id
+            };
 			
-// 			$.ajax({
-// 	            method: "DELETE",
-// 	            url: "/myPage/delete/" + mem_id,
-// 	            success: function(rData) {
-// 	                console.log("rData:", rData);
-// 	                if (rData == "success") {
-// 		                alert("회원탈퇴성공! 로그인 페이지로 이동합니다.");
-// 		                $("#modal-delForm").modal("hide");
-// 		                location.href = "/login/login";
-// 	                } else if (rData == "fail") {
-// 	                	alert("회원탈퇴실패!");
-// 	                }
+			$.ajax({
+	            method: "DELETE",
+	            url: "/myPage/delete/" + mem_id,
+	            success: function(rData) {
+	                console.log("rData:", rData);
+	                if (rData == "success") {
+		                alert("회원탈퇴성공! 로그인 페이지로 이동합니다.");
+		                $("#modal-delForm").modal("hide");
+		                location.href = "/login/login";
+	                } else if (rData == "fail") {
+	                	alert("회원탈퇴실패!");
+	                }
 	                
-// 	            },
-// 	            error: function(xhr, status, error) {
-//                 	alert("회원탈퇴실패!");
-// 	                console.error("회원 삭제 실패:", error);
-// 	            }
-// 	        });
-// 		}
-// 		else {
-// 			return;
-// 		}
+	            },
+	            error: function(xhr, status, error) {
+                	alert("회원탈퇴실패!");
+	                console.error("회원 삭제 실패:", error);
+	            }
+	        });
+		}
+		else {
+			return;
+		}
 	});
 	
 	var modifyResult = '${modifyResult}';
