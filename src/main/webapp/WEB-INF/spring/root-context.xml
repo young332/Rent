@@ -30,10 +30,13 @@
 <!-- 			value="com.mysql.cj.jdbc.Driver" />  -->
 		<!-- mysql 서버 디비 돌릴때 -->
 		<!-- <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/> -->
+		<!-- 호스팅 할 때  -->
+		<!-- <property name="jdbcUrl"
+			value="jdbc:log4jdbc:mysql://localhost:3306/rent001?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowPublicKeyRetrieval=true" /> -->
+		
+		<!-- 로컬돌릴 때  -->
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowPublicKeyRetrieval=true" />
-<!-- 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true" /> -->
+			value="jdbc:log4jdbc:mysql://rent001.cafe24.com:3306/rent001?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowPublicKeyRetrieval=true" /> 
 		<property name="username" value="rent001" />
 		<property name="password" value="khkh001@" />
 	</bean>
