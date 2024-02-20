@@ -1,20 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ include file="/WEB-INF/views/include/top.jsp" %>
-
 <!-- 주소찾기 -->
   	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
  
 <!-- /주소찾기 -->
 
-<!-- 비밀번호변경 유효성 검사 스크립트 include -->
-<script src="/resources/js/change-pw-checker.js"></script>
-
 <!-- 비밀번호 암호화 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+<!-- 비밀번호변경 유효성 검사 스크립트 include -->
+<%@ include file="/WEB-INF/views/include/check_pw.jsp" %>
 
 <script>
 //주소 검색
@@ -36,6 +34,7 @@ function openZipSearch() {
 }
 
 $(function() {
+	
 	// 비밀번호변경 모달열기
 	$("#pwdChange").click(function() {
 		$("#password1").val("");
@@ -47,11 +46,15 @@ $(function() {
 	});
 	
 	// 비밀번호변경 처리
-	$("#btn-pwdChange-save").click(function() {
+	$("#btn-pwdChange-save").click(function(e) {
 // 		var password1 = $("#password1").val();
 // 		console.log("password1:", password1);
-		
-	    validatePasswordChangeForm();
+		e.preventDefault();
+		if ($("#invalid-message1").text() == "사용가능한 비밀번호입니다.") {
+	        validatePasswordChangeForm(); // 폼 유효성 검사 실행
+	    } else {
+	    	alert("비밀번호 형식을 다시 확인해주세요.");
+	    }
 	});
 	
 }); 

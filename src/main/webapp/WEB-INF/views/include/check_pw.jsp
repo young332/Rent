@@ -1,6 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+
 	// 비밀번호 변경 유효성 검사 모듈
 	$(function() {
-		
 	    // 검사 결과 저장 객체
 	    var valid = {
 	        newPWValid:false,
@@ -12,14 +15,15 @@
 	
 		// 비밀번호 유효성 검사
 		$("#newPassword").blur(function() {
-		    var regex = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*?=+_-])[A-Za-z0-9!@#$%^&*?=+_-]{8,16}$/i;
+			var regex = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*?=+_-])[A-Za-z0-9!@#$%^&*?=+_-]{8,16}$/i;
 		    var isValid = regex.test($(this).val());
 		    valid.newPWValid = isValid;
 		    var $invalidMessage1 = $(this).siblings('#invalid-message1');
 		    if (!isValid) {
+		        $invalidMessage1.text("비밀번호는 영문 대/소문자, 숫자, 특수문자를 1개 이상 포함한 8~16자입니다."); // 유효한 경우 텍스트 설정
 		        $invalidMessage1.show(); // 유효하지 않은 경우 메시지 표시
 		    } else {
-		        $invalidMessage1.text("사용가능한 비밀번호입니다."); // 유효하지 않은 경우 텍스트 설정
+		        $invalidMessage1.text("사용가능한 비밀번호입니다."); // 유효한 경우 텍스트 설정
 		        $invalidMessage1.show(); // 유효한 경우 메시지 표시
 		    }
 		});
@@ -78,16 +82,19 @@
 	        isFormValid = false;
 	        alert("기존 비밀번호와 일치하지 않습니다.");
 	    } else if (password == shaPassword1 && password != shaNewPassword && password != shaConfirmPassword) {
-	        isFormValid = true;
-	        console.log("비밀번호 변경 진행");
+	        if(confirm("비밀번호를 변경하시겠습니까?")) {
+		        isFormValid = true;
+		        console.log("비밀번호 변경 진행");
+	        } else {
+		        isFormValid = false;
+		        console.log("비밀번호 변경 취소");
+	        }
 	    }
-	
-	    if (!isFormValid) {
-	        return false; // 폼 제출 중단
-	    } else {
-	    	// 유효성 검사 통과 시 폼 제출
-	    	submitPasswordChangeForm(password, shaNewPassword);
-		}
+	    
+	    if (isFormValid) {
+	        // 폼 유효성 검사를 통과한 경우에만 변경 요청을 보냄
+	        submitPasswordChangeForm(password, shaNewPassword);
+	    }
 	}
 
 	// 폼 제출 함수
@@ -110,9 +117,14 @@
 	        data: JSON.stringify(pwChangeDTO),
 	        success: function(rData) {
 	            console.log("rData:", rData);
+	            console.log("비밀번호 변경 success");
 	            if (rData == "success") {
-	                alert("비밀번호 변경 완료");
-	                $("#modal-pwdChangeForm").modal("hide");
+	                alert("비밀번호 변경 완료!");
+	                $('#modal-pwdChangeForm').modal('hide');
+	                $('#modal-pwdChangeForm').on('hidden.bs.modal', function (e) {
+	                    // 페이지 새로고침
+	                    location.href="/myPage/myPageInfo_modify";
+	                });
 	            } else {
 	                alert("비밀번호 변경 실패!");
 	            }
@@ -123,3 +135,4 @@
 	        }
 	    });
 	}
+</script>
