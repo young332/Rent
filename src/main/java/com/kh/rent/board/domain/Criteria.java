@@ -36,7 +36,7 @@ public class Criteria {
 	
 	//현재 페이지 번호와 한 페이지당 데이터 수를 이용하여 시작행과 끝행을 계산
 	private void setRows() {
-		endRow = pageNum * amount;
+		endRow = pageNum * amount -1;
 		startRow = endRow - (amount -1);
 	}
 	

@@ -3,6 +3,7 @@ package com.kh.rent.board.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.kh.rent.board.domain.BoardVO;
 import com.kh.rent.board.domain.Criteria;
 import com.kh.rent.board.domain.PageDTO;
 import com.kh.rent.board.service.BoardService;
+import com.kh.rent.login.util.LocationUtil;
 import com.kh.rent.point.domain.PointVO;
 import com.kh.rent.point.service.PointService;
 
@@ -37,9 +39,9 @@ public class BoardController {
 	// 글 목록 가져오기
 	@SuppressWarnings("unchecked")
 	@GetMapping("/list")
-	public void list(HttpSession session, Model model ,Criteria cri) {
+	public void list(HttpSession session, Model model ,Criteria cri,HttpServletRequest request) {
 		log.info("list");
-
+		LocationUtil.saveTargetLocation(request);
 		List<BoardVO> noticeList = boardService.getNotice();
 		Map<String, Object> boardMap = boardService.getList(cri);
 		log.info("boardMap:" + boardMap);
@@ -64,7 +66,7 @@ public class BoardController {
 	
 	// 글 등록하기
 	@PostMapping("/register")
-	public String registerPost(BoardVO boardVO,RedirectAttributes rttr) {
+	public String registerPost(BoardVO boardVO, RedirectAttributes rttr) {
 		log.info("registerPost...");
 	 	int result = boardService.register(boardVO);
 	 	rttr.addFlashAttribute("registerResult",result);
@@ -85,7 +87,7 @@ public class BoardController {
 	
 	// 글 하나 가져오기
 	@GetMapping("/get")
-	public void get(Long board_no, Model model,Criteria cri) {
+	public void get(Long board_no, Model model, Criteria cri) {
 		log.info("boardGet...");
 		
 		BoardVO boardVO = boardService.get(board_no);
@@ -117,7 +119,7 @@ public class BoardController {
 	}
 	
 	// 글 수정하기
-	@PostMapping("/modify")
+	@PostMapping("/modifyBoard")
 	public String modify(BoardVO boardVO,RedirectAttributes rttr, Criteria cri) {
 		log.info("modifypost...");
 		log.info("updateboardVO :" + boardVO);
@@ -140,7 +142,23 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(Long board_no, RedirectAttributes rttr,Criteria cri) {
 		log.info("remove...");
-		int result = boardService.remove(board_no);
+		BoardVO boardVO = boardService.get(board_no);
+		int board_group = boardVO.getBoard_group();
+		int board_seq = boardVO.getBoard_seq();
+		String board_mem_id = boardVO.getBoard_mem_id();
+		
+		int result = boardService.remove(board_no, board_group, board_seq);
+		
+		// 글삭제 포인트 기록 추가
+ 		PointVO pointVO = PointVO.builder()
+ 				.point_user_id(board_mem_id)
+ 				.point_code("POINT_D")
+ 				.point_cost(-30000)
+ 				.build();
+ 		if (result == 1) {
+ 			pointService.addPointTable(pointVO);
+ 		}
+		 		
 		rttr.addFlashAttribute("removeResult" , result);
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
@@ -162,7 +180,7 @@ public class BoardController {
 	
 	// 답글 등록하기
 	@PostMapping("/answer.do")
-	public String answerDo(BoardVO replyVO, Model model) {
+	public String answerDo(BoardVO replyVO, Model model, RedirectAttributes rttr) {
 		log.info("showAnswerPost...");
 		log.info("replyVO:" + replyVO);
 		// 1.부모글 정보 가져오기
@@ -176,7 +194,8 @@ public class BoardController {
 		// 5.부모글의 board_group을 꺼내와서 답글(replyVO)의 board_group에 넣어줌
 		replyVO.setBoard_group(parent.getBoard_group());
 		// 6.답글을 테이블에 저장
-		boardService.replyInsert(replyVO);
+		int result = boardService.replyInsert(replyVO);
+		rttr.addFlashAttribute("registerResult",result);
 		log.info("replyVO:" + replyVO);
 		
 		return "redirect:/board/list";

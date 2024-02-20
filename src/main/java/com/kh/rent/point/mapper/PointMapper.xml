@@ -6,28 +6,32 @@
 
 	<!-- 포인트 전체 조회하기(한사람) -->
  	<select id="getPointList" resultType="com.kh.rent.point.domain.PointDTO">
- 		SELECT @ROWNUM:=@ROWNUM+1 AS ROWNUM, A.*,
-	    CASE 
-	        WHEN A.POINT_CODE = 'POINT_J' THEN '회원가입'
-	        WHEN A.POINT_CODE = 'POINT_C' THEN '충전'
-	        WHEN A.POINT_CODE = 'POINT_B' THEN '게시판'
-	        WHEN A.POINT_CODE = 'POINT_P' THEN '결제'
-	        WHEN A.POINT_CODE = 'POINT_E' THEN '이벤트'
-	        WHEN A.POINT_CODE = 'POINT_R' THEN '결제취소'
-	        ELSE '기타'
-	    END AS POINT_CODE_NAME,
-	    CASE 
-	        WHEN A.POINT_COST >= 0 THEN '적립'
-	       	ELSE '사용'
-	    END AS POINT_SECTION
+ 		SELECT 
+		    *
 		FROM (
-		    SELECT P.*, M.MEM_POINT
-		    FROM TBL_POINT AS P
-		    JOIN TBL_MEMBER AS M ON P.POINT_USER_ID = M.MEM_ID
-		    WHERE M.MEM_ID = #{mem_id}
-		    ORDER BY POINT_USE_DATE DESC
-		) AS A, (SELECT @ROWNUM:=0) AS R
-		ORDER BY ROWNUM DESC;
+		    SELECT 
+		        P.*, 
+		        M.MEM_POINT,
+		        C.CODE_NAME,
+		        CASE 
+		            WHEN P.POINT_COST >= 0 THEN '적립'
+		            ELSE '사용'
+		        END AS POINT_SECTION,
+		        @ROWNUM:=@ROWNUM+1 AS ROWNUM
+		    FROM 
+		        TBL_POINT AS P
+		    JOIN 
+		        TBL_MEMBER AS M ON P.POINT_USER_ID = M.MEM_ID
+		    JOIN 
+		        TBL_COMMON_CODE AS C ON P.POINT_CODE = C.CODE_ID,
+		        (SELECT @ROWNUM:=0) AS R
+		    WHERE 
+		        M.MEM_ID = #{mem_id}
+		    ORDER BY 
+		        P.POINT_USE_DATE ASC
+		) AS T
+		ORDER BY 
+		    ROWNUM DESC;
   	</select>
   	
   	<!-- 포인트 충전 -->

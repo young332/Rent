@@ -1,6 +1,7 @@
 package com.kh.rent.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +47,7 @@ public class BoardServiceTests {
 	public void testGetList() {
 		log.info("boardService: "+ boardService);
 		Criteria cri = new Criteria();
-		List<BoardVO> list = (List<BoardVO>)boardService.getList(cri);
+		Map<String, Object> list = boardService.getList(cri);
 		log.info(list);
 	}
 	
@@ -65,8 +66,10 @@ public class BoardServiceTests {
 	// 글 삭제
 	@Test
 	public void testdelete() {
-		Long board_no = 14L;
-		int count = boardService.remove(board_no);
+		Long board_no = 66L;
+		int board_group = 66;
+		int board_seq = 0;
+		int count = boardService.remove(board_no, board_group, board_seq);
 		log.info("count:" + count);
 	}
 	

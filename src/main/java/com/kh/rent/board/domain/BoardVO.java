@@ -28,5 +28,5 @@ public class BoardVO {
 	private int board_group; // 그룹핑
 	private int board_seq; // 답글 순서
 	private int board_level; // 들여쓰기(답글의 답글)
-	private String board_deleteYN; // 삭제여부(1:정상, 0:삭제)
+	private String board_deleteYN; // 삭제여부(N:정상, Y:삭제)
 }

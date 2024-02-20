@@ -85,8 +85,8 @@ $(function(){
 });	
 </script>
 <!-- top -->
-    
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/img/top2.jpg'); background-size: cover; background-position: bottom center; height: 100vh; position: relative;">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
@@ -161,9 +161,8 @@ $(function(){
 					<div class="form-group">
 						<p style="margin-bottom: 150px;">이름과 전화번호로 예약내역을 확인해 보세요.</p>
 						<div class="form-group">
-							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약확인</button>
+							<button type="button" id="btn-Non-member"class="btn btn-primary py-3 px-5">비회원 예약조회</button>
 						</div>
-						<!--이름,휴대폰번호 비회원예약확인 -->
 					</div>
 				</form>
 				</c:if>

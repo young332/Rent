@@ -7,29 +7,59 @@
 
 <script>
 function cancleRegi() {
-	alert("글 등록이 취소되었습니다.");
-	history.back();
+	if(confirm("글 등록을 취소하시겠습니까?")) {
+		history.back();
+		return false; 
+	} else {
+		return false;
+	}
 }
 
 $(function() {
+	var content = $("#board_content").val();
+	content = content.replace(/<br\s*\/?>/mg, "\n");
+	$("#board_content").val(content);
+	
+	// 최대 글자 수 초과 검사 함수
+    function checkMaxLength() {
+        var currentLength = $("#board_content").val().length;
+        var maxLength = 2000;
+        if (currentLength > maxLength) {
+            alert('입력 글자 수가 ' + maxLength + '자를 초과했습니다.');
+            return false;
+        }
+        return true;
+    }
+	
 	// 폼 전송
 	$("#formRegister").submit(function(e) {
 		e.preventDefault();
+		// 최대 글자 수 초과 시 폼 제출 중단
+		if (!checkMaxLength()) {
+            return; 
+        }
 		var content = $("#board_content").val();
 		content = content.replace(/(?:\r\n|\r|\n)/g, "<br>");
 		$("#board_content").val(content);
 		this.submit();
 	});
+	$("#board_content").on('input', function() {
+		checkMaxLength();
+	 });
 });
 
 </script>   
-    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/img/top2.jpg'); background-size: cover; background-position: bottom center; height: 100vh; position: relative;">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>공지사항 <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">공지사항</h1>
+          	<p class="breadcrumbs">
+          	<span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2"><a href="/myPage/myPage">고객의소리 <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2">글쓰기 <i class="ion-ios-arrow-forward"></i></span> 
+          	</p>
+            <h1 class="mb-3 bread">글쓰기</h1>
           </div>
         </div>
       </div>
@@ -98,7 +128,7 @@ $(function() {
 					</c:choose>
 					<div class="col-md-12 d-flex justify-content-center">
 						<button type="submit" class="btn btn-primary mr-2">글 등록</button>
-						<button class="btn btn-primary" onclick="cancleRegi()">취소</button>
+						<button class="btn btn-primary" onclick="return cancleRegi()">취소</button>
 					</div>
 				</form>
 			</div>

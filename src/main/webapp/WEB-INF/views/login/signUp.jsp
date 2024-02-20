@@ -9,7 +9,7 @@
   	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
       
-	<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/img/top2.jpg'); background-size: cover; background-position: bottom center; height: 100vh; position: relative;">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
@@ -167,43 +167,44 @@ $(function(){
 		//문자인증
 		var responseData= "";
 		$("#check_send").click(function() {
-			console.log("클릭");
-			alert("인증번호 발송이 완료되었습니다.");
-			
-			var mem_phone = $("#mem_phone").val();
-			console.log("mem_phonMS:", mem_phone);
-			$.ajax({
-				async : true,
-				type : "GET",
-				url : "/login/phoneSend",
-				dataType : "text",
-				data: { "mem_phone": mem_phone }, 
-				headers : {
-					"Content-Type" : "application/json"
-				},
-				success : function(data) {
-					console.log("datMS:", data);
-					if(data =="error"){
-						alert("휴대폰 번호가 올바르지 않습니다.");
-					} else{
-						 $("#phoneDoubleCheck").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
-				         $("#phoneDoubleCheck").css("color","red");
-				         responseData = data;
-				         
-					$("#phone_check").click(function() {
-						console.log("문자인증클릭");
-						if ($.trim(responseData) == $("#mem_phone_check").val()) {
-							alert("인증성공!\n휴대폰 인증이 정상적으로 완료되었습니다.");
-						} else {
-							alert("인증실패!\n인증번호가 올바르지 않습니다!");
-						}
-					  });	
-					}
-				  }
-			    
-		     });
-	        
-         });
+		    console.log("클릭");
+		    alert("인증번호 발송이 완료되었습니다.");
+		
+		    var mem_phone = $("#mem_phone").val();
+		    console.log("mem_phonMS:", mem_phone);
+		    $.ajax({
+		        async : true,
+		        type : "GET",
+		        url : "/login/phoneSend",
+		        dataType : "text",
+		        data: { "mem_phone": mem_phone }, 
+		        headers : {
+		            "Content-Type" : "application/json"
+		        },
+		        success : function(data) {
+		            console.log("datMS:", data);
+		            if(data =="error"){
+		                alert("전화번호가 올바르지 않습니다.");
+		            } else{
+		                responseData = data;
+		                // 문자 보내기 클릭 시 문구 보이기
+		                $("#phoneDoubleCheck").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+		                $("#phoneDoubleCheck").css("color","red");
+		            }
+		        }
+		    });
+
+    $("#phone_check").click(function() {
+        console.log("문자인증클릭");
+        if ($.trim(responseData) == $("#mem_phone_check").val()) {
+            alert("인증성공!\본인인증이 정상적으로 완료되었습니다.");
+            // 인증 성공 시 문구 숨기기
+            $("#phoneDoubleCheck").text("");
+        } else {
+            alert("인증실패!\n인증번호가 올바르지 않습니다!");
+        }
+    });
+});
 		
 		//비밀번호 유효성검사 
 		function checkPassword(){
@@ -253,7 +254,7 @@ $(function(){
 				if (inputPwd.trim() == "") {alert("비밀번호를 입력해 주세요.");$("#mem_pw").focus();return false;}
 				if (inputPwd != inputPwdCfm) {alert("비밀번호가 서로 다릅니다. 비밀번호를 확인해 주세요.");$("#mem_pw").focus();return false;}
 				if (inputCpnName.length == 0) {alert("이름을 입력해 주세요.");$("#mem_name").focus();return false;}
-				if (inputCpnBirth.length == 0) {alert("생일을 입력해 주세요.");$("#mem_birth").focus();return false;}
+				if (inputCpnBirth.length == 0) {alert("생년월일을 입력해 주세요.");$("#mem_birth").focus();return false;}
 				<!--문자인증 -->
 				if (inputCpnTelNo.length == 0) {alert("전화번호를 입력해 주세요.");$("#mem_phone").focus();return false;}
 				<!--문자인증 -->
@@ -307,7 +308,7 @@ $(function(){
              	 <input class="textErr" style="color: red;" value="'-'없이 숫자8자만 입력해주세요." type="hidden">
               </div>
 					<div class="form-group" id="divInputId">
-						<small>휴대전화</small>
+						<small>전화번호</small>
 						<div class="input-group">
 							<input type="text" class="form-control" id="mem_phone" name="mem_phone">
 							<div class="input-group-append">

@@ -41,18 +41,18 @@ $(function(){
 	$(".btn-oper").click(function(){
 		console.log("클릭");
 		var operation = $(this).data("oper");
-		var no = $(this).data("no");
+		var board_no = $(this).data("no");
 		console.log("operation:" , operation);
-		console.log("no:" , no);
+		console.log("board_no:" , board_no);
 		
 		if (operation == "modify") {
-			window.location.href = '/board/modify?board_no=' + no;
+			window.location.href = '/board/modify?board_no=' + board_no;
 		} else if (operation == "delete"){
 			if(confirm("게시글을 삭제하시겠습니까?")) {
 				$.ajax({
 					type:"post",
 					url : "/board/remove",
-					data : {"board_no" : no},
+					data : {"board_no" : board_no},
 					success : function(rData) {
 						alert("삭제되었습니다.");
 						window.location.href = '/board/list';
@@ -64,14 +64,19 @@ $(function(){
 				})
 			}
 		} else if (operation == "answer") {
-			window.location.href = '/board/answer?board_no=' + no;
+			window.location.href = '/board/answer?board_no=' + board_no;
 		}
 	});
 	
-	var modifyResult = '${modifyResult}';
-	if(modifyResult){
-		alert("수정이 완료되었습니다.");
-	}
+    var referrer = document.referrer;
+    // 수정 페이지로부터 돌아왔을 때에만 alert 표시
+    if(referrer.includes("/board/modifyBoard")) {
+        var modifyResult = '${modifyResult}';
+        if(modifyResult == 1){
+            alert("수정이 완료되었습니다.");
+            return;
+        }
+    }
 	
 	$("#btnlist").click(function(e){
 		e.preventDefault();
@@ -84,18 +89,21 @@ $(function(){
 
 </script>
 <%@ include file="/WEB-INF/views/include/frmCriteria.jsp" %>
-<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/resources/carbook-master/img/top2.jpg'); background-size: cover; background-position: bottom center; height: 100vh; position: relative;">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>공지사항 <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">공지사항</h1>
+          	<p class="breadcrumbs">
+          	<span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> 
+          	<span class="mr-2"><a href="/myPage/myPage">고객의소리 <i class="ion-ios-arrow-forward"></i></a></span> 
+          	</p>
+        	<h1 class="mb-3 bread">문의게시판</h1>
           </div>
         </div>
       </div>
 </section>
-
+<%-- ${boardVO} --%>
 <section class="ftco-section contact-section">
 	<div class="container">
 		<div class="row">
@@ -117,10 +125,10 @@ $(function(){
                             	<dl id="dl_info">
                             		<dt>작성자</dt>
                             		<dt>ㅣ</dt>
-								    <c:if test="${board.board_seq ne 0}">
+								    <c:if test="${boardVO.board_seq ne 0}">
 								        <dd>관리자</dd>
 								    </c:if>
-								    <c:if test="${board.board_seq eq 0}">
+								    <c:if test="${boardVO.board_seq eq 0}">
 								        <dd>${boardVO.board_mem_id}</dd>
 								    </c:if>
                             	</dl>
@@ -144,11 +152,15 @@ $(function(){
 				<div class="col-md-12">
 				    <div class="d-flex justify-content-end align-items-center">
 				        <c:if test="${loginInfo.mem_adminck eq 1}">
-				        	<button type="button" class="btn btn-primary btn-oper mr-2" data-oper="answer" data-no="${boardVO.board_no}">답글쓰기</button>
+				        	<button type="button" class="btn btn-primary btn-oper mr-2" 
+				        			data-oper="answer" data-no="${boardVO.board_no}">답글쓰기</button>
 				        </c:if>
-				        <c:if test="${(loginInfo.mem_id eq boardVO.board_mem_id) or (loginInfo.mem_adminck eq 1 and boardVO.board_noticeYN eq 'Y')}">
-				            <button type="button" class="btn btn-primary btn-oper mr-2" data-oper="modify" data-no="${boardVO.board_no}">수정</button>
-				            <button type="button" class="btn btn-primary btn-oper" data-oper="delete" data-no="${boardVO.board_no}">삭제</button>
+				        <c:if test="${(loginInfo.mem_id eq boardVO.board_mem_id) or 
+				        			  (loginInfo.mem_adminck eq 1 and boardVO.board_noticeYN eq 'Y')}">
+				            <button type="button" class="btn btn-primary btn-oper mr-2" 
+				            		data-oper="modify" data-no="${boardVO.board_no}">수정</button>
+				            <button type="button" class="btn btn-primary btn-oper" 
+				            		data-oper="delete" data-no="${boardVO.board_no}">삭제</button>
 				        </c:if>
 				    </div>
 				</div>
