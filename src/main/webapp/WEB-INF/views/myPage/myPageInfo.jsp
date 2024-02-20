@@ -5,7 +5,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+function sha256(password) {
+	if (password.trim() == "") {
+		alert("비밀번호를 입력하세요");
+	} else {
+		return CryptoJS.SHA256(password).toString();
+	}
+}
+
 $(function() {
+	
 	// 회원탈퇴 모달
 	$("#btn-deleteInfo").click(function() {
 		$("#del_enter_pwd").val("");
@@ -18,36 +27,45 @@ $(function() {
 		
 		var mem_id = $("#id").val(); 
 		var password = $("#password").val();
-// 		console.log("password:", password);
+		console.log("password:", password);
 		var del_enter_pwd = $("#del_enter_pwd").val();
-// 		console.log("del_enter_pwd:", del_enter_pwd);
-
-		if (del_enter_pwd.trim() == "") {
-			alert("비밀번호를 입력하세요");
-		} else if (password != del_enter_pwd) {
-			alert("비밀번호가 맞지 않습니다.");
-		} else if (password == del_enter_pwd) {
-			console.log("비밀번호 일치확인")
-			$.ajax({
-	            method: "DELETE",
-	            url: "/myPage/delete/" + mem_id,
-	            success: function(rData) {
-	                console.log("rData:", rData);
-	                if (rData == "success") {
-		                alert("회원탈퇴성공! 로그인 페이지로 이동합니다.");
-		                $("#modal-delForm").modal("hide");
-		                location.href = "/login/login";
-	                } else if (rData == "fail") {
-	                	alert("회원탈퇴실패!");
-	                }
+		console.log("del_enter_pwd:", del_enter_pwd);
+		var shaDelPassword = sha256(del_enter_pwd);
+		console.log("shaDelPassword:", shaDelPassword);
+		
+		return false;
+// 		if (password != shaDelPassword) {
+// 			alert("비밀번호가 맞지 않습니다.");
+// 		} else if (password == shaDelPassword) {
+// 			alert("비밀번호 일치확인");
+// 			// 폼 데이터 생성
+// 			var formData = {
+//                 mem_id: mem_id
+//             };
+			
+// 			$.ajax({
+// 	            method: "DELETE",
+// 	            url: "/myPage/delete/" + mem_id,
+// 	            success: function(rData) {
+// 	                console.log("rData:", rData);
+// 	                if (rData == "success") {
+// 		                alert("회원탈퇴성공! 로그인 페이지로 이동합니다.");
+// 		                $("#modal-delForm").modal("hide");
+// 		                location.href = "/login/login";
+// 	                } else if (rData == "fail") {
+// 	                	alert("회원탈퇴실패!");
+// 	                }
 	                
-	            },
-	            error: function(xhr, status, error) {
-                	alert("회원탈퇴실패!");
-	                console.error("회원 삭제 실패:", error);
-	            }
-	        });
-		}
+// 	            },
+// 	            error: function(xhr, status, error) {
+//                 	alert("회원탈퇴실패!");
+// 	                console.error("회원 삭제 실패:", error);
+// 	            }
+// 	        });
+// 		}
+// 		else {
+// 			return;
+// 		}
 	});
 	
 	var modifyResult = '${modifyResult}';
@@ -88,7 +106,7 @@ $(function() {
 					</div>
 					<br>
 					<div class="container">
-					  <form action="/action_page.php">
+					  <form>
 					    <div class="form-group">
 					      <label for="id">아이디</label>
 					      <input type="text" class="form-control" id="id" name="id" value="${loginInfo.mem_id}" readonly>
@@ -121,9 +139,9 @@ $(function() {
 							<input type="text" class="form-control" id="mem_addr" name="mem_addr" readonly="readonly" value="${loginInfo.mem_addr}">
 		             	</div>
 						<hr>
-						<button type="button" id="btn-deleteInfo" class="btn btn-danger">회원탈퇴</button>
 					  </form>
 					</div>
+					<button type="button" id="btn-deleteInfo" class="btn btn-danger">회원탈퇴</button>
 			  	
 				</div>
 				<div class="col-md-2">
@@ -143,7 +161,7 @@ $(function() {
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <form action="" method="post">
+                <form>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div align="center">
