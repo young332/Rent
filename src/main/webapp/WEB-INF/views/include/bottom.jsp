@@ -7,7 +7,7 @@
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2"><a href="#" class="logo">
-              <img alt="logo" src="/resources/carbook-master/img/logo.png">
+              <img alt="logo" src="/resources/carbook-master/img/logob.png">
               </a></h2>
               <p>개쩌는 포트폴리오가 될 예정인<br> HAKA 홈페이지</p>
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
@@ -21,11 +21,9 @@
             <div class="ftco-footer-widget mb-4 ml-md-5">
               <h2 class="ftco-heading-2">Information</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">About</a></li>
-                <li><a href="#" class="py-2 d-block">Services</a></li>
-                <li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
-                <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-                <li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
+                <li><a href="/reserve/reserve" class="py-2 d-block">예약</a></li>
+                <li><a href="/customer.jsp" class="py-2 d-block">FAQ</a></li>
+                <li><a href="/board/list" class="py-2 d-block">고객의 소리</a></li>
               </ul>
             </div>
           </div>
@@ -33,11 +31,11 @@
              <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Customer Support</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">FAQ</a></li>
-                <li><a href="#" class="py-2 d-block">Payment Option</a></li>
+                <li><a href="/admin/" class="py-2 d-block">관리자페이지</a></li>
+<!--                 <li><a href="#" class="py-2 d-block">Payment Option</a></li>
                 <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
                 <li><a href="#" class="py-2 d-block">How it works</a></li>
-                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                <li><a href="#" class="py-2 d-block">Contact Us</a></li> -->
               </ul>
             </div>
           </div>

@@ -91,21 +91,21 @@
 		</dependency>
 				
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>3.1.0</version>
-    <scope>provided</scope>
-</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.1.0</version>
+		    <scope>provided</scope>
+		</dependency>
 
 				
 		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
-<dependency>
-    <groupId>javax.servlet.jsp</groupId>
-    <artifactId>javax.servlet.jsp-api</artifactId>
-    <version>2.3.1</version>
-    <scope>provided</scope>
-</dependency>
+		<dependency>
+		    <groupId>javax.servlet.jsp</groupId>
+		    <artifactId>javax.servlet.jsp-api</artifactId>
+		    <version>2.3.1</version>
+		    <scope>provided</scope>
+		</dependency>
 
 		
 		<dependency>
@@ -297,6 +297,13 @@
                     <downloadJavadocs>true</downloadJavadocs>
                 </configuration>
             </plugin>
+            
+            <!-- 마지막 추가 war 파일  -->
+            <plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-war-plugin</artifactId>
+			  <version>3.3.2</version>
+			</plugin>
              
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
