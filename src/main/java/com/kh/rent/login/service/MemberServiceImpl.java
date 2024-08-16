@@ -95,7 +95,7 @@ public class MemberServiceImpl implements MemberService{
 	   //수신전화전호
 	   params.put("To", mem_phone);  // 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
 	   //발신전화번호
-	   params.put("from", "01089179442");
+	   params.put("from", "010");
 	   params.put("type", "SMS");
 	   //문자 내용 입력
 	   params.put("text", "렌트차 인증번호는 [" + randomNumber + "] 입니다.");
